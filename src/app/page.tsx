@@ -1,95 +1,83 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import React, { useState, useEffect } from 'react';
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+import Loader from '../components/Base/Loader.jsx';
+import AboutSection from '../components/Homepage/AboutSection.jsx';
+import FeatureSection from '../components/Homepage/FeatureSection.jsx';
+import FooterSection from '../components/Homepage/FooterSection.jsx';
+import LandingSection from '../components/Homepage/LandingSection.jsx';
+import LoginSection from '../components/Homepage/LoginSection.jsx';
+import NavBar from '../components/Homepage/NavBar.jsx';
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+const Homepage = (props) => {
+	const [loading, setLoading] = useState(true);
+	const [menuOpen, setMenuOpen] = useState(false);
+	const [navItems, setNavItems] = useState(['About Us', 'Features']);
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+	const userID = useTracker(() => Meteor.userId());
+	const user = useTracker(() => Meteor.user());
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
+	const scrollToSection = () => {
+		setTimeout(() => {
+			const element = document.querySelector(`#${props.section ? props.section : 'home'}`);
+			window.scrollTo(0, element?.offsetTop);
+		}, 0);
+	};
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+	useEffect(() => {
+		setTimeout(() => {
+			const element = document.querySelector(`#${props.section ? props.section : 'home'}`);
+			window.scrollTo(0, element?.offsetTop);
+		}, 0);
+	}, [props.section]);
+
+	useEffect(() => {
+		Meteor.subscribe('userData');
+	}, []);
+
+	useEffect(() => {
+		if (!userID && loading) {
+			setNavItems([...navItems, 'Login']);
+			setLoading(false);
+		} else if (user && loading) {
+			if (user.role === 'admin') {
+				setNavItems([...navItems, 'Dashboard']);
+			} else if (user.role === 'kitchen') {
+				setNavItems([...navItems, 'Kitchen']);
+			}
+
+			setLoading(false);
+		}
+	}, [userID, user, navItems, loading]);
+
+	useEffect(() => {
+		if (!loading) {
+			document.querySelector('.app').style.height = 'unset';
+		}
+	}, [loading]);
+
+	// Show loader before rendering
+	if (loading) {
+		return <Loader fullpage />;
+	}
+
+	return (
+		<div className='homepage'>
+			<NavBar navItems={navItems} menuOpen={menuOpen} setMenuOpen={setMenuOpen} scrollToSection={scrollToSection} />
+			<div className={`homepageSections ${menuOpen ? 'menuOpen' : ''}`}>
+				<LandingSection />
+				<AboutSection />
+				<FeatureSection />
+				<LoginSection loggedIn={!!userID} user={user} />
+				<FooterSection />
+			</div>
+			<ToastContainer />
+		</div>
+	);
+};
+
+export default Homepage;

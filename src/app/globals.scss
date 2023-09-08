@@ -1,0 +1,28 @@
+@import 'xtreme-ui/dist/style.css';
+@import 'react-toastify/dist/ReactToastify.css';
+
+html,
+body {
+	width: 100%;
+	height: 100% !important;
+	padding: 0;
+	margin: 0;
+	background: var(--colorBackgroundPrimary);
+	overflow-x: hidden;
+
+	* {
+		font-family: var(--montserrat);
+	}
+}
+
+@keyframes floatUp {
+	0% {
+		transform: translateY(20px);
+		opacity: 0;
+	}
+
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
