@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "seatonjiang.gitmoji-vscode",
+        "ban.spellright",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "jakob101.RelativePath",
+        "usernamehw.errorlens",
+		"naumovs.color-highlight"
+    ]
+}

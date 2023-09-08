@@ -1,0 +1,23 @@
+{
+	"extends": [ "stylelint-config-standard-scss" ],
+	"rules": {
+		"indentation": "tab",
+		"color-hex-case": "upper",
+		"string-quotes": "single",
+		"max-empty-lines": 1,
+		"max-line-length": 120,
+		"no-descending-specificity": null,
+
+		"selector-pseudo-class-no-unknown": [true, {
+			"ignorePseudoClasses": ["global"]
+		}],
+		
+		"function-name-case": null,
+		"selector-class-pattern": "^[a-z][a-zA-Z0-9]+$",
+		"custom-property-pattern": "^[a-z][a-zA-Z0-9]+$",
+		"keyframes-name-pattern": "^[a-z][a-zA-Z0-9]+$",
+		"scss/dollar-variable-pattern": "^[a-z][a-zA-Z0-9]+$",
+		"scss/at-function-pattern": "^[a-z][a-zA-Z0-9]+$",
+		"scss/at-mixin-pattern": "^[a-z][a-zA-Z0-9]+$"
+	}
+}
