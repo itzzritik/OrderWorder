@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import Link from 'next/link';
-
 import { scrollToSection } from '#utils/helper/common';
 
 import './navbar.scss';
@@ -10,8 +8,8 @@ export default function Navbar ({ menuOpen, setMenuOpen }: TNavBarProps) {
 	const [navItems, setNavItems] = useState(['About Us', 'Features']);
 
 	return (
-		<div className='homeNavbar' id='navBar'>
-			<Link className='logo' href='/'>ORDER WORDER</Link>
+		<div className='homeNavbar' id='homepage-navBar'>
+			<p className='logo' onClick={() => scrollToSection()}>ORDER WORDER</p>
 			<div className={`menu ${menuOpen ? 'open' : ''}`}>
 				<div className='icon round' onClick={() => setMenuOpen(!menuOpen)}>
 					<span className='line1' />
@@ -21,18 +19,17 @@ export default function Navbar ({ menuOpen, setMenuOpen }: TNavBarProps) {
 					{
 						navItems.map((item, key) => {
 							return (
-								<Link
+								<p
 									key={key}
 									className='item'
-									href={item.toLowerCase().replace(/ /g, '')}
 									onClick={() => {
-										scrollToSection(item.toLowerCase().replace(/ /g, ''));
+										scrollToSection('homepage-' + item.toLowerCase().replace(/ /g, ''));
 										setMenuOpen(false);
 									}}
 								>
 									<span />
 									<p>{item}</p>
-								</Link>
+								</p>
 							);
 						})
 					}

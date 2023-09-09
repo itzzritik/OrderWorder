@@ -22,7 +22,7 @@ const FeatureList = ({ items }: { items: string[] }) => {
 };
 const FeatureSection = () => {
 	return (
-		<section className='featureSection' id='features'>
+		<section className='featureSection' id='homepage-features'>
 			<div className='featuresContent'>
 				<h2>Features</h2>
 				<FeatureList items={[

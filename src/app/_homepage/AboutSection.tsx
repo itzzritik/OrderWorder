@@ -1,15 +1,13 @@
-import { useRouter } from 'next/navigation';
 import { Button, Lottie } from 'xtreme-ui';
 
 import { getAnimSrc } from '#utils/constants/common';
+import { scrollToSection } from '#utils/helper/common';
 
 import './aboutSection.scss';
 
 const AboutSection = () => {
-	const router = useRouter();
-
 	return (
-		<section className='aboutSection' id='aboutus'>
+		<section className='aboutSection' id='homepage-aboutus'>
 			<div className='aboutContent'>
 				<h2>About us</h2>
 				<p>
@@ -24,8 +22,8 @@ const AboutSection = () => {
 					with us.
 				</p>
 				<div className='aboutAction'>
-					<Button label='Learn more' onClick={() => router.replace('/features')} />
-					<Button label='Why us?' type='secondary' onClick={() => router.replace('/features')} />
+					<Button label='Learn more' onClick={() => scrollToSection('homepage-features')} />
+					<Button label='Why us?' type='secondary' onClick={() => scrollToSection('homepage-features')} />
 				</div>
 			</div>
 			<div className='aboutAnim'>

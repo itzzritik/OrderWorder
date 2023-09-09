@@ -20,6 +20,7 @@
 		text-transform: uppercase;
 		letter-spacing: 1.5px;
 		outline: none;
+		cursor: pointer;
 	}
 
 	.menu {
@@ -124,6 +125,7 @@
 				padding: 0 20px;
 				align-items: center;
 				text-decoration: none;
+				cursor: pointer;
 	
 				@media (hover: hover) {
 					&:hover {

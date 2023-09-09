@@ -7,9 +7,7 @@ export const CatchNextResponse = ({ message = 'Something went wrong', status = 5
 	);
 };
 
-export const scrollToSection = (section: string) => {
-	setTimeout(() => {
-		const element = document.querySelector(`#${section ? section : 'home'}`) as HTMLDivElement;
-		window.scrollTo(0, element?.offsetTop);
-	}, 0);
+export const scrollToSection = (section?: string) => {
+	const element = document.getElementById(section ? section : 'homepage') as HTMLDivElement;
+	element.scrollIntoView({ behavior: 'smooth' });
 };

@@ -3,13 +3,14 @@ import { useEffect, useState, useCallback, MouseEvent, Dispatch, SetStateAction 
 import { useRouter } from 'next/navigation';
 import { Button } from 'xtreme-ui';
 
+import { scrollToSection } from '#utils/helper/common';
+
 import './landingSection.scss';
 
+const imagesCount = 2;
+const maxBlurPerImage = 60 / imagesCount;
+const maxOverlayTranslate = 0.3;
 const LandingSection = () => {
-	const imagesCount = 2;
-	const maxBlurPerImage = 60 / imagesCount;
-	const maxOverlayTranslate = 0.3;
-
 	const router = useRouter();
 	const [background, setBackground] = useState('');
 	const [blurBackground, setBlurBackground] = useState<number>(maxBlurPerImage);
@@ -44,7 +45,7 @@ const LandingSection = () => {
 		};
 
 		new Image().fetch(image);
-	}, [maxBlurPerImage]);
+	}, []);
 
 	const onMouseMove = (event: MouseEvent) => {
 		const target = event.target as HTMLDivElement;
@@ -61,7 +62,7 @@ const LandingSection = () => {
 	}, [fetchImages]);
 
 	return (
-		<section className='landingSection' id='home'
+		<section className='landingSection' id='homepage'
 			style={{ filter: `blur(${blurBackground + blurOverlay}px)` }}
 		>
 			{ background && <div className='coverBackground' style={{ backgroundImage: `url(${background})` }} /> }
@@ -80,7 +81,7 @@ const LandingSection = () => {
 				<p className='desc'>Gone are the days of complex ordering systems and outdated</p>
 				<p className='desc'>paper menus. It&apos;s time for the new normal, OrderWorder</p>
 				<div className='greetingAction'>
-					<Button label='Learn more' type='secondary' onClick={() => router.replace('/aboutus')} />
+					<Button label='Learn more' type='secondary' onClick={() => scrollToSection('homepage-aboutus')} />
 					<Button label='Order now' onClick={() => router.push('/scan')} />
 				</div>
 			</div>
