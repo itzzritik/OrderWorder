@@ -9,7 +9,7 @@ export default function Navbar ({ menuOpen, setMenuOpen }: TNavBarProps) {
 
 	return (
 		<div className='homeNavbar' id='homepage-navBar'>
-			<p className='logo' onClick={() => scrollToSection()}>ORDER WORDER</p>
+			<div className='logo' onClick={() => scrollToSection()}>ORDER WORDER</div>
 			<div className={`menu ${menuOpen ? 'open' : ''}`}>
 				<div className='icon round' onClick={() => setMenuOpen(!menuOpen)}>
 					<span className='line1' />
@@ -19,7 +19,7 @@ export default function Navbar ({ menuOpen, setMenuOpen }: TNavBarProps) {
 					{
 						navItems.map((item, key) => {
 							return (
-								<p
+								<div
 									key={key}
 									className='item'
 									onClick={() => {
@@ -27,9 +27,8 @@ export default function Navbar ({ menuOpen, setMenuOpen }: TNavBarProps) {
 										setMenuOpen(false);
 									}}
 								>
-									<span />
 									<p>{item}</p>
-								</p>
+								</div>
 							);
 						})
 					}
