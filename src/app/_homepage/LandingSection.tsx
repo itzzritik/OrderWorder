@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, MouseEvent, Dispatch, SetStateAction } from 'react';
+import { useEffect, useState, useCallback, MouseEvent, Dispatch, SetStateAction } from 'react';
 
 import { useRouter } from 'next/navigation';
 import { Button } from 'xtreme-ui';
@@ -66,11 +66,12 @@ const LandingSection = () => {
 		>
 			{ background && <div className='coverBackground' style={{ backgroundImage: `url(${background})` }} /> }
 			{
-				background && overlay
-				&& <div className='coverOverlay' onMouseMove={onMouseMove} style={{
+				background && overlay &&
+				<div className='coverOverlay' onMouseMove={onMouseMove} style={{
 					backgroundImage: `url(${overlay})`,
 					transform: `translate(${overlayX}%, ${overlayY}%)`,
-				}} />
+				}}
+				/>
 			}
 			<div className='overlay' />
 			<div className='landingGreeting'>

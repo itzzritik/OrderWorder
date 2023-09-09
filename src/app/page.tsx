@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+'use client';
 
+import { useState } from 'react';
+
+import AboutSection from './_homepage/AboutSection';
+import FeatureSection from './_homepage/FeatureSection';
+import FooterSection from './_homepage/FooterSection';
 import LandingSection from './_homepage/LandingSection';
+import LoginSection from './_homepage/LoginSection';
 import Navbar from './_homepage/Navbar';
 
 export default function Homepage () {

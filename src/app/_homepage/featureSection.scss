@@ -1,0 +1,116 @@
+.featureSection {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 20px 0 80px;
+
+	.featuresContent {
+		width: 45%;
+		max-width: 550px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+
+		h2 {
+			width: fit-content;
+			font-size: 32px;
+			font-weight: 500;
+			text-transform: uppercase;
+			user-select: none;
+			margin-bottom: 20px;
+
+			&::after {
+				content: '';
+				display: block;
+				width: 40%;
+				height: 5px;
+				margin: 15px auto;
+				background-color: rgb(var(--colorBrandPrimaryRgb));
+			}
+		}
+
+		.featureListItem {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			margin: 5px 0;
+
+			h1 {
+				width: 60px;
+				min-width: 60px;
+				height: 60px;
+				min-height: 60px;
+				margin: 0 20px 0 0;
+				border-radius: 9999px;
+				font-size: 32px;
+				font-weight: 500;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				user-select: none;
+				background-color: var(--lightFeatureColor);
+				color: var(--darkFeatureColor);
+				transition: background-color 0.5s ease-out, color 0.5s ease-out;
+			}
+
+			p {
+				font-size: 16px;
+				font-weight: 300;
+				margin: 0;
+
+				&::selection {
+					color: var(--darkFeatureColor);
+					background: var(--lightFeatureColor);
+				}
+			}
+		}
+	}
+
+	.featuresAnim {
+		width: 55%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.whyUsAnim {
+			width: 100%;
+			height: auto;
+			max-width: 600px;
+			max-height: 600px;
+		}
+	}
+}
+
+@media (width <= 910px) {
+	.featureSection  .featuresContent .featureListItem > p {
+		font-size: 14px;
+	}
+}
+
+@media (width <= 830px) {
+	.featureSection  {
+		padding: 0 50px;
+		justify-content: center;
+
+		.featuresContent {
+			width: fit-content;
+			max-width: unset;
+			align-items: center;
+		}
+
+		.featuresAnim {
+			display: none;
+		}
+	}
+}
+
+@media (width <= 530px) {
+	.featureSection  {
+		padding: 0 30px;
+	}
+}
