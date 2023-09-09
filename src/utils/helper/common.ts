@@ -6,3 +6,10 @@ export const CatchNextResponse = ({ message = 'Something went wrong', status = 5
 		{ status },
 	);
 };
+
+export const scrollToSection = (section: string) => {
+	setTimeout(() => {
+		const element = document.querySelector(`#${section ? section : 'home'}`) as HTMLDivElement;
+		window.scrollTo(0, element?.offsetTop);
+	}, 0);
+};

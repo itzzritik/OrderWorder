@@ -1,0 +1,233 @@
+.homeNavbar {
+	--navHeight: 80px;
+	
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: var(--navHeight);
+	padding: 0 30px 0 0;
+	user-select: none;
+	z-index: 2;
+
+	.logo {
+		height: 100%;
+		line-height: var(--navHeight);
+		display: flex;
+		float: left;
+		padding: 0 30px;
+		font-weight: 500;
+		text-decoration: none;
+		text-transform: uppercase;
+		letter-spacing: 1.5px;
+		outline: none;
+	}
+
+	.menu {
+		$iconSize: 35px;
+
+		display: flex;
+		height: 100%;
+		float: right;
+		align-items: center;
+		justify-content: center;
+
+		&.open {
+			.icon {
+				transform: rotate(45deg);
+
+				&:hover {
+					span:nth-child(2) {
+						width: 24px;
+					}
+				}
+
+				.line1 {
+					top: 50%; right: 23px;
+					width: 24px;
+				}
+
+				.line2 {
+					top: 50%; right: 23px;
+					width: 24px;
+					transform: rotate(90deg);
+				}
+			}
+
+			.container {
+				display: flex;
+
+				.item {
+					@for $i from 1 through 3 {
+						&:nth-child(#{$i}) {
+							animation: riseIn 0.38s #{$i * .12}s cubic-bezier(0.175, 0.885, 0.320, 1.275) forwards;
+						}
+					}
+				}
+
+				@keyframes riseIn {
+					100% {
+						opacity: 1;
+						transform: translateY(0);
+					}
+				}
+			}
+		}
+
+		.icon {
+			display: none;
+			position: absolute;
+			top: 0; right: 0;
+			width: var(--navHeight);
+			height: var(--navHeight);
+			justify-content: center;
+			cursor: pointer;
+
+			&, & > * {
+				transition: all 0.3s ease-in-out;
+			}
+
+			@media (hover: hover) {
+				&:hover {
+					.line2 {
+						width: $iconSize - 10px;
+					}
+				}
+			}
+
+			span {
+				position: absolute;
+				right: 18px;
+				display: block;
+				height: 2px;
+				border-bottom: 1px solid var(--colorContentPrimary);
+
+				&.line1 {
+					width: $iconSize;
+					top: 38%;
+				}
+
+				&.line2 {
+					width: $iconSize / 2;
+					top: 52%;
+				}
+			}
+		}
+
+		.container {
+			height: 100%;
+			display: flex;
+
+			.item {
+				position: relative;
+				display: flex;
+				height: 100%;
+				padding: 0 20px;
+				align-items: center;
+				text-decoration: none;
+	
+				@media (hover: hover) {
+					&:hover {
+						span {
+							width: 20%;
+							transition: width 0.05s ease-out;
+						}
+					}
+				}
+
+				&.active {
+					span {
+						width: 90%;
+						transition: width 0.2s cubic-bezier(0.175, 0.885, 0.320, 1.275);
+					}
+				}
+	
+				span {
+					position: absolute;
+					left: 50%; bottom: 12px;
+					transform: translateX(-50%);
+					width: 0;
+					height: 5px;
+					border-bottom: 2px solid rgb(var(--colorBrandPrimary));
+					transition: width 0.1s ease-in;
+				}
+	
+				p {
+					font-size: 12px;
+					font-weight: 500;
+					margin: 0;
+					color: var(--colorContentPrimary);
+					text-align: center;
+					text-transform: uppercase;
+					letter-spacing: 1.5px;
+					z-index: 1;
+				}
+			}
+		}
+	}
+}
+
+@media (width <= 800px) {
+	.homeNavBar .menu .container .item p {
+		font-size: 10px;
+	}
+}
+
+@media (width <= 630px) {
+	.homeNavBar {
+		.menu {
+			.icon {
+				display: flex;
+				margin-right: 10px;
+				z-index: 2;
+			}
+
+			.container {
+				display: none;
+				position: absolute;
+				left: 50%; top: 0;
+				width: 100%;
+				height: 100vh;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+				transform: translateX(-50%);
+
+				.item {
+					width: fit-content;
+					height: auto;
+					justify-content: center;
+					padding: 10px;
+					opacity: 0;
+					transform: translateY(80px);
+
+					@for $i from 1 through 3 {
+						&:nth-child(#{$i}) {
+							animation: riseIn 0.1s #{$i * .5}s ease-out forwards;
+						}
+					}
+					
+
+					@media (hover: hover) {
+						&:hover span {
+							transition: width 0.1s ease-out;
+						}
+					}
+
+					&.active span {
+						width: 100%;
+						transition: width 0.3s cubic-bezier(0.175, 0.885, 0.320, 1.275);
+					}
+
+					span {
+						bottom: 8px;
+					}
+
+					p {
+						font-size: 34px;
+						font-weight: 300;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,174 @@
+.landingSection {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	background-image: url('/backgrounds/landingCoverPlaceholder.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	transition: filter 1s linear;
+
+	&::before, &::after {
+		content: '';
+		position: sticky;
+		top: 0;
+		display: block;
+		width: 100%;
+		height: 80px;
+		z-index: 2;
+		background-image: linear-gradient(to bottom, white 0%, transparent 100%);
+	}
+
+	&::after {
+		position: absolute;
+		top: unset; bottom: 0;
+		background-image: linear-gradient(to bottom, transparent 0%, white 100%);
+	}
+	
+	.coverBackground, .coverOverlay {
+		position: absolute;
+		left: 0; top: 0;
+		width: 100%;
+		height: 100%;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		transition: background-position 1s ease-out;
+	}
+
+	.overlay {
+		position: absolute;
+		left: 0; top: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		pointer-events: none;
+		background-image: linear-gradient(to right, white 0%, transparent 100%);
+		transition: opacity 1s ease-out;
+	}
+
+	.landingGreeting {
+		position: absolute;
+		right: 0;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		padding-right: 90px;
+		user-select: none;
+		pointer-events: none;
+		transition: zoom 1s ease-out;
+
+		> p {
+			width: 100%;
+			color: var(--colorContentPrimary);
+			font-size: 32px;
+			font-weight: 300;
+			margin: 0;
+			text-align: end;
+
+			&.head {
+				font-size: 52px;
+				font-weight: 400;
+				color: black;
+			}
+
+			&.subHead {
+				margin-bottom: 20px;
+				color: black;
+			}
+
+			&.desc {
+				font-size: 14px;
+				font-weight: 400;
+			}
+		}
+
+		.greetingAction {
+			width: 100%;
+			display: flex;
+			margin: 40px 0 20px;
+			justify-content: flex-end;
+			pointer-events: all;
+
+			.button {
+				--buttonWidth: 145px;
+
+				&:first-child {
+					margin-right: 20px;
+				}
+			}
+		}
+	}
+}
+
+@media (width <= 1000px) {
+	.landingSection .landingGreeting {
+		zoom: 0.9;
+	}
+}
+
+@media (width <= 850px) {
+	.landingSection .landingGreeting {
+		zoom: 0.8;
+	}
+}
+
+@media (width <= 700px) {
+	.landingSection {
+		.overlay {
+			opacity: 0.5;
+		}
+
+		.landingGreeting {
+			zoom: 0.9;
+		}
+	}
+}
+
+@media (width <= 530px) {
+	.landingSection {
+		.coverBackground, .coverOverlay {
+			background-position: -140px;
+		}
+
+		.overlay {
+			opacity: 0.92;
+			background-image: linear-gradient(to right, white 0%, white 100%);
+		}
+
+		.landingGreeting {
+			right: 50%;
+			transform: translateX(50%);
+			padding-right: 0;
+			zoom: 1;
+
+			> p {
+				text-align: center;
+			}
+
+			.greetingAction {
+				justify-content: center;
+			}
+		}
+	}
+}
+
+@media (width <= 500px) {
+	.landingSection .landingGreeting {
+		zoom: 0.8;
+	}
+}
+
+@media (width <= 380px) {
+	.landingSection .landingGreeting {
+		zoom: 0.7;
+	}
+}
+
+@media (width <= 330px) {
+	.landingSection .landingGreeting {
+		zoom: 0.6;
+	}
+}
