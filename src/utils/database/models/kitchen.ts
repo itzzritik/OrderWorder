@@ -1,0 +1,34 @@
+import mongoose from 'mongoose';
+
+import { checkIfExist, hashPassword, isBcryptHash } from '../manager';
+
+import { Account } from './account';
+
+const KitchenSchema = new mongoose.Schema<TKitchen>({
+	username: { type: String, trim: true, unique: true, required: true, sparse: true, index: { unique: true } },
+	password: { type: String, required: true },
+	restaurantID: { type: String, trim: true, lowercase: true, required: true },
+},
+{ timestamps: true });
+
+KitchenSchema.pre(['findOneAndUpdate'], async function (next) {
+	const data = this.getUpdate() as TKitchen;
+	try {
+		const account = await checkIfExist(Account, { username: data.restaurantID });
+		if (!account) return next(new Error(`Failed to Create Kitchen, The associated account with username '${data.restaurantID}'does not exist.`));
+
+		if (!isBcryptHash(data.password))
+			this.setUpdate({ ...data, password: hashPassword(data.password) });
+
+		next();
+	} catch (error) {
+		next(error);
+	}
+});
+
+export const Kitchen = mongoose.models?.kitchen ?? mongoose.model<TKitchen>('kitchen', KitchenSchema);
+export type TKitchen = Document & {
+	username: string;
+	password: string;
+	restaurantID: string;
+}

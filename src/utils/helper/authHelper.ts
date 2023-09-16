@@ -1,13 +1,22 @@
+import bcrypt from 'bcrypt';
 import { AuthOptions } from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: AuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 	providers: [
-		GithubProvider({
-			clientId: String(process.env.GITHUB_CLIENT_ID),
-			clientSecret: String(process.env.GITHUB_CLIENT_SECRET),
-			authorization: { params: { scope: 'repo' } },
+		CredentialsProvider({
+			name: 'Credentials',
+			credentials: {
+				email: { label: 'Username', type: 'text', placeholder: 'Enter your email' },
+				password: { label: 'Password', type: 'password', placeholder: 'Enter your password' },
+			},
+			async authorize (credentials, req) {
+				const user = {
+
+				};
+				return user;
+			},
 		}),
 	],
 	callbacks: {

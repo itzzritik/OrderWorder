@@ -2,7 +2,7 @@
     "recommendations": [
         "dbaeumer.vscode-eslint",
         "seatonjiang.gitmoji-vscode",
-        "ban.spellright",
+        "streetsidesoftware.code-spell-checker",
         "donjayamanne.githistory",
         "eamodio.gitlens",
         "jakob101.RelativePath",
