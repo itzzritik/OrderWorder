@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 import { hashPassword, isBcryptHash } from '../manager';
 
@@ -6,14 +7,19 @@ const AccountSchema = new mongoose.Schema<TAccount>({
 	username: { type: String, trim: true, lowercase: true, unique: true, required: true, sparse: true, index: { unique: true } },
 	email: { type: String, trim: true, lowercase: true, unique: true, required: true, sparse: true, index: { unique: true } },
 	password: { type: String, required: true },
-	active: { type: Boolean, default: true },
+	accountActive: { type: Boolean, default: true },
+	subscriptionActive: { type: Boolean, default: true },
+	profile: { type: ObjectId, ref: 'profiles', unique: true },
+	kitchens: [{ type: ObjectId, ref: 'kitchens', unique: true }],
+	tables: [{ type: ObjectId, ref: 'tables', unique: true }],
+	menus: [{ type: ObjectId, ref: 'menus', unique: true }],
 },
 { timestamps: true });
 
-AccountSchema.pre(['findOneAndUpdate'], async function (next) {
+AccountSchema.pre('findOneAndUpdate', async function (next) {
 	const data = this.getUpdate() as TAccount;
 	try {
-		if (!isBcryptHash(data.password))
+		if (data.password && !isBcryptHash(data.password))
 			this.setUpdate({ ...data, password: hashPassword(data.password) });
 
 		next();
@@ -22,35 +28,15 @@ AccountSchema.pre(['findOneAndUpdate'], async function (next) {
 	}
 });
 
-export const Account = mongoose.models?.account ?? mongoose.model<TAccount>('account', AccountSchema);
-export type TAccount = Document & {
+export const Accounts = mongoose.models?.accounts ?? mongoose.model<TAccount>('accounts', AccountSchema);
+export type TAccount = HydratedDocument<{
 	username: string;
 	email: string;
 	password: string;
-	active: boolean;
-}
-
-// const SESSION = mongoose.model('sessions', (() => {
-// 	return new mongoose.Schema({
-// 		'_id': String,
-// 		'expires': Date,
-// 		'session': Object,
-// 	},
-// 	{ '_id': false });
-// })());
-
-// const filter = [{
-// 	$match: {
-// 		$and: [{ operationType: 'delete' }],
-// 	},
-// }];
-// const options = { fullDocument: 'updateLookup' };
-
-// Account.watch(filter, options).on('change', async ({ documentKey: { _id: user } }) => {
-// 	const sessions = await SESSION.find({ 'session.passport.user': user.toString() });
-// 	await SESSION.deleteMany({ 'session.passport.user': user.toString() });
-
-// 	// sessions.forEach(({ session: { appID } }) => {
-// 	// 	endSession({}, appID);
-// 	// });
-// });
+	accountActive: boolean;
+	subscriptionActive: boolean;
+	profile: ObjectId;
+	kitchens: Array<ObjectId>;
+	tables: Array<ObjectId>;
+	menus: Array<ObjectId>;
+}>

@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 import { checkIfExist } from '../manager';
 
-import { Account } from './account';
+import { Accounts } from './account';
 
 const ProfileSchema = new mongoose.Schema<TProfile>({
 	name: { type: String, trim: true, required: true },
@@ -14,16 +14,15 @@ const ProfileSchema = new mongoose.Schema<TProfile>({
 		green: { type: Number, trim: true, min: 0, max: 255 },
 		blue: { type: Number, trim: true, min: 0, max: 255 },
 	},
-	subscriptionActive: { type: Boolean, default: true },
 	gstInclusive: { type: Boolean, default: false },
 	categories: [{ type: String, trim: true, lowercase: true }],
 },
 { timestamps: true });
 
-ProfileSchema.pre(['findOneAndUpdate'], async function (next) {
+ProfileSchema.pre('findOneAndUpdate', async function (next) {
 	const data = this.getUpdate() as TProfile;
 	try {
-		const account = await checkIfExist(Account, { username: data.restaurantID });
+		const account = await checkIfExist(Accounts, { username: data.restaurantID });
 		if (!account) return next(new Error(`Failed to Create Profile, The associated account with username '${data.restaurantID}'does not exist.`));
 
 		this.setUpdate({ ...data, categories: Array.from(new Set(data.categories)) });
@@ -33,9 +32,12 @@ ProfileSchema.pre(['findOneAndUpdate'], async function (next) {
 		next(error);
 	}
 });
+ProfileSchema.post('findOneAndUpdate', async function (doc) {
+	await Accounts.findOneAndUpdate({ username: doc.restaurantID }, { profile: doc._id }, { new: true });
+});
 
-export const Profile = mongoose.models?.profile ?? mongoose.model<TProfile>('profile', ProfileSchema);
-export type TProfile = Document & {
+export const Profiles = mongoose.models?.profiles ?? mongoose.model<TProfile>('profiles', ProfileSchema);
+export type TProfile = HydratedDocument<{
 	name: string;
 	restaurantID: string;
 	description: string;
@@ -45,7 +47,6 @@ export type TProfile = Document & {
 		green: number;
 		blue: number;
 	};
-	subscriptionActive: boolean;
 	gstInclusive: boolean;
 	categories: Array<string>;
-}
+}>

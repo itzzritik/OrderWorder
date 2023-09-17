@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 import { checkIfExist } from '../manager';
 
-import { Account } from './account';
+import { Accounts } from './account';
 
 const FoodType = ['spicy', 'extra-spicy', 'sweet'] as const;
 const Veg = ['veg', 'non-veg', 'contains-egg'] as const;
@@ -19,10 +19,10 @@ const MenuSchema = new mongoose.Schema<TMenu>({
 },
 { timestamps: true });
 
-MenuSchema.pre(['findOneAndUpdate'], async function (next) {
+MenuSchema.pre('findOneAndUpdate', async function (next) {
 	const data = this.getUpdate() as TMenu;
 	try {
-		const account = await checkIfExist(Account, { username: data.restaurantID });
+		const account = await checkIfExist(Accounts, { username: data.restaurantID });
 		if (!account) return next(new Error('Failed to Create Table, The associated account does not exist.'));
 
 		this.setUpdate({ ...data, categories: Array.from(new Set(data.categories)) });
@@ -32,8 +32,11 @@ MenuSchema.pre(['findOneAndUpdate'], async function (next) {
 		next(error);
 	}
 });
+MenuSchema.post('findOneAndUpdate', async function (doc) {
+	await Accounts.findOneAndUpdate({ username: doc.restaurantID }, { $push: { menus: doc._id } }, { new: true });
+});
 
-export const Menu = mongoose.models?.menu ?? mongoose.model<TMenu>('menu', MenuSchema);
+export const Menus = mongoose.models?.menus ?? mongoose.model<TMenu>('menus', MenuSchema);
 export type TMenu = Document & {
 	name: string;
 	restaurantID: string;

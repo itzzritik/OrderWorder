@@ -13,15 +13,9 @@ declare global {
 		message: string;
 	}
 
-	interface Global {
-		mongoose: {
-			promise: ReturnType<typeof connect> | null;
-			conn: typeof _mongoose | null;
-		}
-	}
-
-	let mongoose: {
-		promise: ReturnType<typeof connect> | null;
+	// eslint-disable-next-line no-var
+	var mongoose: {
+		promise: ReturnType<void | typeof connect>;
 		conn: typeof _mongoose | null;
 	};
 }

@@ -1,77 +1,51 @@
 import { createIfNotExist } from '#utils/database/manager';
-import { Account, TAccount } from '#utils/database/models/account';
-import { Kitchen, TKitchen } from '#utils/database/models/kitchen';
-import { Menu } from '#utils/database/models/menu';
-import { Profile, TProfile } from '#utils/database/models/profile';
-import { TTable, Table } from '#utils/database/models/table';
+import { Accounts, TAccount } from '#utils/database/models/account';
+import { Kitchens, TKitchen } from '#utils/database/models/kitchen';
+import { Menus } from '#utils/database/models/menu';
+import { Profiles, TProfile } from '#utils/database/models/profile';
+import { Tables, TTable } from '#utils/database/models/table';
 import { CatchNextResponse } from '#utils/helper/common';
 
 export async function GET () {
 	try {
 		const response = {
-			EmpireAccount: await createIfNotExist<TAccount>(Account, { email: 'empire@gmail.com' }, {
+			totalProcessTime: performance.now(),
+			EmpireAccount: await createIfNotExist<TAccount>(Accounts, { email: 'empire@gmail.com' }, {
 				email: 'empire@gmail.com',
 				username: 'empire',
 				password: '123456',
 				actives: true,
 			}),
-			EmpireProfile: await createIfNotExist<TProfile>(Profile, { restaurantID: 'empire' }, {
-				name: 'Empire Restaurant',
-				restaurantID: 'empire',
-				description: 'Casual Dining - Kerala, Biryani, North Indian, South Indian, Chinese, Arabian, Seafood',
-				address: 'Indiranagar, Benagaluru',
-				themeColor: { red: 127, green: 108, blue: 218 },
-				subscriptionActive: true,
-				gstInclusive: false,
-				categories: [
-					'Empire Box',
-					'Biryani And Rice',
-					'Main Course Non-Veg',
-					'Main Course Veg',
-					'Egg Item',
-					'Fried Rice and Noodles',
-					'Breads',
-					'Beverages',
-					'Beverages',
-					'Desserts',
-					'Desserts',
-					'Desserts',
-				],
-			}),
-
-			EmpireTable1: await createIfNotExist<TTable>(Table, { username: 'empireTable1' }, {
+			EmpireProfile: await createIfNotExist<TProfile>(Profiles, { restaurantID: 'empire' }, empireProfile),
+			EmpireTable1: await createIfNotExist<TTable>(Tables, { username: 'empireTable1' }, {
 				name: 'Table 1',
 				username: 'empireTable1',
 				restaurantID: 'empire',
 			}),
-			EmpireTable2: await createIfNotExist<TTable>(Table, { username: 'empireTable2' }, {
+			EmpireTable2: await createIfNotExist<TTable>(Tables, { username: 'empireTable2' }, {
 				name: 'Table 2',
 				username: 'empireTable2',
 				restaurantID: 'empire',
 			}),
-			EmpireTable3: await createIfNotExist<TTable>(Table, { username: 'empireTable3' }, {
+			EmpireTable3: await createIfNotExist<TTable>(Tables, { username: 'empireTable3' }, {
 				name: 'Table 3',
 				username: 'empireTable3',
 				restaurantID: 'empire',
 			}),
-			EmpireKitchen1: await createIfNotExist<TKitchen>(Kitchen, { username: 'empireKitchen1' }, {
+			EmpireKitchen1: await createIfNotExist<TKitchen>(Kitchens, { username: 'empireKitchen1' }, {
 				username: 'empireKitchen1',
 				password: '12345678',
 				restaurantID: 'empire',
 			}),
-			EmpireMenu: {},
+			EmpireMenu: await (async () => {
+				const menuData = [];
+				for (const menu of empireMenu)
+					menuData.push(await createIfNotExist(Menus, { name: menu.name }, menu));
+				return menuData;
+			})(),
 		};
 
-		const bulkWriteOps = empireMenu.map((data) => ({
-			updateOne: {
-				filter: { name: data.name },
-				update: { $set: data },
-				upsert: true,
-			},
-		}));
-		await Menu.bulkWrite(bulkWriteOps)
-			.then((result) => { response['EmpireMenu'] = result; })
-			.catch((error) => { throw error; });
+		response.totalProcessTime = (performance.now() - response.totalProcessTime) / 1000;
 
 		return new Response(JSON.stringify(response, null, 4));
 	}
@@ -80,7 +54,29 @@ export async function GET () {
 		return CatchNextResponse(err);
 	}
 }
-
+const empireProfile = {
+	name: 'Empire Restaurant',
+	restaurantID: 'empire',
+	description: 'Casual Dining - Kerala, Biryani, North Indian, South Indian, Chinese, Arabian, Seafood',
+	address: 'Indiranagar, Benagaluru',
+	themeColor: { red: 127, green: 108, blue: 218 },
+	subscriptionActive: true,
+	gstInclusive: false,
+	categories: [
+		'Empire Box',
+		'Biryani And Rice',
+		'Main Course Non-Veg',
+		'Main Course Veg',
+		'Egg Item',
+		'Fried Rice and Noodles',
+		'Breads',
+		'Beverages',
+		'Beverages',
+		'Desserts',
+		'Desserts',
+		'Desserts',
+	],
+};
 const empireMenu = [
 	{
 		name: 'Ghee Rice With Boneless Butter Chicken & Manchurian Dry',
@@ -341,6 +337,16 @@ const empireMenu = [
 		foodType: 'Sweet',
 		veg: 'veg',
 		image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNagtidO6K8puIclUH4pDKKQmnLMTu1uQOgeV-gOGyfilMahQ&s',
+	},
+	{
+		name: 'Strawberry Ice Cream',
+		restaurantID: 'empire',
+		description: null,
+		categories: ['Desserts'],
+		price: 30,
+		foodType: 'Sweet',
+		veg: 'veg',
+		image: 'https://images.media-allrecipes.com/userphotos/838110.jpg',
 	},
 	{
 		name: 'Strawberry Ice Cream',
