@@ -16,6 +16,7 @@ const ProfileSchema = new mongoose.Schema<TProfile>({
 	},
 	gstInclusive: { type: Boolean, default: false },
 	categories: [{ type: String, trim: true, lowercase: true }],
+	avatar: { type: String, trim: true },
 },
 { timestamps: true });
 
@@ -42,6 +43,7 @@ export type TProfile = HydratedDocument<{
 	restaurantID: string;
 	description: string;
 	address: string;
+	avatar: string;
 	themeColor: {
 		red: number;
 		green: number;

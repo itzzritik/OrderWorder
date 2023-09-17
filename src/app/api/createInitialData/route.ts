@@ -13,7 +13,7 @@ export async function GET () {
 			EmpireAccount: await createIfNotExist<TAccount>(Accounts, { email: 'empire@gmail.com' }, {
 				email: 'empire@gmail.com',
 				username: 'empire',
-				password: '123456',
+				password: 'empire@123',
 				actives: true,
 			}),
 			EmpireProfile: await createIfNotExist<TProfile>(Profiles, { restaurantID: 'empire' }, empireProfile),
@@ -34,7 +34,7 @@ export async function GET () {
 			}),
 			EmpireKitchen1: await createIfNotExist<TKitchen>(Kitchens, { username: 'empireKitchen1' }, {
 				username: 'empireKitchen1',
-				password: '12345678',
+				password: '123456',
 				restaurantID: 'empire',
 			}),
 			EmpireMenu: await (async () => {
@@ -59,6 +59,7 @@ const empireProfile = {
 	restaurantID: 'empire',
 	description: 'Casual Dining - Kerala, Biryani, North Indian, South Indian, Chinese, Arabian, Seafood',
 	address: 'Indiranagar, Benagaluru',
+	avatar: 'https://restaurant.eatapp.co/hubfs/Modern-Restaurant-Logo.jpg',
 	themeColor: { red: 127, green: 108, blue: 218 },
 	subscriptionActive: true,
 	gstInclusive: false,

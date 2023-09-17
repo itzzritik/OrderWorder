@@ -15,10 +15,14 @@ KitchenSchema.pre('findOneAndUpdate', async function (next) {
 	const data = this.getUpdate() as TKitchen;
 	try {
 		const account = await checkIfExist(Accounts, { username: data.restaurantID });
-		if (!account) return next(new Error(`Failed to Create Kitchen, The associated account with username '${data.restaurantID}'does not exist.`));
+		if (!account) throw `Failed to Create Kitchen, The associated account with username '${data.restaurantID}'does not exist.`;
 
-		if (data.password && !isBcryptHash(data.password))
+		if (data.password) {
+			if (isBcryptHash(data.password)) throw 'Hashed password cannot be hashed again';
+			if (data.password.length < 6) throw 'Password must be at least 6 characters long';
+
 			this.setUpdate({ ...data, password: hashPassword(data.password) });
+		}
 
 		next();
 	} catch (error) {

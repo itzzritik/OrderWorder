@@ -7,8 +7,7 @@ const SALT_ROUNDS = 16;
 
 export const checkIfExist = async <T>(model: Model<T>, query: FilterQuery<T>) => {
 	await connectDB();
-	const existingAccount = await model.findOne(query);
-	return !!existingAccount;
+	return !!(await model.findOne(query));
 };
 
 export const createIfNotExist = async <T>(model: Model<T>, query: FilterQuery<T>, update: UpdateQuery<T>) => {
@@ -23,4 +22,9 @@ export const isBcryptHash = (text: string) => {
 
 export const hashPassword = (password: string) => {
 	return bcrypt.hashSync(password, SALT_ROUNDS);
+};
+
+export const verifyPassword = (password?: string, hash?: string) => {
+	if (!password || !hash) return false;
+	return bcrypt.compareSync(password, hash);
 };
