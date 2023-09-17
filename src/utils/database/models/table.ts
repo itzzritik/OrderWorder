@@ -26,7 +26,7 @@ TableSchema.post('findOneAndUpdate', async function (doc) {
 });
 
 export const Tables = mongoose.models?.tables ?? mongoose.model<TTable>('tables', TableSchema);
-export type TTable = Document & {
+export type TTable = {
 	name: string;
 	username: string;
 	restaurantID: string;

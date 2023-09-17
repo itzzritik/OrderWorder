@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
-import { checkIfExist, hashPassword, isBcryptHash } from '../manager';
+import { hashPassword } from '#utils/helper/passwordHelper';
+
+import { checkIfExist } from '../manager';
 
 import { Accounts } from './account';
 
@@ -17,12 +19,8 @@ KitchenSchema.pre('findOneAndUpdate', async function (next) {
 		const account = await checkIfExist(Accounts, { username: data.restaurantID });
 		if (!account) throw `Failed to Create Kitchen, The associated account with username '${data.restaurantID}'does not exist.`;
 
-		if (data.password) {
-			if (isBcryptHash(data.password)) throw 'Hashed password cannot be hashed again';
-			if (data.password.length < 6) throw 'Password must be at least 6 characters long';
-
+		if (data.password)
 			this.setUpdate({ ...data, password: hashPassword(data.password) });
-		}
 
 		next();
 	} catch (error) {
@@ -34,7 +32,7 @@ KitchenSchema.post('findOneAndUpdate', async function (doc) {
 });
 
 export const Kitchens = mongoose.models?.kitchens ?? mongoose.model<TKitchen>('kitchens', KitchenSchema);
-export type TKitchen = Document & {
+export type TKitchen = {
 	username: string;
 	password: string;
 	restaurantID: string;

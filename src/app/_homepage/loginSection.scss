@@ -29,7 +29,7 @@
 		align-items: center;
 		perspective: 1000px;
 		transform-style: preserve-3d;
-		transition: all var(--animDurDefault) var(--cubicBezierPrimary);
+		transition: all var(--animDurSlow) var(--cubicBezierPrimary);
 
 		&.profile {
 			transform: rotateY(180deg);
@@ -48,10 +48,10 @@
 		.loginCard {
 			position: absolute;
 			width: 500px;
-			height: 280px;
+			height: auto;
 			border-radius: 18px;
 			box-shadow: 0 20px 40px rgb(0 0 0 / 20%), 0 20px 40px hsl(0deg 0 100% / 15%);
-			padding: 20px 35px 30px;
+			padding: 28px;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -59,64 +59,96 @@
 			overflow: hidden;
 			background-color: var(--colorBackgroundPrimary);
 			backface-visibility: hidden;
-			transition: all 0.2s ease-out;
+			transition: all var(--animDurSlow) var(--cubicBezierPrimary);
 
-			&.front {
-				> h3, > h4 {
-					width: 100%;
-					font-size: 42px;
-					font-weight: 300;
-					text-align: left;
-					user-select: none;
-					margin: 0;
-				}
-	
-				> h4 {
-					font-size: 16px;
-					margin-top: 5px;
-				}
-	
-				.inputContainer {
-					--inputHeight: 50px;
+			.logout {
+				position: absolute;
+				right: 0;
+			}
+
+			.inputContainer {
+				--inputHeight: 50px;
+
+				position: relative;
+				width: 100%;
+				margin: 30px 0;
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+
+				.email, .username, .password {
+					--iconSize: var(--inputHeight);
 	
 					position: relative;
 					width: 100%;
-					height: var(--inputHeight);
-					margin: 30px 0;
-	
-					.email {
-						--iconSize: var(--inputHeight);
-		
-						position: absolute;
-						top: 0; left: 0;
-						width: 100%;
-	
-						.label {
-							margin-left: 12px !important;
-						}
-					}
-	
-					.password {
-						--iconSize: var(--inputHeight);
-		
-						position: absolute;
-						top: 0; left: 0;
-						width: 100%;
-						opacity: 0;
-						transform: translateX(120%);
+
+					.label {
+						margin-left: 12px !important;
 					}
 				}
-	
-				.loginAction {
+
+				.username {
+					height: 0;
+					opacity: 0;
+					transition: all var(--animDurFast) var(--cubicBezierPrimary);
+
+					&.show {
+						height: 40px;
+						opacity: 1;
+					}
+				}
+			}
+
+			.loginAction {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding-top: 8px;
+				gap: 8px;
+
+				.kitchenMode {
+					&:not(.active) {
+						background: transparent;
+
+						span {
+							font-variation-settings: 'wdth' 75, 'wght' 600;
+						}
+					}
+				}
+
+				.next {
+					margin-left: auto;
+				}
+			}
+
+			.loggedInAction {
+				display: flex;
+				gap: 16px;
+				margin-top: 32px;
+			}
+
+			&.front {
+				.header {
+					position: relative;
 					width: 100%;
 					display: flex;
-					justify-content: flex-end;
+					flex-direction: column;
 					align-items: center;
-	
-					.next {
-						--buttonWidth: 110px;
-	
-						margin-top: 10px;
+					justify-content: center;
+
+					> h3, > h4 {
+						width: 100%;
+						font-size: 42px;
+						font-weight: 300;
+						text-align: left;
+						user-select: none;
+						margin: 0;
+					}
+		
+					> h4 {
+						font-size: 16px;
+						margin-top: 5px;
 					}
 				}
 			}
@@ -126,8 +158,10 @@
 				transform: rotateY(180deg);
 
 				.header {
+					position: relative;
 					width: 100%;
 					display: flex;
+					align-items: center;
 					gap: 16px;
 
 					.details {
@@ -148,6 +182,11 @@
 							font-variation-settings: 'wdth' 75, 'wght' 400;
 						}
 					}
+				}
+
+				.body {
+					width: 100%;
+					flex: 1;
 				}
 			}
 		}

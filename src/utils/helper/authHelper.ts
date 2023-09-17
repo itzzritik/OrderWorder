@@ -1,10 +1,13 @@
+import pick from 'lodash/pick';
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { verifyPassword } from '#utils/database/manager';
-import { Accounts, TAccount } from '#utils/database/models/account';
+import connectDB from '#utils/database/connect';
+import { Accounts } from '#utils/database/models/account';
+import { Profiles } from '#utils/database/models/profile';
 
 import { isEmailValid } from './common';
+import { verifyPassword } from './passwordHelper';
 
 export const authOptions: AuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
@@ -16,8 +19,10 @@ export const authOptions: AuthOptions = {
 				password: { label: 'Password', type: 'password', placeholder: 'Enter your password' },
 			},
 			async authorize (cred) {
+				await connectDB();
 				const username = cred?.username;
-				const user = await Accounts.findOne<TAccount>(isEmailValid(username) ? { email: username } : { username });
+				const user = await Accounts.findOne(isEmailValid(username) ? { email: username } : { username })
+					.populate({ path: 'profile', model: Profiles });
 
 				if (!user) throw new Error('Account not found.');
 				if (!verifyPassword(cred?.password, user?.password)) throw new Error('Invalid credentials');
@@ -32,43 +37,23 @@ export const authOptions: AuthOptions = {
 	session: {
 		strategy: 'jwt',
 	},
-
-	// callbacks: {
-	// 	async signIn () {
-	// 		return true;
-	// 	},
-	// 	async session ({ session, token }) {
-	// 		session = {
-	// 			...session,
-	// 			user: {
-	// 				...session.user,
-	// 				...token.user,
-	// 			},
-	// 			...token.userKey,
-	// 		};
-	// 		return session;
-	// 	},
-	// 	async jwt ({ account, profile, token }) {
-	// 		if (profile) {
-	// 			token.user = {
-	// 				email: profile?.email,
-	// 				bio: profile?.bio,
-	// 				blog: profile?.blog,
-	// 				followers: profile?.followers,
-	// 				following: profile?.following,
-	// 				public_repos: profile?.public_repos,
-	// 				public_gists: profile?.public_gists,
-	// 				social: {
-	// 					github: profile?.login,
-	// 					twitter: profile?.twitter_username,
-	// 				},
-	// 			};
-	// 			token.userKey = {
-	// 				token_type: account?.token_type,
-	// 				access_token: account?.access_token,
-	// 			};
-	// 		}
-	// 		return token;
-	// 	},
-	// },
+	callbacks: {
+		async session ({ session, token }) {
+			session = {
+				...session,
+				...token?.user,
+			};
+			delete session.user;
+			return session;
+		},
+		async jwt ({ token, user }) {
+			if (user) {
+				token.user = {
+					...pick(user._doc, ['email', 'accountActive', 'subscriptionActive:', 'username', 'verified']),
+					profile: pick(user._doc.profile, ['name', 'themeColor', 'address', 'avatar', 'description', 'gstInclusive', 'categories']),
+				};
+			}
+			return token;
+		},
+	},
 };

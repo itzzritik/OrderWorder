@@ -1,7 +1,6 @@
-import { ObjectId } from 'mongodb';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-import { hashPassword, isBcryptHash } from '../manager';
+import { hashPassword } from '#utils/helper/passwordHelper';
 
 const AccountSchema = new mongoose.Schema<TAccount>({
 	username: { type: String, trim: true, lowercase: true, unique: true, required: true, sparse: true, index: { unique: true } },
@@ -10,22 +9,18 @@ const AccountSchema = new mongoose.Schema<TAccount>({
 	verified: { type: Boolean, default: false },
 	accountActive: { type: Boolean, default: true },
 	subscriptionActive: { type: Boolean, default: true },
-	profile: { type: ObjectId, ref: 'profiles', unique: true },
-	kitchens: [{ type: ObjectId, ref: 'kitchens', unique: true }],
-	tables: [{ type: ObjectId, ref: 'tables', unique: true }],
-	menus: [{ type: ObjectId, ref: 'menus', unique: true }],
+	profile: { type: mongoose.Types.ObjectId, ref: 'profiles', unique: true },
+	kitchens: [{ type: mongoose.Types.ObjectId, ref: 'kitchens', unique: true }],
+	tables: [{ type: mongoose.Types.ObjectId, ref: 'tables', unique: true }],
+	menus: [{ type: mongoose.Types.ObjectId, ref: 'menus', unique: true }],
 },
 { timestamps: true });
 
 AccountSchema.pre('findOneAndUpdate', async function (next) {
 	const data = this.getUpdate() as TAccount;
 	try {
-		if (data.password) {
-			if (isBcryptHash(data.password)) throw 'Hashed password cannot be hashed again';
-			if (data.password.length < 6) throw 'Password must be at least 6 characters long';
-
+		if (data.password)
 			this.setUpdate({ ...data, password: hashPassword(data.password) });
-		}
 
 		next();
 	} catch (error) {
@@ -41,8 +36,8 @@ export type TAccount = HydratedDocument<{
 	verified: boolean;
 	accountActive: boolean;
 	subscriptionActive: boolean;
-	profile: ObjectId;
-	kitchens: Array<ObjectId>;
-	tables: Array<ObjectId>;
-	menus: Array<ObjectId>;
+	profile: mongoose.Types.ObjectId;
+	kitchens: Array<mongoose.Types.ObjectId>;
+	tables: Array<mongoose.Types.ObjectId>;
+	menus: Array<mongoose.Types.ObjectId>;
 }>

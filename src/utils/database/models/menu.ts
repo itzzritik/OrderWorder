@@ -37,7 +37,7 @@ MenuSchema.post('findOneAndUpdate', async function (doc) {
 });
 
 export const Menus = mongoose.models?.menus ?? mongoose.model<TMenu>('menus', MenuSchema);
-export type TMenu = Document & {
+export type TMenu = {
 	name: string;
 	restaurantID: string;
 	description: string;
