@@ -29,7 +29,6 @@ const LoginSection = () => {
 	const [passwordShake, setPasswordShake] = useState(false);
 
 	const router = useRouter();
-
 	const onNext = async () => {
 		setNextLoading(true);
 		if (!profile) {
@@ -49,6 +48,7 @@ const LoginSection = () => {
 			const res = await signIn('credentials', {
 				redirect: false,
 				username: email,
+				...(showKitchen && { kitchen: kitchenUsername }),
 				password,
 				callbackUrl: `${window.location.origin}`,
 			});
@@ -132,18 +132,17 @@ const LoginSection = () => {
 								</div>
 							</div>
 							: <div className='loggedInAction'>
-								<Button
-									className='dashboard'
-									label='dashboard'
-									icon='e323'
-									onClick={() => router.push('/dashboard')}
-								/>
-								<Button
-									className='kitchen'
-									label='kitchen'
-									icon='f86b'
-									onClick={() => router.push('/kitchen')}
-								/>
+								{
+									session.data?.role === 'admin' &&
+									<Button
+										className='dashboard'
+										label='open dashboard'
+										icon='e323'
+										size='mini'
+										onClick={() => router.push('/dashboard')}
+									/>
+								}
+								<Button className='kitchen' label='open kitchen' icon='f86b' size='mini' onClick={() => router.push('/kitchen')} />
 							</div>
 					}
 

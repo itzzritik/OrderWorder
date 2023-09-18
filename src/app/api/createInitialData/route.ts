@@ -17,6 +17,11 @@ export async function GET () {
 				actives: true,
 			}),
 			EmpireProfile: await createIfNotExist<TProfile>(Profiles, { restaurantID: 'empire' }, empireProfile),
+			EmpireKitchen1: await createIfNotExist<TKitchen>(Kitchens, { username: 'empireKitchen1' }, {
+				username: 'empireKitchen1',
+				password: '123456',
+				restaurantID: 'empire',
+			}),
 			EmpireTable1: await createIfNotExist<TTable>(Tables, { username: 'empireTable1' }, {
 				name: 'Table 1',
 				username: 'empireTable1',
@@ -30,11 +35,6 @@ export async function GET () {
 			EmpireTable3: await createIfNotExist<TTable>(Tables, { username: 'empireTable3' }, {
 				name: 'Table 3',
 				username: 'empireTable3',
-				restaurantID: 'empire',
-			}),
-			EmpireKitchen1: await createIfNotExist<TKitchen>(Kitchens, { username: 'empireKitchen1' }, {
-				username: 'empireKitchen1',
-				password: '123456',
 				restaurantID: 'empire',
 			}),
 			EmpireMenu: await (async () => {

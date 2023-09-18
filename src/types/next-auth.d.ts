@@ -3,10 +3,14 @@ import 'next-auth';
 import { TAccount } from '#utils/database/models/account';
 import { TProfile } from '#utils/database/models/profile';
 
-type AuthUser = Partial<Omit<TAccount, 'profile'> & { profile: Partial<TProfile> }>
+type AuthUser = Partial<Omit<TAccount, 'profile'> & {
+	role: 'admin' | 'kitchen' | 'customer'
+	profile: Partial<TProfile>
+}>
 
 declare module 'next-auth' {
 	interface User {
+		role: 'admin' | 'kitchen' | 'customer'
 		_doc: AuthUser
 	}
 

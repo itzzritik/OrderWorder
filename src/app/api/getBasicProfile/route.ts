@@ -11,7 +11,6 @@ export async function GET (req: Request) {
 		const email = new URL(req.url).searchParams.get('email');
 		await connectDB();
 		const account = await Accounts.findOne<TAccount>({ email }).populate({ path: 'profile', model: Profiles });
-
 		if (!account) throw { status: 404, message: 'Account not found' };
 
 		return NextResponse.json(pick(account?.profile, ['name', 'address', 'themeColor', 'avatar']));
