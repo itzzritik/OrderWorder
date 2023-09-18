@@ -68,7 +68,6 @@ const LoginSection = () => {
 		signOut();
 	};
 
-	console.log(session);
 	return (
 		<section className='loginSection' id='homepage-login'>
 			<div className='loginAnim'>
