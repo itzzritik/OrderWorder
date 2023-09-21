@@ -7,6 +7,7 @@
 html,
 body {
 	width: 100vw;
+	height: 100%;
 	padding: 0;
 	margin: 0;
 	background: var(--colorBackgroundPrimary);
@@ -15,6 +16,11 @@ body {
 	* {
 		font-family: var(--montserrat);
 	}
+
+	--colorBackdropPrimary: rgb(0 0 0 / 70%);
+	--boxShadowGlow: 0 0 6px rgb(var(--colorBrandAccentRgb) 0.8);
+	--boxShadowGlowHover: 0 0 10px rgb(var(--colorBrandAccentRgb) 0.8);
+	--boxShadowGlowActive: 0 0 0 transparent;
 }
 
 @keyframes floatUp {

@@ -9,10 +9,10 @@ const AccountSchema = new mongoose.Schema<TAccount>({
 	verified: { type: Boolean, default: false },
 	accountActive: { type: Boolean, default: true },
 	subscriptionActive: { type: Boolean, default: true },
-	profile: { type: mongoose.Types.ObjectId, ref: 'profiles', unique: true },
-	kitchens: [{ type: mongoose.Types.ObjectId, ref: 'kitchens', unique: true }],
-	tables: [{ type: mongoose.Types.ObjectId, ref: 'tables', unique: true }],
-	menus: [{ type: mongoose.Types.ObjectId, ref: 'menus', unique: true }],
+	profile: { type: mongoose.Schema.Types.ObjectId, ref: 'profiles', unique: true },
+	kitchens: [{ type: mongoose.Schema.Types.ObjectId, ref: 'kitchens', unique: true }],
+	tables: [{ type: mongoose.Schema.Types.ObjectId, ref: 'tables', unique: true }],
+	menus: [{ type: mongoose.Schema.Types.ObjectId, ref: 'menus', unique: true }],
 },
 { timestamps: true });
 
@@ -36,8 +36,8 @@ export type TAccount = HydratedDocument<{
 	verified: boolean;
 	accountActive: boolean;
 	subscriptionActive: boolean;
-	profile: mongoose.Types.ObjectId;
-	kitchens: Array<mongoose.Types.ObjectId>;
-	tables: Array<mongoose.Types.ObjectId>;
-	menus: Array<mongoose.Types.ObjectId>;
+	profile: mongoose.Schema.Types.ObjectId;
+	kitchens: Array<mongoose.Schema.Types.ObjectId>;
+	tables: Array<mongoose.Schema.Types.ObjectId>;
+	menus: Array<mongoose.Schema.Types.ObjectId>;
 }>

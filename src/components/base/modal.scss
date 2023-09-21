@@ -1,0 +1,89 @@
+.modal {
+	--modalDuration: 0.2s;
+
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%; 
+	height: 100%;
+	display: block;
+	visibility: hidden;
+	align-items: center;
+	z-index: 5;
+
+	&.open {
+		visibility: visible;
+
+		.backdrop {
+			background-color: var(--colorBackdropPrimary);
+		}
+
+		.modalPane {
+			position: absolute;
+			top: 50%; right: 50%;
+			transform: scale(1) translate(50%, -50%);
+			opacity: 1;
+			transition: all var(--modalDuration) ease-out, right var(--modalDuration) ease-in;
+		}
+	}
+
+	.backdrop {
+		position: absolute;
+		top: 0; left: 0;
+		width: 100%; 
+		height: 100%;
+		background-color: transparent;
+		transition: all 0.3s ease-out;
+	}
+
+	.modalPane {
+		position: absolute;
+		top: 63px; right: 51px;
+		opacity: 0;
+		display: flex;
+		width: 500px;
+		transform: scale(0) translate(50%, -50%);
+		transform-origin: top right;
+		border-radius: 25px;
+		overflow: hidden;
+		box-shadow: 0 0 100px rgb(0 0 0 / 30%);
+		background-color: var(--colorBackgroundPrimary);
+		transition: all var(--modalDuration) ease-out, top var(--modalDuration) ease-in;
+
+		.closeModal {
+			position: absolute;
+			top: 0; right: 0;
+			width: 40px;
+			height: 40px;
+			cursor: pointer;
+		}
+	}
+}
+
+@media (width <= 650px) {
+	.modal {
+		&.open {
+			visibility: visible;
+
+			.modalPane {
+				width: 100%;
+				top: unset; bottom: 0; right: 0;
+				transform: translateY(0);
+				transition: all var(--modalDuration) ease-out;
+			}
+		}
+
+		.modalPane {
+			top: unset; bottom: 0; right: 0;
+			width: 100%;
+			opacity: 1;
+			transform: translateY(100%);
+			border-radius: 35px 35px 0 0;
+			transition: all var(--modalDuration) ease-out;
+
+			.closeModal {
+				width: 60px;
+				height: 60px;
+			}
+		}
+	}
+}
