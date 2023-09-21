@@ -32,7 +32,7 @@ const LoginSection = () => {
 	const onNext = async () => {
 		setNextLoading(true);
 		if (!profile) {
-			const res = await fetch(`/api/getBasicProfile?email=${email}`);
+			const res = await fetch(`/api/baseProfile?email=${email}`);
 			const profile = await res.json();
 
 			if (profile.status === 404) {

@@ -1,0 +1,49 @@
+.search {
+	position: relative;
+	width: var(--optionButtonSize);
+	height: var(--optionButtonSize);
+	margin-right: 5px;
+	border-radius: 9999px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	transition: all 0.1s ease-out;
+
+	@media (hover: hover) {
+		&:hover {
+			div {
+				transform: scale(0.9);
+				transition: transform 0.11s cubic-bezier(0.175, 0.885, 0.320, 1.275);
+			}
+
+			span {
+				background-color: var(--colorBackgroundPrimary);
+				opacity: 1;
+			}
+		}
+	}
+
+	&:active {
+		div {
+			box-shadow: var(--boxShadowGlowActive);
+		}
+	}
+
+	.searchIcon  {
+		position: absolute;
+		margin: 0 16px;
+		pointer-events: none;
+	}
+
+	input {
+		position: absolute;
+		top: 0; left: 0;
+		width: 0;
+		height: 0;
+		padding-left: var(--optionButtonSize);
+		padding-right: var(--optionButtonSize);
+		border: none;
+		outline: none;
+		background-color: transparent;
+	}
+}

@@ -15,7 +15,7 @@
 		display: flex;
 		float: left;
 		padding: 0 30px;
-		font-weight: 500;
+		font-variation-settings: 'wdth' 75, 'wght' 500;
 		text-decoration: none;
 		text-transform: uppercase;
 		letter-spacing: 1.5px;
@@ -140,7 +140,7 @@
 	
 				p {
 					font-size: 12px;
-					font-weight: 500;
+					font-variation-settings: 'wdth' 75, 'wght' 500;
 					margin: 0;
 					text-align: center;
 					text-transform: uppercase;
@@ -218,7 +218,7 @@
 
 					p {
 						font-size: 34px;
-						font-weight: 300;
+						font-variation-settings: 'wdth' 75, 'wght' 300;;
 					}
 				}
 			}

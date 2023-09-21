@@ -15,7 +15,7 @@ const SideSheet = (props: SideSheetProps) => {
 			<div className='sideContainer'>
 				<div className='sheetHeader'>
 					<h1 className='title'>{title[0]} <span>{title[1]}</span></h1>
-					<Button icon='f00d' onClick={() => setOpen(false)} />
+					<Button icon='e59b' size='mini' onClick={() => setOpen(false)} />
 				</div>
 				<div className='sheetContent'>{children}</div>
 			</div>
@@ -27,7 +27,7 @@ export default SideSheet;
 
 type SideSheetProps = {
 	children: ReactNode,
-	className: string,
+	className?: string,
 	title: string[],
 	open: boolean,
 	setOpen: (open: boolean) => void

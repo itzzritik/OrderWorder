@@ -15,7 +15,7 @@
 		h2 {
 			width: fit-content;
 			font-size: 32px;
-			font-weight: 500;
+			font-variation-settings: 'wdth' 75, 'wght' 500;
 			text-transform: uppercase;
 			user-select: none;
 			margin-bottom: 10px;
@@ -32,7 +32,7 @@
 
 		> p {
 			font-size: 16px;
-			font-weight: 300;
+			font-variation-settings: 'wdth' 75, 'wght' 300;;
 		}
 
 		.aboutAction {

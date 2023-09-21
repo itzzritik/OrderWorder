@@ -2,6 +2,11 @@ import mongoose, { HydratedDocument } from 'mongoose';
 
 import { hashPassword } from '#utils/helper/passwordHelper';
 
+import { TKitchen } from './kitchen';
+import { TMenu } from './menu';
+import { TProfile } from './profile';
+import { TTable } from './table';
+
 const AccountSchema = new mongoose.Schema<TAccount>({
 	username: { type: String, trim: true, lowercase: true, unique: true, required: true, sparse: true, index: { unique: true } },
 	email: { type: String, trim: true, lowercase: true, unique: true, required: true, sparse: true, index: { unique: true } },
@@ -36,8 +41,8 @@ export type TAccount = HydratedDocument<{
 	verified: boolean;
 	accountActive: boolean;
 	subscriptionActive: boolean;
-	profile: mongoose.Schema.Types.ObjectId;
-	kitchens: Array<mongoose.Schema.Types.ObjectId>;
-	tables: Array<mongoose.Schema.Types.ObjectId>;
-	menus: Array<mongoose.Schema.Types.ObjectId>;
+	profile: TProfile;
+	kitchens: Array<TKitchen>;
+	tables: Array<TTable>;
+	menus: Array<TMenu>;
 }>

@@ -63,13 +63,13 @@
 		> p {
 			width: 100%;
 			font-size: 32px;
-			font-weight: 300;
+			font-variation-settings: 'wdth' 75, 'wght' 300;;
 			margin: 0;
 			text-align: end;
 
 			&.head {
 				font-size: 52px;
-				font-weight: 400;
+				font-variation-settings: 'wdth' 75, 'wght' 400;;
 				color: black;
 			}
 
@@ -80,7 +80,7 @@
 
 			&.desc {
 				font-size: 14px;
-				font-weight: 400;
+				font-variation-settings: 'wdth' 75, 'wght' 400;;
 			}
 		}
 

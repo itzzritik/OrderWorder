@@ -60,13 +60,13 @@
 
 			h1 {
 				font-size: 28px;
-				font-weight: 500;
+				font-variation-settings: 'wdth' 75, 'wght' 500;
 				overflow: hidden;
 				user-select: none;
 				white-space: nowrap;
 	
 				span {
-					font-weight: 300;
+					font-variation-settings: 'wdth' 75, 'wght' 300;;
 				}
 			}
 
