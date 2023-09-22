@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 import { Button, Icon } from 'xtreme-ui';
@@ -7,8 +7,10 @@ import Modal from '#components/base/Modal';
 import SearchButton from '#components/base/SearchButton';
 import SideSheet from '#components/base/SideSheet';
 import { useRestaurant } from '#components/context/useContext';
+import { TMenu } from '#utils/database/models/menu';
 import { useQueryParams } from '#utils/hooks/useQueryParams';
 
+import MenuCard from './MenuCard';
 import './menuCategory.scss';
 import './orderPage.scss';
 
@@ -16,6 +18,7 @@ const OrderPage = () => {
 	const session = useSession();
 	const { restaurant, fetchMenu } = useRestaurant();
 	const params = useQueryParams();
+	const order = useRef<HTMLDivElement>(null);
 	const categories = useRef<HTMLDivElement>(null);
 	const [loginOpen, setLoginOpen] = useState(false);
 	const [sideSheetOpen, setSideSheetOpen] = useState(false);
@@ -26,20 +29,25 @@ const OrderPage = () => {
 	const [searchActive, setSearchActive] = useState(false);
 	const [searchValue, setSearchValue] = useState('');
 	const [floatHeader, setFloatHeader] = useState(false);
-
 	const [leftCategoryScroll, setLeftCategoryScroll] = useState(false);
 	const [rightCategoryScroll, setRightCategoryScroll] = useState(true);
+	const [showInfoCard, setShowInfoCard] = useState(false);
 
+	const [filteredProducts, setFilteredProducts] = useState(restaurant?.menus);
+	const [selectedProducts, setSelectedProducts] = useState<Array<TMenu>>([]);
 	const [category, setCategory] = useState(0);
+	const [hasImageItems, setHasImageItems] = useState(false);
+	const [hasNonImageItems, setHasNonImageItems] = useState(false);
 
-	const onCategoryScroll = (event) => {
-		if (event.target.scrollLeft > 50) {
+	const onCategoryScroll = (event: SyntheticEvent) => {
+		const target = event.target as HTMLElement;
+		if (target.scrollLeft > 50) {
 			setLeftCategoryScroll(true);
 		} else {
 			setLeftCategoryScroll(false);
 		}
 
-		if (Math.round(event.target.scrollWidth - event.target.scrollLeft) - 50 > event.target.clientWidth) {
+		if (Math.round(target.scrollWidth - target.scrollLeft) - 50 > target.clientWidth) {
 			setRightCategoryScroll(true);
 		} else {
 			setRightCategoryScroll(false);
@@ -60,6 +68,63 @@ const OrderPage = () => {
 
 		return params.router.push('/scan');
 	};
+	const increaseProductQuantity = (product: TMenu) => {
+		const selection = [...selectedProducts];
+		product = {
+			_id: product._id,
+		};
+		if (selectedProducts.some((item) => item._id === product._id)) {
+			selection.forEach((item) => {
+				if (product._id === item._id) {
+					item.quantity++;
+				}
+			});
+		} else {
+			product.quantity = 1;
+			selection.push(product);
+		}
+		setSelectedProducts(selection);
+	};
+	const decreaseProductQuantity = (product: TMenu) => {
+		let selection = [...selectedProducts];
+		product = {
+			_id: product._id,
+		};
+		selection.forEach((item) => {
+			if (product._id === item._id) {
+				item.quantity--;
+				if (item.quantity === 0) {
+					const filter = selection.filter((tempItem) => tempItem._id !== product._id);
+					selection = [...filter];
+				}
+			}
+		});
+		setSelectedProducts(selection);
+	};
+
+	useEffect(() => {
+		const categoryTitle = restaurant?.profile?.categories?.[category] ?? '';
+
+		if (searchValue && searchValue.length > 0) {
+			setFilteredProducts(restaurant?.menus.filter(({ name, description, categories }) =>
+				name.toLowerCase().includes(searchValue.toLowerCase())
+				|| description?.toLowerCase().includes(searchValue.toLowerCase())
+				|| categories.some((item) => item?.toLowerCase().includes(searchValue.toLowerCase()))));
+		}
+		else if (categoryTitle.toLowerCase() === 'all') setFilteredProducts(restaurant?.menus);
+		else setFilteredProducts(restaurant?.menus?.filter(({ categories }) => categories.includes(categoryTitle)));
+
+	}, [searchValue, category, restaurant]);
+
+	useEffect(() => {
+		setHasImageItems(filteredProducts?.some((product) => !!product.image) ?? false);
+		setHasNonImageItems(filteredProducts?.some((product) => !product.image) ?? false);
+	}, [filteredProducts]);
+
+	useEffect(() => {
+		if (session.data?.role === 'customer') setOrderHeading(['Choose', 'Order']);
+		else setOrderHeading(['Explore', 'Menu']);
+	}, [session]);
 
 	useEffect(() => {
 		fetchMenu();
@@ -105,6 +170,50 @@ const OrderPage = () => {
 					<div className={`scrollRight ${rightCategoryScroll ? 'show' : ''}`} onClick={categoryScrollRight}>
 						<Icon code='f054' />
 					</div>
+				</div>
+				<div className='order' ref={order}>
+					<div className='header'>
+						<h1>{orderHeading[0]} <span>{orderHeading[1]}</span></h1>
+					</div>
+					{
+						hasImageItems
+						&& <div className={`itemContainer ${session.data?.role !== 'customer' ? 'restrictOrder ' : ''}`}>
+							<div>
+								{
+									filteredProducts?.map((item, key) => (
+										<MenuCard key={key} item={item} restrictOrder={session.data?.role !== 'customer'}
+											increaseQuantity={increaseProductQuantity}
+											decreaseQuantity={decreaseProductQuantity}
+											showInfo={item._id.toString() === showInfoCard.toString()}
+											setShowInfo={(v) => setShowInfoCard(v)} show={!!item.image}
+											quantity={selectedProducts.some((obj) => obj._id === item._id)
+											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity}
+										/>
+									))
+								}
+							</div>
+						</div>
+					}
+					{hasImageItems && hasNonImageItems && <hr />}
+					{
+						hasNonImageItems
+						&& <div className={`itemContainer withoutImage ${session.data?.role !== 'customer' ? 'restrictOrder ' : ''}`}>
+							<div>
+								{
+									filteredProducts?.map((item, key) => (
+										<MenuCard key={key} item={item} restrictOrder={session.data?.role !== 'customer'}
+											increaseQuantity={increaseProductQuantity}
+											decreaseQuantity={decreaseProductQuantity}
+											showInfo={item._id.toString() === showInfoCard.toString()}
+											setShowInfo={(v) => setShowInfoCard(v)} show={!!item.image}
+											quantity={selectedProducts.some((obj) => obj._id === item._id)
+											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity}
+										/>
+									))
+								}
+							</div>
+						</div>
+					}
 				</div>
 			</div>
 			<SideSheet title={sideSheetHeading} open={sideSheetOpen} setOpen={setSideSheetOpen}>

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 import { checkIfExist } from '../manager';
 
@@ -37,7 +37,7 @@ MenuSchema.post('findOneAndUpdate', async function (doc) {
 });
 
 export const Menus = mongoose.models?.menus ?? mongoose.model<TMenu>('menus', MenuSchema);
-export type TMenu = {
+export type TMenu = HydratedDocument<{
 	name: string;
 	restaurantID: string;
 	description: string;
@@ -46,7 +46,7 @@ export type TMenu = {
 	foodType: TFoodType;
 	veg: TVeg;
 	image: string;
-}
+}>
 
 export type TFoodType = typeof FoodType[number];
 export type TVeg = typeof Veg[number];

@@ -1,0 +1,349 @@
+.menuCard {
+	--menuPictureHeight: 200px;
+
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--colorBackgroundPrimary);
+	border-radius: 20px;
+	padding: 10px;
+	transition: box-shadow 0.13s ease-in;
+	box-shadow: 0 8px 12px rgb(150 150 150 / 15%);
+
+	@mixin showInfo {
+		box-shadow: 0 8px 12px rgb(150 150 150 / 15%);
+		transition: box-shadow 0.13s ease-out;
+
+		.picture {
+			> span {
+				transform: scale(1.1);
+			}
+
+			.description {
+				opacity: 1;
+				transition: opacity 0.1s ease-in;
+			}
+		}
+
+		.vegIcon {
+			width: auto;
+			background-color: transparent;
+			border: 0 solid var(--colorBackgroundSecondary);
+
+			.icon {
+				display: none;
+			}
+
+			.label {
+				display: block;
+			}
+		}
+
+		.price {
+			padding: 5px 30px 5px 10px;
+		}
+	} 
+	
+	&.showInfo {
+		@include showInfo;
+	}
+
+	&.hoverSupported {
+		&:hover {
+			@include showInfo;
+		}
+
+		.options {
+			.title .info {
+				display: none;
+			}
+		}
+	}
+
+	&.blank {
+		visibility: hidden;
+	}
+
+	&.restrictOrder {
+		--menuPictureHeight: 220px;
+
+		.options {
+			.title {
+				> span {
+					-webkit-line-clamp: 1;
+					margin-bottom: 0;
+				}
+
+				.info {
+					width: 18px;
+					min-width: 18px;
+					height: 18px;
+					margin: 10px 10px 0 0;
+				}
+			}
+
+			.footer .addToCart {
+				display: none;
+			}
+		}
+	}
+
+	&.withoutImage {
+		--menuPictureHeight: 0px;
+
+		overflow: hidden;
+
+		&.restrictOrder {
+			.options .title > span {
+				font-size: 14px;
+			}
+		}
+
+		.options {
+			padding: 0;
+
+			.title {
+				padding-right: 20px;
+
+				.info {
+					opacity: 0;
+					pointer-events: none;
+				}
+			}
+		}
+
+		.vegIcon {
+			width: 30px;
+			height: 31px;
+			top: 18px; right: 18px; left: unset;
+			border-color: transparent;
+			background-color: transparent;
+			z-index: 1;
+
+			.label {
+				text-align: end;
+				color: var(--colorContentPrimary);
+				background-color: var(--colorBackgroundPrimary);
+			}
+		}
+	}
+
+	.picture {
+		position: relative;
+		width: 100%;
+		height: var(--menuPictureHeight);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid var(--colorContentTertiary);
+		border-radius: 15px;
+		overflow: hidden;
+
+		> span {
+			display: block;
+			width: 100%;
+			height: 100%;
+			background-size: cover !important;
+			background-position: center !important;
+			transition: transform 0.5s ease-out;
+		}
+
+		.description {
+			display: flex;
+			position: absolute;
+			top: 0; left: 0;
+			width: 100%;
+			height: 100%;
+			color: white;
+			padding: 0 10px;
+			background-color: rgb(0 0 0 / 60%);
+			opacity: 0;
+			justify-content: center;
+			font-size: 12px;
+			text-align: center;
+			align-items: center;
+			transition: opacity 0.2s ease-out;
+		}
+	}
+
+	.vegIcon {
+		position: absolute;
+		top: calc(var(--menuPictureHeight) - 30px); left: 23px;
+		width: 28px;
+		height: 28px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		border-radius: 9999px;
+		background-color: var(--colorBackgroundPrimary);
+		border: 1px solid var(--colorContentTertiary);
+
+		&.veg .icon {
+			color: rgb(var(--colorAlertSuccessRGB));
+		}
+
+		/* stylelint-disable-next-line selector-class-pattern */
+		&.non-veg .icon {
+			color: rgb(var(--colorAlertErrorRGB));
+		}
+
+		/* stylelint-disable-next-line selector-class-pattern */
+		&.contains-egg .icon {
+			color: rgb(var(--colorAlertWarningRGB));
+		}
+
+		.icon {
+			$iconSize: 13px;
+
+			display: block;
+			width: $iconSize;
+			height: $iconSize;
+			mask-size: $iconSize;
+			mask-repeat: no-repeat;
+			mask-position: center;
+		}
+
+		.label {
+			display: none;
+			padding: 0 10px;
+			font-size: 12px;
+			text-transform: capitalize;
+			white-space: nowrap;
+			user-select: none;
+			color: var(--colorBackgroundPrimary);
+		}
+	}
+
+	.options {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		padding: 5px;
+
+		.title {
+			display: flex;
+			margin: 0;
+            
+			> span {
+				flex-grow: 1;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				font-size: 12px;
+				font-weight: 600;
+				overflow: hidden;
+				margin: 10px 10px 5px;
+			}
+
+			.info {
+				width: 38px;
+				min-width: 38px;
+				height: 38px;
+				cursor: pointer;
+
+				span {
+					$iconSize: 15px;
+
+					display: block;
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+
+		.description {
+			font-size: 11px;
+			margin-left: 10px;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+		}
+
+		.footer {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			padding: 8px 13px;
+
+			.priceNoImage {
+				flex: 1;
+				margin: 2px 0 0;
+			}
+		}
+	}
+
+	.price {
+		position: absolute;
+		top: calc(var(--menuPictureHeight) - 30px); right: -15px;
+		font-size: 12px;
+		margin: 0;
+		font-weight: 500;
+		letter-spacing: 0.5px;
+		padding: 5px 20px 5px 10px;
+		color: var(--colorBackgroundPrimary);
+		background-color: rgb(var(--colorBrandAccentRgb));
+		filter: drop-shadow(0 2px 4px rgb(0 0 0 / 50%));
+		border-radius: 0 0 10px;
+		transition: padding 0.5s ease-out;
+
+		&::before {
+			position: relative;
+			z-index: 1;
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			top: -7px; right: 0;
+			display: block;
+			width: 15px;
+			height: 7px;
+			background-color: rgb(var(--colorBrandAccentRgb));
+			filter: brightness(65%);
+			clip-path: polygon(0 0, 0 100%, 100% 100%);
+		}
+
+		div {
+			position: absolute;
+			left: -15px;
+			border-color: rgb(var(--colorBrandAccentRgb)) transparent;
+			border-style: solid;
+
+			&.ribbonTop {
+				top: 0;
+				border-radius: 5px 0 0;
+				border-width: 22px 25px 0;
+			}
+
+			&.ribbonBottom {
+				bottom: 0;
+				border-radius: 0 0 0 5px;
+				border-width: 0 25px 22px;
+			}
+		}
+
+		span {
+			position: relative;
+		}
+	}
+}
+
+@media (width <= 900px) {
+	.menuCard {
+		--menuPictureHeight: 160px;
+	}
+}
+
+@media (width <= 750px) {
+	.menuCard {
+		--menuPictureHeight: 200px;
+	}
+}
