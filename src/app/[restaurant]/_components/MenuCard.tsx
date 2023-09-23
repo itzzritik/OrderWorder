@@ -12,8 +12,9 @@ import './menuCard.scss';
 const vegIcon = {
 	'veg': 'f4d8',
 	'non-veg': 'f6d6',
-	'contains-egg': 'f7fc',
+	'contains-egg': 'f7fb',
 } as const;
+
 const MenuCard = (props: TMenuCardProps) => {
 	const { className, show, restrictOrder, showInfo, setShowInfo, item, quantity } = props;
 	const [cardRef, inView] = useInView({ threshold: 0 });
@@ -35,15 +36,16 @@ const MenuCard = (props: TMenuCardProps) => {
 				inView
 				&& <>
 					{
-						item.image
-						&& <div className='picture'>
+						item.image &&
+						<div className='picture'>
 							<span style={{ background: `url(${item.image})` }} />
 							<div className='description'>{item.description}</div>
 						</div>
 					}
 					{
-						item.veg && <div className={`vegIcon ${item.veg}`}>
-							<Icon className='icon' code={vegIcon[item.veg]} />
+						item.veg &&
+						<div className={`vegIcon ${item.veg}`}>
+							<Icon className='icon' type='duotone' size={16} code={vegIcon[item.veg]} />
 							<span className='label'>{item.veg.replace(/-/g, ' ')}</span>
 						</div>
 					}
@@ -51,8 +53,8 @@ const MenuCard = (props: TMenuCardProps) => {
 						<div className='title'>
 							<span>{item.name}</span>
 							{
-								item.image
-								&& <div className='info' onClick={() => setShowInfo(showInfo ? false : !!item._id)}>
+								item.image &&
+								<div className='info' onClick={() => setShowInfo(showInfo ? false : !!item._id)}>
 									<Icon code={showInfo ? 'f00d' : 'f05a'} />
 								</div>
 							}
@@ -67,8 +69,8 @@ const MenuCard = (props: TMenuCardProps) => {
 						</div>
 					</div>
 					{
-						item.image
-						&& <div className='price rupee'>
+						item.image &&
+						<div className='price rupee'>
 							<div className='ribbonTop' />
 							<div className='ribbonBottom' />
 							<span>{item.price}</span>
@@ -82,14 +84,16 @@ const MenuCard = (props: TMenuCardProps) => {
 
 export default MenuCard;
 
-export type TMenuCardProps = {
+type TMenuCardProps = {
 	className?: string,
 	show?: boolean,
 	restrictOrder?:boolean,
 	showInfo?: boolean,
 	setShowInfo: (showInfo: boolean) => void,
-	item: TMenu,
+	item: TMenuCustom,
 	quantity: number,
-	increaseQuantity: (item: TMenu) => void,
-	decreaseQuantity: (item: TMenu) => void,
+	increaseQuantity: (item: TMenuCustom) => void,
+	decreaseQuantity: (item: TMenuCustom) => void,
 }
+
+type TMenuCustom = TMenu & {quantity: number}

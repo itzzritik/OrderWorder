@@ -168,9 +168,7 @@
 
 	.vegIcon {
 		position: absolute;
-		top: calc(var(--menuPictureHeight) - 30px); left: 23px;
-		width: 28px;
-		height: 28px;
+		top: calc(var(--menuPictureHeight) - 30px); left: 16px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -194,24 +192,17 @@
 		}
 
 		.icon {
-			$iconSize: 13px;
-
-			display: block;
-			width: $iconSize;
-			height: $iconSize;
-			mask-size: $iconSize;
-			mask-repeat: no-repeat;
-			mask-position: center;
+			padding: 16px;
 		}
 
 		.label {
 			display: none;
-			padding: 0 10px;
+			padding: 10px;
 			font-size: 12px;
 			text-transform: capitalize;
 			white-space: nowrap;
 			user-select: none;
-			color: var(--colorBackgroundPrimary);
+			color: var(--colorContentPrimary);
 		}
 	}
 

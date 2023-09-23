@@ -11,12 +11,12 @@ import { TMenu } from '#utils/database/models/menu';
 import { useQueryParams } from '#utils/hooks/useQueryParams';
 
 import MenuCard from './MenuCard';
-import './menuCategory.scss';
 import './orderPage.scss';
 
 const OrderPage = () => {
 	const session = useSession();
 	const { restaurant, fetchMenu } = useRestaurant();
+	const menus = restaurant?.menus as Array<TMenuCustom>;
 	const params = useQueryParams();
 	const order = useRef<HTMLDivElement>(null);
 	const categories = useRef<HTMLDivElement>(null);
@@ -33,46 +33,34 @@ const OrderPage = () => {
 	const [rightCategoryScroll, setRightCategoryScroll] = useState(true);
 	const [showInfoCard, setShowInfoCard] = useState(false);
 
-	const [filteredProducts, setFilteredProducts] = useState(restaurant?.menus);
-	const [selectedProducts, setSelectedProducts] = useState<Array<TMenu>>([]);
+	const [filteredProducts, setFilteredProducts] = useState<Array<TMenuCustom>>(menus);
+	const [selectedProducts, setSelectedProducts] = useState<Array<TMenuCustom>>([]);
 	const [category, setCategory] = useState(0);
 	const [hasImageItems, setHasImageItems] = useState(false);
 	const [hasNonImageItems, setHasNonImageItems] = useState(false);
 
 	const onCategoryScroll = (event: SyntheticEvent) => {
 		const target = event.target as HTMLElement;
-		if (target.scrollLeft > 50) {
-			setLeftCategoryScroll(true);
-		} else {
-			setLeftCategoryScroll(false);
-		}
 
-		if (Math.round(target.scrollWidth - target.scrollLeft) - 50 > target.clientWidth) {
-			setRightCategoryScroll(true);
-		} else {
-			setRightCategoryScroll(false);
-		}
+		if (target.scrollLeft > 50) setLeftCategoryScroll(true);
+		else setLeftCategoryScroll(false);
+
+		if (Math.round(target.scrollWidth - target.scrollLeft) - 50 > target.clientWidth) setRightCategoryScroll(true);
+		else setRightCategoryScroll(false);
+
 	};
 	const categoryScrollLeft = () => {
-		if (categories.current)
-			categories.current.scrollLeft -= 400;
+		if (categories.current) categories.current.scrollLeft -= 400;
 	};
 	const categoryScrollRight = () => {
-		if (categories.current)
-			categories.current.scrollLeft += 400;
+		if (categories.current) categories.current.scrollLeft += 400;
 	};
 	const onLoginClick = () => {
-		if (params.get('table')) {
-			return setLoginOpen(true);
-		}
-
+		if (params.get('table')) return setLoginOpen(true);
 		return params.router.push('/scan');
 	};
-	const increaseProductQuantity = (product: TMenu) => {
+	const increaseProductQuantity = (product: TMenuCustom) => {
 		const selection = [...selectedProducts];
-		product = {
-			_id: product._id,
-		};
 		if (selectedProducts.some((item) => item._id === product._id)) {
 			selection.forEach((item) => {
 				if (product._id === item._id) {
@@ -85,11 +73,8 @@ const OrderPage = () => {
 		}
 		setSelectedProducts(selection);
 	};
-	const decreaseProductQuantity = (product: TMenu) => {
+	const decreaseProductQuantity = (product: TMenuCustom) => {
 		let selection = [...selectedProducts];
-		product = {
-			_id: product._id,
-		};
 		selection.forEach((item) => {
 			if (product._id === item._id) {
 				item.quantity--;
@@ -106,15 +91,15 @@ const OrderPage = () => {
 		const categoryTitle = restaurant?.profile?.categories?.[category] ?? '';
 
 		if (searchValue && searchValue.length > 0) {
-			setFilteredProducts(restaurant?.menus.filter(({ name, description, categories }) =>
+			setFilteredProducts(menus.filter(({ name, description, categories }) =>
 				name.toLowerCase().includes(searchValue.toLowerCase())
 				|| description?.toLowerCase().includes(searchValue.toLowerCase())
 				|| categories.some((item) => item?.toLowerCase().includes(searchValue.toLowerCase()))));
 		}
-		else if (categoryTitle.toLowerCase() === 'all') setFilteredProducts(restaurant?.menus);
-		else setFilteredProducts(restaurant?.menus?.filter(({ categories }) => categories.includes(categoryTitle)));
+		else if (categoryTitle.toLowerCase() === 'all') setFilteredProducts(menus);
+		else setFilteredProducts(menus?.filter(({ categories }) => categories.includes(categoryTitle)));
 
-	}, [searchValue, category, restaurant]);
+	}, [searchValue, category, menus, restaurant?.profile?.categories]);
 
 	useEffect(() => {
 		setHasImageItems(filteredProducts?.some((product) => !!product.image) ?? false);
@@ -186,8 +171,8 @@ const OrderPage = () => {
 											decreaseQuantity={decreaseProductQuantity}
 											showInfo={item._id.toString() === showInfoCard.toString()}
 											setShowInfo={(v) => setShowInfoCard(v)} show={!!item.image}
-											quantity={selectedProducts.some((obj) => obj._id === item._id)
-											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity}
+											quantity={(selectedProducts.some((obj) => obj._id === item._id)
+											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity) || 0}
 										/>
 									))
 								}
@@ -206,8 +191,8 @@ const OrderPage = () => {
 											decreaseQuantity={decreaseProductQuantity}
 											showInfo={item._id.toString() === showInfoCard.toString()}
 											setShowInfo={(v) => setShowInfoCard(v)} show={!!item.image}
-											quantity={selectedProducts.some((obj) => obj._id === item._id)
-											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity}
+											quantity={(selectedProducts.some((obj) => obj._id === item._id)
+											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity) || 0}
 										/>
 									))
 								}
@@ -233,3 +218,5 @@ const OrderPage = () => {
 };
 
 export default OrderPage;
+
+type TMenuCustom = TMenu & {quantity: number}
