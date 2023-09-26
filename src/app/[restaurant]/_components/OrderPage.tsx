@@ -11,11 +11,12 @@ import { TMenu } from '#utils/database/models/menu';
 import { useQueryParams } from '#utils/hooks/useQueryParams';
 
 import MenuCard from './MenuCard';
+import UserLogin from './UserLogin';
 import './orderPage.scss';
 
 const OrderPage = () => {
 	const session = useSession();
-	const { restaurant, fetchMenu } = useRestaurant();
+	const { restaurant } = useRestaurant();
 	const menus = restaurant?.menus as Array<TMenuCustom>;
 	const params = useQueryParams();
 	const order = useRef<HTMLDivElement>(null);
@@ -63,9 +64,7 @@ const OrderPage = () => {
 		const selection = [...selectedProducts];
 		if (selectedProducts.some((item) => item._id === product._id)) {
 			selection.forEach((item) => {
-				if (product._id === item._id) {
-					item.quantity++;
-				}
+				if (product._id === item._id) item.quantity++;
 			});
 		} else {
 			product.quantity = 1;
@@ -111,11 +110,6 @@ const OrderPage = () => {
 		else setOrderHeading(['Explore', 'Menu']);
 	}, [session]);
 
-	useEffect(() => {
-		fetchMenu();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	return (
 		<div className='orderPage'>
 			<div className='mainContainer'>
@@ -124,9 +118,15 @@ const OrderPage = () => {
 					<div className='options'>
 						<SearchButton setSearchActive={setSearchActive} placeholder='Search for food' value={searchValue} setValue={setSearchValue} />
 						{
-							session.data?.role === 'customer'
+							session.data?.role !== 'customer'
 								? <Button className='loginButton' label={params.get('table') ? 'Order' : 'Scan'} onClick={onLoginClick} />
-								: <Button icon='e43b' label='2' onClick={() => setSideSheetOpen(true)} />
+								: (
+									<Button
+										icon='e43b'
+										label={(selectedProducts?.length > 0 ? selectedProducts?.length : '') + ''}
+										onClick={() => setSideSheetOpen(true)}
+									/>
+								)
 						}
 						{
 							session.data?.role === 'admin'
@@ -211,7 +211,7 @@ const OrderPage = () => {
 				/> */}
 			</SideSheet>
 			<Modal open={loginOpen} setOpen={setLoginOpen}>
-				{/* <UserLogin setOpen={setLoginOpen} /> */}
+				<UserLogin setOpen={setLoginOpen} />
 			</Modal>
 		</div>
 	);

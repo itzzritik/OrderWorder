@@ -8,12 +8,14 @@ import { useXTheme } from 'xtreme-ui';
 
 export default function Title () {
 	const pathname = usePathname();
-	const { themeScheme } = useXTheme();
+	const { themeScheme, themeColor } = useXTheme();
 
 	useEffect(() => {
 		if (pathname === '/') document.documentElement.setAttribute('data-theme-scheme', 'light');
 		else document.documentElement.setAttribute('data-theme-scheme', themeScheme);
-	}, [pathname, themeScheme]);
+
+		document.documentElement.setAttribute('data-theme-color', themeColor);
+	}, [pathname, themeColor, themeScheme]);
 
 	useEffect(() => {
 		document.title = 'OrderWorder⌘';

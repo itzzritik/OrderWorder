@@ -41,6 +41,7 @@
 		opacity: 0;
 		display: flex;
 		width: 500px;
+		padding: 36px;
 		transform: scale(0) translate(50%, -50%);
 		transform-origin: top right;
 		border-radius: 25px;
@@ -51,9 +52,7 @@
 
 		.closeModal {
 			position: absolute;
-			top: 0; right: 0;
-			width: 40px;
-			height: 40px;
+			top: 24px; right: 24px;
 			cursor: pointer;
 		}
 	}

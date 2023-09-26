@@ -15,6 +15,7 @@
 		height: 100%;
 		flex-grow: 1;
 		background-color: var(--colorBackgroundSecondary);
+		overflow-y: auto;
 
 		> .scrollbarVertical {
 			transform: translateX(-8px);

@@ -279,7 +279,7 @@
 		font-weight: 500;
 		letter-spacing: 0.5px;
 		padding: 5px 20px 5px 10px;
-		color: var(--colorBackgroundPrimary);
+		color: white;
 		background-color: rgb(var(--colorBrandAccentRgb));
 		filter: drop-shadow(0 2px 4px rgb(0 0 0 / 50%));
 		border-radius: 0 0 10px;
@@ -323,6 +323,7 @@
 
 		span {
 			position: relative;
+			color: white;
 		}
 	}
 }

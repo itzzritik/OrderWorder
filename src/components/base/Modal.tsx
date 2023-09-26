@@ -3,8 +3,10 @@ import React, { ReactNode } from 'react';
 import clsx from 'clsx';
 import { Button } from 'xtreme-ui';
 
+import './modal.scss';
+
 const Modal = (props: TModal) => {
-	const { children, open, setOpen, closeIcon = 'f00d' } = props;
+	const { children, open, setOpen, closeIcon = 'e59b' } = props;
 	const classList = clsx(
 		'modal',
 		open && 'open',
@@ -15,7 +17,7 @@ const Modal = (props: TModal) => {
 			<div className='backdrop' onClick={() => setOpen(false)} />
 			<div className='modalPane'>
 				{children}
-				{ closeIcon && <Button className='closeModal' icon={closeIcon} onClick={() => setOpen(false)} /> }
+				{ closeIcon && <Button className='closeModal' size='mini' icon={closeIcon} onClick={() => setOpen(false)} /> }
 			</div>
 		</div>
 	);

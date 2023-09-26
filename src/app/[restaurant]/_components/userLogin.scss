@@ -1,0 +1,150 @@
+.userLogin {
+	--userLoginDuration: 0.3s;
+	--footerHeight: 60px;
+	--headerHeight: calc(var(--footerHeight) + 2px);
+
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	
+	.header {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		transition: all var(--userLoginDuration) ease-out;
+
+		.heading {
+			bottom: 0;
+			font-weight: 300;
+			font-size: 25px;
+			color: var(--colorContentPrimary);
+			user-select: none;
+
+			span {
+				font-weight: 500;
+			}
+		}
+	}
+
+	.content {
+		position: relative;
+		display: flex;
+		height: 100px;
+		flex-direction: column;
+		flex-grow: 1;
+		justify-content: center;
+		align-items: center;
+		transition: all var(--userLoginDuration) ease-out;
+
+		> .phone, .name {
+			position: absolute;
+			width: 100%;
+			opacity: 1;
+			transition: all var(--userLoginDuration) ease-out;
+		}
+
+		.otpContainer {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			display: flex;
+			align-items: center;
+			transform: translateX(100%);
+			transition: all var(--userLoginDuration) ease-out;
+
+			> .textInput {
+				width: 100%;
+				height: 45px;
+
+				&.otp {
+					margin-top: 30px;
+					height: auto;
+				}
+			}
+		}
+	}
+
+	.footer {
+		transition: all var(--userLoginDuration) ease-out;
+		display: flex;
+		justify-content: flex-end;
+
+		> .button {
+			--buttonWidth: 100px;
+			--buttonHeight: 35px;
+		}
+	}
+
+	&.loginOTP, &.signOTP {
+		.content {
+			height: 100px;
+
+			> .phone {
+				opacity: 0;
+				transform: translateX(-100%);
+			}
+
+			.otpContainer {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		.footer > .button {
+			--buttonWidth: 120px;
+		}
+	}
+
+	&.loginOTP {
+		.content {
+			height: 150px;
+
+			.otpContainer {
+				> .textInput {
+					&.name {
+						display: none;
+					}
+
+					&.otp {
+						margin-top: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (height <= 535px) {
+	.userLogin {
+		&.openCodeSelector {
+			.header {
+				opacity: 0;
+				margin-top: calc(var(--headerHeight) * -1);
+			}
+		}
+	}
+}
+
+@media (height <= 470px) {
+	.userLogin {
+		&.openCodeSelector {
+			.content {
+				height: 250px;
+			}
+		}
+	}
+}
+
+@media (height <= 420px) {
+	.userLogin {
+		&.openCodeSelector {
+			.footer {
+				opacity: 0;
+				margin-bottom: calc(var(--footerHeight) * -1);
+			}
+		}
+	}
+}

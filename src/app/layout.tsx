@@ -14,11 +14,9 @@ export const metadata = {
 };
 export default function RootLayout ({ children }: IRootProps) {
 	return (
-		<html lang='en' className={montserrat.variable} suppressHydrationWarning>
-			<head>
+		<html lang='en' className={montserrat.variable}>
+			<body>
 				<script dangerouslySetInnerHTML={{ __html: themeController }} />
-			</head>
-			<body suppressHydrationWarning>
 				<Title />
 				<GlobalProvider>
 					{ children }
