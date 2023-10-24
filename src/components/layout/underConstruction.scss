@@ -1,0 +1,47 @@
+.underConstruction {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	user-select: none;
+	justify-content: center;
+	background: var(--colorBackgroundSecondary);
+
+	> .animation {
+		width: 500px;
+		height: 350px;
+	}
+
+	> h1 {
+		font-size: 2.5em;
+		font-variation-settings: 'wdth' 75, 'wght' 400;
+		margin: 0;
+		text-transform: capitalize;
+	}
+
+	> p {
+		margin: 0;
+		font-size: 1.2em;
+		font-variation-settings: 'wdth' 75, 'wght' 300;
+		margin-bottom: 30px;
+	}
+}
+
+@media screen and (width <= 500px) {
+	.underConstruction {
+		> .animation {
+			width: 80vw;
+			height: 60vw;
+		}
+
+		> h1 {
+			font-size: 8vw;
+		}
+
+		> p {
+			font-size: 3.8vw;
+		}
+	}
+}

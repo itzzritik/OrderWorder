@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { Spinner } from 'xtreme-ui';
 
 import { useRestaurant } from '#components/context/useContext';
+import UnderConstruction from '#components/layout/UnderConstruction';
 
 import NavSideBar from './_components/NavSideBar';
 import OrderPage from './_components/OrderPage';
@@ -51,10 +52,10 @@ const Restaurant = () => {
 		<div className='restaurant'>
 			<NavSideBar navItems={navItems} foot />
 			<div className='pageContainer'>
-				{tab === 'explore' && <div>Explore page under construction</div>}
+				{tab === 'explore' && <UnderConstruction />}
 				{tab === 'menu' && <OrderPage />}
-				{tab === 'reviews' && <div>Reviews page under construction</div>}
-				{tab === 'contact' && <div>Contact page under construction</div>}
+				{tab === 'reviews' && <UnderConstruction />}
+				{tab === 'contact' && <UnderConstruction />}
 			</div>
 		</div>
 	);
