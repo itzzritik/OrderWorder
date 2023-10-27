@@ -22,19 +22,19 @@ export async function GET () {
 				password: '123456',
 				restaurantID: 'empire',
 			}),
-			EmpireTable1: await createIfNotExist<TTable>(Tables, { username: 'empireTable1' }, {
+			EmpireTable1: await createIfNotExist<TTable>(Tables, { username: '1' }, {
 				name: 'Table 1',
-				username: 'empireTable1',
+				username: '1',
 				restaurantID: 'empire',
 			}),
-			EmpireTable2: await createIfNotExist<TTable>(Tables, { username: 'empireTable2' }, {
+			EmpireTable2: await createIfNotExist<TTable>(Tables, { username: '2' }, {
 				name: 'Table 2',
-				username: 'empireTable2',
+				username: '2',
 				restaurantID: 'empire',
 			}),
-			EmpireTable3: await createIfNotExist<TTable>(Tables, { username: 'empireTable3' }, {
+			EmpireTable3: await createIfNotExist<TTable>(Tables, { username: '3' }, {
 				name: 'Table 3',
-				username: 'empireTable3',
+				username: '3',
 				restaurantID: 'empire',
 			}),
 			EmpireMenu: await (async () => {

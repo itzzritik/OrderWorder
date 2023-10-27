@@ -18,7 +18,7 @@ export const RestaurantProvider = ({ children }: TRestaurantProviderProps) => {
 		const req = await fetch(`/api/menu?id=${pathname.replace('/', '')}`);
 		const data: TAccount = await req.json();
 
-		data.profile.categories.unshift('all');
+		data?.profile?.categories?.unshift('all');
 		setRestaurant(data);
 	};
 

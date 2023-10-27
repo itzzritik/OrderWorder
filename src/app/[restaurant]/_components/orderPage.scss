@@ -109,10 +109,19 @@
 
 				.dashboardButton {
 					--buttonWidth: 150px;
+
+					margin-right: 16px;
 				}
 
 				.kitchenButton {
 					--buttonWidth: 120px;
+
+					margin-right: 16px;
+				}
+
+				.logout {
+					width: 38px;
+					height: 38px;
 				}
 			}
 		}

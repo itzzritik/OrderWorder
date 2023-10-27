@@ -14,7 +14,6 @@
 		cursor: pointer;
 		font-size: 12px;
 		font-weight: 500;
-		color: rgb(var(--colorBrandAccentRgb));
 		background-color: transparent;
 		border: 1px solid rgb(var(--colorBrandAccentRgb));
 
@@ -26,6 +25,10 @@
 			mask-repeat: no-repeat;
 			mask-position: center;
 			background-color: rgb(var(--colorBrandAccentRgb));
+		}
+
+		> i {
+			color: white;
 		}
 
 		&:active {
@@ -71,7 +74,7 @@
 			p {
 				margin: 0;
 				font-size: 14px;
-				font-weight: 600;
+				font-variation-settings: 'wdth' 75, 'wght' 600;
 			}
 
 			span {
@@ -108,7 +111,7 @@
 
 	&.filled {
 		.quantity {
-			color: var(--colorBackgroundPrimary);
+			color: white;
 			background-color: rgb(var(--colorBrandAccentRgb));
 
 			> span {

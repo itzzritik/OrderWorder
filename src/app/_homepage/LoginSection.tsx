@@ -45,7 +45,7 @@ const LoginSection = () => {
 			}
 		}
 		else {
-			const res = await signIn('credentials', {
+			const res = await signIn('restaurant', {
 				redirect: false,
 				username: email,
 				...(showKitchen && { kitchen: kitchenUsername }),

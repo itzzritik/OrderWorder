@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
 
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { Button, Icon } from 'xtreme-ui';
 
 import Modal from '#components/base/Modal';
@@ -40,6 +40,8 @@ const OrderPage = () => {
 	const [hasImageItems, setHasImageItems] = useState(false);
 	const [hasNonImageItems, setHasNonImageItems] = useState(false);
 
+	const showOrderButton = restaurant?.tables?.some(({ username }) => username === params.get('table'));
+
 	const onCategoryScroll = (event: SyntheticEvent) => {
 		const target = event.target as HTMLElement;
 
@@ -48,7 +50,6 @@ const OrderPage = () => {
 
 		if (Math.round(target.scrollWidth - target.scrollLeft) - 50 > target.clientWidth) setRightCategoryScroll(true);
 		else setRightCategoryScroll(false);
-
 	};
 	const categoryScrollLeft = () => {
 		if (categories.current) categories.current.scrollLeft -= 400;
@@ -118,23 +119,40 @@ const OrderPage = () => {
 					<div className='options'>
 						<SearchButton setSearchActive={setSearchActive} placeholder='Search for food' value={searchValue} setValue={setSearchValue} />
 						{
-							session.data?.role !== 'customer'
-								? <Button className='loginButton' label={params.get('table') ? 'Order' : 'Scan'} onClick={onLoginClick} />
-								: (
-									<Button
-										icon='e43b'
-										label={(selectedProducts?.length > 0 ? selectedProducts?.length : '') + ''}
-										onClick={() => setSideSheetOpen(true)}
-									/>
-								)
+							!session.data?.role &&
+							<Button className='loginButton' label={showOrderButton ? 'Order' : 'Scan'} onClick={onLoginClick} />
 						}
 						{
-							session.data?.role === 'admin'
-								&& <Button className='dashboardButton' label='Dashboard' onClick={() => params.router.push('/dashboard')} />
+							session.data?.role === 'customer' &&
+							<Button
+								icon='e43b'
+								label={(selectedProducts?.length > 0 ? selectedProducts?.length : '') + ''}
+								onClick={() => setSideSheetOpen(true)}
+							/>
 						}
 						{
-							session.data?.role === 'kitchen'
-								&& <Button className='kitchenButton' label='Kitchen' onClick={() => params.router.push('/kitchen')} />
+							session.data?.role === 'admin' &&
+							<Button
+								className='dashboardButton'
+								label='Dashboard'
+								icon='e09f'
+								iconType='solid'
+								onClick={() => params.router.push('/dashboard')}
+							/>
+						}
+						{
+							session.data?.role === 'kitchen' &&
+							<Button
+								className='kitchenButton'
+								label='Kitchen'
+								icon='e09f'
+								iconType='solid'
+								onClick={() => params.router.push('/kitchen')}
+							/>
+						}
+						{
+							(session.data?.role === 'admin' || session.data?.role === 'kitchen') &&
+							<Button className='logout' type='primaryDanger' icon='f011' onClick={() => signOut()} />
 						}
 					</div>
 				</div>

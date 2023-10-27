@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { Spinner } from 'xtreme-ui';
 
 import { useRestaurant } from '#components/context/useContext';
@@ -14,6 +14,7 @@ import './restaurant.scss';
 
 const Restaurant = () => {
 	const { restaurant, fetchMenu } = useRestaurant();
+	const pathname = usePathname();
 	const searchParams = useSearchParams();
 
 	const tab = searchParams.get('tab');
@@ -44,7 +45,7 @@ const Restaurant = () => {
 	useEffect(() => {
 		fetchMenu();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [pathname]);
 
 	if (!restaurant) return <Spinner label='Loading...' fullpage />;
 

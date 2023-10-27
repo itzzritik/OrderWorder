@@ -19,7 +19,7 @@ const QuantityButton = (props: TQuantityButtonProps) => {
 		<div className={classList}>
 			<div className='hiddenContainer'>
 				{!props.disabled && <div className='quantity decrease' onClick={decreaseQuantity}>
-					<Icon code='2d' />
+					<Icon code='2d' type='solid' />
 				</div>}
 				<div className='value'>
 					{disabled && <Icon code='f00d' />}
@@ -27,7 +27,7 @@ const QuantityButton = (props: TQuantityButtonProps) => {
 				</div>
 			</div>
 			{!disabled && <div className='quantity increase' onClick={increaseQuantity}>
-				{quantity ? <Icon code='2b' /> : 'Add' }
+				{quantity ? <Icon code='2b' type='solid' /> : 'Add' }
 			</div>}
 		</div>
 	);

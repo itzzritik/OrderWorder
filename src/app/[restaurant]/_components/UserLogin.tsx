@@ -41,7 +41,7 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 
 			const res = await signIn('customer', {
 				redirect: false,
-				restaurant: pathname,
+				restaurant: pathname.replaceAll('/', ''),
 				phone: phoneNumber,
 				name,
 				table: params.get('table'),

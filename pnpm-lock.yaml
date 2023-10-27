@@ -42,8 +42,8 @@ dependencies:
     specifier: ^1.69.4
     version: 1.69.4
   xtreme-ui:
-    specifier: ^0.0.62
-    version: 0.0.62(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^0.0.63
+    version: 0.0.63(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
 
 devDependencies:
   '@svgr/webpack':
@@ -87,7 +87,7 @@ devDependencies:
     version: 15.11.0(typescript@5.2.2)
   stylelint-config-standard-scss:
     specifier: ^11.0.0
-    version: 11.0.0(postcss@8.4.29)(stylelint@15.11.0)
+    version: 11.0.0(postcss@8.4.31)(stylelint@15.11.0)
   stylelint-order:
     specifier: ^6.0.3
     version: 6.0.3(stylelint@15.11.0)
@@ -1392,8 +1392,8 @@ packages:
       postcss-selector-parser: 6.0.13
     dev: true
 
-  /@dotlottie/react-player@1.6.0(react@18.2.0):
-    resolution: {integrity: sha512-gVH+IBuHwy8ZKm91V1sT4OlvhSmbdxYn8YttETqiRrrkJgt4aGwFgXacd05UOwHfE6vO3DHzn5rhsyR723T+KQ==}
+  /@dotlottie/react-player@1.6.3(react@18.2.0):
+    resolution: {integrity: sha512-wktLksV1LzV2qAAMocdBxn2e0J7XUraztLH2DnrlBYUgdy5Cz4FyV8+BPLftcyVD7r/4+0X448hEvK7tFQiLng==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
@@ -1440,14 +1440,14 @@ packages:
   /@floating-ui/core@1.5.0:
     resolution: {integrity: sha512-kK1h4m36DQ0UHGj5Ah4db7R0rHemTqqO0QLvUqi1/mUUp3LuAWbWxdxSIf/XsnH9VS6rRVPLJCncjRzUvyCLXg==}
     dependencies:
-      '@floating-ui/utils': 0.1.4
+      '@floating-ui/utils': 0.1.6
     dev: false
 
   /@floating-ui/dom@1.5.3:
     resolution: {integrity: sha512-ClAbQnEqJAKCJOEbbLo5IUlZHkNszqhuxS4fHAVxRPXPya6Ysf2G8KypnYcOTpx6I8xcgF9bbHb6g/2KpbV8qA==}
     dependencies:
       '@floating-ui/core': 1.5.0
-      '@floating-ui/utils': 0.1.4
+      '@floating-ui/utils': 0.1.6
     dev: false
 
   /@floating-ui/react-dom@2.0.2(react-dom@18.2.0)(react@18.2.0):
@@ -1461,21 +1461,21 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@floating-ui/react@0.25.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-lWRQ/UiTvSIBxohn0/2HFHEmnmOVRjl7j6XcRJuLH0ls6f/9AyHMWVzkAJFuwx0n9gaEeCmg9VccCSCJzbEJig==}
+  /@floating-ui/react@0.26.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-5gyJIJ2tZOPMgmZ/vEcVhdmQiy75b7LPO71sYIiDsxGcZ4hxLuygQWCuT0YXHqppt//Eese+L6t5KnX/gZ3tVA==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
       '@floating-ui/react-dom': 2.0.2(react-dom@18.2.0)(react@18.2.0)
-      '@floating-ui/utils': 0.1.4
+      '@floating-ui/utils': 0.1.6
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tabbable: 6.2.0
     dev: false
 
-  /@floating-ui/utils@0.1.4:
-    resolution: {integrity: sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==}
+  /@floating-ui/utils@0.1.6:
+    resolution: {integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
@@ -2036,58 +2036,58 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@uiw/color-convert@1.4.2(@babel/runtime@7.22.15):
-    resolution: {integrity: sha512-+jnTg9xtZEUzrrp8FMl4Z9mbAO0HbEzEt5qR4bi/4gzlP3b5Dgwyd7WJnt9Q9BqfiWoEm2zVxFW9ty6UDtAElQ==}
+  /@uiw/color-convert@1.4.3(@babel/runtime@7.22.15):
+    resolution: {integrity: sha512-i0E3P4KctYAynAKiVCUAYPQSikzJSaEXyIF/E0+RVlLKzCfQzzWi/RT2+yRdJ4HEVxr1iZNH6sgI9OrTo0/7gA==}
     peerDependencies:
       '@babel/runtime': '>=7.19.0'
     dependencies:
       '@babel/runtime': 7.22.15
     dev: false
 
-  /@uiw/react-color-alpha@1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-aXHgNaQpLR25pE2C2HyrbxL5Q3C8TINNf5CuLL66YrZ4J970rlETMBZhb1DQTdi4yNCcn48axgHkqofgVgbUMQ==}
-    peerDependencies:
-      '@babel/runtime': '>=7.19.0'
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
-    dependencies:
-      '@babel/runtime': 7.22.15
-      '@uiw/color-convert': 1.4.2(@babel/runtime@7.22.15)
-      '@uiw/react-drag-event-interactive': 1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@uiw/react-color-shade-slider@1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-bLYxhm0jCg9kybpWopf8QXwyeF8UdvulfBiJC2HRY67Q/KRSJYmNTE8ONpWnHsFJt7W5TgihxXg7t7Rqt+NnjA==}
+  /@uiw/react-color-alpha@1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-BF6vtQev0F6x9YxDgPLH6wtN3U9JaAQYOkbLFmykpWaJBb/o0hKGrRCEFvmimAFRYp7CFmIop6aL8Jr5GM0xNw==}
     peerDependencies:
       '@babel/runtime': '>=7.19.0'
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
       '@babel/runtime': 7.22.15
-      '@uiw/color-convert': 1.4.2(@babel/runtime@7.22.15)
-      '@uiw/react-color-alpha': 1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
+      '@uiw/color-convert': 1.4.3(@babel/runtime@7.22.15)
+      '@uiw/react-drag-event-interactive': 1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@uiw/react-color-wheel@1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-UVDTnH13y0ujOvDTXjTG38sUOIGZbrxs/Ckw1DKwb/FJrb5a59+Zjb68cD5Q8mvlzaxzfsMNCBbC23z/qgNs9g==}
+  /@uiw/react-color-shade-slider@1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-4v9aDAZiGrB0GaDPSICeQ5msHq2LamgEH7C8O6TsVtk0DoqR6OkJgC+EpKwBp2M2gDWWUc0Hsp3jzvhpmBjt2Q==}
     peerDependencies:
       '@babel/runtime': '>=7.19.0'
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
       '@babel/runtime': 7.22.15
-      '@uiw/color-convert': 1.4.2(@babel/runtime@7.22.15)
-      '@uiw/react-drag-event-interactive': 1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
+      '@uiw/color-convert': 1.4.3(@babel/runtime@7.22.15)
+      '@uiw/react-color-alpha': 1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@uiw/react-drag-event-interactive@1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-oM+fbpqiTNE1uR9jseqgOlXJeNuQF6FIXEjQbfTg8UKGveKWZ0RmhZOMyX0B3oDlr6ozPPAS9nXDYHT+VcEKQA==}
+  /@uiw/react-color-wheel@1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-g+f0EYB1Z9x+/StPfgbW1oDrdWtpiKV1lCndX7nYfTevxpX0JnhJ/bNFfa3AyiQh0NKGE3mHrFg9tQ+uR+iZJg==}
+    peerDependencies:
+      '@babel/runtime': '>=7.19.0'
+      react: '>=16.9.0'
+      react-dom: '>=16.9.0'
+    dependencies:
+      '@babel/runtime': 7.22.15
+      '@uiw/color-convert': 1.4.3(@babel/runtime@7.22.15)
+      '@uiw/react-drag-event-interactive': 1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@uiw/react-drag-event-interactive@1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-PTCWPM9tx7X6bPe2PBawqpEbYKHxuuUwq+O1tfCZBcNCjEc0FI0kp3VTyIzrO5onCzG4sC2vUIWHxHE7and+2Q==}
     peerDependencies:
       '@babel/runtime': '>=7.19.0'
       react: '>=16.9.0'
@@ -4467,13 +4467,13 @@ packages:
       postcss: 8.4.29
     dev: true
 
-  /postcss-scss@4.0.8(postcss@8.4.29):
+  /postcss-scss@4.0.8(postcss@8.4.31):
     resolution: {integrity: sha512-Cr0X8Eu7xMhE96PJck6ses/uVVXDtE5ghUTKNUYgm8ozgP2TkgV3LWs3WgLV1xaSSLq8ZFiXaUrj0LVgG1fGEA==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.4.29
     dependencies:
-      postcss: 8.4.29
+      postcss: 8.4.31
     dev: true
 
   /postcss-selector-parser@6.0.13:
@@ -4512,7 +4512,6 @@ packages:
       nanoid: 3.3.6
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: false
 
   /preact-render-to-string@5.2.6(preact@10.17.1):
     resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
@@ -5041,7 +5040,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /stylelint-config-recommended-scss@13.0.0(postcss@8.4.29)(stylelint@15.11.0):
+  /stylelint-config-recommended-scss@13.0.0(postcss@8.4.31)(stylelint@15.11.0):
     resolution: {integrity: sha512-7AmMIsHTsuwUQm7I+DD5BGeIgCvqYZ4BpeYJJpb1cUXQwrJAKjA+GBotFZgUEGP8lAM+wmd91ovzOi8xfAyWEw==}
     peerDependencies:
       postcss: ^8.3.3
@@ -5050,8 +5049,8 @@ packages:
       postcss:
         optional: true
     dependencies:
-      postcss: 8.4.29
-      postcss-scss: 4.0.8(postcss@8.4.29)
+      postcss: 8.4.31
+      postcss-scss: 4.0.8(postcss@8.4.31)
       stylelint: 15.11.0(typescript@5.2.2)
       stylelint-config-recommended: 13.0.0(stylelint@15.11.0)
       stylelint-scss: 5.2.1(stylelint@15.11.0)
@@ -5066,7 +5065,7 @@ packages:
       stylelint: 15.11.0(typescript@5.2.2)
     dev: true
 
-  /stylelint-config-standard-scss@11.0.0(postcss@8.4.29)(stylelint@15.11.0):
+  /stylelint-config-standard-scss@11.0.0(postcss@8.4.31)(stylelint@15.11.0):
     resolution: {integrity: sha512-fGE79NBOLg09a9afqGH/guJulRULCaQWWv4cv1v2bMX92B+fGb0y56WqIguwvFcliPmmUXiAhKrrnXilIeXoHA==}
     peerDependencies:
       postcss: ^8.3.3
@@ -5075,9 +5074,9 @@ packages:
       postcss:
         optional: true
     dependencies:
-      postcss: 8.4.29
+      postcss: 8.4.31
       stylelint: 15.11.0(typescript@5.2.2)
-      stylelint-config-recommended-scss: 13.0.0(postcss@8.4.29)(stylelint@15.11.0)
+      stylelint-config-recommended-scss: 13.0.0(postcss@8.4.31)(stylelint@15.11.0)
       stylelint-config-standard: 34.0.0(stylelint@15.11.0)
     dev: true
 
@@ -5538,17 +5537,17 @@ packages:
       signal-exit: 4.1.0
     dev: true
 
-  /xtreme-ui@0.0.62(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-+99aD+RaoWwV0TdE8eOJIH1RWdCS3YnV2wx56RsvlBKcZyhZc1hh1qMRxxQh3LryAUdd8KJehMA7TL5ePBygFQ==}
+  /xtreme-ui@0.0.63(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-jbI7JlVtOySLSj5Pi3uXNITJCZwUi8FOvoHPcrSAgSBDgeFuyd4mreYG5YYOE8zVswNEPS7M+7JeqyHLxiRFLA==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@dotlottie/react-player': 1.6.0(react@18.2.0)
-      '@floating-ui/react': 0.25.4(react-dom@18.2.0)(react@18.2.0)
-      '@uiw/react-color-alpha': 1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
-      '@uiw/react-color-shade-slider': 1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
-      '@uiw/react-color-wheel': 1.4.2(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
+      '@dotlottie/react-player': 1.6.3(react@18.2.0)
+      '@floating-ui/react': 0.26.1(react-dom@18.2.0)(react@18.2.0)
+      '@uiw/react-color-alpha': 1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
+      '@uiw/react-color-shade-slider': 1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
+      '@uiw/react-color-wheel': 1.4.3(@babel/runtime@7.22.15)(react-dom@18.2.0)(react@18.2.0)
       clsx: 2.0.0
       colord: 2.9.3
       react: 18.2.0

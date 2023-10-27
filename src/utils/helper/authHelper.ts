@@ -14,7 +14,8 @@ export const authOptions: AuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 	providers: [
 		CredentialsProvider({
-			name: 'credentials',
+			id: 'restaurant',
+			name: 'restaurant',
 			credentials: {
 				username: { label: 'Username', type: 'text', placeholder: 'Enter your username or email' },
 				kitchen: { label: 'Kitchen Username', type: 'text', placeholder: 'Enter your kitchen username' },
@@ -28,7 +29,7 @@ export const authOptions: AuthOptions = {
 					.populate({ path: 'kitchens', model: Kitchens, match: { username: cred?.kitchen } });
 
 				if (!account) throw new Error('Account not found.');
-				console.log('Cred Kitchen', typeof cred?.kitchen);
+
 				if (cred?.kitchen) {
 					if (!verifyPassword(cred?.password, account?.kitchens?.[0]?.password)) throw new Error('Invalid kitchen credentials');
 
@@ -49,6 +50,23 @@ export const authOptions: AuthOptions = {
 				}
 			},
 		}),
+		CredentialsProvider({
+			id: 'customer',
+			name: 'customer',
+			credentials: {
+				restaurant: { label: 'Restaurant Username', type: 'text', placeholder: 'Enter restaurant username' },
+				phone: { label: 'Phone Number', type: 'number', placeholder: 'Enter your phone number' },
+				name: { label: 'Name', type: 'text', placeholder: 'Enter your name' },
+			},
+			async authorize (cred) {
+				await connectDB();
+				const account = await Accounts.findOne({ username: cred?.restaurant });
+
+				if (!account) throw new Error('Restaurant not found.');
+
+				return pick(cred, ['restaurant', 'phone', 'name']);
+			},
+		}),
 	],
 	session: { strategy: 'jwt' },
 	callbacks: {
@@ -58,16 +76,29 @@ export const authOptions: AuthOptions = {
 				...token?.user,
 			};
 			delete session.user;
+			console.log(session);
 			return session;
 		},
-		async jwt ({ token, user }) {
-			if (user) {
-				token.user = {
-					role: user?.role,
-					...pick(user._doc, ['email', 'accountActive', 'subscriptionActive:', 'username', 'verified']),
-					profile: pick(user._doc.profile, ['name', 'themeColor', 'address', 'avatar', 'description', 'gstInclusive', 'categories']),
-				};
+		async jwt ({ token, user, account }) {
+			if (account?.provider === 'restaurant') {
+				if (user) {
+					token.user = {
+						role: user?.role,
+						...pick(user._doc, ['email', 'accountActive', 'subscriptionActive:', 'username', 'verified']),
+						profile: pick(user._doc.profile, ['name', 'themeColor', 'address', 'avatar', 'description', 'gstInclusive', 'categories']),
+					};
+				}
 			}
+
+			if (account?.provider === 'customer') {
+				if (user) {
+					token.user = {
+						...user,
+						role: 'customer',
+					};
+				}
+			}
+
 			return token;
 		},
 	},
