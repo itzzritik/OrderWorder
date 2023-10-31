@@ -1,0 +1,143 @@
+.itemCard {
+	--itemSize: 90px;
+
+	position: relative;
+	display: flex;
+	height: calc(var(--itemSize) + 20px);
+	background-color: var(--colorBackgroundPrimary);
+	border-radius: calc(var(--itemSize) / 4);
+	overflow: hidden;
+	padding: 10px;
+	transition: box-shadow 0.13s ease-in;
+	border: 1px solid var(--colorContentTertiary);
+	margin-bottom: calc(var(--itemSize) / 10);
+
+	.picture {
+		position: relative;
+		width: var(--itemSize);
+		min-width: var(--itemSize);
+		height: var(--itemSize);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid var(--colorContentTertiary);
+		border-radius: calc(var(--itemSize) / 6);
+		overflow: hidden;
+
+		> span {
+			display: block;
+			width: 100%;
+			height: 100%;
+			background-size: cover !important;
+			background-position: center !important;
+		}
+	}
+
+	.options {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		justify-content: space-between;
+		padding: 5px;
+
+		.title {
+			margin: 0 10px;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			font-size: 13px;
+			font-weight: 500;
+			overflow: hidden;
+		}
+
+		.footer {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 10px;
+			font-size: 13px;
+			font-weight: 500;
+			letter-spacing: 0.5px;
+
+			.price {
+				float: left;
+
+				> p {
+					margin: 0;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					span {
+						font-size: 8px;
+						user-select: none;
+						margin: 0 5px;
+					}
+				}
+			}
+
+			.totalAmount {
+				height: 25px;
+				margin: 3px 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 0 15px;
+				font-weight: 600;
+				border: 1px solid var(--colorContentTertiary);
+				border-radius: 9999px;
+			}
+		}
+	}
+	
+	&.staticCard {
+		--itemSize: 70px;
+
+		padding: 5px 10px;
+		border: 1px solid transparent;
+		border-radius: calc(var(--itemSize) / 6);
+		margin-bottom: calc(var(--itemSize) / 6);
+		box-shadow: 0 0 10px rgb(150 150 150 / 30%);
+
+		.picture {
+			margin: 3px 0;
+			border-radius: 9999px;
+			transform: scale(0.9);
+		}
+
+		.options {
+			.title {
+				font-size: 11px;
+			}
+
+			.footer {
+				font-size: 11px;
+			}
+		}
+	}
+}
+
+@media (width <= 530px) {
+	.itemCard {
+		--itemSize: 100px;
+
+		box-shadow: 0 0 transparent;
+		border-radius: 0;
+		margin-bottom: 0;
+		padding: 15px 10px;
+		border-width: 0 0 1px;
+
+		&:first-child {
+			border-width: 1px 0;
+		}
+
+		.picture {
+			transform: scale(0.9);
+		}
+	}
+}

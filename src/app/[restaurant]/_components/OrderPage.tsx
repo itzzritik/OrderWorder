@@ -10,6 +10,7 @@ import { useRestaurant } from '#components/context/useContext';
 import { TMenu } from '#utils/database/models/menu';
 import { useQueryParams } from '#utils/hooks/useQueryParams';
 
+import CartPage from './CartPage';
 import MenuCard from './MenuCard';
 import UserLogin from './UserLogin';
 import './orderPage.scss';
@@ -220,13 +221,13 @@ const OrderPage = () => {
 				</div>
 			</div>
 			<SideSheet title={sideSheetHeading} open={sideSheetOpen} setOpen={setSideSheetOpen}>
-				{/* <CartPage
+				<CartPage
 					selectedProducts={selectedProducts}
 					increaseProductQuantity={increaseProductQuantity}
 					decreaseProductQuantity={decreaseProductQuantity}
-					resetSelectedProducts={resetSelectedProducts}
+					resetSelectedProducts={() => setSelectedProducts([])}
 					setSideSheetHeading={setSideSheetHeading}
-				/> */}
+				/>
 			</SideSheet>
 			<Modal open={loginOpen} setOpen={setLoginOpen}>
 				<UserLogin setOpen={setLoginOpen} />

@@ -67,7 +67,7 @@ const LoginSection = () => {
 		setLogoutLoading(true);
 		signOut();
 	};
-
+	console.log(session.data);
 	return (
 		<section className='loginSection' id='homepage-login'>
 			<div className='loginAnim'>
@@ -94,9 +94,9 @@ const LoginSection = () => {
 				</div>
 				<div className='loginCard back'>
 					<div className='header'>
-						<Avatar src={profile?.avatar ?? session.data?.profile?.avatar ?? ''} size='mini' />
+						{session.data?.profile?.avatar && <Avatar src={profile?.avatar ?? session.data?.profile?.avatar ?? ''} size='mini' />}
 						<div className='details'>
-							<p className='name'>{profile?.name ?? session.data?.profile?.name}</p>
+							<p className='name'>{profile?.name ?? session.data?.profile?.name ?? session.data?.name}</p>
 							<p className='address'>{profile?.address ?? session.data?.profile?.address}</p>
 						</div>
 						<Button className='logout' icon={loggedIn ? 'f011' : 'f304'} size='mini' onClick={logout} loading={logoutLoading} />

@@ -1,0 +1,124 @@
+.collapsible {
+	--collapsibleHeight: 44px;
+	--borderRadius: 12px;
+
+	position: relative;
+	width: 100%;
+	border-radius: var(--borderRadius);
+	margin: 10px 0;
+	transition: all 0.1s ease-out;
+
+	&.round {
+		border-radius: 9999px;
+
+		.collapsibleHeader {
+			border-radius: 9999px;
+		}
+
+		.collapsibleContent {
+			border-radius: 0 9999px;
+		}
+	}
+
+	&.expand {
+		--collapsibleHeight: 60px;
+
+		.collapsibleHeader {
+			.label {
+				font-size: 16px;
+			}
+
+			.arrow {
+				transform: rotate(180deg);
+			}
+		}
+
+		.collapsibleContent {
+			padding: calc(15px + (var(--collapsibleHeight) / 2)) 15px 15px 15px;
+			transform: scaleY(1);
+		}
+	}
+
+	.collapsibleHeader {
+		position: relative;
+		width: 100%;
+		height: var(--collapsibleHeight);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 20px;
+		border-radius: var(--borderRadius);
+		user-select: none;
+		background-color: rgb(var(--colorBrandAccentRgb));
+		box-shadow: var(--boxShadowGlowHover);
+		transition: height 0.2s ease-out;
+		z-index: 2;
+		cursor: pointer;
+
+		@media (hover: hover) {
+			&:hover {
+				box-shadow: var(--boxShadowGlowHover);
+			}
+		}
+
+		&:active {
+			box-shadow: var(--boxShadowGlowActive);
+		}
+
+		.label {
+			font-size: 14px;
+			margin: 0;
+			font-weight: 400;
+			transition: font-size 0.2s ease-out;
+		}
+
+		.alertLabel {
+			position: absolute;
+			right: 45px;
+			width: calc(var(--collapsibleHeight) / 2);
+			height: calc(var(--collapsibleHeight) / 2);
+			border-radius: 9999px;
+			margin: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 600;
+			background-color: var(--colorBackgroundPrimary);
+			color: rgb(var(--colorBrandAccentRgb));
+			transition: all 0.2s ease-out;
+		}
+
+		.arrow {
+			position: absolute;
+			right: 20px;
+			margin-top: 1px;
+			display: block;
+			width: 12px;
+			height: 12px;
+			mask-size: 12px;
+			mask-repeat: no-repeat;
+			mask-position: center;
+			background-color: var(--colorBackgroundPrimary);
+			transition: transform 0.2s ease-out;
+		}
+	}
+
+	.collapsibleContent {
+		width: 100%;
+		position: relative;
+		background-color: var(--colorBackgroundSecondary);
+		box-shadow: var(--boxShadowInset);
+		border-radius: 0 0 var(--borderRadius) var(--borderRadius);
+		padding: 15px;
+		margin-top: calc(var(--collapsibleHeight) / -2);
+		transform: scaleY(0);
+		transform-origin: top;
+		transition: transform 0.2s ease-out;
+	}
+}
+
+@media (width <= 530px) {
+	.collapsible {
+		--collapsibleHeight: 50px;
+	}
+}
