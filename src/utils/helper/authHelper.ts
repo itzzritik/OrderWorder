@@ -60,11 +60,20 @@ export const authOptions: AuthOptions = {
 			},
 			async authorize (cred) {
 				await connectDB();
-				const account = await Accounts.findOne({ username: cred?.restaurant });
+				const account = await Accounts.findOne({ username: cred?.restaurant }).populate({ path: 'profile', model: Profiles });
 
 				if (!account) throw new Error('Restaurant not found.');
-
-				return pick(cred, ['restaurant', 'phone', 'name']);
+				return {
+					customer: {
+						name: cred?.name,
+						phone: cred?.phone,
+					},
+					restaurant: {
+						username: account?.profile?.restaurantID,
+						name: account?.profile?.name,
+						avatar: account?.profile?.avatar,
+					},
+				};
 			},
 		}),
 	],

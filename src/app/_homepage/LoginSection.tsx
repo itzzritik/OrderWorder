@@ -94,10 +94,10 @@ const LoginSection = () => {
 				</div>
 				<div className='loginCard back'>
 					<div className='header'>
-						{session.data?.profile?.avatar && <Avatar src={profile?.avatar ?? session.data?.profile?.avatar ?? ''} size='mini' />}
+						<Avatar src={profile?.avatar ?? session.data?.profile?.avatar ?? session.data?.restaurant?.avatar ?? ''} size='mini' />
 						<div className='details'>
-							<p className='name'>{profile?.name ?? session.data?.profile?.name ?? session.data?.name}</p>
-							<p className='address'>{profile?.address ?? session.data?.profile?.address}</p>
+							<p className='name'>{profile?.name ?? session.data?.profile?.name ?? session.data?.customer?.name}</p>
+							<p className='address'>{profile?.address ?? session.data?.profile?.address ?? session.data?.customer?.phone}</p>
 						</div>
 						<Button className='logout' icon={loggedIn ? 'f011' : 'f304'} size='mini' onClick={logout} loading={logoutLoading} />
 					</div>
@@ -135,14 +135,30 @@ const LoginSection = () => {
 								{
 									session.data?.role === 'admin' &&
 									<Button
-										className='dashboard'
 										label='open dashboard'
 										icon='e323'
 										size='mini'
 										onClick={() => router.push('/dashboard')}
 									/>
 								}
-								<Button className='kitchen' label='open kitchen' icon='f86b' size='mini' onClick={() => router.push('/kitchen')} />
+								{
+									(session.data?.role === 'admin' || session.data?.role === 'kitchen') &&
+									<Button
+										label='open kitchen'
+										icon='f86b'
+										size='mini'
+										onClick={() => router.push('/kitchen')}
+									/>
+								}
+								{
+									session.data?.role === 'customer' &&
+									<Button
+										label='open  restaurant menu'
+										icon='f86b'
+										size='mini'
+										onClick={() => router.push(`/${session.data?.restaurant?.username}`)}
+									/>
+								}
 							</div>
 					}
 

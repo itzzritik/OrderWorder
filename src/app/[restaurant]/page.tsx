@@ -40,6 +40,11 @@ const Restaurant = () => {
 			value: 'contact',
 			icon: 'f095',
 		},
+		{
+			label: 'sign out',
+			value: 'signout',
+			icon: 'f011',
+		},
 	];
 
 	useEffect(() => {

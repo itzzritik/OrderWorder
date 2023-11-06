@@ -5,7 +5,16 @@ import { TProfile } from '#utils/database/models/profile';
 
 type AuthUser = Partial<Omit<TAccount, 'profile'> & {
 	role: 'admin' | 'kitchen' | 'customer'
-	profile: Partial<TProfile>
+	profile: Partial<TProfile>,
+	customer?: {
+		name: string,
+		phone: string,
+	},
+	restaurant?: {
+		username: TProfile.username,
+		name: TProfile.name,
+		avatar: TProfile.avatar,
+	}
 }>
 
 declare module 'next-auth' {

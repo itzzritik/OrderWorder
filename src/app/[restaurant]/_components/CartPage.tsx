@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
 // import Collapsible from '#components/base/Collapsible';
+import { Icon } from 'xtreme-ui';
+
+import Collapsible from '#components/base/Collapsible';
 import { useRestaurant } from '#components/context/useContext';
 import { TMenu } from '#utils/database/models/menu.js';
 
-import './cartPage.scss';
 import ItemCard from './ItemCard';
+import './cartPage.scss';
 
 const CartPage = (props: TCartPageProps) => {
 	const { selectedProducts, increaseProductQuantity, decreaseProductQuantity, setSideSheetHeading } = props;
@@ -83,16 +86,16 @@ const CartPage = (props: TCartPageProps) => {
 		<div className='cartPage'>
 			<div className='cartItems'>
 				{/* {
-					orderedProducts.length > 0 && adminApproved
-					&& <Collapsible className='orderedProducts'
+					orderedProducts.length > 0 && adminApproved &&
+					<Collapsible className='orderedProducts'
 						expand={showOrderHistory}
 						label='Order History'
 						setExpand={setShowOrderHistory}
 						alert={orderedProducts.length}
-					   >
+					>
 						{
 							orderedProducts.map((product, key) => {
-								const productData = Menu.findOne({ _id: product._id });
+								const productData = restaurant?.menus.find((menu) => (menu._id === product._id));
 								product = { ...product, ...productData };
 								return <ItemCard item={product} key={key} staticCard />;
 							})
@@ -116,9 +119,9 @@ const CartPage = (props: TCartPageProps) => {
 					}
 				</div>
 			</div>
-			{/* <div className={`cartCheckout ${bottomBarActive ? 'active' : ''}`}>
+			<div className={`cartCheckout ${bottomBarActive ? 'active' : ''}`}>
 				<div className='checkoutHeader'>
-					{
+					{/* {
 						adminApproved
 						&& <div className='orderTotal' onClick={() => setBottomBarActive((value) => !value)}>
 							{
@@ -132,11 +135,11 @@ const CartPage = (props: TCartPageProps) => {
 									</>
 							}
 						</div>
-					}
+					} */}
 					<div className='cartAction'>
 						{
-							<div className='orderActionButton' onClick={onOrderAction}>
-								{ bottomBarActive && <span style={getIconMask('/icons/Base/arrowDown.svg')} /> }
+							<div className='orderActionButton round' onClick={() => {}}>
+								{ bottomBarActive && <Icon code='f078' /> }
 								{
 									!bottomBarActive && (
 										props.selectedProducts.length > 0
@@ -144,7 +147,8 @@ const CartPage = (props: TCartPageProps) => {
 												<p className='selectionTotal rupee'>{selectionTotal}</p>
 												<p className='separator'>|</p>
 												<p className='orderActionLabel'>
-													{orderedProducts.length ? 'Add to order' : 'Place order'}
+													Place order
+													{/* {orderedProducts.length ? 'Add to order' : 'Place order'} */}
 												</p>
 											</>
 											: <p>Proceed to Pay</p>
@@ -155,7 +159,7 @@ const CartPage = (props: TCartPageProps) => {
 					</div>
 				</div>
 				<div className='taxDetails'>
-					<CartTaxItem name='Sub Total' amount={orderTotal} />
+					{/* <CartTaxItem name='Sub Total' amount={orderTotal} />
 					{
 						taxList.map((taxName, key) => {
 							return (<CartTaxItem key={key} name={taxName.name} taxPercent={taxName.value}
@@ -167,9 +171,9 @@ const CartPage = (props: TCartPageProps) => {
 					<CartTaxItem
 						name='Grand Total'
 						amount={order && order.gstInclusive ? orderTotal : Math.round(parseFloat(orderTotal) + parseFloat(totalTax))}
-					/>
+					/> */}
 				</div>
-			</div> */}
+			</div>
 		</div>
 	);
 };
