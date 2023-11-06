@@ -1,29 +1,29 @@
-import { useState, createContext, ReactNode } from 'react';
+import { createContext, ReactNode, useMemo } from 'react';
 
 import { usePathname } from 'next/navigation';
+import useSWR from 'swr';
 
 import { TAccount } from '#utils/database/models/account';
+import { fetcher } from '#utils/helper/common';
 
 const RestaurantDefault: TRestaurantInitialType = {
 	restaurant: undefined,
-	fetchMenu: () => null,
+	error: undefined,
+	loading: false,
 };
 
 export const RestaurantContext = createContext(RestaurantDefault);
 export const RestaurantProvider = ({ children }: TRestaurantProviderProps) => {
 	const pathname = usePathname();
-	const [restaurant, setRestaurant] = useState(RestaurantDefault.restaurant);
+	const { data, error, isLoading } = useSWR(`/api/menu?id=${pathname.replace('/', '')}`, fetcher);
 
-	const fetchMenu = async () => {
-		const req = await fetch(`/api/menu?id=${pathname.replace('/', '')}`);
-		const data: TAccount = await req.json();
-
-		data?.profile?.categories?.unshift('all');
-		setRestaurant(data);
-	};
+	const restaurant = useMemo(() => {
+		if (!data?.profile?.categories.includes('all')) data?.profile?.categories?.unshift('all');
+		return data;
+	}, [data]);
 
 	return (
-		<RestaurantContext.Provider value={{ restaurant, fetchMenu }}>
+		<RestaurantContext.Provider value={{ restaurant, error, loading: isLoading }}>
 			{children}
 		</RestaurantContext.Provider>
 	);
@@ -35,5 +35,6 @@ export type TRestaurantProviderProps = {
 
 export type TRestaurantInitialType = {
 	restaurant?: TAccount,
-	fetchMenu: () => void
+	error: unknown,
+	loading: boolean,
 }

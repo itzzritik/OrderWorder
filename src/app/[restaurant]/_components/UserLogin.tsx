@@ -18,7 +18,8 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 	const [dialCode] = useState('91');
 	const [phone, setPhone] = useState('');
 
-	const [name, setName] = useState('');
+	const [fname, setFName] = useState('');
+	const [lname, setLName] = useState('');
 	const [heading, setHeading] = useState(['Let\'s', ' start ordering']);
 
 	const phoneNumber = `+${dialCode}${phone}`;
@@ -43,7 +44,8 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 				redirect: false,
 				restaurant: pathname.replaceAll('/', ''),
 				phone: phoneNumber,
-				name,
+				fname,
+				lname,
 				table: params.get('table'),
 				callbackUrl: `${window.location.origin}`,
 			});
@@ -77,11 +79,18 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 				<Textfield className='phone' type='phone' autoComplete='tel-local' value={phone} onChange={(e) => setPhone(e.target.value)} />
 				<div className='otpContainer'>
 					<Textfield
-						className='name'
-						placeholder='Enter Your Name'
-						autoComplete='name'
-						value={name}
-						onChange={(e) => setName(e.target.value)}
+						className='fName'
+						placeholder='First Name'
+						autoComplete='given-name'
+						value={fname}
+						onChange={(e) => setFName(e.target.value)}
+					/>
+					<Textfield
+						className='lName'
+						placeholder='Last Name'
+						autoComplete='family-name'
+						value={lname}
+						onChange={(e) => setLName(e.target.value)}
 					/>
 					{/* <Textfield
 						className='otp'

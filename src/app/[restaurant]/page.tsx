@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Spinner } from 'xtreme-ui';
 
 import { useRestaurant } from '#components/context/useContext';
@@ -13,8 +13,7 @@ import OrderPage from './_components/OrderPage';
 import './restaurant.scss';
 
 const Restaurant = () => {
-	const { restaurant, fetchMenu } = useRestaurant();
-	const pathname = usePathname();
+	const { restaurant } = useRestaurant();
 	const searchParams = useSearchParams();
 
 	const tab = searchParams.get('tab');
@@ -46,11 +45,6 @@ const Restaurant = () => {
 			icon: 'f011',
 		},
 	];
-
-	useEffect(() => {
-		fetchMenu();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pathname]);
 
 	if (!restaurant) return <Spinner label='Loading...' fullpage />;
 

@@ -1,0 +1,20 @@
+import mongoose from 'mongoose';
+
+const gender = ['male', 'female', 'others'] as const;
+const CustomerSchema = new mongoose.Schema<TCustomer>({
+	fname: { type: String, trim: true, required: true },
+	lname: { type: String, trim: true, required: true },
+	phone: { type: String, trim: true, unique: true, required: true, sparse: true, index: { unique: true } },
+	email: { type: String, trim: true, unique: true, required: true, sparse: true, index: { unique: true } },
+	gender: { type: String, trim: true, lowercase: true, enum: gender },
+},
+{ timestamps: true });
+
+export const Customer = mongoose.models?.customer ?? mongoose.model<TCustomer>('customer', CustomerSchema);
+export type TCustomer = {
+	fname: string,
+	lname: string,
+	gender: typeof gender[number];
+	phone: string,
+	email: string
+}

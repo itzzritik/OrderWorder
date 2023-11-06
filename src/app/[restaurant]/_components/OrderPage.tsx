@@ -42,6 +42,7 @@ const OrderPage = () => {
 	const [hasNonImageItems, setHasNonImageItems] = useState(false);
 
 	const showOrderButton = restaurant?.tables?.some(({ username }) => username === params.get('table'));
+	const eligibleToOrder = session.data?.role === 'customer' && showOrderButton;
 
 	const onCategoryScroll = (event: SyntheticEvent) => {
 		const target = event.target as HTMLElement;
@@ -120,11 +121,11 @@ const OrderPage = () => {
 					<div className='options'>
 						<SearchButton setSearchActive={setSearchActive} placeholder='Search for food' value={searchValue} setValue={setSearchValue} />
 						{
-							!session.data?.role &&
+							(!session.data?.role || !showOrderButton) &&
 							<Button className='loginButton' label={showOrderButton ? 'Order' : 'Scan'} onClick={onLoginClick} />
 						}
 						{
-							session.data?.role === 'customer' &&
+							eligibleToOrder &&
 							<Button
 								icon='e43b'
 								label={(selectedProducts?.length > 0 ? selectedProducts?.length : '') + ''}
@@ -181,11 +182,11 @@ const OrderPage = () => {
 					</div>
 					{
 						hasImageItems
-						&& <div className={`itemContainer ${session.data?.role !== 'customer' ? 'restrictOrder ' : ''}`}>
+						&& <div className={`itemContainer ${!eligibleToOrder ? 'restrictOrder ' : ''}`}>
 							<div>
 								{
 									filteredProducts?.map((item, key) => (
-										<MenuCard key={key} item={item} restrictOrder={session.data?.role !== 'customer'}
+										<MenuCard key={key} item={item} restrictOrder={!eligibleToOrder}
 											increaseQuantity={increaseProductQuantity}
 											decreaseQuantity={decreaseProductQuantity}
 											showInfo={item._id.toString() === showInfoCard.toString()}
@@ -200,12 +201,12 @@ const OrderPage = () => {
 					}
 					{hasImageItems && hasNonImageItems && <hr />}
 					{
-						hasNonImageItems
-						&& <div className={`itemContainer withoutImage ${session.data?.role !== 'customer' ? 'restrictOrder ' : ''}`}>
+						hasNonImageItems &&
+						<div className={`itemContainer withoutImage ${!eligibleToOrder ? 'restrictOrder ' : ''}`}>
 							<div>
 								{
 									filteredProducts?.map((item, key) => (
-										<MenuCard key={key} item={item} restrictOrder={session.data?.role !== 'customer'}
+										<MenuCard key={key} item={item} restrictOrder={!eligibleToOrder}
 											increaseQuantity={increaseProductQuantity}
 											decreaseQuantity={decreaseProductQuantity}
 											showInfo={item._id.toString() === showInfoCard.toString()}

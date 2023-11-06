@@ -54,6 +54,7 @@
 			align-items: center;
 			transform: translateX(100%);
 			transition: all var(--userLoginDuration) ease-out;
+			gap: 16px;
 
 			> .textInput {
 				width: 100%;

@@ -1,9 +1,12 @@
+import { omit } from 'lodash';
 import pick from 'lodash/pick';
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 import connectDB from '#utils/database/connect';
+import { createIfNotExist } from '#utils/database/manager';
 import { Accounts } from '#utils/database/models/account';
+import { Customer } from '#utils/database/models/customer';
 import { Kitchens } from '#utils/database/models/kitchen';
 import { Profiles } from '#utils/database/models/profile';
 
@@ -56,18 +59,28 @@ export const authOptions: AuthOptions = {
 			credentials: {
 				restaurant: { label: 'Restaurant Username', type: 'text', placeholder: 'Enter restaurant username' },
 				phone: { label: 'Phone Number', type: 'number', placeholder: 'Enter your phone number' },
-				name: { label: 'Name', type: 'text', placeholder: 'Enter your name' },
+				fname: { label: 'Name', type: 'text', placeholder: 'Enter your first name' },
+				lname: { label: 'Name', type: 'text', placeholder: 'Enter your last name' },
 			},
 			async authorize (cred) {
+				if (!cred?.fname) throw new Error('First name is required');
+				if (!cred?.lname) throw new Error('Last name is required');
+				if (!cred?.phone) throw new Error('Phone number is required');
+
 				await connectDB();
+				const customerCred = {
+					fname: cred?.fname,
+					lname: cred?.lname,
+					phone: cred?.phone,
+				};
+
 				const account = await Accounts.findOne({ username: cred?.restaurant }).populate({ path: 'profile', model: Profiles });
+				const customer = await createIfNotExist(Customer, { phone: cred?.phone }, customerCred);
 
 				if (!account) throw new Error('Restaurant not found.');
 				return {
-					customer: {
-						name: cred?.name,
-						phone: cred?.phone,
-					},
+					role: 'customer',
+					customer,
 					restaurant: {
 						username: account?.profile?.restaurantID,
 						name: account?.profile?.name,
@@ -101,10 +114,7 @@ export const authOptions: AuthOptions = {
 
 			if (account?.provider === 'customer') {
 				if (user) {
-					token.user = {
-						...user,
-						role: 'customer',
-					};
+					token.user = user;
 				}
 			}
 
