@@ -1,4 +1,3 @@
-import { omit } from 'lodash';
 import pick from 'lodash/pick';
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -6,7 +5,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import connectDB from '#utils/database/connect';
 import { createIfNotExist } from '#utils/database/manager';
 import { Accounts } from '#utils/database/models/account';
-import { Customer } from '#utils/database/models/customer';
+import { Customers } from '#utils/database/models/customer';
 import { Kitchens } from '#utils/database/models/kitchen';
 import { Profiles } from '#utils/database/models/profile';
 
@@ -75,7 +74,7 @@ export const authOptions: AuthOptions = {
 				};
 
 				const account = await Accounts.findOne({ username: cred?.restaurant }).populate({ path: 'profile', model: Profiles });
-				const customer = await createIfNotExist(Customer, { phone: cred?.phone }, customerCred);
+				const customer = await createIfNotExist(Customers, { phone: cred?.phone }, customerCred);
 
 				if (!account) throw new Error('Restaurant not found.');
 				return {

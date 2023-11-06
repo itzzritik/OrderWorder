@@ -11,7 +11,7 @@ const SideSheet = (props: SideSheetProps) => {
 
 	return (
 		<div className={classList}>
-			<div className='backdrop' onClick={close} />
+			<div className='backdrop' onClick={() => setOpen(false)} />
 			<div className='sideContainer'>
 				<div className='sheetHeader'>
 					<h1 className='title'>{title[0]} <span>{title[1]}</span></h1>

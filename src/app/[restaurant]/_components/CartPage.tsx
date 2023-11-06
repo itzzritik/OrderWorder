@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // import Collapsible from '#components/base/Collapsible';
 import { Icon } from 'xtreme-ui';
@@ -17,21 +17,22 @@ const CartPage = (props: TCartPageProps) => {
 	const [selectionTotal, setSelectionTotal] = useState(0);
 	const [bottomBarActive, setBottomBarActive] = useState(false);
 
-	// const onOrderAction = () => {
-	// 	if (bottomBarActive) {
-	// 		return setBottomBarActive(false);
-	// 	}
+	const onOrderAction = () => {
+		if (bottomBarActive) {
+			return setBottomBarActive(false);
+		}
 
-	// 	if (props.selectedProducts.length === 0) {
-	// 		return endOrder();
-	// 	}
+		if (props.selectedProducts.length === 0) {
+			return endOrder();
+		}
 
-	// 	if (orderedProducts.length) {
-	// 		updateOrder();
-	// 	} else {
-	// 		startOrder();
-	// 	}
-	// };
+		if (orderedProducts.length) {
+			updateOrder();
+		} else {
+			startOrder();
+		}
+	};
+
 	// const calculateTax = (taxItem) => {
 	// 	let amount = 0;
 	// 	if (order.gstInclusive) {
@@ -44,19 +45,16 @@ const CartPage = (props: TCartPageProps) => {
 	// 	return amount;
 	// };
 
-	// useEffect(() => {
-	// 	if (!props.selectedProducts.length) {
-	// 		setShowOrderHistory(true);
-	// 	} else {
-	// 		setShowOrderHistory(false);
-	// 	}
+	useEffect(() => {
+		if (!selectedProducts.length) setShowOrderHistory(true);
+		else setShowOrderHistory(false);
 
-	// 	setSelectionTotal(props.selectedProducts.reduce((total, product) => {
-	// 		const productData = Menu.findOne({ _id: product._id });
-	// 		product = { ...product, ...productData };
-	// 		return total + (product.quantity * product.price);
-	// 	}, 0));
-	// }, [orderTotal, props.selectedProducts]);
+		setSelectionTotal(selectedProducts.reduce((total, product) => {
+			const productData = restaurant?.menus.find((menu) => (menu._id === product._id));
+			product = { ...product, ...productData };
+			return total + (product.quantity * product.price);
+		}, 0));
+	}, [props.selectedProducts, restaurant?.menus, selectedProducts]);
 
 	// useEffect(() => {
 	// 	if (userOrderEnd) {
@@ -138,7 +136,7 @@ const CartPage = (props: TCartPageProps) => {
 					} */}
 					<div className='cartAction'>
 						{
-							<div className='orderActionButton round' onClick={() => {}}>
+							<div className='orderActionButton round' onClick={onOrderAction}>
 								{ bottomBarActive && <Icon code='f078' /> }
 								{
 									!bottomBarActive && (

@@ -10,7 +10,7 @@ const CustomerSchema = new mongoose.Schema<TCustomer>({
 },
 { timestamps: true });
 
-export const Customer = mongoose.models?.customer ?? mongoose.model<TCustomer>('customer', CustomerSchema);
+export const Customers = mongoose.models?.customers ?? mongoose.model<TCustomer>('customers', CustomerSchema);
 export type TCustomer = {
 	fname: string,
 	lname: string,
