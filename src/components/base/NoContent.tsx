@@ -1,12 +1,16 @@
+import { Lottie } from 'xtreme-ui';
+
+import { getAnimSrc } from '#utils/constants/common';
+
 import './noContent.scss';
 
 const NoContent = (props: TNoContentProps) => {
-	const { icon, label } = props;
+	const { label } = props;
 	return (
 		<div className='noContent'>
 			<div>
-				<span style={getIconMask(props.icon)} />
-				{props.label && <p>{props.label}</p>}
+				<Lottie size={250} src={getAnimSrc('FoodBurgerHappy')} />
+				{label && <p>{label}</p>}
 			</div>
 		</div>
 	);
@@ -15,6 +19,5 @@ const NoContent = (props: TNoContentProps) => {
 export default NoContent;
 
 export type TNoContentProps = {
-	icon: string,
 	label: string,
 }

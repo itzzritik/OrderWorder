@@ -8,13 +8,15 @@
 	div {
 		display: flex;
 		flex-direction: column;
-		opacity: 0.4;
 		user-select: none;
+		align-items: center;
 
 		p {
-			font-weight: 500;
+			font-variation-settings: 'wdth' 75, 'wght' 400;
 			font-size: 20px;
-			margin-top: 6px;
+			margin-top: -24px;
+			color: var(--colorContentSecondary);
+			text-transform: capitalize;
 		}
 	}
 }

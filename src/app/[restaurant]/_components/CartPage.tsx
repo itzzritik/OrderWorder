@@ -10,6 +10,8 @@ import { TMenu } from '#utils/database/models/menu.js';
 import ItemCard from './ItemCard';
 import './cartPage.scss';
 
+import NoContent from '#components/base/NoContent';
+
 const CartPage = (props: TCartPageProps) => {
 	const { selectedProducts, increaseProductQuantity, decreaseProductQuantity, setSideSheetHeading } = props;
 	const { restaurant } = useRestaurant();
@@ -62,14 +64,13 @@ const CartPage = (props: TCartPageProps) => {
 	// 	}
 	// }, [userOrderEnd, setSideSheetHeading]);
 
-	// Display `noContent` when no products are there to display
-	// if (!props.selectedProducts.length && !orderedProducts.length) {
-	// 	return (
-	// 		<div className='cartPage'>
-	// 			<NoContent label='No orders yet' icon='/icons/Base/pan.svg' />
-	// 		</div>
-	// 	);
-	// }
+	if (!props.selectedProducts.length) { // && !orderedProducts.length) {
+		return (
+			<div className='cartPage'>
+				<NoContent label={'Aren\'t you hungry?'} />
+			</div>
+		);
+	}
 
 	// // Display `waitingApproval` when admin approval is pending
 	// if (orderedProducts.length && !adminApproved) {
