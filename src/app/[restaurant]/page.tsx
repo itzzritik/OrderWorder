@@ -37,7 +37,7 @@ const Restaurant = () => {
 		{
 			label: 'contact',
 			value: 'contact',
-			icon: 'f095',
+			icon: 'f8d3',
 		},
 		{
 			label: 'sign out',

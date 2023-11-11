@@ -62,11 +62,13 @@ const CartPage = (props: TCartPageProps) => {
 	// 	}
 	// }, [userOrderEnd, setSideSheetHeading]);
 
-	// // Display `noContent` when no products are there to display
+	// Display `noContent` when no products are there to display
 	// if (!props.selectedProducts.length && !orderedProducts.length) {
-	// 	return (<div className='cartPage'>
-	// 		<NoContent label='No orders yet' icon='/icons/Base/pan.svg' />
-	// 	</div>);
+	// 	return (
+	// 		<div className='cartPage'>
+	// 			<NoContent label='No orders yet' icon='/icons/Base/pan.svg' />
+	// 		</div>
+	// 	);
 	// }
 
 	// // Display `waitingApproval` when admin approval is pending
