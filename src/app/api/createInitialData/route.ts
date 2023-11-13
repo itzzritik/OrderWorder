@@ -367,6 +367,6 @@ const empireMenu = [
 		price: 150,
 		foodType: 'Sweet',
 		veg: 'veg',
-		image: 'https://irepo.primecp.com/2015/04/218935/Death-By-Chocolate_ArticleImage-categoriesPage_ID-977283.jpg',
+		image: 'https://irepo.primecp.com/2015/04/218935/Death-By-Chocolate_MASTER_ID-977271.jpg?v=977271',
 	},
 ];

@@ -1,0 +1,124 @@
+.dashboard {
+	--navIconSize: 60px;
+	--initialHeaderHeight: 100px;
+	--headerHeight: var(--initialHeaderHeight);
+
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	overflow: hidden;
+	padding-left: var(--navIconSize);
+
+	.dashboardViewport {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background-color: var(--colorBackgroundSecondary);
+
+		@media (width >= 530px) {
+			&.floatHeader {
+				--headerHeight: var(--navIconSize);
+	
+				> .dashboardHeader {
+					z-index: 2;
+					box-shadow: 0 10px 10px -10px rgb(0 0 0 / 10%);
+					background-color: var(--colorBackgroundPrimary);
+	
+					.dashboardHeading {
+						font-size: 28px;
+					}
+				}
+
+				.ordersContent {
+					.details {
+						margin-top: calc(var(--headerHeight) + 15px);
+					}
+				}
+			}
+		}
+		
+		.dashboardHeader {
+			position: fixed;
+			top: 0;
+			width: calc(100% - var(--navIconSize));
+			height: var(--headerHeight);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 40px;
+			transition: transform 0.2s ease-out;
+	
+			.dashboardHeading {
+				font-size: 36px;
+				font-weight: 300;
+				margin: 0 40px 0 0;
+				overflow: hidden;
+				user-select: none;
+				white-space: nowrap;
+				text-transform: capitalize;
+				transition: all 0.2s ease-out;
+			}
+		}
+
+		.dashboardContent {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+
+@media (width <= 750px) {
+	.dashboard {
+		--navIconSize: 70px;
+
+		padding-left: 0;
+		display: flex;
+		flex-direction: column-reverse;
+
+		.dashboardViewport {
+			width: 100%;
+			height: calc(100% - var(--navIconSize));
+
+			.dashboardHeader {
+				width: 100%;
+			}
+		}
+	}
+}
+
+@media (width <= 530px) {
+	.dashboard {
+		--headerHeight: 120px;
+		--initialHeaderHeight: 140px;
+
+		.dashboardViewport {
+			&.floatHeader {
+				> .dashboardHeader {
+					z-index: 2;
+					box-shadow: 0 10px 10px -10px rgb(0 0 0 / 10%);
+					background-color: var(--colorBackgroundPrimary);
+					transform: translateY(-70px);
+					transition: all 0.2s ease-out;
+				}
+			}
+
+			.dashboardHeader {
+				flex-direction: column;
+				align-items: flex-start;
+				justify-content: flex-end;
+				padding: 0 30px;
+	
+				.dashboardHeading {
+					margin-right: 0;
+				}
+
+				.navTopBar {
+					height: 40px;
+					margin: 10px 0 1px -10px;
+				}
+			}
+		}
+	}
+}

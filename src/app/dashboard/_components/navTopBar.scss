@@ -1,0 +1,171 @@
+.navTopBar {
+	height: 100%;
+	font-family: var(--font-family-secondary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+	z-index: var(--z-index-secondary);
+
+	.logo {
+		height: 100%;
+		display: flex;
+		float: left;
+		padding: 0 10px;
+		color: var(--color-content-primary);
+		text-decoration: none;
+		text-transform: uppercase;
+		letter-spacing: 1.5px;
+	}
+
+	.menu {
+		$iconSize: 35px;
+		
+		height: 100%;
+		float: right;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&.open {
+			.icon {
+				transform: rotate(45deg);
+
+				&:hover {
+					span:nth-child(2) {
+						width: 24px;
+					}
+				}
+
+				.line1 {
+					top: 50%; right: 23px;
+					width: 24px;
+				}
+
+				.line2 {
+					top: 50%; right: 23px;
+					width: 24px;
+					transform: rotate(90deg);
+				}
+			}
+
+			.navBarContainer {
+				display: flex;
+
+				.item {
+					@for $i from 1 through 3 {
+						&:nth-child(#{$i}) {
+							animation: riseIn 0.38s #{$i * .12}s cubic-bezier(0.175, 0.885, 0.320, 1.275) forwards;
+						}
+					}
+				}
+
+				@keyframes riseIn {
+					100% {
+						opacity: 1;
+						transform: translateY(0);
+					}
+				}
+			}
+		}
+
+		.icon {
+			display: none;
+			position: absolute;
+			top: 0; right: 0;
+			width: var(--navHeight);
+			height: var(--navHeight);
+			justify-content: center;
+			cursor: pointer;
+
+			&, & > * {
+				transition: all 0.3s ease-in-out;
+			}
+
+			@media (hover: hover) {
+				&:hover {
+					.line2 {
+						width: $iconSize - 10px;
+					}
+				}
+			}
+
+			span {
+				position: absolute;
+				right: 18px;
+				display: block;
+				height: 2px;
+
+				&.line1 {
+					width: $iconSize;
+					top: 38%;
+				}
+
+				&.line2 {
+					width: $iconSize / 2;
+					top: 52%;
+				}
+			}
+		}
+
+		.navBarContainer {
+			height: 100%;
+			display: flex;
+
+			.item {
+				position: relative;
+				display: flex;
+				height: 100%;
+				padding: 0 20px;
+				align-items: center;
+				justify-content: center;
+				text-decoration: none;
+	
+				@media (hover: hover) {
+					&:hover {
+						span {
+							width: 20%;
+							transition: width 0.05s ease-out;
+						}
+					}
+				}
+
+				&.active {
+					span {
+						width: 90%;
+						transition: width 0.2s cubic-bezier(0.175, 0.885, 0.320, 1.275);
+					}
+				}
+	
+				span {
+					position: absolute;
+					transform: translateY(18px);
+					width: 0;
+					height: 5px;
+					border-bottom: 2px solid var(--color-brand-primary);
+					transition: width 0.1s ease-in;
+				}
+	
+				p {
+					font-size: 12px;
+					font-weight: 500;
+					margin: 5px 0 0;
+					color: var(--color-content-primary);
+					text-align: center;
+					text-transform: uppercase;
+					letter-spacing: 1.5px;
+					z-index: var(--z-index-primary);
+					transition: all 0.2s ease-out;
+				}
+			}
+		}
+	}
+}
+
+@media (width <= 750px) {
+	.navTopBar {
+		.menu .navBarContainer .item p {
+			font-size: 10px;
+		}
+	}
+}
