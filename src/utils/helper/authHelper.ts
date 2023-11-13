@@ -97,7 +97,6 @@ export const authOptions: AuthOptions = {
 				...token?.user,
 			};
 			delete session.user;
-			console.log(session);
 			return session;
 		},
 		async jwt ({ token, user, account }) {
@@ -116,7 +115,6 @@ export const authOptions: AuthOptions = {
 					token.user = user;
 				}
 			}
-
 			return token;
 		},
 	},

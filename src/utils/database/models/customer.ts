@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 const gender = ['male', 'female', 'others'] as const;
 const CustomerSchema = new mongoose.Schema<TCustomer>({
@@ -11,10 +11,10 @@ const CustomerSchema = new mongoose.Schema<TCustomer>({
 { timestamps: true });
 
 export const Customers = mongoose.models?.customers ?? mongoose.model<TCustomer>('customers', CustomerSchema);
-export type TCustomer = {
+export type TCustomer = HydratedDocument<{
 	fname: string,
 	lname: string,
 	gender: typeof gender[number];
 	phone: string,
 	email: string
-}
+}>

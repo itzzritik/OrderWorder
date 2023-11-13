@@ -34,7 +34,7 @@ type TCollapsibleProps = {
 	className?: string
 	children: ReactNode
 	expand: boolean
-	setExpand: (expand: boolean) => boolean
+	setExpand: (expand: boolean) => void
 	label: string
-	alert?: string
+	alert?: number
 }

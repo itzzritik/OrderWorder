@@ -49,8 +49,8 @@ const ItemCard = (props: TItemCardProps) => {
 									: (
 										<QuantityButton className='addToCart'
 											quantity={item.quantity}
-											increaseQuantity={() => increaseQuantity(item)}
-											decreaseQuantity={() => decreaseQuantity(item)}
+											increaseQuantity={() => increaseQuantity?.(item)}
+											decreaseQuantity={() => decreaseQuantity?.(item)}
 										/>
 									)
 							}
@@ -68,8 +68,8 @@ type TItemCardProps = {
 	className?: string
 	item: TMenuCustom
 	staticCard?: boolean
-	increaseQuantity: (item: TMenuCustom) => void
-	decreaseQuantity: (item: TMenuCustom) => void
+	increaseQuantity?: (item: TMenuCustom) => void
+	decreaseQuantity?: (item: TMenuCustom) => void
 }
 
 type TMenuCustom = TMenu & {quantity: number}

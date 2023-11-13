@@ -175,4 +175,45 @@
 			width: 90%;
 		}
 	}
+
+	.cartApproval {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	
+		.burgerLoader {
+			margin-top: -180px;
+	
+			.cheese {
+				fill: rgb(var(--colorBrandAccentRgb));
+			}
+		}
+	
+		.approvalHeading {
+			margin-top: -16px;
+	
+			p {
+				font-size: 20px;
+				user-select: none;
+				margin: 0;
+				text-align: center;
+				font-variation-settings: 'wdth' 75, 'wght' 300;
+				text-transform: capitalize;
+	
+				&:first-child {
+					font-size: 26px;
+					margin-bottom: 4px;
+					font-variation-settings: 'wdth' 75, 'wght' 500;
+				}
+			}
+		}
+	
+		.endOrder {	
+			border-color: var(--colorContentSecondary);
+			margin-top: 24px;
+		}
+	}
 }

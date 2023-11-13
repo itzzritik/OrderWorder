@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { XProvider } from 'xtreme-ui';
 
+import { OrderProvider } from './Order';
 import { RestaurantProvider } from './Restaurant';
 
 const GlobalProvider = ({ children }: GlobalProviderProps) => {
@@ -12,7 +13,9 @@ const GlobalProvider = ({ children }: GlobalProviderProps) => {
 		<XProvider>
 			<SessionProvider>
 				<RestaurantProvider>
-					{children}
+					<OrderProvider>
+						{children}
+					</OrderProvider>
 				</RestaurantProvider>
 			</SessionProvider>
 		</XProvider>
