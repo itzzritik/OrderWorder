@@ -4,38 +4,19 @@ import React, { useEffect, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
+import NavSideBar from '#components/layout/NavSideBar';
 import { useQueryParams } from '#utils/hooks/useQueryParams';
 
-import NavSideBar from '../[restaurant]/_components/NavSideBar';
-
 import NavTopBar from './_components/NavTopBar';
-
-// import NavTopBar from '../components/Base/NavTopBar.jsx';
-
-const subNavCollection = {
-	home: [
-		{ label: 'overview', route: 'overview' },
-		{ label: 'bills', route: 'bills' },
-	],
-	orders: [
-		{ label: 'requests', route: 'requests' },
-		{ label: 'active', route: 'active' },
-		{ label: 'history', route: 'history' },
-	],
-	settings: [
-		{ label: 'account', route: 'account' },
-		{ label: 'menu', route: 'menu' },
-	],
-} as const;
+import './dashboard.scss';
 
 const navItems = [
-	{ label: 'orders', icon: 'e43f', route: 'orders' },
-	{ label: 'settings', icon: 'f013', route: 'settings' },
+	{ label: 'orders', icon: 'e43f', value: 'orders' },
+	{ label: 'settings', icon: 'f013', value: 'settings' },
 ];
 
 const Dashboard = () => {
 	const session = useSession();
-	const [subNavItems, setSubNavItems] = useState([]);
 	const [floatHeader, setFloatHeader] = useState(false);
 	const [showScrollbar, setShowScrollbar] = useState(false);
 
@@ -55,24 +36,13 @@ const Dashboard = () => {
 		if (session?.data?.role === 'kitchen') queryParams.router.replace('/kitchen');
 	}, [queryParams.router, session]);
 
-	// useEffect(() => {
-	// 	const subNav = subNavCollection[tab];
-	// 	if (!subNav) return;
-
-	// 	if (!subNav.some((item) => item.route === subTab)) {
-	// 		return history.replace(`/dashboard/${tab}/${subNav[0].route}`);
-	// 	}
-	// 	setSubNavItems(subNav);
-	// 	setFloatHeader(false);
-	// }, [history, subTab, subNavCollection, tab]);
-
 	return (
 		<div className='dashboard'>
-			<NavSideBar navItems={navItems} root='dashboard' foot />
+			<NavSideBar navItems={navItems} defaultTab='orders' foot />
 			<div className={`dashboardViewport ${floatHeader ? 'floatHeader' : ''}`}>
 				<div className='dashboardHeader'>
 					<h1 className='dashboardHeading'>{tab}</h1>
-					{/* <NavTopBar navItems={subNavItems} root={`dashboard/${tab}`} /> */}
+					<NavTopBar />
 				</div>
 				<div className='dashboardContent'>
 					{/* {{

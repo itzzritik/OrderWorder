@@ -9,9 +9,10 @@ import { useQueryParams } from '#utils/hooks/useQueryParams';
 import './navSideBar.scss';
 
 const NavSideBar = (props: TNavSideBar) => {
-	const { head, foot, navItems } = props;
+	const { head, foot, navItems, defaultTab } = props;
 	const session = useSession();
 	const queryParams = useQueryParams();
+	const tab = queryParams.get('tab') ?? '';
 
 	const classList = clsx(
 		'menu',
@@ -25,8 +26,8 @@ const NavSideBar = (props: TNavSideBar) => {
 	};
 
 	useEffect(() => {
-		if (!queryParams.get('tab')) queryParams.set({ tab: 'menu' });
-	}, [queryParams]);
+		if (!tab) queryParams.set({ tab: defaultTab });
+	}, [defaultTab, queryParams, tab]);
 
 	return (
 		<div className='navSideBar'>
@@ -35,7 +36,7 @@ const NavSideBar = (props: TNavSideBar) => {
 					navItems.map((item, key) => {
 						if (item.value === 'signout' && session.status === 'unauthenticated') return null;
 
-						const active = queryParams.get('tab') === item.value;
+						const active = tab === item.value;
 						return (
 							<div
 								key={key}
@@ -58,11 +59,8 @@ const NavSideBar = (props: TNavSideBar) => {
 export default NavSideBar;
 
 type TNavSideBar = {
-	navItems: Array<{
-		label: string,
-		value: string,
-		icon: string,
-	}>,
+	navItems: Array<{ label: string, value: string, icon: string }>,
+	defaultTab: string,
 	head?: boolean,
 	foot?: boolean,
 }

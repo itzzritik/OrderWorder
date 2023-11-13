@@ -1,18 +1,17 @@
 .navTopBar {
 	height: 100%;
-	font-family: var(--font-family-secondary);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	user-select: none;
-	z-index: var(--z-index-secondary);
+	z-index: 10;
 
 	.logo {
 		height: 100%;
 		display: flex;
 		float: left;
 		padding: 0 10px;
-		color: var(--color-content-primary);
+		color: var(--colorContentPrimary);
 		text-decoration: none;
 		text-transform: uppercase;
 		letter-spacing: 1.5px;
@@ -120,6 +119,7 @@
 				align-items: center;
 				justify-content: center;
 				text-decoration: none;
+				cursor: pointer;
 	
 				@media (hover: hover) {
 					&:hover {
@@ -142,7 +142,7 @@
 					transform: translateY(18px);
 					width: 0;
 					height: 5px;
-					border-bottom: 2px solid var(--color-brand-primary);
+					border-bottom: 2px solid rgb(var(--colorBrandAccentRgb));
 					transition: width 0.1s ease-in;
 				}
 	
@@ -150,11 +150,9 @@
 					font-size: 12px;
 					font-weight: 500;
 					margin: 5px 0 0;
-					color: var(--color-content-primary);
 					text-align: center;
 					text-transform: uppercase;
 					letter-spacing: 1.5px;
-					z-index: var(--z-index-primary);
 					transition: all 0.2s ease-out;
 				}
 			}
