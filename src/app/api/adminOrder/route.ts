@@ -11,12 +11,10 @@ export async function GET () {
 	try {
 		await connectDB();
 		const session = await getServerSession(authOptions);
-
 		if (!session) throw { status: 401, message: 'Authentication Required' };
 
-		const restaurantID = session?.restaurant?.username;
-		const customer = session?.customer?._id;
-		const order: TOrder | undefined | null = await Orders.findOne<TOrder>({ restaurantID, customer, state: 'active' })
+		const restaurantID = session?.username;
+		const order: TOrder | undefined | null = await Orders.find<TOrder>({ restaurantID })
 			.populate({ path: 'products.product', model: Menus }).lean();
 
 		if (order?.products)

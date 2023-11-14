@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { themeController } from 'xtreme-ui';
 
 import Title from '#components/base/Title';
-import GlobalProvider from '#components/context';
+import { GlobalProvider } from '#components/context';
 import { montserrat } from '#utils/helper/fontHelper';
 
 import './globals.scss';

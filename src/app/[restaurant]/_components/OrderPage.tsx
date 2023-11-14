@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
 
-import { signOut, useSession } from 'next-auth/react';
-import { Button, Icon } from 'xtreme-ui';
+import { useSession } from 'next-auth/react';
+import { Button, Icon, Spinner } from 'xtreme-ui';
 
 import Modal from '#components/base/Modal';
 import SearchButton from '#components/base/SearchButton';
@@ -113,6 +113,8 @@ const OrderPage = () => {
 		else setOrderHeading(['Explore', 'Menu']);
 	}, [session]);
 
+	if (!restaurant) return <Spinner label='Loading Menu...' fullpage />;
+
 	return (
 		<div className='orderPage'>
 			<div className='mainContainer'>
@@ -151,10 +153,6 @@ const OrderPage = () => {
 								iconType='solid'
 								onClick={() => params.router.push('/kitchen')}
 							/>
-						}
-						{
-							(session.data?.role === 'admin' || session.data?.role === 'kitchen') &&
-							<Button className='logout' type='primaryDanger' icon='f011' onClick={() => signOut()} />
 						}
 					</div>
 				</div>

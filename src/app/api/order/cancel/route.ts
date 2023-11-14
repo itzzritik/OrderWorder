@@ -20,10 +20,7 @@ export async function POST () {
 
 		if (!order) throw { status: 400, message: 'No active orders found' };
 
-		await Orders.findByIdAndUpdate<TOrder>(order?._id, {
-			active: false,
-			canceled: true,
-		});
+		await Orders.findByIdAndUpdate<TOrder>(order?._id, { state: 'cancel' });
 
 		return NextResponse.json({ status: 200, message: 'Order canceled.' });
 	} catch (err) {

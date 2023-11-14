@@ -1,0 +1,129 @@
+.orders {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	background-color: var(--colorBackgroundSecondary);
+
+	.noContent {
+		> div {
+			margin-top: 20px;
+
+			span {
+				width: 90%;
+			}
+		}
+	}
+
+	> .ordersContent {
+		position: relative;
+		display: flex;
+		flex-grow: 1;
+		height: 100%;
+		overflow: hidden;
+
+		.list {
+			min-width: 400px;
+			width: 400px;
+			height: 100%;
+			padding: 0 5px;
+			transition: width 0.1s ease-out;
+			
+			> .scrollbarVertical {
+				transform: translateX(3px);
+			}
+			
+			&.disable {
+				.ordersCard {
+					pointer-events: none;
+				}
+			}
+
+			.ordersCard:first-child {
+				margin-top: var(--initialHeaderHeight);
+			}
+
+			.ordersCard:last-child {
+				margin-bottom: 15px;
+			}
+		}
+
+		.details {
+			flex-grow: 1;
+			border-radius: 15px;
+			margin: calc(var(--initialHeaderHeight) + 6px) 30px 15px 10px;
+			background-color: var(--colorBackgroundPrimary);
+			box-shadow: 0 0 8px rgb(150 150 150 / 15%);
+
+			&.reject {
+				box-shadow: 0 0 5px rgb(var(--colorAlertErrorRGB));
+			}
+
+			.noContent > div p {
+				font-size: 18px;
+			}
+		}
+	}
+
+	.detailSideSheet {
+		.scrollbarVertical{
+			display: none;
+		}
+
+		.itemCard {
+			margin: 20px 10px;
+		}
+	}
+}
+
+@media (width <= 1000px) {
+	.orders {
+		> .ordersContent {
+			.list {
+				min-width: 350px;
+				width: 350px;
+			}
+		}
+	}
+}
+
+@media (width <= 930px) {
+	.orders {
+		> .ordersContent {
+			.list {
+				min-width: 280px;
+				width: 280px;
+			}
+		}
+	}
+}
+
+@media (width <= 750px) {
+	.orders {
+		.noContent {
+			> div {
+				margin-top: 70px;
+				transform: scale(0.8);
+	
+				span {
+					width: 90%;
+				}
+			}
+		}
+
+		> .ordersContent {
+			.list {
+				width: 100%;
+
+				> .scrollbarVertical {
+					display: none;
+				}
+			}
+
+			.details {
+				display: none;
+			}
+		}
+	}
+}

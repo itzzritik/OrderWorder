@@ -3,9 +3,8 @@
 import React from 'react';
 
 import { useSearchParams } from 'next/navigation';
-import { Spinner } from 'xtreme-ui';
 
-import { useRestaurant } from '#components/context/useContext';
+import { CustomerProvider } from '#components/context';
 import NavSideBar from '#components/layout/NavSideBar';
 import UnderConstruction from '#components/layout/UnderConstruction';
 
@@ -21,23 +20,22 @@ const navItems = [
 ];
 
 const Restaurant = () => {
-	const { restaurant } = useRestaurant();
 	const searchParams = useSearchParams();
 
 	const tab = searchParams.get('tab');
 
-	if (!restaurant) return <Spinner label='Loading...' fullpage />;
-
 	return (
-		<div className='restaurant'>
-			<NavSideBar navItems={navItems} defaultTab='menu' foot />
-			<div className='pageContainer'>
-				{tab === 'explore' && <UnderConstruction />}
-				{tab === 'menu' && <OrderPage />}
-				{tab === 'reviews' && <UnderConstruction />}
-				{tab === 'contact' && <UnderConstruction />}
+		<CustomerProvider>
+			<div className='restaurant'>
+				<NavSideBar navItems={navItems} defaultTab='menu' foot />
+				<div className='pageContainer'>
+					{tab === 'explore' && <UnderConstruction />}
+					{tab === 'menu' && <OrderPage />}
+					{tab === 'reviews' && <UnderConstruction />}
+					{tab === 'contact' && <UnderConstruction />}
+				</div>
 			</div>
-		</div>
+		</CustomerProvider>
 	);
 };
 

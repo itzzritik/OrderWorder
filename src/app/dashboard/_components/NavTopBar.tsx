@@ -33,7 +33,7 @@ const NavTopBar = (props: TNavTopBarProps) => {
 	const currentNav = subNavItems[tab];
 
 	useEffect(() => {
-		if (!currentNav?.some((item) => item.route === subTab)) queryParams.set({ subTab: currentNav[0]?.route });
+		if (tab && !currentNav?.some((item) => item.route === subTab)) queryParams.set({ subTab: currentNav?.[0]?.route });
 	}, [currentNav, queryParams, subTab, tab]);
 
 	return (

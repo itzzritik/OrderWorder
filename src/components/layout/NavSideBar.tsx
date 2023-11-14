@@ -34,7 +34,7 @@ const NavSideBar = (props: TNavSideBar) => {
 			<div className={classList}>
 				{
 					navItems.map((item, key) => {
-						if (item.value === 'signout' && session.status === 'unauthenticated') return null;
+						if (item.value === 'signout' && session.status !== 'authenticated') return null;
 
 						const active = tab === item.value;
 						return (

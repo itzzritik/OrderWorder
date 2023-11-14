@@ -5,24 +5,37 @@ import { ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { XProvider } from 'xtreme-ui';
 
+import { AdminOrderProvider } from './AdminOrder';
 import { OrderProvider } from './Order';
 import { RestaurantProvider } from './Restaurant';
 
-const GlobalProvider = ({ children }: GlobalProviderProps) => {
+export const GlobalProvider = ({ children }: ProviderProps) => {
 	return (
 		<XProvider>
 			<SessionProvider>
-				<RestaurantProvider>
-					<OrderProvider>
-						{children}
-					</OrderProvider>
-				</RestaurantProvider>
+				{children}
 			</SessionProvider>
 		</XProvider>
 	);
 };
 
-export default GlobalProvider;
-interface GlobalProviderProps {
+export const CustomerProvider = ({ children }: ProviderProps) => {
+	return (
+		<RestaurantProvider>
+			<OrderProvider>
+				{children}
+			</OrderProvider>
+		</RestaurantProvider>
+	);
+};
+
+export const AdminProvider = ({ children }: ProviderProps) => {
+	return (
+		<AdminOrderProvider>
+			{children}
+		</AdminOrderProvider>
+	);
+};
+interface ProviderProps {
     children?: ReactNode
 }

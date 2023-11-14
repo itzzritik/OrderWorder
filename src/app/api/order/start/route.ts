@@ -23,7 +23,7 @@ export async function POST (req: Request) {
 
 		const restaurantID = session?.restaurant?.username;
 		const customer = session?.customer?._id;
-		const order = await Orders.findOne<TOrder>({ restaurantID, customer, active: true }).lean();
+		const order = await Orders.findOne<TOrder>({ restaurantID, customer, state: 'active' }).lean();
 
 		if (order) throw { status: 400, message: 'Can\'t initiate a new order, while one is in progress' };
 
