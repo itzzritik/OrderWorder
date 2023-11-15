@@ -1,0 +1,195 @@
+.ordersCard {
+	position: relative;
+	width: 100%;
+	height: 110px;
+	cursor: pointer;
+	box-sizing: content;
+	border: 10px solid transparent;
+	border-width: 6px 20px;
+
+	&.active {
+		margin: 2px 0;
+		border-width: 0 14px;
+		cursor: auto;
+
+		.content {
+			background-color: rgb(var(--colorBrandAccentRgb));
+			box-shadow: 0 0 12px rgb((var(--colorBrandAccentRgb)) 50%);
+
+			> p {
+				color: var(--colorBackgroundPrimary);
+			}
+		}
+	}
+
+	&.reject {
+		.content {
+			background-color: var(--colorBackgroundPrimary);
+			box-shadow: 0 0 5px rgb(var(--colorAlertErrorRGB));
+
+			> p {
+				&.total {
+					pointer-events: none !important;
+
+					&::after {
+						content: '' !important;
+					}
+				}
+			}
+
+			.options {
+				> .button {
+					&.accept {
+						color: var(--colorBackgroundPrimary);
+						background-color: rgb(var(--colorAlertErrorRGB));
+						border-color: rgb(var(--colorAlertErrorRGB));
+					}
+
+					&.reject {
+						color: var(--colorContentSecondary);
+
+						@media (hover: hover) {
+							&:hover {
+								background-color: var(--colorBackgroundTertiary);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.content {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		min-height: 98px;
+		background-color: var(--colorBackgroundPrimary);
+		border-radius: 15px;
+		box-shadow: 0 0 8px rgb(150 150 150 / 15%);
+		overflow: hidden;
+		padding: 0;
+
+		> p {
+			position: absolute;
+			user-select: none;
+			margin: 0;
+
+			&.table {
+				top: 15px; left: 20px;
+				font-weight: 500;
+				font-size: 16px;
+			}
+
+			&.name {
+				top: 37px; left: 20px;
+				font-weight: 400;
+				font-size: 12px;
+			}
+
+			&.total {
+				bottom: 0; left: 0;
+				font-weight: 500;
+				letter-spacing: 1.02px;
+				font-size: 14px;
+				padding: 15px 20px;
+				cursor: pointer;
+				pointer-events: none;
+			}
+
+			&.noContent {
+				bottom: 0; left: 0;
+				font-weight: 500;
+				letter-spacing: 1.02px;
+				font-size: 14px;
+				padding: 15px 20px;
+				cursor: pointer;
+				pointer-events: none;
+			}
+		}
+
+		.options {
+			position: relative;
+			width: 170px;
+			height: 100%;
+			display: none;
+			flex-direction: column-reverse;
+			align-items: flex-end;
+			float: right;
+			padding: 15px;
+			overflow: hidden;
+			user-select: none;
+
+			> .button {
+				width: 100%;
+
+				--buttonHeight: 32px;
+
+				overflow: hidden;
+				color: var(--colorBackgroundPrimary);
+				border-color: transparent;
+				text-transform: none;
+
+				@media (hover: hover) {
+					&:hover {
+						color: var(--colorBackgroundPrimary);
+						background-color: rgb(var(--colorBrandAccentRgb));
+					}
+				}
+
+				&.accept {
+					color: rgb(var(--colorBrandAccentRgb));
+					background-color: var(--colorBackgroundPrimary);
+					border-color: var(--colorBackgroundPrimary);
+					margin-top: 5px;
+				}
+			}
+		}
+	}
+}
+
+@media (width <= 750px) {
+	.ordersCard {
+		&.active {
+			> .content {
+				> p.total {
+					pointer-events: all;
+
+					&::after {
+						content: '(show details)';
+						font-size: 10px;
+						margin-left: 8px;
+						text-transform: capitalize;
+					}
+				}
+
+				> p.noContent {
+					pointer-events: all;
+
+					&::after {
+						font-size: 10px;
+						margin-left: 8px;
+					}
+				}
+
+				.options {
+					display: flex;
+				}
+			}
+		}
+
+		&.busy {
+			> .content {
+				.options {
+					display: flex;
+				}
+			}
+		}
+	}
+}
+
+@media (width <= 530px) {
+	.ordersCard {
+		height: 130px;
+	}
+}

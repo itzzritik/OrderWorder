@@ -22,12 +22,13 @@ export async function POST (req: Request) {
 		await connectDB();
 
 		const restaurantID = session?.restaurant?.username;
+		const table = session?.restaurant?.table;
 		const customer = session?.customer?._id;
-		const order = await Orders.findOne<TOrder>({ restaurantID, customer, state: 'active' }).lean();
+		const order = await Orders.findOne<TOrder>({ restaurantID, table, state: 'active' }).lean();
 
 		if (order) throw { status: 400, message: 'Can\'t initiate a new order, while one is in progress' };
 
-		await Orders.create<TOrder>({ restaurantID, customer, products: products });
+		await Orders.create<TOrder>({ restaurantID, table, customer, products: products });
 
 		return NextResponse.json({ status: 200, message: 'Order placed successfully' });
 	} catch (err) {

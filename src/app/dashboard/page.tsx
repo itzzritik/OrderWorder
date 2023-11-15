@@ -55,9 +55,9 @@ const Dashboard = () => {
 						// 	/>
 						// ),
 
-							// orders: (
-							// 	<Orders onScroll={onScroll} showScrollbar={showScrollbar} setShowScrollbar={setShowScrollbar} />
-							// ),
+							orders: (
+								<Orders onScroll={onScroll} showScrollbar={showScrollbar} setShowScrollbar={setShowScrollbar} />
+							),
 
 						// settings: (
 						// 	<Settings tab={subTab} onScroll={onScroll} restaurant={restaurant}

@@ -1,73 +1,26 @@
 import React, { useEffect, useState } from 'react';
 
-import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
+import NoContent from '#components/base/NoContent';
+import SideSheet from '#components/base/SideSheet';
+import { useAdminOrder } from '#components/context/useContext';
 
-import { AdminOrder, Menu } from '../../../../models';
-import ItemCard from '../../Base/ItemCard.jsx';
-import NoContent from '../../Base/NoContent.jsx';
-import SideSheet from '../../Base/SideSheet.jsx';
+import ItemCard from '../../[restaurant]/_components/ItemCard';
 
-import OrderDetail from './OrderDetail.jsx';
-import OrdersCard from './OrdersCard.jsx';
-
-const OrderRequests = (props) => {
+const OrderRequests = () => {
+	const { orderRequest, acceptOrder, acceptingOrder, rejectOrder, rejectingOrder } = useAdminOrder();
 	const [activeCardID, setActiveCardID] = useState();
 	const [activeCardData, setActiveCardData] = useState();
 	const [busyCards, setBusyCards] = useState([]);
 	const [rejectCard, setRejectCard] = useState({ _id: null, details: false });
 	const [sideSheetOpen, setSideSheetOpen] = useState(false);
 
-	const orders = useTracker(() => {
-		const query = { adminApproved: false };
-		const orderList = AdminOrder.find(query).fetch();
+	const onOrderAction = () => {
 
-		// Set first card active on first load
-		if (orderList.length && activeCardID === undefined) {
-			setActiveCardID(orderList[0]._id);
-			setActiveCardData(orderList[0]);
-		}
-
-		// Remove Card when its associated order is resolved.
-		if (!orderList.some((order) => order._id === activeCardID)) {
-			activeCardID && setActiveCardID(null);
-			rejectCard._id && setRejectCard({ _id: null, details: false });
-		}
-
-		return orderList;
-	});
-
-	const onOrderAction = (cardOrderID) => {
-		const updateOrder = (action) => {
-			Meteor.call('adminOrderAction', cardOrderID, action, (err) => {
-				setBusyCards((busyCards) => busyCards.filter((cardID) => cardOrderID !== cardID));
-
-				if (err) {
-					return console.log(err);
-				}
-			});
-		};
-
-		setBusyCards((busyCards) => [...busyCards, cardOrderID]);
-
-		// Rejecting order with orderID = cardOrderID
-		if (cardOrderID === rejectCard._id) {
-			return updateOrder('REJECT');
-		}
-
-		// Accepting order with orderID = cardOrderID
-		return updateOrder('APPROVE');
 	};
 
-	// Set activeCardID as `undefined` when tab changes
-	useEffect(() => {
-		setActiveCardID();
-	}, [props.tab]);
-
-	// Update ActiveCardData when activeCardID is changed
 	useEffect(() => {
 		if (!activeCardID) {
-			setActiveCardData(null);
+			setActiveCardData(undefined);
 			setSideSheetOpen(false);
 		}
 	}, [activeCardID]);
@@ -75,10 +28,10 @@ const OrderRequests = (props) => {
 	return (
 		<div className='orders'>
 			{
-				orders.length === 0 ? <NoContent label='Nothing to show' icon='/icons/Base/pan.svg' />
+				orderRequest.length === 0 ? <NoContent label='Nothing to show' />
 					: <div className='ordersContent'>
 						{
-							orders.map((data, i) =>
+							orderRequest.map((data, i) =>
 								(
 									<OrdersCard key={i} data={data} action={onOrderAction} showDetails={setSideSheetOpen}
 										details={rejectCard._id && rejectCard.details}
@@ -86,7 +39,7 @@ const OrderRequests = (props) => {
 										active={activeCardID === data._id} busy={busyCards.includes(data._id)}
 										activate={(orderID) => {
 											setActiveCardID(orderID);
-											setActiveCardData(orders.find((order) => order._id === orderID));
+											setActiveCardData(orderRequest.find((order) => order._id === orderID));
 										}} actions
 									/>
 								),
@@ -95,13 +48,15 @@ const OrderRequests = (props) => {
 						<div className={`details ${activeCardData && rejectCard._id === activeCardData._id ? 'reject ' : ''}`}>
 							{
 								!activeCardData
-									? <NoContent label='Nothing to display' icon='/icons/Base/pan.svg' />
+									? <NoContent label='Nothing to display' />
 									: (
-										<OrderDetail data={activeCardData}
-											action={onOrderAction} setReject={setRejectCard}
-											busy={activeCardData && busyCards.includes(activeCardData._id)}
-											reject={activeCardData && rejectCard._id === activeCardData._id} actions
-										/>
+										<div />
+
+								// <OrderDetail data={activeCardData}
+								// 	action={onOrderAction} setReject={setRejectCard}
+								// 	busy={activeCardData && busyCards.includes(activeCardData._id)}
+								// 	reject={activeCardData && rejectCard._id === activeCardData._id} actions
+								// />
 									)
 							}
 						</div>

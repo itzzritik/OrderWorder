@@ -15,8 +15,9 @@ export async function POST () {
 		await connectDB();
 
 		const restaurantID = session?.restaurant?.username;
+		const table = session?.restaurant?.table;
 		const customer = session?.customer?._id;
-		const order = await Orders.findOne<TOrder>({ restaurantID, customer, active: true }).lean();
+		const order = await Orders.findOne<TOrder>({ restaurantID, table, customer, state: 'active' }).lean();
 
 		if (!order) throw { status: 400, message: 'No active orders found' };
 

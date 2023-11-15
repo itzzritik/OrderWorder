@@ -6,6 +6,7 @@ import { TMenu } from './menu';
 const orderState = ['active', 'cancel', 'complete'] as const;
 const OrderSchema = new mongoose.Schema<TOrder>({
 	restaurantID: { type: String, trim: true, lowercase: true, required: true },
+	table: { type: String, trim: true, lowercase: true, required: true },
 	customer: { type: mongoose.Schema.Types.ObjectId, ref: 'customers' },
 	state: { type: String, trim: true, lowercase: true, enum: orderState, default: 'active' },
 	orderTotal: { type: Number, default: 0 },
@@ -23,6 +24,7 @@ const OrderSchema = new mongoose.Schema<TOrder>({
 export const Orders = mongoose.models?.orders ?? mongoose.model<TOrder>('orders', OrderSchema);
 export type TOrder = {
 	restaurantID: string,
+	table: string,
 	customer: TCustomer,
 	state: typeof orderState[number],
 	orderTotal: number,

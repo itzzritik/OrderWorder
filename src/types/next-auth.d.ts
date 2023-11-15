@@ -3,6 +3,7 @@ import 'next-auth';
 import { TAccount } from '#utils/database/models/account';
 import { TCustomer } from '#utils/database/models/customer';
 import { TProfile } from '#utils/database/models/profile';
+import { TTable } from '#utils/database/models/table';
 
 type AuthUser = Partial<Omit<TAccount, 'profile'> & {
 	role: 'admin' | 'kitchen' | 'customer'
@@ -10,6 +11,7 @@ type AuthUser = Partial<Omit<TAccount, 'profile'> & {
 	customer: Partial<TCustomer>,
 	restaurant: Partial<{
 		username: TProfile.username,
+		table: TTable.username,
 		name: TProfile.name,
 		avatar: TProfile.avatar,
 	}>
