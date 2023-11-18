@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import SideSheet from '#components/base/SideSheet';
-import { useAdminOrder, useRestaurant } from '#components/context/useContext';
+import { useAdminOrder } from '#components/context/useContext';
 import NoContent from '#components/layout/NoContent';
 import { TMenu } from '#utils/database/models/menu';
 import { TOrder } from '#utils/database/models/order';
@@ -13,8 +13,6 @@ import OrdersCard from './OrdersCard';
 
 const OrderRequests = () => {
 	const { orderRequest, acceptOrder, rejectOrder, orderActionLoading } = useAdminOrder();
-	const { restaurant } = useRestaurant();
-	const menu = restaurant?.menus as Array<TMenuCustom>;
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
 	const [rejectCard, setRejectCard] = useState<{ _id: string | null, details: boolean }>({ _id: null, details: false });
@@ -40,7 +38,7 @@ const OrderRequests = () => {
 			{
 				orderRequest?.length === 0 ? <NoContent label='Nothing to show' animationName='GhostNoContent' />
 					: <div className='ordersContent'>
-						<div className='list'>
+						<div className={`list ${orderActionLoading ? 'disable' : ''}`}>
 							{
 								orderRequest?.map?.((data, i) =>
 									(
@@ -85,8 +83,6 @@ const OrderRequests = () => {
 			<SideSheet title={[activeCardData ? `Table: ${activeCardData?.table}` : '']} open={sideSheetOpen} setOpen={setSideSheetOpen}>
 				{
 					activeCardData && activeCardData.products.map((product, key) => {
-						const productData = menu?.find?.((menu) => (menu._id === product._id));
-						product = { ...product, ...productData };
 						return <ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />;
 					})
 				}

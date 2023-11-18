@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useSearchParams } from 'next/navigation';
-import { Button, Icon, Spinner } from 'xtreme-ui';
+import { Button, Icon } from 'xtreme-ui';
 
 import NoContent from '#components/layout/NoContent';
 import { TMenu } from '#utils/database/models/menu';
@@ -12,53 +12,25 @@ import ItemCard from '../../../components/layout/ItemCard';
 import './orderDetail.scss';
 
 const OrderDetail = (props: TOrderDetailProps) => {
-	const { data, actions, busy, reject } = props;
+	const { data, actions, busy, reject, setReject, action } = props;
 	const queryParams = useSearchParams();
 	const subTab = queryParams.get('subTab') ?? '';
-
-	const [loading] = useState(false);
-
-	// Show empty when no data is provided
-	if (!data) return null;
-
-	// Show loading page
-	if (loading) {
-		return <Spinner fullpage />;
-	}
 
 	const OptionButtons = () => {
 		if (!actions) return null;
 
 		if (subTab === 'active') {
-			if (data.products.length === 0) {
-				return (
-					<div className='options'>
-						<Button className='accept' label='End Session' iconType='solid'
-							onClick={() => props.action(data?.table)} loading={busy}
-						/>
-					</div>
-				);
-			// eslint-disable-next-line no-else-return
-			} else if (data.userOrderEnd) {
-				return (
-					<div className='options'>
-						<Button className='accept' label='Complete' iconType='solid'
-							onClick={() => props.completeOrder(data?.table)} loading={busy}
-						/>
-					</div>
-				);
-			}
 			return (
 				<div className='options'>
 					<Button className='reject' type='primaryDanger' icon='f00d' iconType='solid' onClick={() => {
-						props.setReject({
+						setReject({
 							_id: !reject ? data._id.toString() : null,
 							details: true,
 						});
-					}} label={!reject ? 'End Order' : 'No'}
+					}} label={!reject ? 'Cancel' : 'No Don\'t'}
 					/>
-					<Button className='accept' icon='f00c' iconType='solid' label={!reject ? 'End Session' : 'End'}
-						onClick={() => props.action(data?.table)} loading={busy}
+					<Button className='accept' icon='f00c' iconType='solid' label={!reject ? 'Complete' : 'Yes do it!'}
+						onClick={() => action(data._id.toString())} loading={busy}
 					/>
 				</div>
 			);
@@ -66,14 +38,14 @@ const OrderDetail = (props: TOrderDetailProps) => {
 		return (
 			<div className={`options ${busy ? 'busy ' : ''}`}>
 				<Button className='reject' type='primaryDanger' icon='f00d' iconType='solid' onClick={() => {
-					props.setReject({
+					setReject({
 						_id: !reject ? data._id.toString() : null,
 						details: true,
 					});
-				}} label={!reject ? 'Reject' : 'Nope'}
+				}} label={!reject ? 'Reject' : 'No Don\'t'}
 				/>
-				<Button className='accept'icon='f00c' iconType='solid' label={!reject ? 'Accept' : 'Reject'}
-					onClick={() => props.action(data._id.toString())} loading={busy}
+				<Button className='accept'icon='f00c' iconType='solid' label={!reject ? 'Accept' : 'Yes do it!'}
+					onClick={() => action(data._id.toString())} loading={busy}
 				/>
 			</div>
 		);

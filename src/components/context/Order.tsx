@@ -1,7 +1,8 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
 import noop from 'lodash/noop';
 import pick from 'lodash/pick';
+import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
@@ -19,6 +20,7 @@ const OrderDefault: TOrderInitialType = {
 
 export const OrderContext = createContext(OrderDefault);
 export const OrderProvider = ({ children }: TOrderProviderProps) => {
+	const session = useSession();
 	const { data: order, mutate } = useSWR('/api/order', fetcher);
 
 	const [startingOrder, setStartingOrder] = useState(false);
@@ -44,6 +46,10 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 		await mutate();
 		setCancelingOrder(false);
 	};
+
+	useEffect(() => {
+		mutate();
+	}, [mutate, session.status]);
 
 	return (
 		<OrderContext.Provider value={{ order, startOrder, startingOrder, cancelOrder, cancelingOrder }}>

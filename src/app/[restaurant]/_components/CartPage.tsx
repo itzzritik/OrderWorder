@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 // import Collapsible from '#components/base/Collapsible';
+import { useSearchParams } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 import { Button, Icon, Lottie } from 'xtreme-ui';
 
 import { useOrder, useRestaurant } from '#components/context/useContext';
@@ -15,6 +17,10 @@ import './cartPage.scss';
 
 const CartPage = (props: TCartPageProps) => {
 	const { selectedProducts, increaseProductQuantity, decreaseProductQuantity, resetSelectedProducts, setSideSheetHeading } = props;
+	const session = useSession();
+	const params = useSearchParams();
+	const table = params.get('table');
+
 	const { restaurant } = useRestaurant();
 	const { order, startOrder, startingOrder, cancelOrder, cancelingOrder } = useOrder();
 	const [showOrderHistory, setShowOrderHistory] = useState(false);
@@ -66,6 +72,17 @@ const CartPage = (props: TCartPageProps) => {
 			return total + (product.quantity * product.price);
 		}, 0));
 	}, [props.selectedProducts, restaurant?.menus, selectedProducts]);
+
+	useEffect(() => {
+		console.log(order, table);
+
+		const cancelAndSignout = async () => {
+			await cancelOrder();
+			signOut();
+		};
+
+		if (order?.table && order?.table !== table) cancelAndSignout();
+	}, [cancelOrder, order, table]);
 
 	// useEffect(() => {
 	// 	if (userOrderEnd) {

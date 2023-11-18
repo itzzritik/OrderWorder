@@ -20,6 +20,7 @@ const OrderPage = () => {
 	const { restaurant } = useRestaurant();
 	const menus = restaurant?.menus as Array<TMenuCustom>;
 	const params = useQueryParams();
+	const table = params.get('table');
 	const order = useRef<HTMLDivElement>(null);
 	const categories = useRef<HTMLDivElement>(null);
 	const [loginOpen, setLoginOpen] = useState(false);
@@ -41,7 +42,7 @@ const OrderPage = () => {
 	const [hasImageItems, setHasImageItems] = useState(false);
 	const [hasNonImageItems, setHasNonImageItems] = useState(false);
 
-	const showOrderButton = restaurant?.tables?.some(({ username }) => username === params.get('table'));
+	const showOrderButton = restaurant?.tables?.some(({ username }) => username === table);
 	const eligibleToOrder = session.data?.role === 'customer' && showOrderButton;
 
 	const onCategoryScroll = (event: SyntheticEvent) => {
@@ -60,7 +61,7 @@ const OrderPage = () => {
 		if (categories.current) categories.current.scrollLeft += 400;
 	};
 	const onLoginClick = () => {
-		if (params.get('table')) return setLoginOpen(true);
+		if (table) return setLoginOpen(true);
 		return params.router.push('/scan');
 	};
 	const increaseProductQuantity = (product: TMenuCustom) => {
