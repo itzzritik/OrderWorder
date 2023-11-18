@@ -87,7 +87,7 @@ const OrdersCard = (props: TOrdersCard) => {
 	return (
 		<div className={classList}
 			onClick={() => {
-				!active && !history && setReject({ _id: null, details: false });
+				!active && !history && setReject?.({ _id: null, details: false });
 				activate(data._id.toString());
 			}}
 		>
@@ -97,7 +97,7 @@ const OrdersCard = (props: TOrdersCard) => {
 				{
 					!data?.products?.length
 						? <p className='noContent'>No orders yet</p>
-						: <p className='total rupee' onClick={() => showDetails(true)}>{data?.orderTotal}</p>
+						: <p className='total rupee' onClick={() => showDetails?.(true)}>{data?.orderTotal}</p>
 				}
 				<OptionButtons />
 			</div>
@@ -110,12 +110,13 @@ export default OrdersCard;
 type TOrdersCard = {
 	data: TOrder
 	actions?: boolean
-	active: boolean
-	reject: boolean
-	setReject: (props: { _id: string | null, details: boolean }) => void
-	busy: boolean
-	details: boolean
-	action: (id: string) => void
-	showDetails: (value: boolean) => void
+	history?: boolean
+	active?: boolean
+	reject?: boolean
+	setReject?: (props: { _id: string | null, details: boolean }) => void
+	busy?: boolean
+	details?: boolean
+	action?: (id: string) => void
+	showDetails?: (value: boolean) => void
 	activate: (id: string) => void
 }

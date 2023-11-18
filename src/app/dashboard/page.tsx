@@ -20,11 +20,9 @@ const navItems = [
 const Dashboard = () => {
 	const session = useSession();
 	const [floatHeader, setFloatHeader] = useState(false);
-	const [showScrollbar, setShowScrollbar] = useState(false);
 
 	const queryParams = useQueryParams();
 	const tab = queryParams.get('tab') ?? '';
-	const subTab = queryParams.get('subTab') ?? '';
 
 	const onScroll = (event) => {
 		if (event.target.scrollTop >= 1) {
@@ -56,7 +54,7 @@ const Dashboard = () => {
 						// ),
 
 							orders: (
-								<Orders onScroll={onScroll} showScrollbar={showScrollbar} setShowScrollbar={setShowScrollbar} />
+								<Orders />
 							),
 
 						// settings: (

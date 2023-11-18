@@ -3,10 +3,10 @@ import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Button, Icon, Spinner } from 'xtreme-ui';
 
-import Modal from '#components/base/Modal';
 import SearchButton from '#components/base/SearchButton';
 import SideSheet from '#components/base/SideSheet';
 import { useRestaurant } from '#components/context/useContext';
+import Modal from '#components/layout/Modal';
 import { TMenu } from '#utils/database/models/menu';
 import { useQueryParams } from '#utils/hooks/useQueryParams';
 

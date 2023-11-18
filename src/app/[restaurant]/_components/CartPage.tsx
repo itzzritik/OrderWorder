@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 // import Collapsible from '#components/base/Collapsible';
 import { Button, Icon, Lottie } from 'xtreme-ui';
 
-import Collapsible from '#components/base/Collapsible';
-import NoContent from '#components/base/NoContent';
 import { useOrder, useRestaurant } from '#components/context/useContext';
+import Collapsible from '#components/layout/Collapsible';
+import NoContent from '#components/layout/NoContent';
 import { getAnimSrc } from '#utils/constants/common';
 import { TMenu } from '#utils/database/models/menu.js';
 
-import ItemCard from '../../../components/base/ItemCard';
+import ItemCard from '../../../components/layout/ItemCard';
 
 import './cartPage.scss';
 

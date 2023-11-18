@@ -1,0 +1,97 @@
+.invoiceWrapper {
+	.invoice {
+		position: relative;
+		width: 100%;
+		padding: 0 15px 100px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		overflow: auto;
+	
+		.invoiceItems {
+			width: 100%;
+			padding-top: 2px;
+		
+			.invoiceItemsHeading {
+				font-size: 28px;
+				text-align: center;
+				font-weight: 500;
+				user-select: none;
+				margin-bottom: 30px;
+			}
+			
+			.invoiceHeadingDetails {
+				font-size: 14px;
+				font-weight: 600;
+				
+				> span {
+					font-weight: 400;
+				}
+			}
+	
+			.invoiceItemCard {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				padding: 10px 0;
+				border-bottom: 1px solid var(--colorContentTertiary);
+		
+				.invoiceItemName {
+					font-weight: 500;
+					margin: 0;
+				}
+	
+				.invoiceItemPrice {
+					display: flex;
+					justify-content: space-between;
+		
+					> p {
+						font-size: 13px;
+						margin: 0;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+		
+						span {
+							font-size: 8px;
+							user-select: none;
+							margin: 0 5px;
+						}
+					}
+				}
+			}
+		}
+	
+		.invoiceBill {
+			width: 100%;
+			margin-top: 20px;
+	
+			.invoiceBillItem {
+				display: flex;
+				justify-content: space-between;
+				font-size: 15px;
+				font-weight: 600;
+	
+				p {
+					margin-bottom: 5px;
+	
+					&.billName {
+						user-select: none;
+					}
+				}
+			}
+	
+			.invoiceTaxes {
+				.invoiceBillItem {
+					font-size: 13px;
+					font-weight: 400;
+				}
+			}
+		}
+	
+		.invoiceDownload {
+			position: fixed;
+			bottom: 45px; right: 65px;
+		}
+	}
+}

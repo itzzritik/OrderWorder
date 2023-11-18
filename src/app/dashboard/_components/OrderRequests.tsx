@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import NoContent from '#components/base/NoContent';
 import SideSheet from '#components/base/SideSheet';
 import { useAdminOrder, useRestaurant } from '#components/context/useContext';
+import NoContent from '#components/layout/NoContent';
 import { TMenu } from '#utils/database/models/menu';
 import { TOrder } from '#utils/database/models/order';
 
-import ItemCard from '../../../components/base/ItemCard';
+import ItemCard from '../../../components/layout/ItemCard';
 
 import OrderDetail from './OrderDetail';
 import OrdersCard from './OrdersCard';

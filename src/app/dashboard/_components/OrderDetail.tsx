@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button, Icon, Spinner } from 'xtreme-ui';
 
-import NoContent from '#components/base/NoContent';
+import NoContent from '#components/layout/NoContent';
 import { TMenu } from '#utils/database/models/menu';
 import { TOrder } from '#utils/database/models/order';
 
-import ItemCard from '../../../components/base/ItemCard';
+import ItemCard from '../../../components/layout/ItemCard';
 
 import './orderDetail.scss';
 

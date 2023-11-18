@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
+
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Button } from 'xtreme-ui';
 
 import './invoice.scss';
 
@@ -23,10 +25,7 @@ const Invoice = (props: TInvoiceProps) => {
 
 	useEffect(() => {
 		if (props.order) {
-			const products = props.order.products.map((product) => ({
-				...menu.find((menu) => (menu._id === product._id)),
-				quantity: product.quantity }));
-			setOrderList(products);
+			setOrderList(props.order.products);
 			setSubTotal(props.order.total);
 			setGrandTotal(props.order.orderTotal);
 			setTaxList(props.order.taxes);
@@ -34,7 +33,9 @@ const Invoice = (props: TInvoiceProps) => {
 	}, [props.order]);
 
 	return (
-		<Document paperSize={'Letter'}
+		<Document
+			className='invoiceWrapper'
+			paperSize={'Letter'}
 			fileName='Invoice.pdf'
 			title='Invoice'
 			subject='Invoice'
@@ -46,11 +47,11 @@ const Invoice = (props: TInvoiceProps) => {
 					<h6 className='invoiceItemsHeading'>Your Order Summary</h6>
 					<hr />
 					<h6 align='left' className='invoiceHeadingDetails'>Invoice Number: <span>{props.order.invoiceNumber}</span></h6>
-					<h6 align='left' className='invoiceHeadingDetails'>Customer Name: <span>{props.order.customer.name}</span></h6>
+					<h6 align='left' className='invoiceHeadingDetails'>Customer Name: <span>{props?.order?.customer?.fname} {props?.order?.customer?.lname}</span></h6>
 					<hr />
 					{
 						orderList.map((item, key) => (
-							<div className='invoiceItemCard'>
+							<div className='invoiceItemCard' key={key}>
 								<p className='invoiceItemName'>{item.name}</p>
 								<div className='invoiceItemPrice'>
 									<p className='rupee'>{item.price}<span>✕</span>{item.quantity}</p>
@@ -64,18 +65,14 @@ const Invoice = (props: TInvoiceProps) => {
 					<InvoiceBillItem name='Sub Total' amount={subTotal} />
 					<div className='invoiceTaxes'>
 						{
-							taxList.map((taxName, key) => {
-								return (<InvoiceBillItem key={key} name={taxName.name} taxPercent={taxName.value}
-									amount={taxName.calculatedTax}
-								        />);
+							taxList?.map?.((taxName, key) => {
+								return (<InvoiceBillItem key={key} name={taxName.name} taxPercent={taxName.value} amount={taxName.calculatedTax} />);
 							})
 						}
 					</div>
 					<InvoiceBillItem name='Grand Total' amount={grandTotal} />
 				</div>
-				<IconButton className='invoiceDownload' icon='/icons/Base/download.svg'
-					onClick={downloadPDF} active
-				/>
+				<Button className='invoiceDownload' icon='f354' onClick={downloadPDF} />
 			</div>
 		</Document>
 	);
@@ -84,14 +81,15 @@ const Invoice = (props: TInvoiceProps) => {
 export default Invoice;
 
 type TInvoiceProps = {
-	order: 
+	order: TOrder
 }
 
 type TOrder = {
-	products: 
-	total
-	orderTotal
-	taxes
-	invoiceNumber
-	customer
+
+	// products:
+	// total
+	// orderTotal
+	// taxes
+	// invoiceNumber
+	// customer
 }

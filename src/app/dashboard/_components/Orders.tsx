@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
+import OrderHistory from './OrderHistory';
 import OrderRequests from './OrderRequests';
 import './orders.scss';
 
@@ -17,9 +18,9 @@ const Orders = () => {
 	// 	return <ActiveOrders />;
 	// }
 
-	// if (subTab === 'history') {
-	// 	return <OrderHistory />;
-	// }
+	if (subTab === 'history') {
+		return <OrderHistory />;
+	}
 };
 
 export default Orders;
