@@ -12,18 +12,17 @@ import OrderDetail from './OrderDetail';
 import OrdersCard from './OrdersCard';
 
 const OrderRequests = () => {
-	const { orderRequest, acceptOrder, rejectOrder, orderActionLoading } = useAdminOrder();
+	const { orderRequest, orderAction, orderActionLoading } = useAdminOrder();
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
 	const [rejectCard, setRejectCard] = useState<{ _id: string | null, details: boolean }>({ _id: null, details: false });
 	const [sideSheetOpen, setSideSheetOpen] = useState(false);
 
 	const onOrderAction = async (orderID: string) => {
-		if (orderID === rejectCard._id) {
-			return await rejectOrder(orderID);
-		}
+		if (orderID === rejectCard._id)
+			return await orderAction(orderID, 'reject');
 
-		return await acceptOrder(orderID);
+		return await orderAction(orderID, 'accept');
 	};
 
 	useEffect(() => {

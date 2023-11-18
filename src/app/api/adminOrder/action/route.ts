@@ -6,7 +6,7 @@ import { Orders, TOrder } from '#utils/database/models/order';
 import { authOptions } from '#utils/helper/authHelper';
 import { CatchNextResponse } from '#utils/helper/common';
 
-const actions = ['accept', 'reject'];
+const actions = ['accept', 'reject', 'complete'];
 export async function POST (req: Request) {
 	try {
 		const session = await getServerSession(authOptions);
@@ -27,8 +27,13 @@ export async function POST (req: Request) {
 				product.adminApproved = true;
 			});
 
-		if (body.action == 'reject')
-			order.state = 'reject';
+		if (body.action == 'reject') {
+			if (!order.products.some(({ adminApproved }) => adminApproved)) order.state = 'reject';
+			else order.products = order.products.filter(({ adminApproved }) => adminApproved);
+		}
+
+		if (body.action == 'complete')
+			order.state = 'complete';
 
 		await order.save();
 

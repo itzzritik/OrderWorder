@@ -12,8 +12,8 @@ import { fetcher } from '#utils/helper/common';
 
 const OrderDefault: TOrderInitialType = {
 	order: undefined,
-	startOrder: () => new Promise(noop),
-	startingOrder: false,
+	placeOrder: () => new Promise(noop),
+	placingOrder: false,
 	cancelOrder: noop,
 	cancelingOrder: false,
 };
@@ -23,19 +23,19 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 	const session = useSession();
 	const { data: order, mutate } = useSWR('/api/order', fetcher);
 
-	const [startingOrder, setStartingOrder] = useState(false);
+	const [placingOrder, setPlacingOrder] = useState(false);
 	const [cancelingOrder, setCancelingOrder] = useState(false);
 
-	const startOrder = async (products: Array<TMenuCustom>) => {
-		setStartingOrder(true);
-		const req = await fetch('/api/order/start', { method: 'POST', body: JSON.stringify({
+	const placeOrder = async (products: Array<TMenuCustom>) => {
+		setPlacingOrder(true);
+		const req = await fetch('/api/order/place', { method: 'POST', body: JSON.stringify({
 			products: products.map((product) => pick(product, ['_id', 'quantity'])),
 		}) });
 		const res = await req.json();
 
 		if (!req.ok) toast.error(res?.message);
 		await mutate();
-		setStartingOrder(false);
+		setPlacingOrder(false);
 	};
 	const cancelOrder = async () => {
 		setCancelingOrder(true);
@@ -52,7 +52,7 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 	}, [mutate, session.status]);
 
 	return (
-		<OrderContext.Provider value={{ order, startOrder, startingOrder, cancelOrder, cancelingOrder }}>
+		<OrderContext.Provider value={{ order, placeOrder, placingOrder, cancelOrder, cancelingOrder }}>
 			{children}
 		</OrderContext.Provider>
 	);
@@ -64,8 +64,8 @@ export type TOrderProviderProps = {
 
 export type TOrderInitialType = {
 	order?: TOrder,
-	startOrder: (products: Array<TMenuCustom>) => Promise<void>
-	startingOrder: boolean,
+	placeOrder: (products: Array<TMenuCustom>) => Promise<void>
+	placingOrder: boolean,
 	cancelOrder: () => void,
 	cancelingOrder: boolean,
 }

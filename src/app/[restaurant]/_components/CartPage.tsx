@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 // import Collapsible from '#components/base/Collapsible';
 import { useSearchParams } from 'next/navigation';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { Button, Icon, Lottie } from 'xtreme-ui';
 
-import { useOrder, useRestaurant } from '#components/context/useContext';
+import { useOrder } from '#components/context/useContext';
 import Collapsible from '#components/layout/Collapsible';
 import NoContent from '#components/layout/NoContent';
 import { getAnimSrc } from '#utils/constants/common';
@@ -17,12 +17,9 @@ import './cartPage.scss';
 
 const CartPage = (props: TCartPageProps) => {
 	const { selectedProducts, increaseProductQuantity, decreaseProductQuantity, resetSelectedProducts, setSideSheetHeading } = props;
-	const session = useSession();
 	const params = useSearchParams();
 	const table = params.get('table');
-
-	const { restaurant } = useRestaurant();
-	const { order, startOrder, startingOrder, cancelOrder, cancelingOrder } = useOrder();
+	const { order, placeOrder, placingOrder, cancelOrder, cancelingOrder } = useOrder();
 	const [showOrderHistory, setShowOrderHistory] = useState(false);
 	const [selectionTotal, setSelectionTotal] = useState(0);
 	const [bottomBarActive, setBottomBarActive] = useState(false);
@@ -38,11 +35,7 @@ const CartPage = (props: TCartPageProps) => {
 			// return endOrder();
 		}
 
-		if (order) {
-			// updateOrder();
-		} else {
-			await startOrder(selectedProducts);
-		}
+		await placeOrder(selectedProducts);
 		resetSelectedProducts();
 	};
 	const onCancelOrder = async () => {
@@ -67,11 +60,9 @@ const CartPage = (props: TCartPageProps) => {
 		else setShowOrderHistory(false);
 
 		setSelectionTotal(selectedProducts.reduce((total, product) => {
-			const productData = restaurant?.menus.find((menu) => (menu._id === product._id));
-			product = { ...product, ...productData };
 			return total + (product.quantity * product.price);
 		}, 0));
-	}, [props.selectedProducts, restaurant?.menus, selectedProducts]);
+	}, [props.selectedProducts, selectedProducts]);
 
 	useEffect(() => {
 		console.log(order, table);
@@ -130,15 +121,13 @@ const CartPage = (props: TCartPageProps) => {
 				{
 					order?.products?.length && approvedProducts &&
 					<Collapsible className='orderedProducts'
-						expand={showOrderHistory}
 						label='Order History'
+						expand={showOrderHistory}
 						setExpand={setShowOrderHistory}
 						alert={order?.products?.length}
 					>
 						{
 							order?.products.map((product, key) => {
-								const productData = restaurant?.menus.find((menu) => (menu._id === product._id));
-								product = { ...product, ...productData };
 								return <ItemCard key={key} item={product as unknown as TMenuCustom} staticCard />;
 							})
 						}
@@ -147,8 +136,6 @@ const CartPage = (props: TCartPageProps) => {
 				<div className='selectedProducts'>
 					{
 						selectedProducts.map((product, key) => {
-							const productData = restaurant?.menus.find((menu) => (menu._id === product._id));
-							product = { ...product, ...productData } as TMenuCustom;
 							return (
 								<ItemCard
 									item={product}

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 import { Button, Icon } from 'xtreme-ui';
 
+import Collapsible from '#components/layout/Collapsible';
 import NoContent from '#components/layout/NoContent';
 import { TMenu } from '#utils/database/models/menu';
 import { TOrder } from '#utils/database/models/order';
@@ -15,6 +16,13 @@ const OrderDetail = (props: TOrderDetailProps) => {
 	const { data, actions, busy, reject, setReject, action } = props;
 	const queryParams = useSearchParams();
 	const subTab = queryParams.get('subTab') ?? '';
+
+	const [showApprovedItems, setShowApprovedItems] = useState(false);
+
+	const { approvedItems, requestedItems } = useMemo(() => ({
+		approvedItems: data.products.filter(({ adminApproved }) => adminApproved),
+		requestedItems: data.products.filter(({ adminApproved }) => !adminApproved),
+	}), [data.products]);
 
 	const OptionButtons = () => {
 		if (!actions) return null;
@@ -77,7 +85,33 @@ const OrderDetail = (props: TOrderDetailProps) => {
 				{
 					data?.products?.length === 0
 						? <NoContent label='No approved orders from this table yet!' animationName='GhostNoContent' />
-						: data.products.map((product, key) => (<ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />))
+						: (
+							subTab !== 'requests' || !approvedItems.length
+								? data.products.map((product, key) => (
+									<ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />
+								))
+								:
+								<div>
+									<Collapsible className='orderedProducts'
+										label='Approved Products'
+										expand={showApprovedItems}
+										setExpand={setShowApprovedItems}
+										alert={approvedItems?.length}
+									>
+										{
+											approvedItems.map((product, key) =>
+												<ItemCard key={key} item={product as unknown as TMenuCustom} staticCard />,
+											)
+										}
+									</Collapsible>
+									{
+										requestedItems.map((product, key) => (
+											<ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />
+										))
+									}
+								</div>
+
+						)
 				}
 			</div>
 		</div>

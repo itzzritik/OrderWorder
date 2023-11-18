@@ -11,7 +11,7 @@ import OrderDetail from './OrderDetail';
 import OrdersCard from './OrdersCard';
 
 const ActiveOrders = () => {
-	const { orderActive, rejectOrder, orderActionLoading } = useAdminOrder();
+	const { orderActive, orderAction, orderActionLoading } = useAdminOrder();
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
 	const [rejectCard, setRejectCard] = useState<{ _id: string | null, details: boolean }>({ _id: null, details: false });
@@ -19,9 +19,10 @@ const ActiveOrders = () => {
 
 	const onOrderAction = async (orderID: string) => {
 		console.log(orderID, rejectCard._id);
-		if (orderID === rejectCard._id) {
-			return await rejectOrder(orderID);
-		}
+		if (orderID === rejectCard._id)
+			return await orderAction(orderID, 'reject');
+
+		return await orderAction(orderID, 'complete');
 	};
 
 	useEffect(() => {

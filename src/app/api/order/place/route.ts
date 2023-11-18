@@ -13,7 +13,7 @@ export async function POST (req: Request) {
 		const body = await req.json();
 
 		if (!session) throw { status: 401, message: 'Authentication Required' };
-		if (!body?.products.length) throw { status: 400, message: 'Can\'t initiate new order on empty cart' };
+		if (!body?.products.length) throw { status: 400, message: 'Can\'t place order on empty cart' };
 
 		await connectDB();
 		const products: TProduct[] = await Promise.all(body?.products?.map(async (product: TProduct & {_id: string}) => {
@@ -31,14 +31,20 @@ export async function POST (req: Request) {
 		const restaurantID = session?.restaurant?.username;
 		const table = session?.restaurant?.table;
 		const customer = session?.customer?._id;
-		const order = await Orders.findOne<TOrder>({ restaurantID, table, state: 'active' }).lean();
+		const order = await Orders.findOne<TOrder>({ restaurantID, customer, state: 'active' });
 
-		if (order) throw { status: 400, message: 'Can\'t initiate a new order, while one is in progress' };
+		if (order) {
+			order.products = [...order.products, ...products];
+			await order.save();
+
+			return NextResponse.json({ status: 200, message: 'Additional items ordered successfully' });
+		}
 
 		const newOrder = new Orders({ restaurantID, table, customer, products: products });
 		await newOrder.save();
 
 		return NextResponse.json({ status: 200, message: 'Order placed successfully' });
+
 	} catch (err) {
 		console.log(err);
 		return CatchNextResponse(err);
