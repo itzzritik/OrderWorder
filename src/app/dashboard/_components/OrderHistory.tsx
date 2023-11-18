@@ -25,7 +25,7 @@ const OrderHistory = () => {
 	return (
 		<div className='orders'>
 			{
-				orderHistory.length === 0 ? <NoContent label='Nothing to show' animationName='GhostNoContent' />
+				orderHistory.length === 0 ? <NoContent label='No order history' animationName='GhostNoContent' />
 					: <div className='ordersContent'>
 						<div className='list'>
 							{

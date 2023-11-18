@@ -35,7 +35,7 @@ const OrderRequests = () => {
 	return (
 		<div className='orders'>
 			{
-				orderRequest?.length === 0 ? <NoContent label='Nothing to show' animationName='GhostNoContent' />
+				orderRequest?.length === 0 ? <NoContent label='No order requests' animationName='GhostNoContent' />
 					: <div className='ordersContent'>
 						<div className={`list ${orderActionLoading ? 'disable' : ''}`}>
 							{
@@ -64,7 +64,7 @@ const OrderRequests = () => {
 						<div className={`details ${activeCardData && rejectCard._id === activeCardData._id.toString() ? 'reject ' : ''}`}>
 							{
 								!activeCardData
-									? <NoContent label='No orders yet' animationName='GhostNoContent' size={200} />
+									? <NoContent label='Nothing to show' animationName='GhostNoContent' size={200} />
 									: (
 										<OrderDetail
 											actions

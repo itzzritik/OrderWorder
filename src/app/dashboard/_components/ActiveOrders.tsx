@@ -35,7 +35,7 @@ const ActiveOrders = () => {
 	return (
 		<div className='orders'>
 			{
-				orderActive?.length === 0 ? <NoContent label='Nothing to show' animationName='GhostNoContent' />
+				orderActive?.length === 0 ? <NoContent label='No active orders' animationName='GhostNoContent' />
 					: <div className='ordersContent'>
 						<div className={`list ${orderActionLoading ? 'disable' : ''}`}>{
 							orderActive.map((data, i) => (
