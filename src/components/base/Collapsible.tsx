@@ -19,7 +19,7 @@ const Collapsible = (props: TCollapsibleProps) => {
 			<div className='collapsibleHeader' onClick={() => setExpand(!expand)}>
 				<p className='label'>{label}</p>
 				{alert && <span className='alertLabel'>{alert}</span>}
-				<Icon code='f063' />
+				<Icon className='arrow' code='f063' type='solid' />
 			</div>
 			<div className='collapsibleContent'>
 				{expand && children}

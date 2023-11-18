@@ -6,7 +6,7 @@
 
 	.cartItems {
 		width: 100%;
-		margin-bottom: calc(var(--checkoutHeight) + 20px);
+		padding-bottom: calc(var(--checkoutHeight) + 20px);
 
 		.orderedProducts {
 			.collapsibleContent {

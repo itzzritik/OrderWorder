@@ -25,7 +25,12 @@
 
 		.collapsibleHeader {
 			.label {
-				font-size: 16px;
+				font-variation-settings: 'wdth' 75, 'wght' 400;
+				font-size: 20px;
+			}
+
+			.alertLabel {
+				font-size: 18px;
 			}
 
 			.arrow {
@@ -66,9 +71,10 @@
 		}
 
 		.label {
-			font-size: 14px;
+			font-size: 16px;
 			margin: 0;
-			font-weight: 400;
+			font-variation-settings: 'wdth' 75, 'wght' 500;
+			color: white;
 			transition: font-size 0.2s ease-out;
 		}
 
@@ -78,27 +84,19 @@
 			width: calc(var(--collapsibleHeight) / 2);
 			height: calc(var(--collapsibleHeight) / 2);
 			border-radius: 9999px;
-			margin: 0;
+			margin: 0 4px 0 0;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			font-weight: 600;
+			font-size: 14px;
+			font-variation-settings: 'wdth' 75, 'wght' 600;
 			background-color: var(--colorBackgroundPrimary);
 			color: rgb(var(--colorBrandAccentRgb));
 			transition: all 0.2s ease-out;
 		}
 
 		.arrow {
-			position: absolute;
-			right: 20px;
-			margin-top: 1px;
-			display: block;
-			width: 12px;
-			height: 12px;
-			mask-size: 12px;
-			mask-repeat: no-repeat;
-			mask-position: center;
-			background-color: var(--colorBackgroundPrimary);
+			color: white;
 			transition: transform 0.2s ease-out;
 		}
 	}

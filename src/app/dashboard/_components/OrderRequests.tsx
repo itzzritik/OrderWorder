@@ -87,7 +87,7 @@ const OrderRequests = () => {
 					activeCardData && activeCardData.products.map((product, key) => {
 						const productData = menu?.find?.((menu) => (menu._id === product._id));
 						product = { ...product, ...productData };
-						return <ItemCard item={product} key={key} staticCard />;
+						return <ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />;
 					})
 				}
 			</SideSheet>

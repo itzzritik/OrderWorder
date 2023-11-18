@@ -44,6 +44,7 @@ export type TOrder = HydratedDocument<{
 }>
 
 export type TProduct = {
+	_id: mongoose.Types.ObjectId,
 	product: TMenu,
 	quantity: number,
 	price: number,

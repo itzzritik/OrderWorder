@@ -11,7 +11,7 @@ export async function POST (req: Request) {
 	try {
 		const session = await getServerSession(authOptions);
 		const body = await req.json();
-		console.log(body);
+
 		if (!session) throw { status: 401, message: 'Authentication Required' };
 		if (!body?.orderID) throw { status: 400, message: 'Order id is required to perform an action' };
 		if (!actions.includes(body?.action)) throw { status: 400, message: 'Invalid action provided' };
