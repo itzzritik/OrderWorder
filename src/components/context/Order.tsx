@@ -20,7 +20,6 @@ const OrderDefault: TOrderInitialType = {
 export const OrderContext = createContext(OrderDefault);
 export const OrderProvider = ({ children }: TOrderProviderProps) => {
 	const { data: order, mutate } = useSWR('/api/order', fetcher);
-	console.log(order);
 
 	const [startingOrder, setStartingOrder] = useState(false);
 	const [cancelingOrder, setCancelingOrder] = useState(false);

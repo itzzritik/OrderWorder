@@ -67,7 +67,7 @@ const LoginSection = () => {
 		setLogoutLoading(true);
 		signOut();
 	};
-	console.log(session.data);
+
 	return (
 		<section className='loginSection' id='homepage-login'>
 			<div className='loginAnim'>

@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 import { Button, Icon, Spinner } from 'xtreme-ui';
 
 import NoContent from '#components/base/NoContent';
+import { TMenu } from '#utils/database/models/menu';
+import { TOrder } from '#utils/database/models/order';
 
 import ItemCard from '../../../components/base/ItemCard';
 
 import './orderDetail.scss';
 
 const OrderDetail = (props: TOrderDetailProps) => {
-	const { data } = props;
-	console.log(data);
+	const { data, actions, busy, reject } = props;
 	const queryParams = useSearchParams();
 	const subTab = queryParams.get('subTab') ?? '';
 
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		setLoading(false);
-	}, []);
+	const [loading] = useState(false);
 
 	// Show empty when no data is provided
 	if (!data) return null;
@@ -29,13 +26,15 @@ const OrderDetail = (props: TOrderDetailProps) => {
 		return <Spinner fullpage />;
 	}
 
-	const optionButtons = () => {
+	const OptionButtons = () => {
+		if (!actions) return null;
+
 		if (subTab === 'active') {
 			if (data.products.length === 0) {
 				return (
 					<div className='options'>
-						<Button className='accept' label='End Session'
-							onClick={() => props.action(data.table)} loading={props.busy} round
+						<Button className='accept' label='End Session' iconType='solid'
+							onClick={() => props.action(data?.table)} loading={busy}
 						/>
 					</div>
 				);
@@ -43,76 +42,70 @@ const OrderDetail = (props: TOrderDetailProps) => {
 			} else if (data.userOrderEnd) {
 				return (
 					<div className='options'>
-						<Button className='accept' label='Complete'
-							onClick={() => props.completeOrder(data.table)} loading={props.busy} round
+						<Button className='accept' label='Complete' iconType='solid'
+							onClick={() => props.completeOrder(data?.table)} loading={busy}
 						/>
 					</div>
 				);
 			}
 			return (
 				<div className='options'>
-					<Button className='reject' round onClick={() => {
+					<Button className='reject' type='primaryDanger' icon='f00d' iconType='solid' onClick={() => {
 						props.setReject({
-							_id: !props.reject ? data._id : null,
+							_id: !reject ? data._id.toString() : null,
 							details: true,
 						});
-					}} label={!props.reject ? 'End Order' : 'No'}
+					}} label={!reject ? 'End Order' : 'No'}
 					/>
-					<Button className='accept' label={!props.reject ? 'End Session' : 'End'} round
-						onClick={() => props.action(data.table)} loading={props.busy}
+					<Button className='accept' icon='f00c' iconType='solid' label={!reject ? 'End Session' : 'End'}
+						onClick={() => props.action(data?.table)} loading={busy}
 					/>
 				</div>
 			);
 		}
 		return (
-			<div className={`options ${props.busy ? 'busy ' : ''}`}>
-				<Button className='reject' round onClick={() => {
+			<div className={`options ${busy ? 'busy ' : ''}`}>
+				<Button className='reject' type='primaryDanger' icon='f00d' iconType='solid' onClick={() => {
 					props.setReject({
-						_id: !props.reject ? data._id : null,
+						_id: !reject ? data._id.toString() : null,
 						details: true,
 					});
-				}} label={!props.reject ? 'Reject' : 'No'}
+				}} label={!reject ? 'Reject' : 'Nope'}
 				/>
-				<Button className='accept' label={!props.reject ? 'Accept' : 'Reject'} round
-					onClick={() => props.action(data._id)} loading={props.busy}
+				<Button className='accept'icon='f00c' iconType='solid' label={!reject ? 'Accept' : 'Reject'}
+					onClick={() => props.action(data._id.toString())} loading={busy}
 				/>
 			</div>
 		);
 	};
 
-	const productDetails = () => {
-		// if (orderData.userOrderEnd) {
-		// 	return <Invoice order={orderData} />;
-		// }
-		return data.products.map((product, key) => {
-			const productData = menu.find((menu) => (menu._id === product._id));
-			product = { ...product, ...productData };
-			return <ItemCard item={product} key={key} staticCard />;
-		});
-	};
-
 	return (
-		<div className={`orderDetail ${props.reject ? 'reject ' : ''}`}>
+		<div className={`orderDetail ${reject ? 'reject ' : ''}`}>
 			<div className='header'>
 				<div className='info'>
-					<h1 className='table'>{!props.reject ? orderData.restaurant.tableName : 'Are you sure?'}</h1>
+					<h1 className='table'>{!reject ? `Table: ${data?.table}` : 'Are you sure?'}</h1>
 					<div className='name'>
-						<Icon code='f007' />
-						{data.customer.name}
+						<Icon code='f007' type='solid' size={16} />
+						{data?.customer?.fname} {data?.customer?.lname}
 					</div>
 					<div className='phone'>
-						<Icon code='f095' />
-						{data.customer.phoneNumber}
+						<Icon code='f095' type='solid' size={16} />
+						{data?.customer?.phone}
 					</div>
-					{ !data.total ? <div /> : <div className='total rupee'>{data.total}</div> }
+					{
+						data?.orderTotal && <div className='total'>
+							<Icon code='e1bc' type='solid' size={16} />
+							{data?.orderTotal}
+						</div>
+					}
 				</div>
-				{props.actions && optionButtons()}
+				<OptionButtons />
 			</div>
-			<div className='detailContent' trackSize='small'>
+			<div className='detailContent'>
 				{
-					data.products.length === 0
-						? <NoContent label='No approved orders from this table yet!' animationName='' />
-						: productDetails()
+					data?.products?.length === 0
+						? <NoContent label='No approved orders from this table yet!' animationName='GhostNoContent' />
+						: data.products.map((product, key) => (<ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />))
 				}
 			</div>
 		</div>
@@ -122,10 +115,11 @@ const OrderDetail = (props: TOrderDetailProps) => {
 export default OrderDetail;
 
 export type TOrderDetailProps = {
-
-	// data
-	// busy
-	// reject
-	// setReject
-	// actions
+	data: TOrder
+	actions?: boolean
+	action: (id: string) => void
+	busy: boolean
+	reject: boolean
+	setReject: (props: { _id: string | null, details: boolean }) => void
 }
+type TMenuCustom = TMenu & {quantity: number}

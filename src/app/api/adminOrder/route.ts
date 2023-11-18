@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 
 import connectDB from '#utils/database/connect';
+import { Customers } from '#utils/database/models/customer';
 import { Menus } from '#utils/database/models/menu';
 import { Orders, TOrder } from '#utils/database/models/order';
 import { authOptions } from '#utils/helper/authHelper';
@@ -14,17 +15,20 @@ export async function GET () {
 		if (!session) throw { status: 401, message: 'Authentication Required' };
 
 		const restaurantID = session?.username;
-		const order: TOrder | undefined | null = await Orders.find<TOrder>({ restaurantID })
-			.populate({ path: 'products.product', model: Menus }).lean();
+		const orders: TOrder[] = (await Orders.find<TOrder>({ restaurantID })
+			.populate({ path: 'customer', model: Customers })
+			.populate({ path: 'products.product', model: Menus }).lean()) ?? [];
 
-		if (order?.products)
-			order.products = order?.products?.map((product) => {
-				product = { ...product, ...product.product };
-				product.product = product?.product?.id;
-				return product;
-			});
+		orders?.forEach?.((order) => {
+			if (order?.products)
+				order.products = order?.products?.map((product) => {
+					product = { ...product, ...product.product };
+					product.product = product?.product?.id;
+					return product;
+				});
+		});
 
-		return NextResponse.json(order);
+		return NextResponse.json(orders);
 	} catch (err) {
 		console.log(err);
 		return CatchNextResponse(err);

@@ -14,17 +14,18 @@
 
 		.content {
 			background-color: rgb(var(--colorBrandAccentRgb));
-			box-shadow: 0 0 12px rgb((var(--colorBrandAccentRgb)) 50%);
+			box-shadow: 0 0 12px rgb(var(--colorBrandAccentRgb));
+			transition: all 0.2s ease-out;
 
 			> p {
-				color: var(--colorBackgroundPrimary);
+				color: white;
 			}
 		}
 	}
 
 	&.reject {
 		.content {
-			background-color: var(--colorBackgroundPrimary);
+			background-color: rgb(var(--colorAlertErrorRGB));
 			box-shadow: 0 0 5px rgb(var(--colorAlertErrorRGB));
 
 			> p {
@@ -119,6 +120,7 @@
 			padding: 15px;
 			overflow: hidden;
 			user-select: none;
+			gap: 8px;
 
 			> .button {
 				width: 100%;
@@ -152,6 +154,12 @@
 	.ordersCard {
 		&.active {
 			> .content {
+				background-color: var(--colorBackgroundPrimary);
+
+				> p {
+					color: var(--colorContentPrimary);
+				}
+
 				> p.total {
 					pointer-events: all;
 

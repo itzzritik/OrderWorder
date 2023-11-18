@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 import { TCustomer } from './customer';
 import { TMenu } from './menu';
 
-const orderState = ['active', 'cancel', 'complete'] as const;
+const orderState = ['active', 'reject', 'cancel', 'complete'] as const;
 const OrderSchema = new mongoose.Schema<TOrder>({
 	restaurantID: { type: String, trim: true, lowercase: true, required: true },
 	table: { type: String, trim: true, lowercase: true, required: true },
@@ -33,7 +33,7 @@ OrderSchema.pre('save', function (next) {
 });
 
 export const Orders = mongoose.models?.orders ?? mongoose.model<TOrder>('orders', OrderSchema);
-export type TOrder = {
+export type TOrder = HydratedDocument<{
 	restaurantID: string,
 	table: string,
 	customer: TCustomer,
@@ -41,7 +41,7 @@ export type TOrder = {
 	orderTotal: number,
 	taxTotal: number,
 	products: Array<TProduct>
-}
+}>
 
 export type TProduct = {
 	product: TMenu,

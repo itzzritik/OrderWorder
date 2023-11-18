@@ -12,16 +12,14 @@ const AdminOrderDefault: TAdminOrderInitialType = {
 	orderActive: [],
 	orderHistory: [],
 	acceptOrder: () => new Promise(noop),
-	acceptingOrder: false,
 	rejectOrder: () => new Promise(noop),
-	rejectingOrder: false,
+	orderActionLoading: false,
 };
 
 export const AdminOrderContext = createContext(AdminOrderDefault);
 export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 	const { data: orderHistory = [], mutate } = useSWR('/api/adminOrder', fetcher);
-	const [acceptingOrder, setAcceptingOrder] = useState(false);
-	const [rejectingOrder, setRejectingOrder] = useState(false);
+	const [orderActionLoading, setOrderActionLoading] = useState(false);
 
 	const { orderRequest, orderActive } = orderHistory?.reduce?.(
 		(acc: { orderRequest: TOrder[], orderActive: TOrder[] }, order: TOrder) => {
@@ -34,8 +32,9 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 		{ orderRequest: [], orderActive: [] },
 	) ?? {};
 
-	const orderAction = async (accept: boolean) => {
+	const orderAction = async (orderID: string, accept: boolean = true) => {
 		const req = await fetch('/api/adminOrder/action', { method: 'POST', body: JSON.stringify({
+			orderID,
 			action: accept ? 'accept' : 'reject',
 		}) });
 		const res = await req.json();
@@ -43,21 +42,21 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 		if (!req.ok) toast.error(res?.message);
 		await mutate();
 	};
-	const acceptOrder = async () => {
-		setAcceptingOrder(true);
-		orderAction(true);
-		setAcceptingOrder(false);
+	const acceptOrder = async (orderID: string) => {
+		if (orderActionLoading) return;
+		setOrderActionLoading(true);
+		orderAction(orderID, true);
+		setOrderActionLoading(false);
 	};
-	const rejectOrder = async () => {
-		setRejectingOrder(true);
-		orderAction(false);
-		setRejectingOrder(false);
+	const rejectOrder = async (orderID: string) => {
+		if (orderActionLoading) return;
+		setOrderActionLoading(true);
+		orderAction(orderID, false);
+		setOrderActionLoading(false);
 	};
-
-	console.log(orderRequest, orderActive);
 
 	return (
-		<AdminOrderContext.Provider value={{ orderRequest, orderActive, orderHistory, acceptOrder, acceptingOrder, rejectOrder, rejectingOrder }}>
+		<AdminOrderContext.Provider value={{ orderRequest, orderActive, orderHistory, acceptOrder, rejectOrder, orderActionLoading }}>
 			{children}
 		</AdminOrderContext.Provider>
 	);
@@ -71,8 +70,7 @@ export type TAdminOrderInitialType = {
 	orderRequest: TOrder[],
 	orderActive: TOrder[],
 	orderHistory: TOrder[],
-	acceptOrder: () => Promise<void>,
-	acceptingOrder: boolean,
-	rejectOrder: () => Promise<void>,
-	rejectingOrder: boolean,
+	acceptOrder: (orderID: string) => Promise<void>,
+	rejectOrder: (orderID: string) => Promise<void>,
+	orderActionLoading: boolean,
 }

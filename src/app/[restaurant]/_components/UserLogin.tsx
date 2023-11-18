@@ -26,7 +26,6 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 	const onNext = async () => {
 		if (page === 'phone') {
 			if (!mobileNumberPattern.test(phoneNumber)) {
-				console.log(phoneNumber);
 				return toast.error('Please enter a valid phone number');
 			}
 
