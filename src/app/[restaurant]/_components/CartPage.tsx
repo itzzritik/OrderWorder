@@ -9,7 +9,8 @@ import { useOrder, useRestaurant } from '#components/context/useContext';
 import { getAnimSrc } from '#utils/constants/common';
 import { TMenu } from '#utils/database/models/menu.js';
 
-import ItemCard from './ItemCard';
+import ItemCard from '../../../components/base/ItemCard';
+
 import './cartPage.scss';
 
 const CartPage = (props: TCartPageProps) => {
@@ -75,7 +76,7 @@ const CartPage = (props: TCartPageProps) => {
 	if (!props.selectedProducts.length && !order?.products?.length) {
 		return (
 			<div className='cartPage'>
-				<NoContent label={'Aren\'t you hungry?'} />
+				<NoContent label={'Aren\'t you hungry?'} animationName='FoodBurgerHappy' />
 			</div>
 		);
 	}

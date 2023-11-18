@@ -17,7 +17,6 @@ import './orderPage.scss';
 
 const OrderPage = () => {
 	const session = useSession();
-	console.log(session);
 	const { restaurant } = useRestaurant();
 	const menus = restaurant?.menus as Array<TMenuCustom>;
 	const params = useQueryParams();

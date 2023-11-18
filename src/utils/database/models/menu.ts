@@ -13,6 +13,7 @@ const MenuSchema = new mongoose.Schema<TMenu>({
 	description: { type: String, trim: true },
 	categories: [{ type: String, trim: true, lowercase: true }],
 	price: { type: Number, trim: true, required: true },
+	taxPercent: { type: Number, trim: true, required: true },
 	foodType: { type: String, trim: true, lowercase: true, enum: FoodType },
 	veg: { type: String, trim: true, lowercase: true, required: true, enum: Veg },
 	image: { type: String, trim: true },
@@ -43,6 +44,7 @@ export type TMenu = HydratedDocument<{
 	description: string;
 	categories: Array<string>;
 	price: number;
+	taxPercent: number;
 	foodType: TFoodType;
 	veg: TVeg;
 	image: string;

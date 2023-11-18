@@ -9,17 +9,28 @@ const OrderSchema = new mongoose.Schema<TOrder>({
 	table: { type: String, trim: true, lowercase: true, required: true },
 	customer: { type: mongoose.Schema.Types.ObjectId, ref: 'customers' },
 	state: { type: String, trim: true, lowercase: true, enum: orderState, default: 'active' },
-	orderTotal: { type: Number, default: 0 },
-	tax: { type: Number, default: 0 },
-	taxRate: { type: Number, default: 5 },
+	orderTotal: { type: Number },
+	taxTotal: { type: Number },
 	products: [{
 		product: { type: mongoose.Schema.Types.ObjectId, ref: 'menus' },
 		quantity: { type: Number, default: 1 },
+		price: { type: Number, required: true },
+		tax: { type: Number, required: true },
 		adminApproved: { type: Boolean, default: false },
 		fulfilled: { type: Boolean, default: false },
 	}],
 },
 { timestamps: true });
+
+OrderSchema.pre('save', function (next) {
+	this.orderTotal = 0;
+	this.taxTotal = 0;
+	this?.products?.forEach(({ quantity, price, tax }) => {
+		this.orderTotal += (price * quantity);
+		this.taxTotal += tax;
+	});
+	next();
+});
 
 export const Orders = mongoose.models?.orders ?? mongoose.model<TOrder>('orders', OrderSchema);
 export type TOrder = {
@@ -28,14 +39,15 @@ export type TOrder = {
 	customer: TCustomer,
 	state: typeof orderState[number],
 	orderTotal: number,
-	tax: number,
-	taxRate: number,
+	taxTotal: number,
 	products: Array<TProduct>
 }
 
 export type TProduct = {
 	product: TMenu,
 	quantity: number,
+	price: number,
+	tax: number,
 	fulfilled: boolean,
 	adminApproved: boolean,
 }

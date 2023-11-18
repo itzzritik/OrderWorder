@@ -15,20 +15,18 @@
 		font-size: 12px;
 		font-weight: 500;
 		background-color: transparent;
+		color: rgb(var(--colorBrandAccentRgb));
 		border: 1px solid rgb(var(--colorBrandAccentRgb));
 
 		> span {
 			display: block;
 			width: 100%;
 			height: 100%;
-			mask-size: 11px;
-			mask-repeat: no-repeat;
-			mask-position: center;
 			background-color: rgb(var(--colorBrandAccentRgb));
 		}
 
 		> i {
-			color: white;
+			color: inherit;
 		}
 
 		&:active {

@@ -5,11 +5,11 @@ import { getAnimSrc } from '#utils/constants/common';
 import './noContent.scss';
 
 const NoContent = (props: TNoContentProps) => {
-	const { label } = props;
+	const { animationName, label, size = 250, speed } = props;
 	return (
 		<div className='noContent'>
 			<div>
-				<Lottie size={250} src={getAnimSrc('FoodBurgerHappy')} speed={0.7} />
+				<Lottie src={getAnimSrc(animationName)} size={size} speed={speed} />
 				{label && <p>{label}</p>}
 			</div>
 		</div>
@@ -19,5 +19,8 @@ const NoContent = (props: TNoContentProps) => {
 export default NoContent;
 
 export type TNoContentProps = {
+	animationName: string,
 	label: string,
+	size?: number,
+	speed?: number,
 }

@@ -23,7 +23,7 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 	const [acceptingOrder, setAcceptingOrder] = useState(false);
 	const [rejectingOrder, setRejectingOrder] = useState(false);
 
-	const { orderRequest, orderActive } = orderHistory.reduce(
+	const { orderRequest, orderActive } = orderHistory?.reduce?.(
 		(acc: { orderRequest: TOrder[], orderActive: TOrder[] }, order: TOrder) => {
 			if (order.state === 'active') {
 				acc.orderActive.push(order);
@@ -32,7 +32,7 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 			return acc;
 		},
 		{ orderRequest: [], orderActive: [] },
-	);
+	) ?? {};
 
 	const orderAction = async (accept: boolean) => {
 		const req = await fetch('/api/adminOrder/action', { method: 'POST', body: JSON.stringify({

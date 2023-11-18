@@ -1,53 +1,53 @@
 import React from 'react';
 
+import clsx from 'clsx';
 import { Button } from 'xtreme-ui';
 
-import { useAdminOrder } from '#components/context/useContext';
+import './ordersCard.scss';
 
 const OrdersCard = (props: TOrdersCard) => {
-	const { active, reject, setReject, busy, history, data, details, action, activate, showDetails, completeOrder } = props;
-	const {} = useAdminOrder();
+	const { data, active, reject, setReject, busy, history, details, action, activate, showDetails, completeOrder } = props;
 	const onAction = () => {
 		action(data._id);
 	};
-	const tableName = data.role === 'table' ? data.profile.name : data.restaurant.tableName;
-	const customerName = data.role === 'table' ? data.profile.customerName : data.customer.name;
+	const tableName = data.table;
+	const customerName = data.customer.name;
 
-	const optionButtons = () => {
-		if (data.role === 'table') {
-			if (orderData && !orderData.userOrderEnd) {
-				return (
-					<div className='options'>
-						<Button className='accept' label={!reject ? 'End Session' : 'End'}
-							onClick={() => action(data.username)} loading={busy} round
-						/>
-						{!busy && <Button className='reject' onClick={() => {
-							setReject({
-								_id: !reject ? data._id : null,
-								details: false,
-							});
-						}} label={!props.reject ? 'End Order' : 'No'}
-						          />}
-					</div>
-				);
-			// eslint-disable-next-line no-else-return
-			} else if (orderData && orderData.userOrderEnd) {
-				return (
-					<div className='options'>
-						<Button className='accept' label='Complete'
-							onClick={() => completeOrder(data.username)} loading={busy}
-						/>
-					</div>
-				);
-			}
-			return (
-				<div className='options'>
-					<Button className='accept' label='End Session'
-						onClick={() => action(data.username)} loading={busy}
-					/>
-				</div>
-			);
-		}
+	const OptionButtons = () => {
+		// if (data.role === 'table') {
+		// 	if (orderData && !orderData.userOrderEnd) {
+		// 		return (
+		// 			<div className='options'>
+		// 				<Button className='accept' label={!reject ? 'End Session' : 'End'}
+		// 					onClick={() => action(data.username)} loading={busy} round
+		// 				/>
+		// 				{!busy && <Button className='reject' onClick={() => {
+		// 					setReject({
+		// 						_id: !reject ? data._id : null,
+		// 						details: false,
+		// 					});
+		// 				}} label={!props.reject ? 'End Order' : 'No'}
+		// 				          />}
+		// 			</div>
+		// 		);
+		// 	// eslint-disable-next-line no-else-return
+		// 	} else if (orderData && orderData.userOrderEnd) {
+		// 		return (
+		// 			<div className='options'>
+		// 				<Button className='accept' label='Complete'
+		// 					onClick={() => completeOrder(data.username)} loading={busy}
+		// 				/>
+		// 			</div>
+		// 		);
+		// 	}
+		// 	return (
+		// 		<div className='options'>
+		// 			<Button className='accept' label='End Session'
+		// 				onClick={() => action(data.username)} loading={busy}
+		// 			/>
+		// 		</div>
+		// 	);
+		// }
 		return (
 			<div className='options'>
 				<Button className='accept' label={!reject ? 'Accept' : 'Reject'}
@@ -69,10 +69,12 @@ const OrdersCard = (props: TOrdersCard) => {
 		);
 	};
 
-	let classList = 'ordersCard ';
-	active && (classList += 'active ');
-	reject && (classList += 'reject ');
-	busy && (classList += 'busy ');
+	const classList = clsx(
+		'ordersCard',
+		active && 'active',
+		reject && 'reject',
+		busy && 'busy',
+	);
 
 	return (
 		<div className={classList}
@@ -85,11 +87,11 @@ const OrdersCard = (props: TOrdersCard) => {
 				<p className='table'>{!reject || details ? tableName : 'Are you sure?'}</p>
 				<p className='name'>{!reject || details ? customerName : tableName}</p>
 				{
-					!orderData
+					!data?.products?.length
 						? <p className='noContent'>No orders yet</p>
-						: <p className='total rupee' onClick={() => showDetails(true)}>{orderData.total}</p>
+						: <p className='total rupee' onClick={() => showDetails(true)}>{data?.orderTotal}</p>
 				}
-				{actions && optionButtons()}
+				<OptionButtons />
 			</div>
 		</div>
 	);

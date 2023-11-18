@@ -24,7 +24,7 @@ const Invoice = (props: TInvoiceProps) => {
 	useEffect(() => {
 		if (props.order) {
 			const products = props.order.products.map((product) => ({
-				...Menu.findOne({ _id: product._id }),
+				...menu.find((menu) => (menu._id === product._id)),
 				quantity: product.quantity }));
 			setOrderList(products);
 			setSubTotal(props.order.total);

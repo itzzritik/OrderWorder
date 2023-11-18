@@ -7,17 +7,17 @@ import './orders.scss';
 
 const Orders = () => {
 	const queryParams = useSearchParams();
-	const tab = queryParams.get('tab') ?? '';
+	const subTab = queryParams.get('subTab') ?? '';
 
-	if (tab === 'requests') {
+	if (subTab === 'requests') {
 		return <OrderRequests />;
 	}
 
-	// if (tab === 'active') {
+	// if (subTab === 'active') {
 	// 	return <ActiveOrders />;
 	// }
 
-	// if (tab === 'history') {
+	// if (subTab === 'history') {
 	// 	return <OrderHistory />;
 	// }
 };

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 
 import connectDB from '#utils/database/connect';
+import { Customers } from '#utils/database/models/customer';
 import { Menus } from '#utils/database/models/menu';
 import { Orders, TOrder } from '#utils/database/models/order';
 import { authOptions } from '#utils/helper/authHelper';
@@ -17,6 +18,7 @@ export async function GET () {
 		const restaurantID = session?.restaurant?.username;
 		const customer = session?.customer?._id;
 		const order: TOrder | undefined | null = await Orders.findOne<TOrder>({ restaurantID, customer, state: 'active' })
+			.populate({ path: 'customer', model: Customers }).lean()
 			.populate({ path: 'products.product', model: Menus }).lean();
 
 		if (order?.products)
