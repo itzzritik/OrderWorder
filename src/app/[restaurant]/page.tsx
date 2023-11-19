@@ -6,7 +6,7 @@ import { CustomerProvider } from '#components/context';
 import NavSideBar from '#components/layout/NavSideBar';
 import UnderConstruction from '#components/layout/UnderConstruction';
 
-import OrderPage from './_components/OrderPage';
+import OrderPage from './_components/Menu/OrderPage';
 import './restaurant.scss';
 
 const navItems = [

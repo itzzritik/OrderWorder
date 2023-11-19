@@ -11,7 +11,7 @@ import NoContent from '#components/layout/NoContent';
 import { getAnimSrc } from '#utils/constants/common';
 import { TMenu } from '#utils/database/models/menu.js';
 
-import ItemCard from '../../../components/layout/ItemCard';
+import ItemCard from '../../../../components/layout/ItemCard';
 
 import CartTaxItem from './CartTaxItem';
 import './cartPage.scss';
