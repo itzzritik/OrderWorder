@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { UIEvent, useEffect, useState } from 'react';
 
 import SideSheet from '#components/base/SideSheet';
 import { useAdminOrder } from '#components/context/useContext';
@@ -8,7 +8,8 @@ import { TOrder } from '#utils/database/models/order';
 
 import OrdersCard from './OrdersCard';
 
-const OrderHistory = () => {
+const OrderHistory = (props: TOrderHistoryProps) => {
+	const { onScroll } = props;
 	const { orderHistory } = useAdminOrder();
 
 	const [activeCardID, setActiveCardID] = useState<string>();
@@ -16,7 +17,11 @@ const OrderHistory = () => {
 	const [sideSheetOpen, setSideSheetOpen] = useState(false);
 
 	useEffect(() => {
-		if (orderHistory.length > 0 && !activeCardData) {
+		if (orderHistory.length === 0) {
+			setActiveCardID(undefined);
+			setActiveCardData(undefined);
+		}
+		else if (!orderHistory.some(({ _id }) => _id.toString() === activeCardID)) {
 			setActiveCardID(orderHistory[0]?._id.toString());
 			setActiveCardData(orderHistory[0]);
 		}
@@ -27,7 +32,7 @@ const OrderHistory = () => {
 			{
 				orderHistory.length === 0 ? <NoContent label='No order history' animationName='GhostNoContent' />
 					: <div className='ordersContent'>
-						<div className='list'>
+						<div className='list' onScroll={onScroll}>
 							{
 								orderHistory.map((data, i) => (
 									<OrdersCard
@@ -61,3 +66,7 @@ const OrderHistory = () => {
 };
 
 export default OrderHistory;
+
+export type TOrderHistoryProps = {
+	onScroll: (event: UIEvent<HTMLDivElement>) => void
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { UIEvent, useEffect, useState } from 'react';
 
 import SideSheet from '#components/base/SideSheet';
 import { useAdminOrder } from '#components/context/useContext';
@@ -11,7 +11,8 @@ import ItemCard from '../../../components/layout/ItemCard';
 import OrderDetail from './OrderDetail';
 import OrdersCard from './OrdersCard';
 
-const OrderRequests = () => {
+const OrderRequests = (props: TOrderRequestsProps) => {
+	const { onScroll } = props;
 	const { orderRequest, orderAction, orderActionLoading } = useAdminOrder();
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
@@ -26,7 +27,11 @@ const OrderRequests = () => {
 	};
 
 	useEffect(() => {
-		if (orderRequest.length > 0 && !activeCardData) {
+		if (orderRequest.length === 0) {
+			setActiveCardID(undefined);
+			setActiveCardData(undefined);
+		}
+		else if (!orderRequest.some(({ _id }) => _id.toString() === activeCardID)) {
 			setActiveCardID(orderRequest[0]?._id.toString());
 			setActiveCardData(orderRequest[0]);
 		}
@@ -37,7 +42,7 @@ const OrderRequests = () => {
 			{
 				orderRequest?.length === 0 ? <NoContent label='No order requests' animationName='GhostNoContent' />
 					: <div className='ordersContent'>
-						<div className={`list ${orderActionLoading ? 'disable' : ''}`}>
+						<div className={`list ${orderActionLoading ? 'disable' : ''}`} onScroll={onScroll}>
 							{
 								orderRequest?.map?.((data, i) =>
 									(
@@ -92,4 +97,7 @@ const OrderRequests = () => {
 
 export default OrderRequests;
 
+export type TOrderRequestsProps = {
+	onScroll: (event: UIEvent<HTMLDivElement>) => void
+}
 type TMenuCustom = TMenu & {quantity: number}

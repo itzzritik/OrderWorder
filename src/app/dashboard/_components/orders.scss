@@ -29,6 +29,7 @@
 			height: 100%;
 			padding: 0 5px;
 			transition: width 0.1s ease-out;
+			overflow-y: auto;
 			
 			> .scrollbarVertical {
 				transform: translateX(3px);

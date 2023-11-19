@@ -23,9 +23,7 @@ export async function POST (req: Request) {
 		if (!order) throw { status: 400, message: `Order with id: ${body?.orderID} not found` };
 
 		if (body.action == 'accept')
-			order.products.forEach((product) => {
-				product.adminApproved = true;
-			});
+			order.products.forEach((product) => { product.adminApproved = true; });
 
 		if (body.action == 'reject') {
 			if (!order.products.some(({ adminApproved }) => adminApproved)) order.state = 'reject';

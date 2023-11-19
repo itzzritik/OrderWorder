@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { UIEvent, useEffect, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
@@ -24,7 +24,7 @@ const Dashboard = () => {
 	const queryParams = useQueryParams();
 	const tab = queryParams.get('tab') ?? '';
 
-	const onScroll = (event) => {
+	const onScroll = (event: UIEvent<HTMLDivElement>) => {
 		if (event.target.scrollTop >= 1) {
 			return setFloatHeader(true);
 		}
@@ -54,7 +54,7 @@ const Dashboard = () => {
 						// ),
 
 							orders: (
-								<Orders />
+								<Orders onScroll={onScroll} />
 							),
 
 						// settings: (

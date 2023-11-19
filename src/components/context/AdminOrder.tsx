@@ -14,6 +14,7 @@ const AdminOrderDefault: TAdminOrderInitialType = {
 	orderHistory: [],
 	orderAction: () => new Promise(noop),
 	orderActionLoading: false,
+	orderLoading: false,
 };
 
 export const AdminOrderContext = createContext(AdminOrderDefault);
@@ -21,9 +22,9 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 	const params = useSearchParams();
 	const tab = params.get('tab');
 	const subTab = params.get('subTab');
-	const { data: orderData = [], mutate } = useSWR('/api/adminOrder', fetcher);
+	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR('/api/adminOrder', fetcher);
 	const [orderActionLoading, setOrderActionLoading] = useState(false);
-
+	console.log(orderLoading);
 	const { orderRequest, orderActive, orderHistory } = orderData?.reduce?.(
 		(acc: { orderRequest: TOrder[], orderActive: TOrder[], orderHistory: TOrder[] }, order: TOrder) => {
 			if (order.state === 'active') {
@@ -52,7 +53,7 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 	}, [tab, subTab, mutate]);
 
 	return (
-		<AdminOrderContext.Provider value={{ orderRequest, orderActive, orderHistory, orderAction, orderActionLoading }}>
+		<AdminOrderContext.Provider value={{ orderRequest, orderActive, orderHistory, orderAction, orderActionLoading, orderLoading }}>
 			{children}
 		</AdminOrderContext.Provider>
 	);
@@ -68,6 +69,7 @@ export type TAdminOrderInitialType = {
 	orderHistory: TOrder[],
 	orderAction: (orderID: string, action: TOrderAction) => Promise<void>,
 	orderActionLoading: boolean,
+	orderLoading: boolean,
 }
 
 export type TOrderAction = 'accept' | 'complete' | 'reject'

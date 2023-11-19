@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { UIEvent, useEffect, useState } from 'react';
 
 import SideSheet from '#components/base/SideSheet';
 import { useAdminOrder } from '#components/context/useContext';
@@ -10,7 +10,8 @@ import { TOrder } from '#utils/database/models/order';
 import OrderDetail from './OrderDetail';
 import OrdersCard from './OrdersCard';
 
-const ActiveOrders = () => {
+const ActiveOrders = (props: TActiveOrdersProps) => {
+	const { onScroll } = props;
 	const { orderActive, orderAction, orderActionLoading } = useAdminOrder();
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
@@ -18,7 +19,6 @@ const ActiveOrders = () => {
 	const [sideSheetOpen, setSideSheetOpen] = useState(false);
 
 	const onOrderAction = async (orderID: string) => {
-		console.log(orderID, rejectCard._id);
 		if (orderID === rejectCard._id)
 			return await orderAction(orderID, 'reject');
 
@@ -26,7 +26,11 @@ const ActiveOrders = () => {
 	};
 
 	useEffect(() => {
-		if (orderActive.length > 0 && !activeCardData) {
+		if (orderActive.length === 0) {
+			setActiveCardID(undefined);
+			setActiveCardData(undefined);
+		}
+		else if (!orderActive.some(({ _id }) => _id.toString() === activeCardID)) {
 			setActiveCardID(orderActive[0]?._id.toString());
 			setActiveCardData(orderActive[0]);
 		}
@@ -37,7 +41,7 @@ const ActiveOrders = () => {
 			{
 				orderActive?.length === 0 ? <NoContent label='No active orders' animationName='GhostNoContent' />
 					: <div className='ordersContent'>
-						<div className={`list ${orderActionLoading ? 'disable' : ''}`}>{
+						<div className={`list ${orderActionLoading ? 'disable' : ''}`} onScroll={onScroll}>{
 							orderActive.map((data, i) => (
 								<OrdersCard
 									key={i}
@@ -86,5 +90,9 @@ const ActiveOrders = () => {
 };
 
 export default ActiveOrders;
+
+export type TActiveOrdersProps = {
+	onScroll: (event: UIEvent<HTMLDivElement>) => void
+}
 
 type TMenuCustom = TMenu & {quantity: number}
