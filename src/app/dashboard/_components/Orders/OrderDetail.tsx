@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 import { Button, Icon } from 'xtreme-ui';

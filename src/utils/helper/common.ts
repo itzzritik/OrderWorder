@@ -2,6 +2,7 @@ import forEach from 'lodash/forEach';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
+export const fetcher = (url: string) => fetch(url).then((r) => r.json());
 export const CatchNextResponse = ({ message = 'Something went wrong', status = 500 }: NextResponseError) => {
 	return NextResponse.json(
 		{ message, status },

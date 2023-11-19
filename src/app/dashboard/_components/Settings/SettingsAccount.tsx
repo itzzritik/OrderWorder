@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { signOut, useSession } from 'next-auth/react';
 import { Button } from 'xtreme-ui';

@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 
 import { useRouter } from 'next/navigation';
 import { QrReader } from 'react-qr-reader';

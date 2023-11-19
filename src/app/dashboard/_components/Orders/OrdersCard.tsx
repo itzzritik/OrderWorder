@@ -1,5 +1,3 @@
-import React from 'react';
-
 import clsx from 'clsx';
 import { useSearchParams } from 'next/navigation';
 import { Button } from 'xtreme-ui';

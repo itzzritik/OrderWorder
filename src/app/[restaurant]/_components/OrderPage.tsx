@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, UIEvent, useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, UIEvent, useEffect, useRef, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 import { Button, Icon, Spinner } from 'xtreme-ui';

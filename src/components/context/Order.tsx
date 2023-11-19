@@ -8,6 +8,7 @@ import useSWR from 'swr';
 
 import { TMenu } from '#utils/database/models/menu';
 import { TOrder } from '#utils/database/models/order';
+import { fetcher } from '#utils/helper/common';
 
 const OrderDefault: TOrderInitialType = {
 	order: undefined,
@@ -21,7 +22,7 @@ const OrderDefault: TOrderInitialType = {
 export const OrderContext = createContext(OrderDefault);
 export const OrderProvider = ({ children }: TOrderProviderProps) => {
 	const session = useSession();
-	const { data: order, isLoading: loading, mutate } = useSWR('/api/order');
+	const { data: order, isLoading: loading, mutate } = useSWR('/api/order', fetcher);
 
 	const [placingOrder, setPlacingOrder] = useState(false);
 	const [cancelingOrder, setCancelingOrder] = useState(false);

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { Button } from 'xtreme-ui';

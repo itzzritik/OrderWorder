@@ -1,4 +1,4 @@
-import React, { UIEvent } from 'react';
+import { UIEvent } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 import { Spinner } from 'xtreme-ui';

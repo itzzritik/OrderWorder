@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import useSWR from 'swr';
 
 import { TAccount } from '#utils/database/models/account';
+import { fetcher } from '#utils/helper/common';
 
 const RestaurantDefault: TRestaurantInitialType = {
 	restaurant: undefined,
@@ -14,7 +15,7 @@ const RestaurantDefault: TRestaurantInitialType = {
 export const RestaurantContext = createContext(RestaurantDefault);
 export const RestaurantProvider = ({ children }: TRestaurantProviderProps) => {
 	const pathname = usePathname();
-	const { data, error, isLoading } = useSWR(`/api/menu?id=${pathname.replace('/', '')}`);
+	const { data, error, isLoading } = useSWR(`/api/menu?id=${pathname.replace('/', '')}`, fetcher);
 
 	const restaurant = useMemo(() => {
 		if (!data?.profile?.categories.includes('all')) data?.profile?.categories?.unshift('all');

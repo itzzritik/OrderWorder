@@ -1,6 +1,6 @@
 'use client';
 
-import React, { UIEvent, useEffect, useState } from 'react';
+import { UIEvent, useEffect, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
@@ -10,8 +10,8 @@ import { useQueryParams } from '#utils/hooks/useQueryParams';
 
 import NavTopBar from './_components/Orders/NavTopBar';
 import Orders from './_components/Orders/Orders';
-import './dashboard.scss';
 import Settings from './_components/Settings/Settings';
+import './dashboard.scss';
 
 const navItems = [
 	{ label: 'orders', icon: 'e43b', value: 'orders' },
