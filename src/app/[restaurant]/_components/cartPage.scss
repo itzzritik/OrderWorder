@@ -24,7 +24,7 @@
 		flex-direction: column;
 		width: 100%;
 		background-color: var(--colorBackgroundPrimary);
-		box-shadow: 0 -10px 10px -10px rgb(0 0 0 / 20%);
+		box-shadow: 0 -10px 10px -10px rgb(150 150 150 / 15%);
 		z-index: 3;
 		transform: translateY(calc(100% - var(--checkoutHeight)));
 		transition: transform 0.2s ease-out;
@@ -33,6 +33,7 @@
 			width: 100%;
 			height: var(--checkoutHeight);
 			display: flex;
+			justify-content: flex-end;
 			padding: 10px 20px;
 			border-bottom: 1px solid var(--colorContentTertiary);
 
@@ -74,9 +75,10 @@
 					}
 
 					&.plusTaxes {
-						font-size: 10px;
+						font-size: 12px;
 						font-variation-settings: 'wdth' 75, 'wght' 400;
 						color: var(--colorContentSecondary);
+						margin-left: -2px;
 					}
 				}
 			}
@@ -166,6 +168,12 @@
 
 			.taxSummaryTitle {
 				cursor: pointer;
+
+				&:hover {
+					.subtitle {
+						color: var(--colorContentSecondary);
+					}
+				}
 			}
 
 			.taxSummary {

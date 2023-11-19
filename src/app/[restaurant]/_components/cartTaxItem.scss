@@ -8,6 +8,7 @@
 		font-size: 14px;
 		margin: 4px 0;
 		font-variation-settings: 'wdth' 75, 'wght' 400;
+		transition: all 0.1s ease-out;
 
 		&.taxName {
 			text-transform: capitalize;

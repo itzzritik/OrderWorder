@@ -151,37 +151,27 @@ const CartPage = (props: TCartPageProps) => {
 									: <>
 										<p>Sub Total</p>
 										<span className='totalValue rupee'>{order?.orderTotal} </span>
-										{ order?.orderTotal && <span className='plusTaxes'>plus taxes</span> }
+										{ order?.orderTotal && <span className='plusTaxes'> + ₹{order?.taxTotal} Tax</span> }
 									</>
 							}
 						</div>
 					}
 					<div className='cartAction'>
-						{
-							bottomBarActive ?
-								<Button icon='f078' iconType='solid' size='mini' onClick={onOrderAction} />
-								: (
-									props.selectedProducts.length > 0 ?
-										<Button
-											icon='e1bc'
-											iconType='solid'
-											size='mini'
-											label={`${selectionTotal} | ${order?.products?.length ? 'Add to order' : 'Place order'}`}
-											loading={placingOrder}
-											onClick={onOrderAction}
-										/>
-										:
-										<Button
-											icon='f09d'
-											size='mini'
-											iconType='solid'
-											label='Proceed to Pay'
-											loading={placingOrder}
-											onClick={onOrderAction}
-										/>
-								)
-
-						}
+						<Button
+							iconType='solid'
+							size='mini'
+							icon={bottomBarActive ? 'f078' : (props.selectedProducts.length > 0 ? 'e1bc' : 'f09d')}
+							label={
+								bottomBarActive ? 'close'
+									: (
+										props.selectedProducts.length > 0 ?
+											`${selectionTotal} | ${order?.products?.length ? 'Add to order' : 'Place order'}`
+											: 'Proceed to Pay'
+									)
+							}
+							loading={placingOrder}
+							onClick={onOrderAction}
+						/>
 					</div>
 				</div>
 				{
@@ -209,7 +199,6 @@ const CartPage = (props: TCartPageProps) => {
 								))
 							}
 						</div>
-
 						<hr />
 						<CartTaxItem
 							name='Grand Total'
