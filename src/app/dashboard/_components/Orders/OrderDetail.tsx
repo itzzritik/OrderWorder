@@ -8,7 +8,7 @@ import NoContent from '#components/layout/NoContent';
 import { TMenu } from '#utils/database/models/menu';
 import { TOrder } from '#utils/database/models/order';
 
-import ItemCard from '../../../components/layout/ItemCard';
+import ItemCard from '../../../../components/layout/ItemCard';
 
 import './orderDetail.scss';
 

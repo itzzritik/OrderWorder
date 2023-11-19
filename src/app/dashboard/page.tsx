@@ -8,9 +8,10 @@ import { AdminProvider } from '#components/context';
 import NavSideBar from '#components/layout/NavSideBar';
 import { useQueryParams } from '#utils/hooks/useQueryParams';
 
-import NavTopBar from './_components/NavTopBar';
-import Orders from './_components/Orders';
+import NavTopBar from './_components/Orders/NavTopBar';
+import Orders from './_components/Orders/Orders';
 import './dashboard.scss';
+import Settings from './_components/Settings/Settings';
 
 const navItems = [
 	{ label: 'orders', icon: 'e43b', value: 'orders' },
@@ -55,11 +56,9 @@ const Dashboard = () => {
 								<Orders onScroll={onScroll} />
 							),
 
-						// settings: (
-						// 	<Settings tab={subTab} onScroll={onScroll} restaurant={restaurant}
-						// 		showScrollbar={showScrollbar} setShowScrollbar={setShowScrollbar}
-						// 	/>
-						// ),
+							settings: (
+								<Settings onScroll={onScroll} />
+							),
 						}[tab]}
 					</div>
 				</div>

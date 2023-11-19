@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
 import { TOrder } from '#utils/database/models/order';
-import { fetcher } from '#utils/helper/common';
 
 const AdminOrderDefault: TAdminOrderInitialType = {
 	orderRequest: [],
@@ -22,7 +21,7 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 	const params = useSearchParams();
 	const tab = params.get('tab');
 	const subTab = params.get('subTab');
-	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR('/api/adminOrder', fetcher);
+	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR('/api/adminOrder');
 	const [orderActionLoading, setOrderActionLoading] = useState(false);
 
 	const { orderRequest, orderActive, orderHistory } = orderData?.reduce?.(
