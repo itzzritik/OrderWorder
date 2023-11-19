@@ -27,7 +27,7 @@ const OrderRequests = (props: TOrderRequestsProps) => {
 	};
 
 	useEffect(() => {
-		if (orderRequest.length === 0) {
+		if (orderRequest?.length === 0) {
 			setActiveCardID(undefined);
 			setActiveCardData(undefined);
 		}

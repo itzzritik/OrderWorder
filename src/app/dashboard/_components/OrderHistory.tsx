@@ -17,7 +17,7 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 	const [sideSheetOpen, setSideSheetOpen] = useState(false);
 
 	useEffect(() => {
-		if (orderHistory.length === 0) {
+		if (orderHistory?.length === 0) {
 			setActiveCardID(undefined);
 			setActiveCardData(undefined);
 		}

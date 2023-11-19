@@ -11,6 +11,7 @@ import { TProfile } from '#utils/database/models/profile';
 import './loginSection.scss';
 
 const LoginSection = () => {
+	const router = useRouter();
 	const session = useSession();
 	const loggedIn = session.status === 'authenticated';
 
@@ -28,7 +29,6 @@ const LoginSection = () => {
 	const [password, setPassword] = useState('');
 	const [passwordShake, setPasswordShake] = useState(false);
 
-	const router = useRouter();
 	const onNext = async () => {
 		setNextLoading(true);
 		if (!profile) {
@@ -59,6 +59,9 @@ const LoginSection = () => {
 				setPasswordShake(true);
 				setTimeout(() => setPasswordShake(false), 600);
 			}
+
+			if (kitchenUsername) router.push('/kitchen');
+			else router.push('/dashboard');
 		}
 		setNextLoading(false);
 	};
@@ -96,7 +99,11 @@ const LoginSection = () => {
 					<div className='header'>
 						<Avatar src={profile?.avatar ?? session.data?.profile?.avatar ?? session.data?.restaurant?.avatar ?? ''} size='mini' />
 						<div className='details'>
-							<p className='name'>{profile?.name ?? session.data?.profile?.name ?? session.data?.customer?.name}</p>
+							<p className='name'>
+								{profile?.name ??
+									session.data?.profile?.name ??
+									`${session.data?.customer?.fname} ${session.data?.customer?.fname}`}
+							</p>
 							<p className='address'>{profile?.address ?? session.data?.profile?.address ?? session.data?.customer?.phone}</p>
 						</div>
 						<Button className='logout' icon={loggedIn ? 'f011' : 'f304'} size='mini' onClick={logout} loading={logoutLoading} />

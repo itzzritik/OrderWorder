@@ -24,7 +24,7 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 	const subTab = params.get('subTab');
 	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR('/api/adminOrder', fetcher);
 	const [orderActionLoading, setOrderActionLoading] = useState(false);
-	console.log(orderLoading);
+
 	const { orderRequest, orderActive, orderHistory } = orderData?.reduce?.(
 		(acc: { orderRequest: TOrder[], orderActive: TOrder[], orderHistory: TOrder[] }, order: TOrder) => {
 			if (order.state === 'active') {
@@ -37,7 +37,7 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 		{ orderRequest: [], orderActive: [], orderHistory: [] },
 	) ?? {};
 
-	const orderAction = async (orderID: string, action: 'accept' | 'complete' | 'reject') => {
+	const orderAction = async (orderID: string, action: TOrderAction) => {
 		if (orderActionLoading) return;
 		setOrderActionLoading(true);
 		const req = await fetch('/api/adminOrder/action', { method: 'POST', body: JSON.stringify({ orderID, action }) });
@@ -72,4 +72,4 @@ export type TAdminOrderInitialType = {
 	orderLoading: boolean,
 }
 
-export type TOrderAction = 'accept' | 'complete' | 'reject'
+export type TOrderAction = 'accept' | 'complete' | 'reject' | 'rejectOnActive'

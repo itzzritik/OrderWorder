@@ -20,13 +20,13 @@ const ActiveOrders = (props: TActiveOrdersProps) => {
 
 	const onOrderAction = async (orderID: string) => {
 		if (orderID === rejectCard._id)
-			return await orderAction(orderID, 'reject');
+			return await orderAction(orderID, 'rejectOnActive');
 
 		return await orderAction(orderID, 'complete');
 	};
 
 	useEffect(() => {
-		if (orderActive.length === 0) {
+		if (orderActive?.length === 0) {
 			setActiveCardID(undefined);
 			setActiveCardData(undefined);
 		}

@@ -25,7 +25,7 @@ const Dashboard = () => {
 	const tab = queryParams.get('tab') ?? '';
 
 	const onScroll = (event: UIEvent<HTMLDivElement>) => {
-		if (event.target.scrollTop >= 1) {
+		if ((event.target as HTMLDivElement).scrollTop >= 1) {
 			return setFloatHeader(true);
 		}
 		return setFloatHeader(false);
