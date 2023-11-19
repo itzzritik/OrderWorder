@@ -39,6 +39,8 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 		else if (page === 'signOTP' || page === 'loginOTP') {
 			if (!params.get('table')) return toast.error('Please scan the QR Code');
 
+			setBusy(true);
+
 			const res = await signIn('customer', {
 				redirect: false,
 				restaurant: pathname.replaceAll('/', ''),
@@ -53,6 +55,7 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 				toast.error(res?.error);
 			}
 			setOpen(false);
+			setBusy(false);
 		}
 	};
 
@@ -75,7 +78,14 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 				<span className='heading'><span>{heading[0]}</span>{heading[1]}</span>
 			</div>
 			<div className='content'>
-				<Textfield className='phone' type='phone' autoComplete='tel-local' value={phone} onChange={(e) => setPhone(e.target.value)} />
+				<Textfield
+					className='phone'
+					type='phone'
+					autoComplete='tel-local'
+					value={phone}
+					onEnterKey={onNext}
+					onChange={(e) => setPhone(e.target.value)}
+				/>
 				<div className='otpContainer'>
 					<Textfield
 						className='fName'
@@ -88,6 +98,7 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 						className='lName'
 						placeholder='Last Name'
 						autoComplete='family-name'
+						onEnterKey={onNext}
 						value={lname}
 						onChange={(e) => setLName(e.target.value)}
 					/>

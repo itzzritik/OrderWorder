@@ -3,20 +3,5 @@
 	width: 100%;
 	height: 100%;
 	background-color: var(--colorBackgroundSecondary);
-
-	> .scrollbarVertical {
-		transform: translateX(-7px);
-	}
-
-	> .scrollViewport {
-		padding-top: var(--initialHeaderHeight);
-	}
-}
-
-@media (width <= 750px) {
-	.settings {
-		> .scrollbarVertical {
-			display: none;
-		}
-	}
+	padding-top: var(--headerHeight);
 }

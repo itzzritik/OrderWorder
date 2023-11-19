@@ -25,39 +25,34 @@ export const authOptions: AuthOptions = {
 				password: { label: 'Password', type: 'password', placeholder: 'Enter your password' },
 			},
 			async authorize (cred) {
-				try {
-					if (!cred?.username) throw new Error('Restaurant username is required');
-					if (!cred?.password) throw new Error('Password is required');
+				if (!cred?.username) throw new Error('Restaurant username is required');
+				if (!cred?.password) throw new Error('Password is required');
 
-					await connectDB();
-					const username = isEmailValid(cred?.username) ? { email: cred?.username } : { username: cred?.username };
-					const account = await Accounts.findOne(username)
-						.populate({ path: 'profile', model: Profiles })
-						.populate({ path: 'kitchens', model: Kitchens, match: { username: cred?.kitchen } });
+				await connectDB();
+				const username = isEmailValid(cred?.username) ? { email: cred?.username } : { username: cred?.username };
+				const account = await Accounts.findOne(username)
+					.populate({ path: 'profile', model: Profiles })
+					.populate({ path: 'kitchens', model: Kitchens, match: { username: cred?.kitchen } });
 
-					if (!account) throw new Error('Account not found.');
+				if (!account) throw new Error('Account not found.');
 
-					if (cred?.kitchen) {
-						if (!verifyPassword(cred?.password, account?.kitchens?.[0]?.password)) throw new Error('Invalid kitchen credentials');
+				if (cred?.kitchen) {
+					if (!verifyPassword(cred?.password, account?.kitchens?.[0]?.password)) throw new Error('Invalid kitchen credentials');
 
-						return {
-							id: account._id.toString(),
-							role: 'kitchen',
-							...account,
-						};
-					}
-					else {
-						if (!verifyPassword(cred?.password, account?.password)) throw new Error('Invalid admin credentials');
-
-						return {
-							id: account._id.toString(),
-							role: 'admin',
-							...account,
-						};
-					}
+					return {
+						id: account._id.toString(),
+						role: 'kitchen',
+						...account,
+					};
 				}
-				catch (e) {
-					throw new Error('Something went wrong');
+				else {
+					if (!verifyPassword(cred?.password, account?.password)) throw new Error('Invalid admin credentials');
+
+					return {
+						id: account._id.toString(),
+						role: 'admin',
+						...account,
+					};
 				}
 			},
 		}),
@@ -72,43 +67,38 @@ export const authOptions: AuthOptions = {
 				lname: { label: 'Name', type: 'text', placeholder: 'Enter your last name' },
 			},
 			async authorize (cred) {
-				try {
-					if (!cred?.restaurant) throw new Error('Restaurant id is required');
-					if (!cred?.table) throw new Error('Table id is required');
-					if (!cred?.fname) throw new Error('First name is required');
-					if (!cred?.lname) throw new Error('Last name is required');
-					if (!cred?.phone) throw new Error('Phone number is required');
+				if (!cred?.restaurant) throw new Error('Restaurant id is required');
+				if (!cred?.table) throw new Error('Table id is required');
+				if (!cred?.fname) throw new Error('First name is required');
+				if (!cred?.lname) throw new Error('Last name is required');
+				if (!cred?.phone) throw new Error('Phone number is required');
 
-					await connectDB();
-					const customerCred = {
-						fname: cred?.fname,
-						lname: cred?.lname,
-						phone: cred?.phone,
-					};
+				await connectDB();
+				const customerCred = {
+					fname: cred?.fname,
+					lname: cred?.lname,
+					phone: cred?.phone,
+				};
 
-					const customer = await createIfNotExist(Customers, { phone: cred?.phone }, customerCred);
-					const account = await Accounts.findOne({ username: cred?.restaurant })
-						.populate({ path: 'profile', model: Profiles })
-						.populate({ path: 'tables', model: Tables });
+				const customer = await createIfNotExist(Customers, { phone: cred?.phone }, customerCred);
+				const account = await Accounts.findOne({ username: cred?.restaurant })
+					.populate({ path: 'profile', model: Profiles })
+					.populate({ path: 'tables', model: Tables });
 
-					if (!account) throw new Error('Restaurant not found.');
-					if (!account?.tables?.some?.(({ username }: { username: string }) => username === cred?.table))
-						throw new Error('Invalid table id');
+				if (!account) throw new Error('Restaurant not found.');
+				if (!account?.tables?.some?.(({ username }: { username: string }) => username === cred?.table))
+					throw new Error('Invalid table id');
 
-					return {
-						role: 'customer',
-						customer,
-						restaurant: {
-							username: account?.profile?.restaurantID,
-							table: cred?.table,
-							name: account?.profile?.name,
-							avatar: account?.profile?.avatar,
-						},
-					};
-				}
-				catch (e) {
-					throw new Error('Something went wrong');
-				}
+				return {
+					role: 'customer',
+					customer,
+					restaurant: {
+						username: account?.profile?.restaurantID,
+						table: cred?.table,
+						name: account?.profile?.name,
+						avatar: account?.profile?.avatar,
+					},
+				};
 			},
 		}),
 	],

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
 import { toast } from 'react-toastify';
+import { Button, Spinner, Textfield } from 'xtreme-ui';
+
+import './passwordSettings.scss';
 
 const PasswordSettings = () => {
 	const [loading, setLoading] = useState(false);
@@ -20,59 +23,60 @@ const PasswordSettings = () => {
 		setNewPassword('');
 		setNewConfPassword('');
 	};
-	const onSave = () => {
+	const onSave = async () => {
 		if (!authenticated) {
 			toast.error('Failed to change password');
 			return onClear();
 		}
 		if (!newPassword) {
-			return toast.warn('Please enter a new password');
+			return toast.warn('New password is required');
 		}
 		if (!newConfPassword) {
-			return toast.warn('Please enter a confirm new password');
+			return toast.warn('Confirm new password is required');
 		}
 		if (newPassword !== newConfPassword) {
 			setConfPasswordShake(true);
 			setTimeout(() => setConfPasswordShake(false), 600);
-			return toast.warn('Confirm password should be same as new password');
+			return toast.warn('New and Confirm password should match');
 		}
 
 		setLoading(true);
-		Accounts.changePassword(password, newPassword, (err) => {
-			setLoading(false);
 
-			if (err) {
-				console.log(err);
-				return toast.error('Failed to change password');
-			}
-
-			toast.success('Password successfully changed');
-			onClear();
+		const req = await fetch('/api/settings/password/change', {
+			method: 'POST',
+			body: JSON.stringify({ password, newPassword }),
 		});
+		const res = await req.json();
+
+		if (res?.status === 200) toast.success(res?.message);
+		else toast.error(res?.message);
+
+		setAuthenticated(false);
+		setPassword('');
+		setNewPassword('');
+		setNewConfPassword('');
+		setLoading(false);
 	};
-	const onPasswordKeyPress = (event) => {
-		if (event.key === 'Enter' && !authenticated) {
-			const digest = sha256(password);
-			Meteor.call('checkPassword', digest, function (err, correctPassword) {
-				if (err) {
-					console.log(err);
-					return toast.error('Unexpected error occurred');
-				}
-
-				if (!correctPassword) {
-					setPasswordShake(true);
-					setTimeout(() => setPasswordShake(false), 600);
-					return toast.error('Incorrect Password');
-				}
-
-				setAuthenticated(true);
+	const onPasswordKeyPress = async () => {
+		if (!authenticated) {
+			setLoading(true);
+			const req = await fetch('/api/settings/password/check', {
+				method: 'POST',
+				body: JSON.stringify({ password }),
 			});
+			const res = await req.json();
+
+			if (res?.status === 200) setAuthenticated(true);
+			else {
+				setPasswordShake(true);
+				setTimeout(() => setPasswordShake(false), 600);
+				toast.error(res?.message);
+			}
+			setLoading(false);
 		}
 	};
-	const onNewPasswordKeyPress = (event) => {
-		if (event.key === 'Enter' && authenticated) {
-			onSave();
-		}
+	const onNewPasswordKeyPress = () => {
+		if (authenticated) onSave();
 	};
 	return (
 		<div className='passwordSettings'>
@@ -81,31 +85,53 @@ const PasswordSettings = () => {
 				{
 					authenticated
 					&& <div className='action'>
-						<IconButton className='clear' icon='/icons/Base/cross.svg' onClick={onClear} />
-						<IconButton className='save' loading={loading} active onClick={onSave}
-							icon='/icons/Base/tick.svg'
+						<Button
+							className='clear'
+							type='secondaryDanger'
+							icon='f00d'
+							iconType='solid'
+							label='Cancel'
+							disabled={loading}
+							onClick={onClear}
 						/>
+						<Button className='save' icon='f00c' iconType='solid' label='Apply' loading={loading} onClick={onSave} />
 					</div>
 				}
 			</div>
 			<div className='passwordFields'>
 				{
-					!authenticated
-						? <TextInput className={`password ${passwordShake ? 'shake' : ''}`}
-								placeholder='Enter your password' value={password} setValue={setPassword}
-								onKeyPress={onPasswordKeyPress} icon={'/icons/Base/password.svg'} password
-						  />
-						: <>
-							<TextInput className={`newPassword ${passwordShake ? 'shake' : ''}`}
-								placeholder='Enter new password' value={newPassword} setValue={setNewPassword}
-								onKeyPress={onNewPasswordKeyPress} icon={'/icons/Base/password.svg'} password
-							/>
+					loading ? <Spinner label='Authenticating...' />
+						:
+						(
+							!authenticated ?
+								<Textfield
+									className={`password ${passwordShake ? 'shake' : ''}`}
+									placeholder='Enter your password'
+									type='password'
+									onEnterKey={onPasswordKeyPress}
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+								/>
+								: <>
+									<Textfield
+										className={`newPassword ${passwordShake ? 'shake' : ''}`}
+										placeholder='Enter new password'
+										type='password'
+										onEnterKey={onNewPasswordKeyPress}
+										value={newPassword}
+										onChange={(e) => setNewPassword(e.target.value)}
+									/>
 
-							<TextInput className={`newConfPassword ${confPasswordShake ? 'shake' : ''}`}
-								placeholder='Enter confirm password' value={newConfPassword} setValue={setNewConfPassword}
-								onKeyPress={onNewPasswordKeyPress} icon={'/icons/Base/password.svg'} password
-							/>
-						</>
+									<Textfield
+										className={`newConfPassword ${confPasswordShake ? 'shake' : ''}`}
+										placeholder='Enter confirm password'
+										type='password'
+										onEnterKey={onNewPasswordKeyPress}
+										value={newConfPassword}
+										onChange={(e) => setNewConfPassword(e.target.value)}
+									/>
+								</>
+						)
 				}
 			</div>
 		</div>

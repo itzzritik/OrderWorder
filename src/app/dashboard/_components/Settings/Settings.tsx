@@ -3,6 +3,7 @@ import { UIEvent } from 'react';
 import { useSearchParams } from 'next/navigation.js';
 
 import SettingsAccount from './SettingsAccount';
+import './settings.scss';
 
 const Settings = (props: TSettingsProps) => {
 	const { onScroll } = props;

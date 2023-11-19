@@ -56,8 +56,6 @@ const CartPage = (props: TCartPageProps) => {
 	}, [props.selectedProducts, selectedProducts]);
 
 	useEffect(() => {
-		console.log(order, table);
-
 		const cancelAndSignout = async () => {
 			await cancelOrder();
 			signOut();

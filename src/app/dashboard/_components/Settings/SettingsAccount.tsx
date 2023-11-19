@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 
-import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { Button } from 'xtreme-ui';
 
 import { splitStringByFirstWord } from '#utils/helper/common';
 
+import PasswordSettings from './PasswordSettings';
 import './settingsAccount.scss';
 
 const SettingsAccount = () => {
+	const router = useRouter();
 	const session = useSession();
 	const [restaurantName, setRestaurantName] = useState<string[]>([]);
-	const [logoutLoading, setLogoutLoading] = useState(false);
 
 	useEffect(() => {
 		if (session?.data?.profile?.name) {
@@ -29,11 +31,10 @@ const SettingsAccount = () => {
 					className='logout'
 					icon='f011'
 					label='Sign out'
-					loading={logoutLoading}
-					onClick={() => { setLogoutLoading(true); signOut(); }}
+					onClick={() => router.push('/logout')}
 				/>
 			</div>
-			{/* <PasswordSettings /> */}
+			<PasswordSettings />
 			{/* <ThemeSettings mainColor={props?.restaurant?.themeColor} /> */}
 		</div>
 	);

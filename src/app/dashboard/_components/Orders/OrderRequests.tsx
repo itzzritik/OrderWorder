@@ -13,7 +13,7 @@ import OrdersCard from './OrdersCard';
 
 const OrderRequests = (props: TOrderRequestsProps) => {
 	const { onScroll } = props;
-	const { orderRequest, orderAction, orderActionLoading } = useAdminOrder();
+	const { orderRequest = [], orderAction, orderActionLoading } = useAdminOrder();
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
 	const [rejectCard, setRejectCard] = useState<{ _id: string | null, details: boolean }>({ _id: null, details: false });
@@ -27,7 +27,7 @@ const OrderRequests = (props: TOrderRequestsProps) => {
 	};
 
 	useEffect(() => {
-		if (orderRequest?.length === 0) {
+		if (orderRequest.length === 0) {
 			setActiveCardID(undefined);
 			setActiveCardData(undefined);
 		}

@@ -36,7 +36,7 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 		},
 		{ orderRequest: [], orderActive: [], orderHistory: [] },
 	) ?? {};
-	console.log(orderRequest, orderActive, orderHistory, orderData);
+
 	const orderAction = async (orderID: string, action: TOrderAction) => {
 		if (orderActionLoading) return;
 		setOrderActionLoading(true);

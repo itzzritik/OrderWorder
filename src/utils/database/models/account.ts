@@ -21,12 +21,11 @@ const AccountSchema = new mongoose.Schema<TAccount>({
 },
 { timestamps: true });
 
-AccountSchema.pre('findOneAndUpdate', async function (next) {
-	const data = this.getUpdate() as TAccount;
+AccountSchema.pre('save', async function (next) {
 	try {
-		if (data.password)
-			this.setUpdate({ ...data, password: hashPassword(data.password) });
-
+		if (this.password) {
+			this.password = hashPassword(this?.password);
+		}
 		next();
 	} catch (error) {
 		next(error);

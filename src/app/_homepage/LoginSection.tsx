@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { Avatar, Button, Lottie, Textfield } from 'xtreme-ui';
 
@@ -58,6 +58,7 @@ const LoginSection = () => {
 				setPassword('');
 				setPasswordShake(true);
 				setTimeout(() => setPasswordShake(false), 600);
+				return setNextLoading(false);
 			}
 
 			if (kitchenUsername) router.push('/kitchen');
@@ -68,7 +69,7 @@ const LoginSection = () => {
 	const logout = () => {
 		if (!loggedIn) return setProfile(undefined);
 		setLogoutLoading(true);
-		signOut();
+		router.push('/logout');
 	};
 
 	return (
@@ -87,6 +88,7 @@ const LoginSection = () => {
 							className={`email ${emailShake ? 'shake' : ''}`}
 							icon='f0e0'
 							placeholder='Enter your email'
+							onEnterKey={onNext}
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 						/>
@@ -100,9 +102,10 @@ const LoginSection = () => {
 						<Avatar src={profile?.avatar ?? session.data?.profile?.avatar ?? session.data?.restaurant?.avatar ?? ''} size='mini' />
 						<div className='details'>
 							<p className='name'>
-								{profile?.name ??
-									session.data?.profile?.name ??
-									`${session.data?.customer?.fname} ${session.data?.customer?.fname}`}
+								{
+									profile?.name ?? session.data?.profile?.name ??
+									`${session.data?.customer?.fname} ${session.data?.customer?.fname}`
+								}
 							</p>
 							<p className='address'>{profile?.address ?? session.data?.profile?.address ?? session.data?.customer?.phone}</p>
 						</div>
@@ -123,6 +126,7 @@ const LoginSection = () => {
 										type='password'
 										className={`password ${passwordShake ? 'shake' : ''}`}
 										placeholder={`Enter ${showKitchen ? 'kitchen' : 'admin'} password`}
+										onEnterKey={onNext}
 										value={password}
 										onChange={(e) => setPassword(e.target.value)}
 									/>

@@ -12,7 +12,7 @@ import OrdersCard from './OrdersCard';
 
 const ActiveOrders = (props: TActiveOrdersProps) => {
 	const { onScroll } = props;
-	const { orderActive, orderAction, orderActionLoading } = useAdminOrder();
+	const { orderActive = [], orderAction, orderActionLoading } = useAdminOrder();
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
 	const [rejectCard, setRejectCard] = useState<{ _id: string | null, details: boolean }>({ _id: null, details: false });

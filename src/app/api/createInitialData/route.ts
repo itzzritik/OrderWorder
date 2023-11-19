@@ -11,7 +11,7 @@ export async function GET () {
 		const response = {
 			totalProcessTime: performance.now(),
 			EmpireAccount: await createIfNotExist<TAccount>(Accounts, { email: 'empire@gmail.com' }, {
-				email: 'empire@gmail.com',
+				email: 'admin@empire.com',
 				username: 'empire',
 				password: 'empire@123',
 				actives: true,

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 
 import clsx from 'clsx';
-import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { Icon } from 'xtreme-ui';
 
 import { useQueryParams } from '#utils/hooks/useQueryParams';
@@ -10,6 +11,7 @@ import './navSideBar.scss';
 
 const NavSideBar = (props: TNavSideBar) => {
 	const { head, foot, navItems, defaultTab } = props;
+	const router = useRouter();
 	const session = useSession();
 	const queryParams = useQueryParams();
 	const tab = queryParams.get('tab') ?? '';
@@ -21,7 +23,7 @@ const NavSideBar = (props: TNavSideBar) => {
 	);
 
 	const onNavClick = (tab: string) => {
-		if (tab === 'signout') return signOut();
+		if (tab === 'signout') return router.push('/logout');
 		queryParams.set({ tab });
 	};
 

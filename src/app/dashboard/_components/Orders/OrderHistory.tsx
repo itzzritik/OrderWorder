@@ -10,7 +10,7 @@ import OrdersCard from './OrdersCard';
 
 const OrderHistory = (props: TOrderHistoryProps) => {
 	const { onScroll } = props;
-	const { orderHistory } = useAdminOrder();
+	const { orderHistory = [] } = useAdminOrder();
 
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
