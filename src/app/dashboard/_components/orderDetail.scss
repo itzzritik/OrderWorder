@@ -47,7 +47,7 @@
 				display: block;
 				margin: 0;
 				font-size: 28px;
-				font-weight: 500;
+				font-variation-settings: 'wdth' 75, 'wght' 500;
 				user-select: none;
 				white-space: nowrap;
 				overflow: hidden;
@@ -61,7 +61,7 @@
 				display: flex;
 				height: var(--infoHeight);
 				line-height: var(--infoHeight);
-				font-weight: 400;
+				font-variation-settings: 'wdth' 75, 'wght' 400;
 				font-size: var(--infoFont);
 				align-items: center;
 				margin: 0 0 0 -2px;

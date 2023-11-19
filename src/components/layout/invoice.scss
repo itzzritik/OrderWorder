@@ -15,17 +15,17 @@
 			.invoiceItemsHeading {
 				font-size: 28px;
 				text-align: center;
-				font-weight: 500;
+				font-variation-settings: 'wdth' 75, 'wght' 500;
 				user-select: none;
 				margin-bottom: 30px;
 			}
 			
 			.invoiceHeadingDetails {
 				font-size: 14px;
-				font-weight: 600;
+				font-variation-settings: 'wdth' 75, 'wght' 600;
 				
 				> span {
-					font-weight: 400;
+					font-variation-settings: 'wdth' 75, 'wght' 400;
 				}
 			}
 	
@@ -37,7 +37,7 @@
 				border-bottom: 1px solid var(--colorContentTertiary);
 		
 				.invoiceItemName {
-					font-weight: 500;
+					font-variation-settings: 'wdth' 75, 'wght' 500;
 					margin: 0;
 				}
 	
@@ -70,7 +70,7 @@
 				display: flex;
 				justify-content: space-between;
 				font-size: 15px;
-				font-weight: 600;
+				font-variation-settings: 'wdth' 75, 'wght' 600;
 	
 				p {
 					margin-bottom: 5px;
@@ -84,7 +84,7 @@
 			.invoiceTaxes {
 				.invoiceBillItem {
 					font-size: 13px;
-					font-weight: 400;
+					font-variation-settings: 'wdth' 75, 'wght' 400;
 				}
 			}
 		}

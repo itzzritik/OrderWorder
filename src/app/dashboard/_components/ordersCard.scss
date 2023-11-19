@@ -78,19 +78,19 @@
 
 			&.table {
 				top: 15px; left: 20px;
-				font-weight: 500;
+				font-variation-settings: 'wdth' 75, 'wght' 500;
 				font-size: 16px;
 			}
 
 			&.name {
 				top: 37px; left: 20px;
-				font-weight: 400;
+				font-variation-settings: 'wdth' 75, 'wght' 400;
 				font-size: 12px;
 			}
 
 			&.total {
 				bottom: 0; left: 0;
-				font-weight: 500;
+				font-variation-settings: 'wdth' 75, 'wght' 500;
 				letter-spacing: 1.02px;
 				font-size: 14px;
 				padding: 15px 20px;
@@ -100,7 +100,7 @@
 
 			&.noContent {
 				bottom: 0; left: 0;
-				font-weight: 500;
+				font-variation-settings: 'wdth' 75, 'wght' 500;
 				letter-spacing: 1.02px;
 				font-size: 14px;
 				padding: 15px 20px;

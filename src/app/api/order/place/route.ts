@@ -24,7 +24,7 @@ export async function POST (req: Request) {
 				product: product?._id,
 				quantity: product?.quantity,
 				price: menuItem?.price,
-				tax: menuItem?.price * menuItem?.taxPercent / 100,
+				tax: (menuItem?.price * menuItem?.taxPercent / 100).toFixed(2),
 			};
 		}));
 

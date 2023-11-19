@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 // import Collapsible from '#components/base/Collapsible';
+import clsx from 'clsx';
 import { useSearchParams } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-import { Button, Icon, Lottie } from 'xtreme-ui';
+import { Button, Lottie } from 'xtreme-ui';
 
 import { useOrder } from '#components/context/useContext';
 import Collapsible from '#components/layout/Collapsible';
@@ -13,6 +14,7 @@ import { TMenu } from '#utils/database/models/menu.js';
 
 import ItemCard from '../../../components/layout/ItemCard';
 
+import CartTaxItem from './CartTaxItem';
 import './cartPage.scss';
 
 const CartPage = (props: TCartPageProps) => {
@@ -23,11 +25,13 @@ const CartPage = (props: TCartPageProps) => {
 	const [showOrderHistory, setShowOrderHistory] = useState(false);
 	const [selectionTotal, setSelectionTotal] = useState(0);
 	const [bottomBarActive, setBottomBarActive] = useState(false);
+	const [showTaxSummary, setShowTaxSummary] = useState(false);
 
 	const approvedProducts = order?.products?.reduce((acc, product) => (product.adminApproved ? acc + 1 : acc), 0);
 
 	const onOrderAction = async () => {
 		if (bottomBarActive) {
+			setShowTaxSummary(false);
 			return setBottomBarActive(false);
 		}
 
@@ -42,18 +46,6 @@ const CartPage = (props: TCartPageProps) => {
 		await cancelOrder();
 		resetSelectedProducts();
 	};
-
-	// const calculateTax = (taxItem) => {
-	// 	let amount = 0;
-	// 	if (order.gstInclusive) {
-	// 		amount = orderTotal - orderTotal * (1 / (1 + (taxItem.value / 100)));
-	// 		amount = parseFloat(amount).toFixed(2);
-	// 	} else {
-	// 		amount = orderTotal * (taxItem.value / 100);
-	// 		amount = parseFloat(amount).toFixed(2);
-	// 	}
-	// 	return amount;
-	// };
 
 	useEffect(() => {
 		if (!selectedProducts.length) setShowOrderHistory(true);
@@ -111,10 +103,6 @@ const CartPage = (props: TCartPageProps) => {
 		);
 	}
 
-	// if (userOrderEnd) {
-	// 	return <Invoice order={order} />;
-	// }
-
 	return (
 		<div className='cartPage'>
 			<div className='cartItems'>
@@ -151,57 +139,84 @@ const CartPage = (props: TCartPageProps) => {
 			<div className={`cartCheckout ${bottomBarActive ? 'active' : ''}`}>
 				<div className='checkoutHeader'>
 					{
-						approvedProducts
-						&& <div className='orderTotal' onClick={() => setBottomBarActive((value) => !value)}>
+						approvedProducts &&
+						<div className='orderTotal' onClick={() => {
+							setShowTaxSummary(false);
+							setBottomBarActive((v) => !v);
+						}}
+						>
 							{
 								bottomBarActive
-									? <h5>Amount <span>Details</span></h5>
+									? <h5>Bill <span>Summary</span></h5>
 									: <>
 										<p>Sub Total</p>
 										<span className='totalValue rupee'>{order?.orderTotal} </span>
-										{/* { order && !order.gstInclusive && orderTotal > 0 && <span className='plusTaxes'>plus taxes</span> }
-										{ order && order.gstInclusive && orderTotal > 0 && <span className='plusTaxes'>including taxes</span> } */}
+										{ order?.orderTotal && <span className='plusTaxes'>plus taxes</span> }
 									</>
 							}
 						</div>
 					}
 					<div className='cartAction'>
 						{
-							<div className='orderActionButton round' onClick={onOrderAction}>
-								{ bottomBarActive && <Icon code='f078' /> }
-								{
-									!bottomBarActive && (
-										props.selectedProducts.length > 0
-											? <>
-												<p className='selectionTotal rupee'>{selectionTotal}</p>
-												<p className='separator'>|</p>
-												<p className='orderActionLabel'>
-													Place order
-													{/* {orderedProducts.length ? 'Add to order' : 'Place order'} */}
-												</p>
-											</>
-											: <p>Proceed to Pay</p>
-									)
-								}
-							</div>
+							bottomBarActive ?
+								<Button icon='f078' iconType='solid' size='mini' onClick={onOrderAction} />
+								: (
+									props.selectedProducts.length > 0 ?
+										<Button
+											icon='e1bc'
+											iconType='solid'
+											size='mini'
+											label={`${selectionTotal} | ${order?.products?.length ? 'Add to order' : 'Place order'}`}
+											loading={placingOrder}
+											onClick={onOrderAction}
+										/>
+										:
+										<Button
+											icon='f09d'
+											size='mini'
+											iconType='solid'
+											label='Proceed to Pay'
+											loading={placingOrder}
+											onClick={onOrderAction}
+										/>
+								)
+
 						}
 					</div>
 				</div>
-				<div className='taxDetails'>
-					{/* <CartTaxItem name='Sub Total' amount={orderTotal} />
-					{
-						taxList.map((taxName, key) => {
-							return (<CartTaxItem key={key} name={taxName.name} taxPercent={taxName.value}
-								amount={calculateTax(taxName)}
-							        />);
-						})
-					}
-					<hr />
-					<CartTaxItem
-						name='Grand Total'
-						amount={order && order.gstInclusive ? orderTotal : Math.round(parseFloat(orderTotal) + parseFloat(totalTax))}
-					/> */}
-				</div>
+				{
+					order &&
+					<div className={clsx('taxDetails', showTaxSummary && 'show')}>
+						<CartTaxItem name='Item Total' amount={order?.orderTotal} />
+						<hr className='itemHr' />
+						<CartTaxItem
+							className='taxSummaryTitle'
+							name={showTaxSummary ? 'Tax Summary' : 'Tax Total'}
+							subtitle={showTaxSummary ? 'collapse' : 'show details'}
+							amount={order?.taxTotal}
+							onClick={() => setShowTaxSummary((v) => !v)}
+						/>
+						<div className='taxSummary'>
+							{
+								order?.products?.map((product, i) => (
+									<CartTaxItem
+										key={i}
+										name={product?.name ?? ''}
+										size='mini'
+										taxPercent={product?.taxPercent}
+										amount={product?.quantity * product?.tax}
+									/>
+								))
+							}
+						</div>
+
+						<hr />
+						<CartTaxItem
+							name='Grand Total'
+							amount={order?.orderTotal + order?.taxTotal}
+						/>
+					</div>
+				}
 			</div>
 		</div>
 	);

@@ -17,13 +17,13 @@
 
 		.heading {
 			bottom: 0;
-			font-weight: 300;
+			font-variation-settings: 'wdth' 75, 'wght' 300;
 			font-size: 25px;
 			color: var(--colorContentPrimary);
 			user-select: none;
 
 			span {
-				font-weight: 500;
+				font-variation-settings: 'wdth' 75, 'wght' 500;
 			}
 		}
 	}

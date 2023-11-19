@@ -15,7 +15,7 @@ const SideSheet = (props: SideSheetProps) => {
 			<div className='sideContainer'>
 				<div className='sheetHeader'>
 					<h1 className='title'>{title[0]} <span>{title[1]}</span></h1>
-					<Button icon='e59b' size='mini' onClick={() => setOpen(false)} />
+					<Button icon='f00d' iconType='solid' size='mini' onClick={() => setOpen(false)} />
 				</div>
 				<div className='sheetContent'>{children}</div>
 			</div>

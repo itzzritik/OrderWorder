@@ -1,0 +1,33 @@
+.cartTaxItem {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	p {
+		font-size: 14px;
+		margin: 4px 0;
+
+		&.taxName {
+			text-transform: capitalize;
+		}
+
+		&.subtitle {
+			font-size: 12px;
+			color: var(--colorContentTertiary);
+			margin-left: 12px;
+		}
+
+		&.taxAmount {
+			margin-left: auto;
+		}
+	}
+
+	&.mini {
+		p {
+			font-size: 11px;
+			margin-bottom: 0;
+			color: var(--colorContentSecondary);
+		}
+	}
+}
