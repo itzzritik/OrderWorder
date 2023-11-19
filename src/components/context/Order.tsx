@@ -12,6 +12,7 @@ import { fetcher } from '#utils/helper/common';
 
 const OrderDefault: TOrderInitialType = {
 	order: undefined,
+	loading: false,
 	placeOrder: () => new Promise(noop),
 	placingOrder: false,
 	cancelOrder: noop,
@@ -21,7 +22,7 @@ const OrderDefault: TOrderInitialType = {
 export const OrderContext = createContext(OrderDefault);
 export const OrderProvider = ({ children }: TOrderProviderProps) => {
 	const session = useSession();
-	const { data: order, mutate } = useSWR('/api/order', fetcher);
+	const { data: order, isLoading: loading, mutate } = useSWR('/api/order', fetcher);
 
 	const [placingOrder, setPlacingOrder] = useState(false);
 	const [cancelingOrder, setCancelingOrder] = useState(false);
@@ -52,7 +53,7 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 	}, [mutate, session.status]);
 
 	return (
-		<OrderContext.Provider value={{ order, placeOrder, placingOrder, cancelOrder, cancelingOrder }}>
+		<OrderContext.Provider value={{ order, loading, placeOrder, placingOrder, cancelOrder, cancelingOrder }}>
 			{children}
 		</OrderContext.Provider>
 	);
@@ -64,6 +65,7 @@ export type TOrderProviderProps = {
 
 export type TOrderInitialType = {
 	order?: TOrder,
+	loading: boolean,
 	placeOrder: (products: Array<TMenuCustom>) => Promise<void>
 	placingOrder: boolean,
 	cancelOrder: () => void,

@@ -92,7 +92,9 @@ const OrderDetail = (props: TOrderDetailProps) => {
 								))
 								:
 								<div>
-									<Collapsible className='orderedProducts'
+									<Collapsible
+										className='orderedProducts'
+										round
 										label='Approved Products'
 										expand={showApprovedItems}
 										setExpand={setShowApprovedItems}

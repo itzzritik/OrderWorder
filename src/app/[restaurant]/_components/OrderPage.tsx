@@ -1,11 +1,11 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import React, { SyntheticEvent, UIEvent, useEffect, useRef, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 import { Button, Icon, Spinner } from 'xtreme-ui';
 
 import SearchButton from '#components/base/SearchButton';
 import SideSheet from '#components/base/SideSheet';
-import { useRestaurant } from '#components/context/useContext';
+import { useOrder, useRestaurant } from '#components/context/useContext';
 import Modal from '#components/layout/Modal';
 import { TMenu } from '#utils/database/models/menu';
 import { useQueryParams } from '#utils/hooks/useQueryParams';
@@ -17,6 +17,7 @@ import './orderPage.scss';
 
 const OrderPage = () => {
 	const session = useSession();
+	const { loading } = useOrder();
 	const { restaurant } = useRestaurant();
 	const menus = restaurant?.menus as Array<TMenuCustom>;
 	const params = useQueryParams();
@@ -45,6 +46,19 @@ const OrderPage = () => {
 	const showOrderButton = restaurant?.tables?.some(({ username }) => username === table);
 	const eligibleToOrder = session.data?.role === 'customer' && showOrderButton;
 
+	const onMenuScroll = (event: UIEvent<HTMLDivElement>) => {
+		const scrollTop = (event.target as HTMLDivElement).scrollTop;
+		if (scrollTop > 30) {
+			setFloatHeader(true);
+			setTopHeading(['Menu', 'Category']);
+
+			if (order?.current && scrollTop >= order?.current?.offsetTop - 15) setTopHeading(orderHeading);
+
+			return;
+		}
+
+		return setFloatHeader(false);
+	};
 	const onCategoryScroll = (event: SyntheticEvent) => {
 		const target = event.target as HTMLElement;
 
@@ -114,11 +128,9 @@ const OrderPage = () => {
 		else setOrderHeading(['Explore', 'Menu']);
 	}, [session]);
 
-	if (!restaurant) return <Spinner label='Loading Menu...' fullpage />;
-
 	return (
 		<div className='orderPage'>
-			<div className='mainContainer'>
+			<div className='mainContainer' onScroll={onMenuScroll}>
 				<div className={`mainHeader ${searchActive ? 'searchActive' : ''} ${floatHeader ? 'floatHeader' : ''}`}>
 					<h1>{topHeading[0]} <span>{topHeading[1]}</span></h1>
 					<div className='options'>
@@ -157,77 +169,91 @@ const OrderPage = () => {
 						}
 					</div>
 				</div>
-				<div className={`category ${searchValue ? 'disable' : ''}`}>
-					<div className='itemCategories' ref={categories} onScroll={onCategoryScroll}>
-						{
-							restaurant?.profile?.categories?.map((item, key) => (
-								<div key={key} className={`menuCategory ${category === key ? 'active' : ''}`} onClick={() => setCategory(key)}>
-									<span className='title'>{item}</span>
+				{
+					restaurant &&
+					<div className={`category ${searchValue ? 'disable' : ''}`}>
+						<div className='itemCategories' ref={categories} onScroll={onCategoryScroll}>
+							{
+								restaurant?.profile?.categories?.map((item, key) => (
+									<div key={key} className={`menuCategory ${category === key ? 'active' : ''}`} onClick={() => setCategory(key)}>
+										<span className='title'>{item}</span>
+									</div>
+								))
+							}
+							<div className='space' />
+						</div>
+						<div className={`scrollLeft ${leftCategoryScroll ? 'show' : ''}`} onClick={categoryScrollLeft}>
+							<Icon code='f053' />
+						</div>
+						<div className={`scrollRight ${rightCategoryScroll ? 'show' : ''}`} onClick={categoryScrollRight}>
+							<Icon code='f054' />
+						</div>
+					</div>
+				}
+				{
+					!restaurant
+						? <Spinner label='Loading Menu...' fullpage />
+						:
+						<div className='order' ref={order}>
+							<div className='header'>
+								<h1>{orderHeading[0]} <span>{orderHeading[1]}</span></h1>
+							</div>
+							{
+								hasImageItems &&
+								<div className={`itemContainer ${!eligibleToOrder ? 'restrictOrder ' : ''}`}>
+									<div>
+										{
+											filteredProducts?.map((item, key) => (
+												<MenuCard key={key} item={item} restrictOrder={!eligibleToOrder}
+													increaseQuantity={increaseProductQuantity}
+													decreaseQuantity={decreaseProductQuantity}
+													showInfo={item._id.toString() === showInfoCard.toString()}
+													setShowInfo={(v) => setShowInfoCard(v)} show={!!item.image}
+													quantity={(selectedProducts.some((obj) => obj._id === item._id)
+											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity) || 0}
+												/>
+											))
+										}
+									</div>
 								</div>
-							))
-						}
-						<div className='space' />
-					</div>
-					<div className={`scrollLeft ${leftCategoryScroll ? 'show' : ''}`} onClick={categoryScrollLeft}>
-						<Icon code='f053' />
-					</div>
-					<div className={`scrollRight ${rightCategoryScroll ? 'show' : ''}`} onClick={categoryScrollRight}>
-						<Icon code='f054' />
-					</div>
-				</div>
-				<div className='order' ref={order}>
-					<div className='header'>
-						<h1>{orderHeading[0]} <span>{orderHeading[1]}</span></h1>
-					</div>
-					{
-						hasImageItems
-						&& <div className={`itemContainer ${!eligibleToOrder ? 'restrictOrder ' : ''}`}>
-							<div>
-								{
-									filteredProducts?.map((item, key) => (
-										<MenuCard key={key} item={item} restrictOrder={!eligibleToOrder}
-											increaseQuantity={increaseProductQuantity}
-											decreaseQuantity={decreaseProductQuantity}
-											showInfo={item._id.toString() === showInfoCard.toString()}
-											setShowInfo={(v) => setShowInfoCard(v)} show={!!item.image}
-											quantity={(selectedProducts.some((obj) => obj._id === item._id)
+							}
+							{hasImageItems && hasNonImageItems && <hr />}
+							{
+								hasNonImageItems &&
+									<div className={`itemContainer withoutImage ${!eligibleToOrder ? 'restrictOrder ' : ''}`}>
+										<div>
+											{
+												filteredProducts?.map((item, key) => (
+													<MenuCard key={key} item={item} restrictOrder={!eligibleToOrder}
+														increaseQuantity={increaseProductQuantity}
+														decreaseQuantity={decreaseProductQuantity}
+														showInfo={item._id.toString() === showInfoCard.toString()}
+														setShowInfo={(v) => setShowInfoCard(v)} show={!!item.image}
+														quantity={(selectedProducts.some((obj) => obj._id === item._id)
 											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity) || 0}
-										/>
-									))
-								}
-							</div>
+													/>
+												))
+											}
+										</div>
+									</div>
+							}
 						</div>
-					}
-					{hasImageItems && hasNonImageItems && <hr />}
-					{
-						hasNonImageItems &&
-						<div className={`itemContainer withoutImage ${!eligibleToOrder ? 'restrictOrder ' : ''}`}>
-							<div>
-								{
-									filteredProducts?.map((item, key) => (
-										<MenuCard key={key} item={item} restrictOrder={!eligibleToOrder}
-											increaseQuantity={increaseProductQuantity}
-											decreaseQuantity={decreaseProductQuantity}
-											showInfo={item._id.toString() === showInfoCard.toString()}
-											setShowInfo={(v) => setShowInfoCard(v)} show={!!item.image}
-											quantity={(selectedProducts.some((obj) => obj._id === item._id)
-											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity) || 0}
-										/>
-									))
-								}
-							</div>
-						</div>
-					}
-				</div>
+
+				}
 			</div>
 			<SideSheet title={sideSheetHeading} open={sideSheetOpen} setOpen={setSideSheetOpen}>
-				<CartPage
-					selectedProducts={selectedProducts}
-					increaseProductQuantity={increaseProductQuantity}
-					decreaseProductQuantity={decreaseProductQuantity}
-					resetSelectedProducts={() => setSelectedProducts([])}
-					setSideSheetHeading={setSideSheetHeading}
-				/>
+				{
+					loading ?
+						<Spinner label='Loading Order...' fullpage />
+						:
+						<CartPage
+							selectedProducts={selectedProducts}
+							increaseProductQuantity={increaseProductQuantity}
+							decreaseProductQuantity={decreaseProductQuantity}
+							resetSelectedProducts={() => setSelectedProducts([])}
+							setSideSheetHeading={setSideSheetHeading}
+						/>
+				}
 			</SideSheet>
 			<Modal open={loginOpen} setOpen={setLoginOpen}>
 				<UserLogin setOpen={setLoginOpen} />

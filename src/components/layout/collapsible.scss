@@ -9,19 +9,13 @@
 	transition: all 0.1s ease-out;
 
 	&.round {
-		border-radius: 9999px;
-
 		.collapsibleHeader {
 			border-radius: 9999px;
-		}
-
-		.collapsibleContent {
-			border-radius: 0 9999px;
 		}
 	}
 
 	&.expand {
-		--collapsibleHeight: 60px;
+		--collapsibleHeight: 48px;
 
 		.collapsibleHeader {
 			.label {
@@ -90,7 +84,7 @@
 			justify-content: center;
 			font-size: 14px;
 			font-variation-settings: 'wdth' 75, 'wght' 600;
-			background-color: var(--colorBackgroundPrimary);
+			background-color: white;
 			color: rgb(var(--colorBrandAccentRgb));
 			transition: all 0.2s ease-out;
 		}

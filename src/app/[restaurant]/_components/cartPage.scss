@@ -39,6 +39,7 @@
 			.orderTotal {
 				height: 100%;
 				font-size: 16px;
+				padding-top: 6px;
 				font-variation-settings: 'wdth' 75, 'wght' 500;
 				flex: 1;
 				cursor: pointer;
@@ -55,9 +56,12 @@
 	
 				> p {
 					margin: 0;
+					font-size: 14px;
 					font-variation-settings: 'wdth' 75, 'wght' 400;
-					line-height: 24px;
+					line-height: 16px;
 					user-select: none;
+					color: var(--colorContentSecondary);
+					text-transform: uppercase;
 				}
 
 				> span {
@@ -66,10 +70,12 @@
 					&.totalValue {
 						font-size: 20px;
 						line-height: 24px;
+						letter-spacing: 0.5px;
 					}
 
 					&.plusTaxes {
 						font-size: 10px;
+						font-variation-settings: 'wdth' 75, 'wght' 400;
 						color: var(--colorContentSecondary);
 					}
 				}
@@ -149,7 +155,7 @@
 				height: 1px;
 				margin: 24px 0 20px;
 				background-color: var(--colorBackgroundSecondary);
-				transition: all 0.3s ease-out;
+				transition: all 0.15s ease-out;
 
 				&.itemHr {
 					height: 0;
@@ -165,7 +171,7 @@
 			.taxSummary {
 				opacity: 0;
 				height: 0;
-				transition: all 0.3s ease-out 0.1s;
+				transition: all 0.2s ease-out 0.05s;
 				overflow: hidden;
 			}
 

@@ -6,11 +6,12 @@ import { Icon } from 'xtreme-ui';
 import './collapsible.scss';
 
 const Collapsible = (props: TCollapsibleProps) => {
-	const { className, children, expand, setExpand, label, alert } = props;
+	const { className, children, round, expand, setExpand, label, alert } = props;
 
 	const classList = clsx(
 		'collapsible',
 		className,
+		round && 'round',
 		expand && 'expand',
 	);
 
@@ -33,6 +34,7 @@ export default Collapsible;
 type TCollapsibleProps = {
 	className?: string
 	children: ReactNode
+	round?: boolean
 	expand: boolean
 	setExpand: (expand: boolean) => void
 	label: string

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-// import Collapsible from '#components/base/Collapsible';
 import clsx from 'clsx';
 import { useSearchParams } from 'next/navigation';
 import { signOut } from 'next-auth/react';
@@ -109,6 +108,7 @@ const CartPage = (props: TCartPageProps) => {
 				{
 					order?.products?.length && approvedProducts &&
 					<Collapsible className='orderedProducts'
+						round
 						label='Order History'
 						expand={showOrderHistory}
 						setExpand={setShowOrderHistory}

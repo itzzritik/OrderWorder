@@ -7,6 +7,7 @@
 	p {
 		font-size: 14px;
 		margin: 4px 0;
+		font-variation-settings: 'wdth' 75, 'wght' 400;
 
 		&.taxName {
 			text-transform: capitalize;
@@ -15,6 +16,7 @@
 		&.subtitle {
 			font-size: 12px;
 			color: var(--colorContentTertiary);
+			font-variation-settings: 'wdth' 75, 'wght' 500;
 			margin-left: 12px;
 		}
 

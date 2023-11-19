@@ -17,10 +17,6 @@
 		background-color: var(--colorBackgroundSecondary);
 		overflow-y: auto;
 
-		> .scrollbarVertical {
-			transform: translateX(-8px);
-		}
-
 		.mainHeader {
 			position: fixed;
 			top: 0;
