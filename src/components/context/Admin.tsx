@@ -27,7 +27,7 @@ export const AdminProvider = ({ children }: TAdminProviderProps) => {
 	const tab = params.get('tab');
 	const subTab = params.get('subTab');
 	const { data: profile = [], isLoading: profileLoading, mutate: profileMutate } = useSWR('/api/admin', fetcher);
-	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR('/api/admin/order', fetcher);
+	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR('/api/admin/order', fetcher, { refreshInterval: 5000 });
 	const [orderActionLoading, setOrderActionLoading] = useState(false);
 
 	const { orderRequest, orderActive, orderHistory } = orderData?.reduce?.(
