@@ -7,7 +7,6 @@ import { TTable } from '#utils/database/models/table';
 
 type AuthUser = Partial<Omit<TAccount, 'profile'> & {
 	role: 'admin' | 'kitchen' | 'customer'
-	profile: Partial<TProfile>,
 	customer: Partial<TCustomer>,
 	restaurant: Partial<{
 		username: TProfile.username,

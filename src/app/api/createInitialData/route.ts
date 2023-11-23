@@ -1,5 +1,6 @@
+import connectDB from '#utils/database/connect';
 import { createIfNotExist } from '#utils/database/manager';
-import { Accounts, TAccount } from '#utils/database/models/account';
+import { Accounts } from '#utils/database/models/account';
 import { Kitchens, TKitchen } from '#utils/database/models/kitchen';
 import { Menus } from '#utils/database/models/menu';
 import { Profiles, TProfile } from '#utils/database/models/profile';
@@ -7,15 +8,17 @@ import { Tables, TTable } from '#utils/database/models/table';
 import { CatchNextResponse } from '#utils/helper/common';
 
 export async function GET () {
+	await connectDB();
 	try {
+		const EmpireAccount = new Accounts({
+			email: 'admin@empire.com',
+			username: 'empire',
+			password: 'empire@123',
+			actives: true,
+		});
 		const response = {
 			totalProcessTime: performance.now(),
-			EmpireAccount: await createIfNotExist<TAccount>(Accounts, { email: 'empire@gmail.com' }, {
-				email: 'admin@empire.com',
-				username: 'empire',
-				password: 'empire@123',
-				actives: true,
-			}),
+			EmpireAccount: await EmpireAccount.save(),
 			EmpireProfile: await createIfNotExist<TProfile>(Profiles, { restaurantID: 'empire' }, empireProfile),
 			EmpireKitchen1: await createIfNotExist<TKitchen>(Kitchens, { username: 'empireKitchen1' }, {
 				username: 'empireKitchen1',
@@ -46,6 +49,7 @@ export async function GET () {
 		};
 
 		response.totalProcessTime = (performance.now() - response.totalProcessTime) / 1000;
+		response.EmpireAccount.password = 'confidential';
 
 		return new Response(JSON.stringify(response, null, 4));
 	}
@@ -60,7 +64,7 @@ const empireProfile = {
 	description: 'Casual Dining - Kerala, Biryani, North Indian, South Indian, Chinese, Arabian, Seafood',
 	address: 'Indiranagar, Benagaluru',
 	avatar: 'https://restaurant.eatapp.co/hubfs/Modern-Restaurant-Logo.jpg',
-	themeColor: { red: 127, green: 108, blue: 218 },
+	themeColor: { r: 127, g: 108, b: 218 },
 	subscriptionActive: true,
 	gstInclusive: false,
 	categories: [

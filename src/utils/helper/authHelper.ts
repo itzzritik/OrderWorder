@@ -31,7 +31,6 @@ export const authOptions: AuthOptions = {
 				await connectDB();
 				const username = isEmailValid(cred?.username) ? { email: cred?.username } : { username: cred?.username };
 				const account = await Accounts.findOne(username)
-					.populate({ path: 'profile', model: Profiles })
 					.populate({ path: 'kitchens', model: Kitchens, match: { username: cred?.kitchen } });
 
 				if (!account) throw new Error('Account not found.');
@@ -90,6 +89,7 @@ export const authOptions: AuthOptions = {
 					throw new Error('Invalid table id');
 
 				return {
+					id: '',
 					role: 'customer',
 					customer,
 					restaurant: {
@@ -118,7 +118,6 @@ export const authOptions: AuthOptions = {
 					token.user = {
 						role: user?.role,
 						...pick(user._doc, ['email', 'accountActive', 'subscriptionActive:', 'username', 'verified']),
-						profile: pick(user._doc.profile, ['name', 'themeColor', 'address', 'avatar', 'description', 'gstInclusive', 'categories']),
 					};
 				}
 			}

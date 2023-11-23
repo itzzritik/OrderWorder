@@ -4,7 +4,7 @@ import { UIEvent, useEffect, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
-import { AdminProvider } from '#components/context';
+import { DashboardProvider } from '#components/context';
 import NavSideBar from '#components/layout/NavSideBar';
 import { useQueryParams } from '#utils/hooks/useQueryParams';
 
@@ -36,7 +36,7 @@ const Dashboard = () => {
 	}, [queryParams.router, session]);
 
 	return (
-		<AdminProvider>
+		<DashboardProvider>
 			<div className='dashboard'>
 				<NavSideBar navItems={navItems} defaultTab='orders' foot />
 				<div className={`dashboardViewport ${floatHeader ? 'floatHeader' : ''}`}>
@@ -63,7 +63,7 @@ const Dashboard = () => {
 					</div>
 				</div>
 			</div>
-		</AdminProvider>
+		</DashboardProvider>
 	);
 };
 

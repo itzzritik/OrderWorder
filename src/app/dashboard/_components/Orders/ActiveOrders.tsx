@@ -1,7 +1,7 @@
 import { UIEvent, useEffect, useState } from 'react';
 
 import SideSheet from '#components/base/SideSheet';
-import { useAdminOrder } from '#components/context/useContext';
+import { useAdmin } from '#components/context/useContext';
 import ItemCard from '#components/layout/ItemCard';
 import NoContent from '#components/layout/NoContent';
 import { TMenu } from '#utils/database/models/menu';
@@ -12,7 +12,7 @@ import OrdersCard from './OrdersCard';
 
 const ActiveOrders = (props: TActiveOrdersProps) => {
 	const { onScroll } = props;
-	const { orderActive = [], orderAction, orderActionLoading } = useAdminOrder();
+	const { orderActive = [], orderAction, orderActionLoading } = useAdmin();
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
 	const [rejectCard, setRejectCard] = useState<{ _id: string | null, details: boolean }>({ _id: null, details: false });

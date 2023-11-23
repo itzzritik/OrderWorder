@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { DashboardProvider } from '#components/context';
+
 import AboutSection from './_homepage/AboutSection';
 import FeatureSection from './_homepage/FeatureSection';
 import FooterSection from './_homepage/FooterSection';
@@ -13,15 +15,19 @@ export default function Homepage () {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (
-		<div className='homepage'>
-			<Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-			<div className={`homepageSections ${menuOpen ? 'menuOpen' : ''}`}>
-				<LandingSection />
-				<AboutSection />
-				<FeatureSection />
-				<LoginSection />
-				<FooterSection />
+		<DashboardProvider>
+			<div className='homepage'>
+				<Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+				<div className={`homepageSections ${menuOpen ? 'menuOpen' : ''}`}>
+					<LandingSection />
+					<AboutSection />
+					<FeatureSection />
+
+					<LoginSection />
+
+					<FooterSection />
+				</div>
 			</div>
-		</div>
+		</DashboardProvider>
 	);
 }

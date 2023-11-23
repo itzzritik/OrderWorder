@@ -3,7 +3,7 @@ import { UIEvent } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Spinner } from 'xtreme-ui';
 
-import { useAdminOrder } from '#components/context/useContext';
+import { useAdmin } from '#components/context/useContext';
 
 import ActiveOrders from './ActiveOrders';
 import OrderHistory from './OrderHistory';
@@ -12,7 +12,7 @@ import './orders.scss';
 
 const Orders = (props: TOrdersProps) => {
 	const { onScroll } = props;
-	const { orderLoading } = useAdminOrder();
+	const { orderLoading } = useAdmin();
 	const queryParams = useSearchParams();
 	const subTab = queryParams.get('subTab') ?? '';
 

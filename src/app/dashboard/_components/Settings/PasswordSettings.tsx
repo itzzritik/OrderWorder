@@ -42,7 +42,7 @@ const PasswordSettings = () => {
 
 		setLoading(true);
 
-		const req = await fetch('/api/settings/password/change', {
+		const req = await fetch('/api/admin/password/change', {
 			method: 'POST',
 			body: JSON.stringify({ password, newPassword }),
 		});
@@ -60,7 +60,7 @@ const PasswordSettings = () => {
 	const onPasswordKeyPress = async () => {
 		if (!authenticated) {
 			setLoading(true);
-			const req = await fetch('/api/settings/password/check', {
+			const req = await fetch('/api/admin/password/check', {
 				method: 'POST',
 				body: JSON.stringify({ password }),
 			});
@@ -90,17 +90,16 @@ const PasswordSettings = () => {
 							type='secondaryDanger'
 							icon='f00d'
 							iconType='solid'
-							label='Cancel'
 							disabled={loading}
 							onClick={onClear}
 						/>
-						<Button className='save' icon='f00c' iconType='solid' label='Apply' loading={loading} onClick={onSave} />
+						<Button className='save' icon='f00c' iconType='solid' label='Change' loading={loading} onClick={onSave} />
 					</div>
 				}
 			</div>
 			<div className='passwordFields'>
 				{
-					loading ? <Spinner label='Authenticating...' />
+					loading ? <Spinner className='spinner' label='Authenticating...' fullpage />
 						:
 						(
 							!authenticated ?

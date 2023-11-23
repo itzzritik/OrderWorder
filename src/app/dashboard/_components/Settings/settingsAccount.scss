@@ -10,17 +10,21 @@
 		width: 100%;
 		border-radius: 20px;
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
 		background-color: var(--colorBackgroundPrimary);
-		box-shadow: 0 8px 12px rgb(150 150 150 / 15%);
+		box-shadow: 0 10px 10px -10px rgb(0 0 0 / 10%);
 		padding: 20px 30px;
+
+		.avatar {
+			margin-right: 24px;
+		}
 
 		.restaurantDetails {
 			.name {
 				color: var(--colorContentPrimary);
 				font-size: 38px;
-				font-weight: 500;
+				font-variation-settings: 'wdth' 75, 'wght' 500;
 				margin: 0;
 				overflow: hidden;
 				user-select: none;
@@ -28,42 +32,46 @@
 				transition: all 0.2s ease-out;
 	
 				span {
-					font-weight: 300;
+					font-variation-settings: 'wdth' 75, 'wght' 300;
 				}
 			}
 
 			.address {
 				font-size: 18px;
-				font-weight: 300;
+				font-variation-settings: 'wdth' 75, 'wght' 300;
 				margin: 5px 2px;
 			}
 		}
 
 		.logout {
-			> .icon {
-				mask-size: 18px;
-			}
+			margin-left: auto;
 		}
 	}
 }
 
-@media (width <= 530px) {
+@media (width <= 750px) {
 	.settingsAccount {
 		padding: 10px 25px 25px;
 
-		.profileSettingsCard  .restaurantDetails {
-			.name {
-				font-size: 32px;
-			} 
+		.profileSettingsCard  {
+			.avatar {
+				display: none;
+			}
 
-			.address {
-				font-size: 16px;
+			.restaurantDetails {
+				.name {
+					font-size: 32px;
+				} 
+	
+				.address {
+					font-size: 16px;
+				}
 			}
 		}
 	}
 }
 
-@media (width <= 460px) {
+@media (width <= 600px) {
 	.settingsAccount {
 		.profileSettingsCard  .restaurantDetails {
 			.name {
@@ -77,18 +85,18 @@
 	}
 }
 
-@media (width <= 420px) {
+@media (width <= 540px) {
 	.settingsAccount {
 		.profileSettingsCard {
 			padding: 20px 25px;
 
 			.restaurantDetails {
 				.name {
-					font-size: 24px;
+					font-size: 6vw;
 				} 
 
 				.address {
-					font-size: 14px;
+					font-size: 3vw;
 				}
 			}
 		}

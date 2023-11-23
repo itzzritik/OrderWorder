@@ -10,9 +10,9 @@ const ProfileSchema = new mongoose.Schema<TProfile>({
 	description: { type: String, trim: true },
 	address: { type: String, trim: true },
 	themeColor: {
-		red: { type: Number, trim: true, min: 0, max: 255 },
-		green: { type: Number, trim: true, min: 0, max: 255 },
-		blue: { type: Number, trim: true, min: 0, max: 255 },
+		r: { type: Number, trim: true, min: 0, max: 255 },
+		g: { type: Number, trim: true, min: 0, max: 255 },
+		b: { type: Number, trim: true, min: 0, max: 255 },
 	},
 	gstInclusive: { type: Boolean, default: false },
 	categories: [{ type: String, trim: true, lowercase: true }],
@@ -44,11 +44,12 @@ export type TProfile = HydratedDocument<{
 	description: string;
 	address: string;
 	avatar: string;
-	themeColor: {
-		red: number;
-		green: number;
-		blue: number;
-	};
+	themeColor: TThemeColor;
 	gstInclusive: boolean;
 	categories: Array<string>;
 }>
+export type TThemeColor = {
+	r: number;
+	g: number;
+	b: number;
+}

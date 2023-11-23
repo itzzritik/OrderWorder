@@ -18,7 +18,7 @@ export const RestaurantProvider = ({ children }: TRestaurantProviderProps) => {
 	const { data, error, isLoading } = useSWR(`/api/menu?id=${pathname.replace('/', '')}`, fetcher);
 
 	const restaurant = useMemo(() => {
-		if (!data?.profile?.categories.includes('all')) data?.profile?.categories?.unshift('all');
+		if (!data?.profile?.categories?.includes('all')) data?.profile?.categories?.unshift('all');
 		return data;
 	}, [data]);
 

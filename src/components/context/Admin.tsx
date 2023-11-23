@@ -6,9 +6,13 @@ import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
 import { TOrder } from '#utils/database/models/order';
+import { TProfile } from '#utils/database/models/profile';
 import { fetcher } from '#utils/helper/common';
 
-const AdminOrderDefault: TAdminOrderInitialType = {
+const AdminDefault: TAdminInitialType = {
+	profile: undefined,
+	profileLoading: false,
+	profileMutate: () => new Promise(noop),
 	orderRequest: [],
 	orderActive: [],
 	orderHistory: [],
@@ -17,12 +21,13 @@ const AdminOrderDefault: TAdminOrderInitialType = {
 	orderLoading: false,
 };
 
-export const AdminOrderContext = createContext(AdminOrderDefault);
-export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
+export const AdminContext = createContext(AdminDefault);
+export const AdminProvider = ({ children }: TAdminProviderProps) => {
 	const params = useSearchParams();
 	const tab = params.get('tab');
 	const subTab = params.get('subTab');
-	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR('/api/adminOrder', fetcher);
+	const { data: profile = [], isLoading: profileLoading, mutate: profileMutate } = useSWR('/api/admin', fetcher);
+	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR('/api/admin/order', fetcher);
 	const [orderActionLoading, setOrderActionLoading] = useState(false);
 
 	const { orderRequest, orderActive, orderHistory } = orderData?.reduce?.(
@@ -40,7 +45,7 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 	const orderAction = async (orderID: string, action: TOrderAction) => {
 		if (orderActionLoading) return;
 		setOrderActionLoading(true);
-		const req = await fetch('/api/adminOrder/action', { method: 'POST', body: JSON.stringify({ orderID, action }) });
+		const req = await fetch('/api/admin/order/action', { method: 'POST', body: JSON.stringify({ orderID, action }) });
 		const res = await req.json();
 
 		if (!req.ok) toast.error(res?.message);
@@ -53,17 +58,31 @@ export const AdminOrderProvider = ({ children }: TAdminOrderProviderProps) => {
 	}, [tab, subTab, mutate]);
 
 	return (
-		<AdminOrderContext.Provider value={{ orderRequest, orderActive, orderHistory, orderAction, orderActionLoading, orderLoading }}>
+		<AdminContext.Provider value={{
+			profile,
+			profileLoading,
+			profileMutate,
+			orderRequest,
+			orderActive,
+			orderHistory,
+			orderAction,
+			orderActionLoading,
+			orderLoading,
+		}}
+		>
 			{children}
-		</AdminOrderContext.Provider>
+		</AdminContext.Provider>
 	);
 };
 
-export type TAdminOrderProviderProps = {
+export type TAdminProviderProps = {
     children?: ReactNode
 }
 
-export type TAdminOrderInitialType = {
+export type TAdminInitialType = {
+	profile?: TProfile,
+	profileLoading: boolean,
+	profileMutate: () => Promise<void>
 	orderRequest: TOrder[],
 	orderActive: TOrder[],
 	orderHistory: TOrder[],

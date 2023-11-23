@@ -1,11 +1,14 @@
+/* eslint-disable react/no-danger */
 'use client';
 
 import { ReactNode } from 'react';
 
 import { SessionProvider } from 'next-auth/react';
-import { XProvider } from 'xtreme-ui';
+import { XProvider, themeController } from 'xtreme-ui';
 
-import { AdminOrderProvider } from './AdminOrder';
+import { ThemeManager } from '#components/base/ThemeManager';
+
+import { AdminProvider } from './Admin';
 import { OrderProvider } from './Order';
 import { RestaurantProvider } from './Restaurant';
 
@@ -13,6 +16,7 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
 	return (
 		<XProvider>
 			<SessionProvider>
+				<script dangerouslySetInnerHTML={{ __html: themeController(undefined, 'black') }} />
 				{children}
 			</SessionProvider>
 		</XProvider>
@@ -22,6 +26,7 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
 export const CustomerProvider = ({ children }: ProviderProps) => {
 	return (
 		<RestaurantProvider>
+			<ThemeManager />
 			<OrderProvider>
 				{children}
 			</OrderProvider>
@@ -29,11 +34,12 @@ export const CustomerProvider = ({ children }: ProviderProps) => {
 	);
 };
 
-export const AdminProvider = ({ children }: ProviderProps) => {
+export const DashboardProvider = ({ children }: ProviderProps) => {
 	return (
-		<AdminOrderProvider>
+		<AdminProvider>
+			<ThemeManager />
 			{children}
-		</AdminOrderProvider>
+		</AdminProvider>
 	);
 };
 interface ProviderProps {

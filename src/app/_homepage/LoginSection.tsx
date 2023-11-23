@@ -5,6 +5,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { Avatar, Button, Lottie, Textfield } from 'xtreme-ui';
 
+import { useAdmin } from '#components/context/useContext';
 import { getAnimSrc } from '#utils/constants/common';
 import { TProfile } from '#utils/database/models/profile';
 
@@ -13,6 +14,7 @@ import './loginSection.scss';
 const LoginSection = () => {
 	const router = useRouter();
 	const session = useSession();
+	const { profile: dashboard, profileLoading } = useAdmin();
 	const loggedIn = session.status === 'authenticated';
 
 	const [logoutLoading, setLogoutLoading] = useState(false);
@@ -99,17 +101,27 @@ const LoginSection = () => {
 				</div>
 				<div className='loginCard back'>
 					<div className='header'>
-						<Avatar src={profile?.avatar ?? session.data?.profile?.avatar ?? session.data?.restaurant?.avatar ?? ''} size='mini' />
-						<div className='details'>
-							<p className='name'>
-								{
-									profile?.name ?? session.data?.profile?.name ??
-									`${session.data?.customer?.fname} ${session.data?.customer?.fname}`
-								}
-							</p>
-							<p className='address'>{profile?.address ?? session.data?.profile?.address ?? session.data?.customer?.phone}</p>
-						</div>
-						<Button className='logout' icon={loggedIn ? 'f011' : 'f304'} size='mini' onClick={logout} loading={logoutLoading} />
+						{
+							((session.data?.role === 'admin' || session.data?.role === 'kitchen') && profileLoading)
+								? <div className='details'><p className='name'> OrderWorder</p></div>
+								: <>
+									<Avatar src={profile?.avatar ?? dashboard?.avatar ?? session.data?.restaurant?.avatar ?? ''} size='mini' />
+									<div className='details'>
+										<p className='name'> {
+											profile?.name ?? dashboard?.name ?? `${session.data?.customer?.fname} ${session.data?.customer?.fname}`
+										} </p>
+										<p className='address'>{profile?.address ?? dashboard?.address ?? session.data?.customer?.phone}</p>
+									</div>
+									<Button
+										className='logout'
+										icon={loggedIn ? 'f011' : 'f304'}
+										size='mini'
+										onClick={logout}
+										loading={logoutLoading}
+									/>
+								</>
+						}
+
 					</div>
 					{
 						!loggedIn
