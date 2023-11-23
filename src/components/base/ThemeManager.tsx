@@ -25,6 +25,8 @@ export const ThemeManager = () => {
 	useEffect(() => {
 		if (pathname === '/') document.documentElement.setAttribute('data-theme-scheme', 'light');
 		else document.documentElement.setAttribute('data-theme-scheme', themeScheme);
+
+		document.documentElement.setAttribute('data-theme-color', 'black');
 	}, [pathname, themeScheme]);
 
 	useEffect(() => {
