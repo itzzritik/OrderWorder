@@ -17,6 +17,7 @@ const MenuSchema = new mongoose.Schema<TMenu>({
 	foodType: { type: String, trim: true, lowercase: true, enum: FoodType },
 	veg: { type: String, trim: true, lowercase: true, required: true, enum: Veg },
 	image: { type: String, trim: true },
+	hidden: { type: Boolean, default: true },
 },
 { timestamps: true });
 
@@ -48,6 +49,7 @@ export type TMenu = HydratedDocument<{
 	foodType: TFoodType;
 	veg: TVeg;
 	image: string;
+	hidden: boolean;
 }>
 
 export type TFoodType = typeof FoodType[number];

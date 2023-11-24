@@ -2,6 +2,7 @@ import { UIEvent } from 'react';
 
 import { useSearchParams } from 'next/navigation.js';
 
+import MenuEditor from './MenuEditor/MenuEditor';
 import SettingsAccount from './SettingsAccount';
 import './settings.scss';
 
@@ -15,7 +16,8 @@ const Settings = (props: TSettingsProps) => {
 			{{
 				account: <SettingsAccount />,
 
-				// menu: <MenuEditor showScrollBarAtRef={showScrollBarAtRef} />,
+				menu: <MenuEditor />,
+
 				// tables: <TableEditor showScrollBarAtRef={showScrollBarAtRef} />,
 			}[subTab]}
 		</div>

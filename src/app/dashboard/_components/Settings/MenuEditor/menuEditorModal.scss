@@ -1,0 +1,606 @@
+.menuEditorModal {
+	$transition: all 0.25s ease-out;
+
+	position: fixed;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	display: flex;
+	opacity: 0;
+	justify-content: center;
+	align-items: center;
+	z-index: 10px;
+	transition: $transition;
+
+	&.show {
+		visibility: visible;
+		opacity: 1;
+
+		.backdrop {
+			opacity: 0.7;
+		}
+
+		.modalViewport {
+			transform: scale(1);
+		}
+	}
+
+	&.newState {
+		.modalViewport {
+			.modalHeader span {
+				pointer-events: none;
+			}
+
+			.modalContent {
+				.newSelector {
+					opacity: 1;
+					transform: translateX(0);
+				}
+			}
+		}
+	}
+
+	&.menuCategoryState {
+		.modalViewport {
+			width: 390px;
+			height: 375px;
+
+			.modalContent {
+				.newSelector {
+					opacity: 0;
+					transform: translateX(-100%);
+				}
+
+				.menuCategoryContainer {
+					opacity: 1;
+					transform: translateX(0);
+				}
+			}
+		}
+	}
+
+	&.menuItemState, &.menuItemEditState {
+		.modalViewport {
+			width: 700px;
+			max-width: 100%;
+			height: 600px;
+			max-height: 100%;
+
+			.modalContent {
+				.newSelector {
+					opacity: 0;
+					transform: translateX(-100%);
+				}
+
+				.menuItemContainer {
+					opacity: 1;
+					transform: translateX(0);
+				}
+
+				.submitMenuItem {
+					opacity: 1;
+					transform: scale(1);
+				}
+			}
+		}
+	}
+
+	.backdrop {
+		position: fixed;
+		top: 0; left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		opacity: 0.7;
+	}
+
+	.modalViewport {
+		position: relative;
+		width: 250px;
+		height: 150px;
+		border-radius: 20px;
+		overflow: hidden;
+		display: flex;
+		padding: 10px;
+		flex-direction: column;
+		transform: scale(0.8);
+		background-color: var(--colorBackgroundPrimary);
+		transition: $transition;
+
+		.modalHeader {
+			width: 100%;
+			height: 50px;
+			margin-bottom: 5px;
+			user-select: none;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			> div {
+				height: 100%;
+				display: flex;
+				align-items: center;
+
+				span {
+					display: block;
+					width: 50px;
+					height: 100%;
+					mask-size: 15px;
+					mask-repeat: no-repeat;
+					mask-position: center;
+					background-color: var(--colorContentPrimary);
+					cursor: pointer;
+				}
+
+				h5 {
+					color: var(--colorContentPrimary);
+					text-transform: capitalize;
+					margin: 0;
+				}
+			}
+
+			.uploadProgress {
+				color: var(--colorContentPrimary);
+				margin: 0 15px 0 0;
+			}
+		}
+
+		.modalContent {
+			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 10px;
+			overflow: hidden;
+			flex: 1;
+
+			.removeImage {
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: rgb(var(--colorAlertErrorRGB));
+				border-radius: 9999px;
+				box-shadow: 0 0 5px rgb(var(--colorAlertErrorRGB));
+				cursor: pointer;
+
+				span {
+					display: block;
+					width: 8px;
+					height: 8px;
+					mask-size: 8px;
+					mask-repeat: no-repeat;
+					mask-position: center;
+					background-color: var(--colorBackgroundPrimary);
+				}
+			}
+
+			.newSelector {
+				position: absolute;
+				width: 230px;
+				height: 75px;
+				display: flex;
+				flex-direction: column;
+				opacity: 0;
+				transform: translateX(20%);
+				transition: $transition;
+
+				> div {
+					flex: 1;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					user-select: none;
+					cursor: pointer;
+					font-size: 14px;
+					text-transform: capitalize;
+					border-radius: 10px;
+
+					&:hover {
+						background: rgb(var(--colorBrandAccentRgb) 0.15);
+					}
+				}
+			}
+
+			.menuCategoryContainer {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: var(--colorBackgroundTertiary);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				opacity: 0;
+				padding: 10px;
+				transform: translateX(100%);
+				box-shadow: var(--boxShadowInset);
+				transition: $transition;
+
+				.removeImage {
+					top: 14px; left: 50%;
+					transform: translateX(30px);
+				}
+
+				.menuCategory {
+					margin-top: 20px;
+					margin-right: 0;
+				}
+
+				.categoryControls {
+					width: 100%;
+					flex: 1;
+					margin-top: 20px;
+					padding: 5px 10px;
+					display: flex;
+					flex-direction: column;
+
+					.categoryNameTitle {
+						width: 100%;
+						padding: 0 5px;
+						user-select: none;
+						color: var(--colorContentPrimary);
+						margin-bottom: 5px;
+						display: flex;
+						justify-content: space-between;
+					}
+
+					.textInput {
+						width: 100%;
+						height: 50px;
+						background-color: var(--colorBackgroundPrimary);
+
+						> input {
+							font-size: 12px;
+							padding: 0 20px;
+
+							&:focus {
+								border: 1px solid var(--colorContentTertiary);
+							}
+
+							&::placeholder {
+								letter-spacing: 0.5px;
+								user-select: none;
+								color: var(--colorContentSecondary);
+							}
+						}
+					}
+
+					.categoryButtons {
+						flex: 1;
+						display: flex;
+						justify-content: center;
+						align-items: flex-end;
+						margin-bottom: 10px;
+					}
+				}
+			}
+
+			.menuItemContainer {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: var(--colorBackgroundTertiary);
+				display: flex;
+				flex-direction: column;
+				opacity: 0;
+				padding: 10px 10px 70px;
+				overflow-y: auto;
+				scroll-behavior: smooth;
+				transform: translateX(100%);
+				transition: $transition;
+				box-shadow: var(--boxShadowInset);
+				scrollbar-width: none;
+				-ms-overflow-style: none;
+
+				&::-webkit-scrollbar {
+					display: none;
+				}
+
+				.menuItemHead {
+					width: 100%;
+					height: 110px;
+					display: flex;
+
+					.removeImage {
+						top: 8px; left: 110px;
+					}
+
+					.menuItemImage {
+						position: relative;
+						width: 110px;
+						height: 110px;
+						margin: 5px 0 0 5px;
+						border-radius: 12px;
+						overflow: hidden;
+						background-color: var(--colorBackgroundPrimary);
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						border: 5px solid var(--colorBackgroundPrimary);
+						cursor: pointer;
+						
+						.placeholder {
+							$iconSize: 50px;
+	
+							display: block;
+							width: $iconSize;
+							height: $iconSize;
+							mask-size: $iconSize;
+							mask-repeat: no-repeat;
+							mask-position: center;
+							background-color: var(--colorContentTertiary);
+						}
+
+						.image {
+							width: 100%;
+							height: 100%;
+							background-size: cover;
+							background-repeat: no-repeat;
+							border-radius: 11px;
+						}
+					}
+
+					.itemNameContainer {
+						flex: 1;
+						padding: 0 10px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+
+						.itemNameTitle {
+							width: 100%;
+							flex: 1;
+							padding: 0 5px;
+							user-select: none;
+							color: var(--colorContentPrimary);
+							margin: 5px 0;
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+
+							> h5 {
+								margin: 0;
+							}
+						}
+
+						.textInput {
+							width: 100%;
+							height: 50px;
+							background-color: var(--colorBackgroundPrimary);
+	
+							> input {
+								font-size: 12px;
+								padding: 0 20px;
+
+								&:focus {
+									border: 1px solid var(--colorContentTertiary);
+								}
+
+								&::placeholder {
+									letter-spacing: 0.5px;
+									user-select: none;
+									color: var(--colorContentSecondary);
+								}
+							}
+						}
+					}
+				}
+
+				.menuItemBody {
+					width: 100%;
+					flex: 1;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					padding: 5px;
+					margin-top: 10px;
+
+					.vegSelector {
+						margin-top: 20px;
+						border-radius: 10px;
+
+						.button {
+							margin: 0 3px;
+							transform: scale(0.92);
+						}
+					}
+
+					.itemPrice {
+						width: 100%;
+						padding: 10px 0;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+
+						.itemPriceLabel {
+							width: 100%;
+							padding: 0 5px;
+							user-select: none;
+							color: var(--colorContentPrimary);
+							margin: 5px 0;
+							display: flex;
+							justify-content: space-between;
+						}
+
+						.textInput {
+							--iconSize: 50px;
+
+							width: 100%;
+							height: 50px;
+							margin-bottom: 10px;
+							background-color: var(--colorBackgroundPrimary);
+	
+							> input {
+								font-size: 12px;
+
+								&:focus {
+									border: 1px solid var(--colorContentTertiary);
+								}
+
+								&::placeholder {
+									letter-spacing: 0.5px;
+									user-select: none;
+									color: var(--colorContentSecondary);
+								}
+							}
+
+							.inputIcon {
+								padding-left: 10px;
+
+								span {
+									$rupeeIcon: 22px;
+
+									width: $rupeeIcon;
+									height: $rupeeIcon;
+									mask-size: $rupeeIcon;
+									background: var(--colorContentSecondary);
+								}
+							}
+						}
+					}
+
+					.itemDescription {
+						width: 100%;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+
+						.itemDescriptionLabel {
+							width: 100%;
+							padding: 5px 5px 0;
+							user-select: none;
+							color: var(--colorContentPrimary);
+							margin-bottom: 5px;
+							display: flex;
+							justify-content: space-between;
+						}
+
+						> textarea {
+							width: 100%;
+							height: 80px;
+							outline: none;
+							resize: none;
+							padding: 15px 20px;
+							color: var(--colorContentPrimary);
+							border-radius: 8px;
+							border: 1px solid transparent;
+	
+							&:focus {
+								border: 1px solid var(--colorContentTertiary);
+							}
+
+							&::placeholder {
+								letter-spacing: 0.5px;
+								user-select: none;
+							}
+						}
+					}
+
+					.itemCategory {
+						width: 100%;
+						display: flex;
+						flex-direction: column;
+						margin-top: 10px;
+
+						> h6 {
+							width: 100%;
+							padding: 0 5px;
+							user-select: none;
+							color: var(--colorContentPrimary);
+							margin: 5px 0;
+							display: flex;
+							justify-content: space-between;
+						}
+
+						.categorySelector {
+							margin-top: 8px;
+							border-radius: 20px;
+						}
+					}
+				}
+			}
+
+			.submitMenuItem {
+				position: fixed;
+				bottom: 25px; right: 25px;
+				opacity: 0;
+				transform: scale(0);
+				transition: all 0.2s ease-out;
+			}
+		}
+	}
+}
+
+@media (width <= 530px) {
+	.menuEditorModal {
+		justify-content: center;
+		align-items: flex-end;
+
+		&.show {
+			.modalViewport {
+				transform: translateY(0);
+			}
+		}
+
+		&.newState {
+			.modalViewport {
+				width: 100%;
+				height: 175px;
+
+				.modalContent .newSelector {
+					height: 100px;
+				}
+			}
+		}
+
+		&.menuCategoryState {
+			.modalViewport {
+				width: 100%;
+				max-height: 100%;
+			}
+		}
+
+		&.menuItemState, &.menuItemEditState {
+			.modalViewport {
+				width: 100%;
+				height: 100%;
+			}
+		}
+
+		.modalViewport {
+			width: 100%;
+			padding: 10px 10px 0;
+			border-radius: 20px 20px 0 0;
+			transform: translateY(100%);
+
+			.modalContent {
+				border-radius: 10px 10px 0 0;
+
+				.newSelector {
+					width: 100%;
+				}
+
+				.menuCategoryContainer {
+					.categoryControls {
+						.textInput {
+							height: 45px;
+						}
+
+						.categoryButtons {
+							padding-bottom: 4px;
+						}
+					} 
+				}
+
+				.submitMenuItem {
+					bottom: 20px; right: 28px;
+				}
+			}
+		}
+	}
+}

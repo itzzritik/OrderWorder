@@ -5,12 +5,16 @@ import { useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 import useSWR from 'swr';
 
+import { TMenu } from '#utils/database/models/menu';
 import { TOrder } from '#utils/database/models/order';
 import { TProfile } from '#utils/database/models/profile';
+import { TTable } from '#utils/database/models/table';
 import { fetcher } from '#utils/helper/common';
 
 const AdminDefault: TAdminInitialType = {
 	profile: undefined,
+	menus: [],
+	tables: [],
 	profileLoading: false,
 	profileMutate: () => new Promise(noop),
 	orderRequest: [],
@@ -26,7 +30,7 @@ export const AdminProvider = ({ children }: TAdminProviderProps) => {
 	const params = useSearchParams();
 	const tab = params.get('tab');
 	const subTab = params.get('subTab');
-	const { data: profile = [], isLoading: profileLoading, mutate: profileMutate } = useSWR('/api/admin', fetcher);
+	const { data: { profile, menus = [], tables = [] } = {}, isLoading: profileLoading, mutate: profileMutate } = useSWR('/api/admin', fetcher);
 	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR('/api/admin/order', fetcher, { refreshInterval: 5000 });
 	const [orderActionLoading, setOrderActionLoading] = useState(false);
 
@@ -60,6 +64,8 @@ export const AdminProvider = ({ children }: TAdminProviderProps) => {
 	return (
 		<AdminContext.Provider value={{
 			profile,
+			menus,
+			tables,
 			profileLoading,
 			profileMutate,
 			orderRequest,
@@ -81,6 +87,8 @@ export type TAdminProviderProps = {
 
 export type TAdminInitialType = {
 	profile?: TProfile,
+	menus: TMenu[],
+	tables: TTable[],
 	profileLoading: boolean,
 	profileMutate: () => Promise<void>
 	orderRequest: TOrder[],
