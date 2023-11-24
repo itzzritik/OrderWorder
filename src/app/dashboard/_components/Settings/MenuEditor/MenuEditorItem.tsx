@@ -1,14 +1,20 @@
 import React from 'react';
 
 import { useInView } from 'react-intersection-observer';
-import { Icon } from 'xtreme-ui';
+import { Button, Icon } from 'xtreme-ui';
 
 import { TMenu } from '#utils/database/models/menu';
 
 import './menuEditorItem.scss';
 
+const vegIcon = {
+	'veg': 'f4d8',
+	'non-veg': 'f6d6',
+	'contains-egg': 'f7fb',
+} as const;
+
 const MenuEditorItem = (props: TMenuEditorItemProps) => {
-	const { item, onEdit, onHide } = props;
+	const { item, onEdit, onHide, hideSettingsLoading = false } = props;
 	const [itemRef, inView] = useInView({ threshold: 0 });
 
 	return (
@@ -23,9 +29,9 @@ const MenuEditorItem = (props: TMenuEditorItemProps) => {
 								: <span className='image' style={{ background: `url(${item.image})` }} />
 						}
 						{
-							item.veg
-							&& <div className={`vegIcon ${item.veg}`}>
-								<Icon code={item.veg} />
+							item.veg &&
+							<div className={`vegIcon ${item.veg}`}>
+								<Icon className='icon' type='duotone' size={16} code={vegIcon[item.veg]} />
 								<span className='label'>{item.veg.replace(/-/g, ' ')}</span>
 							</div>
 						}
@@ -36,14 +42,16 @@ const MenuEditorItem = (props: TMenuEditorItemProps) => {
 						<p className='menuItemPrice rupee'>{item.price}</p>
 					</div>
 					<div className='menuItemOptions'>
-						<div className='menuItemVisibleButton' onClick={() => onHide(item._id.toString())}>
-							<Icon code={item.hidden ? 'f070' : 'f06e'} />
-							<span className='label'>{item.hidden ? 'Hidden' : 'Visible'}</span>
-						</div>
-						<div className='menuItemEditButton' onClick={() => onEdit(item)}>
-							<Icon code='f304' />
-							<span className='label'>Edit</span>
-						</div>
+						<Button
+							icon={item.hidden ? 'f070' : 'f06e'}
+							iconType='solid'
+							size='mini'
+							type={item.hidden ? 'secondary' : 'primary'}
+							label={item.hidden ? 'Hidden' : 'Visible'}
+							loading={hideSettingsLoading}
+							onClick={() => onHide(item._id.toString(), !item.hidden)}
+						/>
+						<Button icon='f304' iconType='solid' size='mini' type='primary' onClick={() => onEdit(item)} />
 					</div>
 				</>
 			}
@@ -56,5 +64,6 @@ export default MenuEditorItem;
 type TMenuEditorItemProps = {
 	item: TMenu,
 	onEdit: (item: TMenu) => void,
-	onHide: (id: string) => void
+	onHide: (id: string, hidden: boolean) => void
+	hideSettingsLoading: boolean,
 }

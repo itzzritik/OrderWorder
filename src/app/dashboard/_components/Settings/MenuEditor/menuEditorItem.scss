@@ -13,24 +13,13 @@
 			.menuItemPicture {
 				.vegIcon {
 					width: auto;
-					padding-left: 9px;
-					border-radius: 9999px;
+					border-width: 1px;
 					transition: all 0.15s ease-out;
-
-					.icon {
-						--iconSize: 12px;
-
-						margin-right: 8px;
-					}
 
 					.label {
 						display: block;
 					}
 				}
-			}
-
-			.menuItemOptions {
-				display: flex;
 			}
 		}
 	}
@@ -67,51 +56,44 @@
 
 		.vegIcon {
 			position: absolute;
-			left: 10px; bottom: 10px;
-			width: 20px;
-			height: 20px;
+			left: 6px; bottom: 6px;
+			width: 24px;
+			height: 24px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			overflow: hidden;
-			border-radius: 4px;
+			border-radius: 10px;
 			color: var(--colorContentPrimary);
 			background-color: var(--colorBackgroundPrimary);
-			border: 1px solid var(--colorContentTertiary);
+			border: 0 solid var(--colorContentTertiary);
 	
 			&.veg .icon {
-				background-color: rgb(var(--colorAlertErrorRGB));
+				color: rgb(var(--colorAlertSuccessRGB));
 			}
-
+	
 			/* stylelint-disable-next-line selector-class-pattern */
 			&.non-veg .icon {
-				background-color: rgb(var(--colorAlertErrorRGB));
+				color: rgb(var(--colorAlertErrorRGB));
 			}
-
+	
 			/* stylelint-disable-next-line selector-class-pattern */
 			&.contains-egg .icon {
-				background-color: rgb(var(--colorAlertWarningRGB));
+				color: rgb(var(--colorAlertWarningRGB));
 			}
 	
 			.icon {
-				--iconSize: 14px;
-	
-				display: block;
-				width: var(--iconSize);
-				height: var(--iconSize);
-				mask-size: var(--iconSize);
-				mask-repeat: no-repeat;
-				mask-position: center;
+				padding: 16px;
 			}
-
+	
 			.label {
 				display: none;
-				padding-right: 10px;
-				font-size: 11px;
-				font-weight: 600;
+				padding: 10px 10px 10px 0;
+				font-size: 12px;
 				text-transform: capitalize;
 				white-space: nowrap;
 				user-select: none;
+				color: var(--colorContentPrimary);
 			}
 		}
 	}
@@ -125,7 +107,7 @@
 
 		.menuItemTitle {
 			font-size: 18px;
-			font-weight: 500;
+			font-variation-settings: 'wdth' 75, 'wght' 500;
 		}
 
 		.menuItemDesc {
@@ -145,67 +127,23 @@
 		width: auto;
 		height: auto;
 		top: 10px; right: 10px;
-		display: none;
+		display: flex;
+		justify-content: flex-end;
+		gap: 8px;
 
 		.menuItemEditButton, .menuItemVisibleButton {
 			width: 35px;
 			height: 35px;
 			display: flex;
-			justify-content: center;
+			justify-content: flex-start;
 			align-items: center;
 			overflow: hidden;
 			border-radius: 9999px;
 			color: var(--colorContentPrimary);
 			background-color: var(--colorBackgroundPrimary);
 			border: 1px solid var(--colorContentTertiary);
-			transition: all 0.2s ease-out;
+			transition: all 0.2s linear;
 			cursor: pointer;
-	
-			@media (hover: hover) {
-				&:hover {
-					width: 80px;
-
-					.label {
-						display: block;
-					}
-				}
-			}
-	
-			.icon {
-				--iconSize: 12px;
-	
-				display: block;
-				width: var(--iconSize);
-				height: var(--iconSize);
-				mask-size: var(--iconSize);
-				mask-repeat: no-repeat;
-				mask-position: center;
-				background-color: var(--colorContentPrimary);
-			}
-
-			.label {
-				display: none;
-				font-size: 14px;
-				font-weight: 600;
-				text-transform: capitalize;
-				white-space: nowrap;
-				user-select: none;
-				margin-left: 6px;
-			}
-		}
-	}
-
-	.menuItemVisibleButton {
-		margin-right: 8px;
-
-		.icon {
-			--iconSize: 15px !important;
-		}
-
-		@media (hover: hover) {
-			&:hover {
-				width: 100px !important;
-			}
 		}
 	}
 }

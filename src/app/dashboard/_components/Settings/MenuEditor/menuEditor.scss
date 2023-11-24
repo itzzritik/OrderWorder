@@ -24,7 +24,7 @@
 			.menuCategoryHeading {
 				color: var(--colorContentPrimary);
 				font-size: 24px;
-				font-weight: 300;
+				font-variation-settings: 'wdth' 75, 'wght' 300;
 				margin: 0 40px 0 0;
 				overflow: hidden;
 				user-select: none;
@@ -101,7 +101,7 @@
 			.menuItemHeading {
 				color: var(--colorContentPrimary);
 				font-size: 24px;
-				font-weight: 300;
+				font-variation-settings: 'wdth' 75, 'wght' 300;
 				margin: 0 40px 0 0;
 				overflow: hidden;
 				user-select: none;
@@ -119,57 +119,12 @@
 	.menuEditorAdd {
 		position: fixed;
 		bottom: 20px; right: 20px;
-		width: 50px;
-		height: 50px;
 		display: flex;
-		justify-content: center;
-		align-items: center;
-		overflow: hidden;
-		border-radius: 9999px;
-		color: var(--colorBackgroundPrimary);
-		background-color: rgb(var(--colorBrandAccentRgb));
-		box-shadow: var(--boxShadowGlow);
+		z-index: 10;
 		transition: all 0.2s ease-out;
-		cursor: pointer;
 
 		&.active {
 			transform: scale(0);
-		}
-
-		@media (hover: hover) {
-			&:hover {
-				width: 110px;
-				box-shadow: var(--boxShadowGlowHover);
-
-				.label {
-					display: block;
-				}
-			}
-		}
-
-		&:active {
-			box-shadow: var(--boxShadowGlowActive);
-		}
-
-		.icon {
-			--iconSize: 16px;
-
-			display: block;
-			width: var(--iconSize);
-			height: var(--iconSize);
-			mask-size: var(--iconSize);
-			mask-repeat: no-repeat;
-			mask-position: center;
-			background-color: var(--colorBackgroundPrimary);
-		}
-
-		.label {
-			display: none;
-			font-size: 16px;
-			font-weight: 600;
-			text-transform: capitalize;
-			user-select: none;
-			margin-left: 8px;
 		}
 	}
 }

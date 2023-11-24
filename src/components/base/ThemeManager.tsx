@@ -34,6 +34,6 @@ export const ThemeManager = () => {
 	}, []);
 
 	return (
-		<ToastContainer />
+		<ToastContainer position='top-center' theme={themeScheme === 'light' ? 'light' : 'dark'} />
 	);
 };

@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, UIEvent } from 'react';
 
-import { Icon } from 'xtreme-ui';
+import { toast } from 'react-toastify';
+import { Button, Icon, Spinner } from 'xtreme-ui';
 
 import { useAdmin } from '#components/context/useContext';
 
@@ -9,9 +10,10 @@ import MenuEditorModal from './MenuEditorModal';
 import './menuEditor.scss';
 
 const MenuEditor = () => {
-	const { profile, menus } = useAdmin();
+	const { profile, menus, profileLoading, profileMutate } = useAdmin();
 	const [modalState, setModalState] = useState('');
 	const [editItem, setEditItem] = useState();
+	const [hideSettingsLoading, setHideSettingsLoading] = useState<string[]>([]);
 	const [category, setCategory] = useState(0);
 
 	const categories = useRef<HTMLDivElement>(null);
@@ -19,21 +21,13 @@ const MenuEditor = () => {
 	const [leftCategoryScroll, setLeftCategoryScroll] = useState(false);
 	const [rightCategoryScroll, setRightCategoryScroll] = useState(true);
 
-	const onCategoryClicked = (key) => {
-		setCategory(key);
-	};
-	const onCategoryScroll = (event) => {
-		if (event.target.scrollLeft > 50) {
-			setLeftCategoryScroll(true);
-		} else {
-			setLeftCategoryScroll(false);
-		}
+	const onCategoryScroll = (event: UIEvent<HTMLDivElement>) => {
+		const target = event.target as HTMLDivElement;
+		if (target.scrollLeft > 50) setLeftCategoryScroll(true);
+		else setLeftCategoryScroll(false);
 
-		if (Math.round(event.target.scrollWidth - event.target.scrollLeft) - 50 > event.target.clientWidth) {
-			setRightCategoryScroll(true);
-		} else {
-			setRightCategoryScroll(false);
-		}
+		if (Math.round(target.scrollWidth - target.scrollLeft) - 50 > target.clientWidth) setRightCategoryScroll(true);
+		else setRightCategoryScroll(false);
 	};
 	const categoryScrollLeft = () => {
 		if (categories?.current)
@@ -43,14 +37,26 @@ const MenuEditor = () => {
 		if (categories?.current)
 			categories.current.scrollLeft += 400;
 	};
-	const onHide = (itemID) => {
+	const onHide = async (itemId: string, hidden: boolean) => {
+		setHideSettingsLoading((v) => ([...v, itemId]));
+		const req = await fetch('/api/admin/menu/hidden', {
+			method: 'POST',
+			body: JSON.stringify({ itemId, hidden }),
+		});
+		const res = await req.json();
 
+		if (res?.status !== 200) toast.error(res?.message);
+
+		await profileMutate();
+		setHideSettingsLoading((v) => v.filter((item) => item !== itemId));
 	};
 	const onEdit = (item) => {
 		setEditItem(item);
 		setModalState('menuItemEditState');
 	};
-	console.log(menus);
+
+	if (profileLoading) return <Spinner fullpage label='Loading Menu...' />;
+
 	return (
 		<div className='menuEditor'>
 			<div className='menuCategoryEditor'>
@@ -64,7 +70,7 @@ const MenuEditor = () => {
 							<div
 								key={i}
 								className={`menuCategory ${category === i ? 'active' : ''}`}
-								onClick={() => onCategoryClicked(i)}
+								onClick={() => setCategory(i)}
 							>
 								<span className='title'>{item}</span>
 							</div>
@@ -85,15 +91,24 @@ const MenuEditor = () => {
 					<div className='menuItemOptions' />
 				</div>
 				<div className='menuItemContainer'>
-					{ menus.map((item, key) => <MenuEditorItem key={key} item={item} onEdit={onEdit} onHide={onHide} />) }
+					{
+						menus.map((item, id) => (
+							<MenuEditorItem
+								key={id}
+								item={item}
+								onEdit={onEdit}
+								onHide={onHide}
+								hideSettingsLoading={hideSettingsLoading.includes(item._id.toString())}
+							/>
+						)) }
 				</div>
 			</div>
-			<div className={`menuEditorAdd ${modalState ? 'active' : ''}`}
+			<Button
+				className={`menuEditorAdd ${modalState ? 'active' : ''}`}
 				onClick={() => setModalState('newState')}
-			>
-				<Icon code='2b' type='solid' />
-				<span className='label'>New</span>
-			</div>
+				icon='2b'
+				iconType='solid'
+			/>
 			{/* <MenuEditorModal
 				state={modalState}
 				setState={setModalState}

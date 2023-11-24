@@ -204,13 +204,16 @@ const OrderPage = () => {
 									<div>
 										{
 											filteredProducts?.map((item, key) => (
+												!item.hidden &&
 												<MenuCard key={key} item={item} restrictOrder={!eligibleToOrder}
 													increaseQuantity={increaseProductQuantity}
 													decreaseQuantity={decreaseProductQuantity}
 													showInfo={item._id.toString() === showInfoCard.toString()}
 													setShowInfo={(v) => setShowInfoCard(v)} show={!!item.image}
-													quantity={(selectedProducts.some((obj) => obj._id === item._id)
-											&& selectedProducts?.find((obj) => obj._id === item._id)?.quantity) || 0}
+													quantity={(
+														selectedProducts.some((obj) => obj._id === item._id) &&
+														selectedProducts?.find((obj) => obj._id === item._id)?.quantity) || 0
+													}
 												/>
 											))
 										}

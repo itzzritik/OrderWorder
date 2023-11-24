@@ -32,8 +32,7 @@ const ThemeSettings = () => {
 		});
 		const res = await req.json();
 
-		if (res?.status === 200) toast.success(res?.message);
-		else toast.error(res?.message);
+		if (res?.status !== 200) toast.error(res?.message);
 
 		await profileMutate();
 
