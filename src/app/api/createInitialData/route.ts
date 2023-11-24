@@ -408,18 +408,6 @@ const empireMenu = [
 		hidden: false,
 	},
 	{
-		name: 'Strawberry Ice Cream',
-		restaurantID: 'empire',
-		description: null,
-		categories: ['Desserts'],
-		price: 30,
-		taxPercent: 5,
-		foodType: 'sweet',
-		veg: 'veg',
-		image: 'https://images.media-allrecipes.com/userphotos/838110.jpg',
-		hidden: false,
-	},
-	{
 		name: 'Death By Chocolate',
 		restaurantID: 'empire',
 		description: null,
