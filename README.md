@@ -1,34 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# OrderWorder - Contactless Dining Experience
 
-## Getting Started
+![App Screenshot](link_to_screenshot)
 
-First, run the development server:
+Welcome to OrderWorder, our Contactless Dining Full-Stack Application! This innovative application revolutionizes the dining experience by allowing restaurants to seamlessly replace traditional menus with a digital, contactless solution.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **QR Code Integration**: Each table is equipped with a QR code for easy access to the application.
+- **Ordering System**: Customers can browse the menu, place orders, and make payments directly through the intuitive web app.
+- **Admin Dashboard**: Enables restaurant management, order acceptance/rejection, inventory, and payroll management.
+- **Kitchen Dashboard**: Chefs receive live updates on incoming orders for efficient food preparation.
+- **Real-Time Functionality**: Built using Next.js and SCSS to ensure a responsive and real-time user experience.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to Use
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. **Setup QR Codes**: Place QR codes on each table to enable access for customers.
+2. **Access the Web App**: Customers can scan the QR code using their smartphones to open the web app and start ordering.
+3. **Admin Dashboard**: Access the admin panel to manage restaurants, accept/reject orders, and handle inventory and payroll.
+4. **Kitchen Dashboard**: Chefs can use the kitchen dashboard to stay updated on live orders for timely preparation.
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **FullStack**: Next.js and SASS
+- **Database**: Mongo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
