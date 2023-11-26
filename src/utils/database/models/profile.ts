@@ -13,7 +13,7 @@ const ProfileSchema = new mongoose.Schema<TProfile>({
 		b: { type: Number, trim: true, min: 0, max: 255 },
 	},
 	gstInclusive: { type: Boolean, default: false },
-	categories: [{ type: String, trim: true, lowercase: true }],
+	categories: [{ type: String, trim: true, lowercase: true, match: /^[^,]*$/ }],
 	avatar: { type: String, trim: true },
 	cover: { type: String, trim: true },
 	photos: [{ type: String, trim: true }],

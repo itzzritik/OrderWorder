@@ -44,8 +44,6 @@ const ThemeSettings = () => {
 		setTimeout(() => setColor(profile?.themeColor), 5);
 	}, [profile?.themeColor]);
 
-	console.log(profile?.themeColor, color);
-
 	return (
 		<div className='themeSettings'>
 			<div className='colorHeader'>

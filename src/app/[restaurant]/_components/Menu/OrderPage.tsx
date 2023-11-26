@@ -1,7 +1,7 @@
-import { SyntheticEvent, UIEvent, useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, UIEvent, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
-import { Button, Icon, Spinner } from 'xtreme-ui';
+import { ActionCard, Button, Icon, Spinner } from 'xtreme-ui';
 
 import SearchButton from '#components/base/SearchButton';
 import SideSheet from '#components/base/SideSheet';
@@ -19,9 +19,14 @@ const OrderPage = () => {
 	const session = useSession();
 	const { loading } = useOrder();
 	const { restaurant } = useRestaurant();
+
 	const menus = restaurant?.menus as Array<TMenuCustom>;
 	const params = useQueryParams();
 	const table = params.get('table');
+	const searchParam = params.get('search')?.trim() ?? '';
+	const categoryParam = params.get('category')?.trim();
+	const category = useMemo(() => (categoryParam ? categoryParam.split(',') : []), [categoryParam]);
+
 	const order = useRef<HTMLDivElement>(null);
 	const categories = useRef<HTMLDivElement>(null);
 	const [loginOpen, setLoginOpen] = useState(false);
@@ -39,7 +44,6 @@ const OrderPage = () => {
 
 	const [filteredProducts, setFilteredProducts] = useState<Array<TMenuCustom>>(menus);
 	const [selectedProducts, setSelectedProducts] = useState<Array<TMenuCustom>>([]);
-	const [category, setCategory] = useState<string[]>([]);
 	const [hasImageItems, setHasImageItems] = useState(false);
 	const [hasNonImageItems, setHasNonImageItems] = useState(false);
 
@@ -51,12 +55,9 @@ const OrderPage = () => {
 		if (scrollTop > 30) {
 			setFloatHeader(true);
 			setTopHeading(['Menu', 'Category']);
-
 			if (order?.current && scrollTop >= order?.current?.offsetTop - 15) setTopHeading(orderHeading);
-
 			return;
 		}
-
 		return setFloatHeader(false);
 	};
 	const onCategoryScroll = (event: SyntheticEvent) => {
@@ -75,8 +76,11 @@ const OrderPage = () => {
 		if (categories.current) categories.current.scrollLeft += 400;
 	};
 	const onCategoryClick = (categoryName: string) => {
-		if (category.includes(categoryName)) return setCategory((v) => v.filter((item) => item !== categoryName));
-		return setCategory((v) => [...v, categoryName]);
+		let newCategory = [];
+		if (category.includes(categoryName)) newCategory = category.filter((item) => item !== categoryName);
+		else newCategory = [...category, categoryName];
+
+		params.set({ category: newCategory.join(',') });
 	};
 	const onLoginClick = () => {
 		if (table) return setLoginOpen(true);
@@ -109,9 +113,7 @@ const OrderPage = () => {
 	};
 
 	useEffect(() => {
-		const search = searchValue.toLowerCase();
-
-		console.log(search, category);
+		const search = searchParam.toLowerCase();
 
 		setFilteredProducts(
 			menus?.filter?.(({ name, description, category: cat }) =>
@@ -123,7 +125,11 @@ const OrderPage = () => {
 			),
 		);
 
-	}, [category, menus, searchValue]);
+	}, [category, menus, searchParam]);
+
+	useEffect(() => {
+		params.set({ search: searchValue });
+	}, [params, searchValue]);
 
 	useEffect(() => {
 		setHasImageItems(filteredProducts?.some((product) => !!product.image) ?? false);
@@ -141,7 +147,12 @@ const OrderPage = () => {
 				<div className={`mainHeader ${searchActive ? 'searchActive' : ''} ${floatHeader ? 'floatHeader' : ''}`}>
 					<h1>{topHeading[0]} <span>{topHeading[1]}</span></h1>
 					<div className='options'>
-						<SearchButton setSearchActive={setSearchActive} placeholder='Search for food' value={searchValue} setValue={setSearchValue} />
+						<SearchButton
+							setSearchActive={setSearchActive}
+							placeholder='Search menu'
+							value={searchValue}
+							setValue={setSearchValue}
+						/>
 						{
 							(!session.data?.role || !showOrderButton) &&
 							<Button className='loginButton' label={showOrderButton ? 'Order' : 'Scan'} onClick={onLoginClick} />
@@ -182,13 +193,13 @@ const OrderPage = () => {
 						<div className='itemCategories' ref={categories} onScroll={onCategoryScroll}>
 							{
 								restaurant?.profile?.categories?.map((item, i) => (
-									<div
+									<ActionCard
 										key={i}
 										className={`menuCategory ${category.includes(item) ? 'active' : ''}`}
 										onClick={() => onCategoryClick(item)}
 									>
 										<span className='title'>{item}</span>
-									</div>
+									</ActionCard>
 								))
 							}
 							<div className='space' />
