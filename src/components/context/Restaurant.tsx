@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useMemo } from 'react';
+import { createContext, ReactNode } from 'react';
 
 import { usePathname } from 'next/navigation';
 import useSWR from 'swr';
@@ -15,12 +15,7 @@ const RestaurantDefault: TRestaurantInitialType = {
 export const RestaurantContext = createContext(RestaurantDefault);
 export const RestaurantProvider = ({ children }: TRestaurantProviderProps) => {
 	const pathname = usePathname();
-	const { data, error, isLoading } = useSWR(`/api/menu?id=${pathname.replace('/', '')}`, fetcher);
-
-	const restaurant = useMemo(() => {
-		if (!data?.profile?.categories?.includes('all')) data?.profile?.categories?.unshift('all');
-		return data;
-	}, [data]);
+	const { data: restaurant, error, isLoading } = useSWR(`/api/menu?id=${pathname.replace('/', '')}`, fetcher);
 
 	return (
 		<RestaurantContext.Provider value={{ restaurant, error, loading: isLoading }}>

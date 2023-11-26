@@ -1,8 +1,6 @@
 import mongoose, { HydratedDocument } from 'mongoose';
 
-import { checkIfExist } from '../manager';
-
-import { Accounts } from './account';
+import { Accounts, TAccount } from './account';
 
 const ProfileSchema = new mongoose.Schema<TProfile>({
 	name: { type: String, trim: true, required: true },
@@ -17,24 +15,31 @@ const ProfileSchema = new mongoose.Schema<TProfile>({
 	gstInclusive: { type: Boolean, default: false },
 	categories: [{ type: String, trim: true, lowercase: true }],
 	avatar: { type: String, trim: true },
+	cover: { type: String, trim: true },
+	photos: [{ type: String, trim: true }],
 },
 { timestamps: true });
 
-ProfileSchema.pre('findOneAndUpdate', async function (next) {
-	const data = this.getUpdate() as TProfile;
+ProfileSchema.pre('save', async function (next) {
 	try {
-		const account = await checkIfExist(Accounts, { username: data.restaurantID });
-		if (!account) return next(new Error(`Failed to Create Profile, The associated account with username '${data.restaurantID}'does not exist.`));
+		const account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
 
-		this.setUpdate({ ...data, categories: Array.from(new Set(data.categories)) });
+		if (!account) return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
+
+		this.categories = Array.from(new Set(this.categories));
 
 		next();
 	} catch (error) {
 		next(error);
 	}
 });
-ProfileSchema.post('findOneAndUpdate', async function (doc) {
-	await Accounts.findOneAndUpdate({ username: doc.restaurantID }, { profile: doc._id }, { new: true });
+ProfileSchema.post('save', async function () {
+	const account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
+
+	if (!account) return new Error('The associated account does not exist.');
+
+	account.profile = this._id as unknown as TProfile;
+	await account?.save();
 });
 
 export const Profiles = mongoose.models?.profiles ?? mongoose.model<TProfile>('profiles', ProfileSchema);
@@ -44,6 +49,8 @@ export type TProfile = HydratedDocument<{
 	description: string;
 	address: string;
 	avatar: string;
+	cover: string;
+	photos: Array<string>;
 	themeColor: TThemeColor;
 	gstInclusive: boolean;
 	categories: Array<string>;

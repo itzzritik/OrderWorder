@@ -3,7 +3,6 @@ import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 import connectDB from '#utils/database/connect';
-import { createIfNotExist } from '#utils/database/manager';
 import { Accounts } from '#utils/database/models/account';
 import { Customers } from '#utils/database/models/customer';
 import { Kitchens } from '#utils/database/models/kitchen';
@@ -79,7 +78,10 @@ export const authOptions: AuthOptions = {
 					phone: cred?.phone,
 				};
 
-				const customer = await createIfNotExist(Customers, { phone: cred?.phone }, customerCred);
+				let customer = await Customers.findOne({ phone: cred?.phone });
+
+				if (!customer) customer = await new Customers(customerCred).save();
+
 				const account = await Accounts.findOne({ username: cred?.restaurant })
 					.populate({ path: 'profile', model: Profiles })
 					.populate({ path: 'tables', model: Tables });

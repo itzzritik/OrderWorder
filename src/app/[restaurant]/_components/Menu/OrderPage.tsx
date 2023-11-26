@@ -39,7 +39,7 @@ const OrderPage = () => {
 
 	const [filteredProducts, setFilteredProducts] = useState<Array<TMenuCustom>>(menus);
 	const [selectedProducts, setSelectedProducts] = useState<Array<TMenuCustom>>([]);
-	const [category, setCategory] = useState(0);
+	const [category, setCategory] = useState<string[]>([]);
 	const [hasImageItems, setHasImageItems] = useState(false);
 	const [hasNonImageItems, setHasNonImageItems] = useState(false);
 
@@ -74,6 +74,10 @@ const OrderPage = () => {
 	const categoryScrollRight = () => {
 		if (categories.current) categories.current.scrollLeft += 400;
 	};
+	const onCategoryClick = (categoryName: string) => {
+		if (category.includes(categoryName)) return setCategory((v) => v.filter((item) => item !== categoryName));
+		return setCategory((v) => [...v, categoryName]);
+	};
 	const onLoginClick = () => {
 		if (table) return setLoginOpen(true);
 		return params.router.push('/scan');
@@ -105,18 +109,21 @@ const OrderPage = () => {
 	};
 
 	useEffect(() => {
-		const categoryTitle = restaurant?.profile?.categories?.[category] ?? '';
+		const search = searchValue.toLowerCase();
 
-		if (searchValue && searchValue.length > 0) {
-			setFilteredProducts(menus.filter(({ name, description, categories }) =>
-				name.toLowerCase().includes(searchValue.toLowerCase())
-				|| description?.toLowerCase().includes(searchValue.toLowerCase())
-				|| categories.some((item) => item?.toLowerCase().includes(searchValue.toLowerCase()))));
-		}
-		else if (categoryTitle.toLowerCase() === 'all') setFilteredProducts(menus);
-		else setFilteredProducts(menus?.filter(({ categories }) => categories.includes(categoryTitle)));
+		console.log(search, category);
 
-	}, [searchValue, category, menus, restaurant?.profile?.categories]);
+		setFilteredProducts(
+			menus?.filter?.(({ name, description, category: cat }) =>
+				(search
+					? name?.toLowerCase().includes(search) || description?.toLowerCase().includes(search) || cat?.toLowerCase().includes(search)
+					: true
+				)
+				&& (category.length ? category.includes(cat) : true),
+			),
+		);
+
+	}, [category, menus, searchValue]);
 
 	useEffect(() => {
 		setHasImageItems(filteredProducts?.some((product) => !!product.image) ?? false);
@@ -171,11 +178,15 @@ const OrderPage = () => {
 				</div>
 				{
 					restaurant &&
-					<div className={`category ${searchValue ? 'disable' : ''}`}>
+					<div className='category'>
 						<div className='itemCategories' ref={categories} onScroll={onCategoryScroll}>
 							{
-								restaurant?.profile?.categories?.map((item, key) => (
-									<div key={key} className={`menuCategory ${category === key ? 'active' : ''}`} onClick={() => setCategory(key)}>
+								restaurant?.profile?.categories?.map((item, i) => (
+									<div
+										key={i}
+										className={`menuCategory ${category.includes(item) ? 'active' : ''}`}
+										onClick={() => onCategoryClick(item)}
+									>
 										<span className='title'>{item}</span>
 									</div>
 								))

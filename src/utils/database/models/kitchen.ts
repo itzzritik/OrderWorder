@@ -2,9 +2,7 @@ import mongoose from 'mongoose';
 
 import { hashPassword } from '#utils/helper/passwordHelper';
 
-import { checkIfExist } from '../manager';
-
-import { Accounts } from './account';
+import { Accounts, TAccount } from './account';
 
 const KitchenSchema = new mongoose.Schema<TKitchen>({
 	username: { type: String, trim: true, unique: true, required: true, sparse: true, index: { unique: true } },
@@ -13,22 +11,24 @@ const KitchenSchema = new mongoose.Schema<TKitchen>({
 },
 { timestamps: true });
 
-KitchenSchema.pre('findOneAndUpdate', async function (next) {
-	const data = this.getUpdate() as TKitchen;
+KitchenSchema.pre('save', async function (next) {
 	try {
-		const account = await checkIfExist(Accounts, { username: data.restaurantID });
-		if (!account) throw `Failed to Create Kitchen, The associated account with username '${data.restaurantID}'does not exist.`;
+		const account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
 
-		if (data.password)
-			this.setUpdate({ ...data, password: hashPassword(data.password) });
+		if (!account) return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
+		if (this.isModified('password')) this.password = hashPassword(this.password);
 
 		next();
 	} catch (error) {
 		next(error);
 	}
 });
-KitchenSchema.post('findOneAndUpdate', async function (doc) {
-	await Accounts.findOneAndUpdate({ username: doc.restaurantID }, { $push: { kitchens: doc._id } }, { new: true });
+
+KitchenSchema.post('save', async function () {
+	const account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
+	if (!account) return new Error('The associated account does not exist.');
+	account.kitchens.push(this._id as unknown as TKitchen);
+	await account?.save();
 });
 
 export const Kitchens = mongoose.models?.kitchens ?? mongoose.model<TKitchen>('kitchens', KitchenSchema);

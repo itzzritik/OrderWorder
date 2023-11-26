@@ -16,11 +16,13 @@ export async function POST () {
 
 		const restaurantID = session?.restaurant?.username;
 		const customer = session?.customer?._id;
-		const order = await Orders.findOne<TOrder>({ restaurantID, customer, state: 'active' }).lean();
+		const order = await Orders.findOne<TOrder>({ restaurantID, customer, state: 'active' });
 
 		if (!order) throw { status: 400, message: 'No active orders found' };
 
-		await Orders.findByIdAndUpdate<TOrder>(order?._id, { state: 'cancel' });
+		order.state = 'cancel';
+
+		await order.save();
 
 		return NextResponse.json({ status: 200, message: 'Order canceled.' });
 	} catch (err) {

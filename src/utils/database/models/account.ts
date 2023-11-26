@@ -23,9 +23,8 @@ const AccountSchema = new mongoose.Schema<TAccount>({
 
 AccountSchema.pre('save', async function (next) {
 	try {
-		if (this.password) {
-			this.password = hashPassword(this?.password);
-		}
+		if (this.isModified('password')) this.password = hashPassword(this?.password);
+
 		next();
 	} catch (error) {
 		next(error);

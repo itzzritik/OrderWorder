@@ -1,422 +1,299 @@
-import connectDB from '#utils/database/connect';
-import { createIfNotExist } from '#utils/database/manager';
-import { Accounts } from '#utils/database/models/account';
-import { Kitchens, TKitchen } from '#utils/database/models/kitchen';
-import { Menus } from '#utils/database/models/menu';
-import { Profiles, TProfile } from '#utils/database/models/profile';
-import { Tables, TTable } from '#utils/database/models/table';
-import { CatchNextResponse } from '#utils/helper/common';
+import { TMenu } from '#utils/database/models/menu';
 
-export async function GET () {
-	await connectDB();
-	try {
-		const EmpireAccount = new Accounts({
-			email: 'admin@empire.com',
-			username: 'empire',
-			password: 'empire@123',
-			actives: true,
-		});
-		const response = {
-			totalProcessTime: performance.now(),
-			EmpireAccount: await EmpireAccount.save(),
-			EmpireProfile: await createIfNotExist<TProfile>(Profiles, { restaurantID: 'empire' }, empireProfile),
-			EmpireKitchen1: await createIfNotExist<TKitchen>(Kitchens, { username: 'empireKitchen1' }, {
-				username: 'empireKitchen1',
-				password: '123456',
-				restaurantID: 'empire',
-			}),
-			EmpireTable1: await createIfNotExist<TTable>(Tables, { username: '1' }, {
-				name: 'Table 1',
-				username: '1',
-				restaurantID: 'empire',
-			}),
-			EmpireTable2: await createIfNotExist<TTable>(Tables, { username: '2' }, {
-				name: 'Table 2',
-				username: '2',
-				restaurantID: 'empire',
-			}),
-			EmpireTable3: await createIfNotExist<TTable>(Tables, { username: '3' }, {
-				name: 'Table 3',
-				username: '3',
-				restaurantID: 'empire',
-			}),
-			EmpireMenu: await (async () => {
-				const menuData = [];
-				for (const menu of empireMenu)
-					menuData.push(await createIfNotExist(Menus, { name: menu.name }, menu));
-				return menuData;
-			})(),
-		};
-
-		response.totalProcessTime = (performance.now() - response.totalProcessTime) / 1000;
-		response.EmpireAccount.password = 'confidential';
-
-		return new Response(JSON.stringify(response, null, 4));
-	}
-	catch (err) {
-		console.log(err);
-		return CatchNextResponse(err);
-	}
-}
-const empireProfile = {
-	name: 'Empire Restaurant',
-	restaurantID: 'empire',
-	description: 'Casual Dining - Kerala, Biryani, North Indian, South Indian, Chinese, Arabian, Seafood',
-	address: 'Indiranagar, Benagaluru',
-	avatar: 'https://restaurant.eatapp.co/hubfs/Modern-Restaurant-Logo.jpg',
-	themeColor: { r: 127, g: 108, b: 218 },
-	subscriptionActive: true,
-	gstInclusive: false,
-	categories: [
-		'Empire Box',
-		'Biryani And Rice',
-		'Main Course Non-Veg',
-		'Main Course Veg',
-		'Egg Item',
-		'Fried Rice and Noodles',
-		'Breads',
-		'Beverages',
-		'Beverages',
-		'Desserts',
-		'Desserts',
-		'Desserts',
-	],
-};
-const empireMenu = [
+const empireBox = [
 	{
 		name: 'Ghee Rice With Boneless Butter Chicken & Manchurian Dry',
-		restaurantID: 'empire',
 		description: 'Ghee Rice, Butter Chicken Boneless (5 Pcs), Manchurian Dry (5 Pcs)',
-		categories: ['Empire Box'],
+		category: 'Empire Box',
 		price: 199,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'non-veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/3c1/7394ef6f5086c3b3c4b17130995d33c1.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Ghee Rice With Dal Fry',
-		restaurantID: 'empire',
 		description: 'Ghee Rice, Dal Fry',
-		categories: ['Empire Box'],
+		category: 'Empire Box',
 		price: 110,
-		taxPercent: 5,
 		foodType: null,
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/5fc/dff6a95626a60b75c7de72055f0b15fc.png',
-		hidden: false,
 	},
 	{
 		name: 'Biriyani Rice With Chilly Chicken Boneless',
-		restaurantID: 'empire',
 		description: 'Biriyani Rice, Raitha, Chilly Chicken Bonless (5 Pcs)',
-		categories: ['Empire Box'],
+		category: 'Empire Box',
 		price: 150,
-		taxPercent: 5,
 		foodType: 'extra-spicy',
 		veg: 'non-veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/e70/85ec2da1cdb0c37a01bf4f345979de70.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Veg Fried Rice And Gobi Manchurian',
-		restaurantID: 'empire',
 		description: 'Veg Fried Rice, Gobi Manchurian',
-		categories: ['Empire Box'],
+		category: 'Empire Box',
 		price: 140,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/b95/bffa32a74a9c20e1a5831edc57cd5b95.png',
-		hidden: false,
 	},
+];
+
+const rice = [
 	{
 		name: 'Mutton Biriyani Boneless',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Biryani And Rice'],
+		category: 'Biryani And Rice',
 		price: 185,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'non-veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/280/2112a1536b75e649b09d84fce0eef280.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Egg Biriyani',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Biryani And Rice'],
+		category: 'Biryani And Rice',
 		price: 120,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'contains-egg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/071/95e4aa6e1a4688feda7257c75a198071.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Veg Biriyani',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Biryani And Rice'],
+		category: 'Biryani And Rice',
 		price: 110,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/463/d31313b7b0e3317438bad307efc21463.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Curd Rice',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Biryani And Rice'],
+		category: 'Biryani And Rice',
 		price: 110,
-		taxPercent: 5,
 		foodType: 'sweet',
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/bba/a8592bf0db3405112f7393fc56623bba.jpg',
-		hidden: false,
 	},
+];
+
+const mainCourse = [
 	{
 		name: 'Kadai Chicken Dry',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Main Course Non-Veg'],
+		category: 'Main Course',
 		price: 140,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'non-veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/a90/e90722778c19c42a5195cb35ca86fa90.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Kadai Mutton Boneless Gravy',
-		restaurantID: 'empire',
+
 		description: null,
-		categories: ['Main Course Non-Veg'],
+		category: 'Main Course',
 		price: 180,
-		taxPercent: 5,
 		foodType: 'extra-spicy',
 		veg: 'non-veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/a90/e90722778c19c42a5195cb35ca86fa90.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Kadai Veg',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Main Course Veg'],
+		category: 'Main Course',
 		price: 130,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/955/b12cb13c87a4752ba8d2e8ec1f4b8955.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Paneer Tikka Masala',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Main Course Veg'],
+		category: 'Main Course',
 		price: 110,
-		taxPercent: 5,
 		foodType: null,
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/9cb/978cc7cb973723c3bda2e3d2707a49cb.jpg',
-		hidden: false,
 	},
+];
+
+const eggDishes = [
 	{
 		name: 'Boiled Egg (2 Nos)',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Egg Item'],
+		category: 'Egg Dishes',
 		price: 50,
-		taxPercent: 5,
 		foodType: null,
 		veg: 'contains-egg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/c9a/cfc0c8d10f678de0ab7f36bb79c6fc9a.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Egg Bulls Eye',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Egg Item'],
+		category: 'Egg Dishes',
 		price: 50,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'contains-egg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/22f/15f4dd017b5ca2f46bd0f55fa55dd22f.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Egg Masala',
-		restaurantID: 'empire',
+
 		description: null,
-		categories: ['Egg Item'],
+		category: 'Egg Dishes',
 		price: 105,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'contains-egg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/a50/75461abff94269645ef85d57cf908a50.jpg',
-		hidden: false,
 	},
+];
+
+const friedRice = [
 	{
 		name: 'Mix Fried Rice Non Veg',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Fried Rice and Noodles'],
+		category: 'Fried Rice and Noodles',
 		price: 150,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'non-veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/a57/2665a52529b343d63966684f30ffba57.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Veg Fried Rice',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Fried Rice and Noodles'],
+		category: 'Fried Rice and Noodles',
 		price: 110,
-		taxPercent: 5,
 		foodType: null,
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/901/1767d538164bf58f15c00d37e7197901.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Hakka Noodles',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Fried Rice and Noodles'],
+		category: 'Fried Rice and Noodles',
 		price: 120,
-		taxPercent: 5,
 		foodType: 'spicy',
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/901/1767d538164bf58f15c00d37e7197901.jpg',
-		hidden: false,
 	},
+];
+
+const breads = [
 	{
 		name: 'Butter Roti',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Breads'],
+		category: 'Breads',
 		price: 50,
-		taxPercent: 5,
 		foodType: null,
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/a62/b1e746cea233a01a56368bf963bcba62.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Butter Naan',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Breads'],
+		category: 'Breads',
 		price: 30,
-		taxPercent: 5,
 		foodType: null,
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/437/37521ee5db5bbb5f3398870cd36f0437.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Kulcha',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Breads'],
+		category: 'Breads',
 		price: 40,
-		taxPercent: 5,
 		foodType: null,
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/1f6/0caeff7f0fd2f11b07156776398b81f6.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Tandoori Roti',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Breads'],
+		category: 'Breads',
 		price: 30,
-		taxPercent: 5,
 		foodType: null,
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/897/5438b36bd0eb9498dd095bb628ae9897.jpg',
-		hidden: false,
 	},
+];
+
+const beverages = [
 	{
 		name: 'Chocolate Shake',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Beverages'],
+		category: 'Beverages',
 		price: 80,
-		taxPercent: 5,
 		foodType: 'sweet',
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/cf1/e7ef9c4788459485c1e2fe5ac3398cf1.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Blue Angel',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Beverages'],
+		category: 'Beverages',
 		price: 90,
-		taxPercent: 5,
 		foodType: 'sweet',
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/841/d8339ee1bb8ff6957fc53fd9b00e9841.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Lassi sweet',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Beverages'],
+		category: 'Beverages',
 		price: 50,
-		taxPercent: 5,
 		foodType: 'sweet',
 		veg: 'veg',
 		image: 'https://b.zmtcdn.com/data/dish_photos/0d3/4a4eec00227db36ad4bc380ec97dd0d3.jpg',
-		hidden: false,
 	},
+];
+
+const desserts = [
 	{
 		name: 'Rabdi Falooda',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Desserts'],
+		category: 'Desserts',
 		price: 100,
-		taxPercent: 5,
 		foodType: 'sweet',
 		veg: 'veg',
 		image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNagtidO6K8puIclUH4pDKKQmnLMTu1uQOgeV-gOGyfilMahQ&s',
-		hidden: false,
 	},
 	{
 		name: 'Strawberry Ice Cream',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Desserts'],
+		category: 'Desserts',
 		price: 30,
-		taxPercent: 5,
 		foodType: 'sweet',
 		veg: 'veg',
 		image: 'https://images.media-allrecipes.com/userphotos/838110.jpg',
-		hidden: false,
 	},
 	{
 		name: 'Death By Chocolate',
-		restaurantID: 'empire',
 		description: null,
-		categories: ['Desserts'],
+		category: 'Desserts',
 		price: 150,
-		taxPercent: 5,
 		foodType: 'sweet',
 		veg: 'veg',
 		image: 'https://irepo.primecp.com/2015/04/218935/Death-By-Chocolate_MASTER_ID-977271.jpg?v=977271',
-		hidden: false,
 	},
 ];
+
+let menus = [
+	...mainCourse,
+	...rice,
+	...eggDishes,
+	...friedRice,
+	...empireBox,
+	...breads,
+	...beverages,
+	...desserts,
+] as TMenu[];
+
+menus = menus.map((menu) => {
+	menu.restaurantID = 'empire';
+	if (!menu?.taxPercent) menu.taxPercent = 5;
+	if (!menu?.hidden) menu.hidden = false;
+	return menu;
+});
+
+export { menus };

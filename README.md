@@ -2,7 +2,7 @@
 
 ![App Screenshot](link_to_screenshot)
 
-Welcome to OrderWorder, our Contactless Dining Full-Stack Application! This innovative application revolutionizes the dining experience by allowing restaurants to seamlessly replace traditional menus with a digital, contactless solution.
+Introducing OrderWorder, our Contactless Dining Full-Stack Platform! This groundbreaking platform transforms the dining experience, enabling restaurants to effortlessly swap out traditional menus with a digital, contactless solution.
 
 ## Features
 
@@ -12,6 +12,11 @@ Welcome to OrderWorder, our Contactless Dining Full-Stack Application! This inno
 - **Kitchen Dashboard**: Chefs receive live updates on incoming orders for efficient food preparation.
 - **Real-Time Functionality**: Built using Next.js and SCSS to ensure a responsive and real-time user experience.
 
+## Tech Stack
+
+- **FullStack**: Next.js and SASS
+- **Database**: Mongo
+
 ## How to Use
 
 1. **Setup QR Codes**: Place QR codes on each table to enable access for customers.
@@ -19,8 +24,5 @@ Welcome to OrderWorder, our Contactless Dining Full-Stack Application! This inno
 3. **Admin Dashboard**: Access the admin panel to manage restaurants, accept/reject orders, and handle inventory and payroll.
 4. **Kitchen Dashboard**: Chefs can use the kitchen dashboard to stay updated on live orders for timely preparation.
 
-## Tech Stack
-
-- **FullStack**: Next.js and SASS
-- **Database**: Mongo
+## Try it out
 
