@@ -1,6 +1,6 @@
 import { SyntheticEvent, UIEvent, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { ActionCard, Button, Icon, Spinner } from 'xtreme-ui';
 
 import SearchButton from '#components/base/SearchButton';
@@ -129,7 +129,8 @@ const OrderPage = () => {
 
 	useEffect(() => {
 		params.set({ search: searchValue });
-	}, [params, searchValue]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [searchValue]);
 
 	useEffect(() => {
 		setHasImageItems(filteredProducts?.some((product) => !!product.image) ?? false);
@@ -140,6 +141,10 @@ const OrderPage = () => {
 		if (session.data?.role === 'customer') setOrderHeading(['Choose', 'Order']);
 		else setOrderHeading(['Explore', 'Menu']);
 	}, [session]);
+
+	useEffect(() => {
+		if (session.status === 'authenticated' && session.data?.restaurant?.username !== restaurant?.username) signOut();
+	}, [restaurant?.username, session.data?.restaurant?.username, session.status]);
 
 	return (
 		<div className='orderPage'>
