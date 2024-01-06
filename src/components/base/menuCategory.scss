@@ -11,16 +11,8 @@
 	align-items: center;
 	cursor: pointer;
 
-	@media (hover: hover) {
-		&:hover {
-			box-shadow: 0 3px 12px rgb(var(--colorBrandAccentRgb) 0.6);
-			transition: box-shadow 0.13s ease-out;
-		}
-	}
-
 	&.active {
 		background-color: rgb(var(--colorBrandAccentRgb));
-		box-shadow: 0 3px 12px rgb(var(--colorBrandAccentRgb) 0.6);
 
 		.title {
 			color: white;

@@ -128,6 +128,10 @@ const OrderPage = () => {
 	}, [category, menus, searchParam]);
 
 	useEffect(() => {
+		params.set({ category: category.filter((e) => restaurant?.profile.categories.includes(e)).join(',') });
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [category, restaurant]);
+	useEffect(() => {
 		params.set({ search: searchValue });
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchValue]);
