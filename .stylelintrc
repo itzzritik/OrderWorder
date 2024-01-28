@@ -1,11 +1,6 @@
 {
 	"extends": [ "stylelint-config-standard-scss" ],
 	"rules": {
-		"indentation": "tab",
-		"color-hex-case": "upper",
-		"string-quotes": "single",
-		"max-empty-lines": 1,
-		"max-line-length": 120,
 		"no-descending-specificity": null,
 
 		"selector-pseudo-class-no-unknown": [true, {

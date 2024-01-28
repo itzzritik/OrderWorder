@@ -1,6 +1,5 @@
 <img src="public/screenshots/restaurant_banner.jpg" width="100%">
 <br>
-<br>
 
 # OrderWorder - Contactless Dining Experience
 
@@ -60,10 +59,10 @@ Orderworder has two interfaces, one for **customers** and one for **restaurant's
 		<td>
 			<ul>
 				<img src="public/screenshots/px.png" width="0px" height="0px">
-				<li>Goto <a href="https://orderworder.ritik.me">Starbucks Menu Page</a></li>
-				<li>Scroll Down to login section</li>
-				<li>Email: <code>admin@starbucks.com</code></li>
-				<li>Password: <code>starbucks@123</code></li>
+				<li>Goto <a href="https://orderworder.ritik.me">Homepage</a>, and scroll down to login section</li>
+				<li>Enter email: <code>admin@starbucks.com</code></li>
+				<li>Enter password: <code>starbucks@123</code></li>
+				<li>Login complete, Now visit <a href="https://orderworder.ritik.me/dashboard">Admin Dashboard</a> or <a href="https://orderworder.ritik.me/kitchen">Kitchen Dashboard</a></li>
 				<img src="public/screenshots/px.png" width="650px" height="0px">
 			</ul>
 		</td>

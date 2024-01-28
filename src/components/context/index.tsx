@@ -4,7 +4,7 @@
 import { ReactNode } from 'react';
 
 import { SessionProvider } from 'next-auth/react';
-import { XProvider, themeController } from 'xtreme-ui';
+import { XProvider } from 'xtreme-ui';
 
 import { ThemeManager } from '#components/base/ThemeManager';
 
@@ -16,7 +16,6 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
 	return (
 		<XProvider>
 			<SessionProvider>
-				<script dangerouslySetInnerHTML={{ __html: themeController(undefined, 'black') }} />
 				{children}
 			</SessionProvider>
 		</XProvider>

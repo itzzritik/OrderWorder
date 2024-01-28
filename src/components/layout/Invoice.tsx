@@ -1,6 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { Button } from 'xtreme-ui';
 
 import './invoice.scss';
@@ -33,15 +31,7 @@ const Invoice = (props: TInvoiceProps) => {
 	}, [props.order]);
 
 	return (
-		<Document
-			className='invoiceWrapper'
-			paperSize={'Letter'}
-			fileName='Invoice.pdf'
-			title='Invoice'
-			subject='Invoice'
-			keywords='Invoice'
-			ref={invoiceRef}
-		>
+		<div className='invoiceWrapper'>
 			<div className='invoice'>
 				<div className='invoiceItems'>
 					<h6 className='invoiceItemsHeading'>Your Order Summary</h6>
@@ -74,7 +64,7 @@ const Invoice = (props: TInvoiceProps) => {
 				</div>
 				<Button className='invoiceDownload' icon='f354' onClick={downloadPDF} />
 			</div>
-		</Document>
+		</div>
 	);
 };
 
