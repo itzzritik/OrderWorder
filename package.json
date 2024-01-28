@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "doppler run --command=\"next dev\"",
+		"dev:build": "doppler run --command=\"next build\"",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint"
@@ -14,7 +15,7 @@
 		"clsx": "^2.1.0",
 		"lodash": "^4.17.21",
 		"mongoose": "^8.1.1",
-		"next": "14.1.0",
+		"next": "14.0.0",
 		"next-auth": "^4.24.5",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
