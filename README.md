@@ -1,6 +1,8 @@
-# OrderWorder - Contactless Dining Experience
+<img src="public/screenshots/restaurant_banner.jpg" width="100%">
+<br>
+<br>
 
-![App Screenshot](link_to_screenshot)
+# OrderWorder - Contactless Dining Experience
 
 Introducing OrderWorder, our Contactless Dining Full-Stack Platform! This groundbreaking platform transforms the dining experience, enabling restaurants to effortlessly swap out traditional menus with a digital, contactless solution.
 
@@ -25,4 +27,59 @@ Introducing OrderWorder, our Contactless Dining Full-Stack Platform! This ground
 4. **Kitchen Dashboard**: Chefs can use the kitchen dashboard to stay updated on live orders for timely preparation.
 
 ## Try it out
+Orderworder has two interfaces, one for **customers** and one for **restaurant's admin**.
 
+### Customer Login:
+<table>
+	<tr>
+		<td>
+			<ul>
+				<img src="public/screenshots/px.png" width="0px" height="0px">
+				<li>Goto <a href="https://orderworder.ritik.me/starbucks?tab=menu&table=1">Starbucks Menu Page</a> or Scan the QR Code</li>
+				<li>Click on order button</li>
+				<li>Enter Name and Phone (10 digit number format)</li>
+				<li>Login complete, now add few items in cart and place order</li>
+				<img src="public/screenshots/px.png" width="500px" height="0px">
+			</ul>
+		</td>
+		<td width="150px">
+			<p align="center">
+				<picture>
+					<source media="(prefers-color-scheme: dark)" srcset="public/screenshots/restaurant_qr_dark.png" />
+					<source media="(prefers-color-scheme: light)" srcset="public/screenshots/restaurant_qr_light.png" />
+					<img alt="OrderWorderQR" src="public/screenshots/restaurant_qr_light.png" />
+				</picture>
+			</p>
+		</td>
+	</tr>
+</table>
+
+### Admin Login (Open in separate browser):
+<table>
+	<tr>
+		<td>
+			<ul>
+				<img src="public/screenshots/px.png" width="0px" height="0px">
+				<li>Goto <a href="https://orderworder.ritik.me">Starbucks Menu Page</a></li>
+				<li>Scroll Down to login section</li>
+				<li>Email: <code>admin@starbucks.com</code></li>
+				<li>Password: <code>starbucks@123</code></li>
+				<img src="public/screenshots/px.png" width="650px" height="0px">
+			</ul>
+		</td>
+	</tr>
+</table>
+
+## Screenshots
+
+#### Restaurant Menu:
+<p align="center">
+	<img src="public/screenshots/restaurant_menu.png" width="49%">
+	<img src="public/screenshots/restaurant_cart.png" width="49%">
+</p>
+
+#### Admin Dashboard:
+<p align="center">
+	<img src="public/screenshots/dashboard_requests.png" width="49%">
+	<img src="public/screenshots/dashboard_active.png" width="49%">
+</p>
