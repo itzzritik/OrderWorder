@@ -34,18 +34,18 @@ Orderworder has two interfaces, one for **customers** and one for **restaurant's
 		<td>
 			<ul>
 				<img src="public/screenshots/px.png" width="0px" height="0px">
-				<li>Goto <a href="https://orderworder.ritik.me/starbucks?tab=menu&table=1">Starbucks Menu Page</a> or Scan the QR Code</li>
+				<li>Goto <a href="https://orderworder.ritik.me/starbucks?table=1">Starbucks Menu Page</a> or Scan the QR Code</li>
 				<li>Click on order button</li>
 				<li>Enter Name and Phone (10 digit number format)</li>
 				<li>Login complete, now add few items in cart and place order</li>
 				<img src="public/screenshots/px.png" width="500px" height="0px">
 			</ul>
 		</td>
-		<td width="150px">
+		<td width="200px">
 			<p align="center">
 				<picture>
-					<source media="(prefers-color-scheme: dark)" srcset="public/screenshots/restaurant_qr_dark.png" />
-					<source media="(prefers-color-scheme: light)" srcset="public/screenshots/restaurant_qr_light.png" />
+					<source media="(prefers-color-scheme: dark)" srcset="public/screenshots/restaurant_qrcode_dark.png" />
+					<source media="(prefers-color-scheme: light)" srcset="public/screenshots/restaurant_qrcode_light.png" />
 					<img alt="OrderWorderQR" src="public/screenshots/restaurant_qr_light.png" />
 				</picture>
 			</p>
@@ -63,7 +63,7 @@ Orderworder has two interfaces, one for **customers** and one for **restaurant's
 				<li>Enter email: <code>admin@starbucks.com</code></li>
 				<li>Enter password: <code>starbucks@123</code></li>
 				<li>Login complete, Now visit <a href="https://orderworder.ritik.me/dashboard">Admin Dashboard</a> or <a href="https://orderworder.ritik.me/kitchen">Kitchen Dashboard</a></li>
-				<img src="public/screenshots/px.png" width="650px" height="0px">
+				<img src="public/screenshots/px.png" width="700px" height="0px">
 			</ul>
 		</td>
 	</tr>
