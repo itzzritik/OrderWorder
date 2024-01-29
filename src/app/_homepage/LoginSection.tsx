@@ -108,7 +108,7 @@ const LoginSection = () => {
 									<Avatar src={profile?.avatar ?? dashboard?.avatar ?? session.data?.restaurant?.avatar ?? ''} size='mini' />
 									<div className='details'>
 										<p className='name'> {
-											profile?.name ?? dashboard?.name ?? `${session.data?.customer?.fname} ${session.data?.customer?.fname}`
+											profile?.name ?? dashboard?.name ?? `${session.data?.customer?.fname} ${session.data?.customer?.lname}`
 										} </p>
 										<p className='address'>{profile?.address ?? dashboard?.address ?? session.data?.customer?.phone}</p>
 									</div>

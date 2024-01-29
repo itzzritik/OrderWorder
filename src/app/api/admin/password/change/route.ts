@@ -33,3 +33,5 @@ export async function POST (req: Request) {
 		return CatchNextResponse(err);
 	}
 }
+
+export const dynamic = "force-dynamic"

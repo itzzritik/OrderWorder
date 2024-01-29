@@ -20,3 +20,5 @@ export async function GET (req: Request) {
 		return CatchNextResponse(err);
 	}
 }
+
+export const dynamic = "force-dynamic"

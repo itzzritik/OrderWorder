@@ -1,7 +1,7 @@
 /* eslint-disable react/no-danger */
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 
 import { SessionProvider } from 'next-auth/react';
 import { XProvider } from 'xtreme-ui';
@@ -16,7 +16,9 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
 	return (
 		<XProvider>
 			<SessionProvider>
-				{children}
+				<Suspense>
+					{children}
+				</Suspense>
 			</SessionProvider>
 		</XProvider>
 	);
