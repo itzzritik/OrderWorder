@@ -10,7 +10,7 @@ export const useQueryParams = () => {
 	return {
 		pathname,
 		router,
-		...searchParams,
+		get: (v: string) => searchParams.get(v),
 		set: (query: Record<string, string>) => {
 			router.replace(pathname + '?' + createQueryString(searchParams, query));
 		},
