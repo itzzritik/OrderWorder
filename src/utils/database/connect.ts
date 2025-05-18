@@ -4,7 +4,9 @@ if (!process.env.MONGODB_URI) {
 	throw new Error('Please add your MongoDB URI to Environment Variables.');
 }
 
-const options = { };
+const options = {
+	autoIndex: false,
+};
 let cached = global.mongoose;
 
 if (!cached) {
