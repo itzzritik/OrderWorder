@@ -1,5 +1,7 @@
-import { getAnimSrc } from "#utils/constants/common";
-import { Lottie } from "xtreme-ui";
+import { Lottie } from 'xtreme-ui';
+
+import { getAnimSrc } from '#utils/constants/common';
+
 import './kitchen.scss';
 
 const Kitchen = () => {
@@ -8,7 +10,7 @@ const Kitchen = () => {
 			<Lottie src={getAnimSrc('UnderConstruction')} size={450} />
 			<p>This page is under development</p>
 		</div>
-	)
-}
+	);
+};
 
 export default Kitchen;

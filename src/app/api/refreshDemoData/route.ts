@@ -9,12 +9,30 @@ import { CatchNextResponse } from '#utils/helper/common';
 import empire from './_data/empire/empire';
 import starbucks from './_data/starbucks/starbucks';
 
+const deleteData = async (ids: string[]) => {
+	const models = [
+		{ model: Menus, name: 'Menus' },
+		{ model: Kitchens, name: 'Kitchens' },
+		{ model: Profiles, name: 'Profiles' },
+		{ model: Tables, name: 'Tables' },
+		{ model: Accounts, name: 'Accounts', field: 'username' },
+	];
+
+	const results = await Promise.all(
+		models.map(async ({ model, name, field = 'restaurantID' }) => {
+			const res = await model.deleteMany({ [field]: { $in: ids } });
+			return { model: name, ...res };
+		}),
+	);
+
+	return results;
+};
+
 const createData = async (props: TDocumentData) => {
 	const { account, profile, menus, kitchens, tables } = props;
 
 	const startTime = performance.now();
 	const newAccount = await new Accounts(account).save();
-	newAccount.password = 'confidential';
 
 	return {
 		account: newAccount,
@@ -31,6 +49,7 @@ export async function GET () {
 	try {
 		const response = {
 			totalProcessTime: performance.now(),
+			deleteData: await deleteData(['empire', 'starbucks']),
 			empire: await createData(empire),
 			starbucks: await createData(starbucks),
 		};

@@ -6,13 +6,13 @@ import { Button, Icon, Spinner } from 'xtreme-ui';
 import { useAdmin } from '#components/context/useContext';
 
 import MenuEditorItem from './MenuEditorItem';
-import MenuEditorModal from './MenuEditorModal';
 import './menuEditor.scss';
+import { TMenu } from '#utils/database/models/menu';
 
 const MenuEditor = () => {
 	const { profile, menus, profileLoading, profileMutate } = useAdmin();
 	const [modalState, setModalState] = useState('');
-	const [editItem, setEditItem] = useState();
+	const [editItem, setEditItem] = useState<TMenu>();
 	const [hideSettingsLoading, setHideSettingsLoading] = useState<string[]>([]);
 	const [category, setCategory] = useState(0);
 
@@ -50,7 +50,7 @@ const MenuEditor = () => {
 		await profileMutate();
 		setHideSettingsLoading((v) => v.filter((item) => item !== itemId));
 	};
-	const onEdit = (item) => {
+	const onEdit = (item: TMenu) => {
 		setEditItem(item);
 		setModalState('menuItemEditState');
 	};
@@ -109,14 +109,6 @@ const MenuEditor = () => {
 				icon='2b'
 				iconType='solid'
 			/>
-			{/* <MenuEditorModal
-				state={modalState}
-				setState={setModalState}
-				restaurantID={profile?.restaurantID}
-				categoryList={profile?.categories}
-				editItem={editItem}
-				setEditItem={setEditItem}
-			/> */}
 		</div>
 	);
 };

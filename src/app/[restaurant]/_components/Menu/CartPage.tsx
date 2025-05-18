@@ -17,7 +17,7 @@ import CartTaxItem from './CartTaxItem';
 import './cartPage.scss';
 
 const CartPage = (props: TCartPageProps) => {
-	const { selectedProducts, increaseProductQuantity, decreaseProductQuantity, resetSelectedProducts, setSideSheetHeading } = props;
+	const { selectedProducts, increaseProductQuantity, decreaseProductQuantity, resetSelectedProducts } = props;
 	const params = useSearchParams();
 	const table = params.get('table');
 	const { order, placeOrder, placingOrder, cancelOrder, cancelingOrder } = useOrder();

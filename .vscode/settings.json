@@ -2,7 +2,6 @@
     "css.validate": false,
 	"less.validate": false,
 	"scss.validate": false,
-	"stylelint.validate": ["css", "scss"],
     "files.eol": "\n",
 	"editor.tabSize": 4,
 	"editor.insertSpaces": false,

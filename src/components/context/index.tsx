@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger */
 'use client';
 
 import { ReactNode, Suspense } from 'react';

@@ -101,7 +101,7 @@
 				}
 
 				&.line2 {
-					width: $iconSize / 2;
+					width: calc($iconSize / 2);
 					top: 52%;
 				}
 			}

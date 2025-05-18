@@ -30,4 +30,4 @@ export async function POST (req: Request) {
 	}
 }
 
-export const dynamic = "force-dynamic"
+export const dynamic = 'force-dynamic';
