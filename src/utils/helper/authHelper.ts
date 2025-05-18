@@ -35,7 +35,7 @@ export const authOptions: AuthOptions = {
 				if (!account) throw new Error('Account not found.');
 
 				if (cred?.kitchen) {
-					if (!verifyPassword(cred?.password, account?.kitchens?.[0]?.password)) throw new Error('Invalid kitchen credentials');
+					if (! (await verifyPassword(cred?.password, account?.kitchens?.[0]?.password))) throw new Error('Invalid kitchen credentials');
 
 					return {
 						id: account._id.toString(),
@@ -44,7 +44,7 @@ export const authOptions: AuthOptions = {
 					};
 				}
 				else {
-					if (!verifyPassword(cred?.password, account?.password)) throw new Error('Invalid admin credentials');
+					if (! (await verifyPassword(cred?.password, account?.password))) throw new Error('Invalid admin credentials');
 
 					return {
 						id: account._id.toString(),

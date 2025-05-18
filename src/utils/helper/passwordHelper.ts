@@ -10,7 +10,7 @@ export const hashPassword = (password: string) => {
 	return bcrypt.hashSync(password, SALT_ROUNDS);
 };
 
-export const verifyPassword = (password?: string, hash?: string) => {
-	if (!password || !hash) return false;
-	return bcrypt.compareSync(password, hash);
+export const verifyPassword = async (password?: string, hash?: string) => {
+  if (!password || !hash) return false;
+  return await bcrypt.compare(password, hash);
 };

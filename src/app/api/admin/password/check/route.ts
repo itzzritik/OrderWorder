@@ -20,7 +20,7 @@ export async function POST (req: Request) {
 
 		if (!account) throw { status: 500, message: 'Something went wrong' };
 
-		if (verifyPassword(password, account?.password))
+		if (await verifyPassword(password, account?.password))
 			return NextResponse.json({ status: 200, message: 'Authentication Successful' });
 
 		return NextResponse.json({ status: 403, message: 'Password incorrect' });

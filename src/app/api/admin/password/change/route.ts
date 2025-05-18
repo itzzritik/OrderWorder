@@ -28,7 +28,7 @@ export async function POST (req: Request) {
 		if (!account) throw { status: 500, message: 'Something went wrong' };
 
 		console.time('verifyPassword');
-		const valid = verifyPassword(password, account.password);
+		const valid = await verifyPassword(password, account.password);
 		console.timeEnd('verifyPassword');
 
 		if (valid) {
