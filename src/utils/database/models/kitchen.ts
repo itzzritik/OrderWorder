@@ -16,7 +16,7 @@ KitchenSchema.pre('save', async function (next) {
 		const account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
 
 		if (!account) return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
-		if (this.isModified('password')) this.password = hashPassword(this.password);
+		if (this.isModified('password')) this.password = await hashPassword(this.password);
 
 		next();
 	} catch (error) {
