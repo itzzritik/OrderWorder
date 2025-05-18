@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { menus } from './empireMenu';
 
 const account = {

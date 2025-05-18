@@ -1,7 +1,8 @@
 import mongoose, { HydratedDocument } from 'mongoose';
 
 import { Accounts, TAccount } from './account';
-import { Profiles } from './profile';
+
+const accountCache = new Map<string, TAccount | null>();
 
 const FoodType = ['spicy', 'extra-spicy', 'sweet'] as const;
 const Veg = ['veg', 'non-veg', 'contains-egg'] as const;
@@ -22,10 +23,12 @@ const MenuSchema = new mongoose.Schema<TMenu>({
 
 MenuSchema.pre('save', async function (next) {
 	try {
-		const account = await Accounts.findOne<TAccount>({ username: this.restaurantID })
-			.populate({ path: 'profile', model: Profiles });
-
-		if (!account) return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
+		let account = accountCache.get(this.restaurantID);
+		if (!account) {
+			account = await Accounts.findOne<TAccount>({ username: this.restaurantID }).populate('profile');
+			if (account) accountCache.set(this.restaurantID, account);
+			else return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
+		}
 		if (!account?.profile?.categories?.includes(this.category))
 			return next(new Error('The menu item category does not exist.'));
 
@@ -35,12 +38,10 @@ MenuSchema.pre('save', async function (next) {
 	}
 });
 MenuSchema.post('save', async function () {
-	const account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
-
-	if (!account) return new Error('The associated account does not exist.');
-
-	account.menus.push(this._id as unknown as TMenu);
-	await account?.save();
+	await Accounts.updateOne(
+		{ username: this.restaurantID },
+		{ $addToSet: { menus: this._id } },
+	);
 });
 
 export const Menus = mongoose.models?.menus ?? mongoose.model<TMenu>('menus', MenuSchema);

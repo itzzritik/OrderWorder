@@ -2,6 +2,8 @@ import mongoose, { HydratedDocument } from 'mongoose';
 
 import { Accounts, TAccount } from './account';
 
+const accountCache = new Map<string, TAccount | null>();
+
 const ProfileSchema = new mongoose.Schema<TProfile>({
 	name: { type: String, trim: true, required: true },
 	restaurantID: { type: String, trim: true, lowercase: true, unique: true, required: true, sparse: true, index: { unique: true } },
@@ -22,24 +24,24 @@ const ProfileSchema = new mongoose.Schema<TProfile>({
 
 ProfileSchema.pre('save', async function (next) {
 	try {
-		const account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
-
-		if (!account) return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
+		let account = accountCache.get(this.restaurantID);
+		if (!account) {
+			account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
+			if (account) accountCache.set(this.restaurantID, account);
+			else return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
+		}
 
 		this.categories = Array.from(new Set(this.categories));
-
 		next();
 	} catch (error) {
 		next(error);
 	}
 });
 ProfileSchema.post('save', async function () {
-	const account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
-
-	if (!account) return new Error('The associated account does not exist.');
-
-	account.profile = this._id as unknown as TProfile;
-	await account?.save();
+	await Accounts.updateOne(
+		{ username: this.restaurantID },
+		{ $set: { profile: this._id } },
+	);
 });
 
 export const Profiles = mongoose.models?.profiles ?? mongoose.model<TProfile>('profiles', ProfileSchema);

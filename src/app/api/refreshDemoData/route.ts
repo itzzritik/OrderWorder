@@ -10,6 +10,7 @@ import empire from './_data/empire/empire';
 import starbucks from './_data/starbucks/starbucks';
 
 const deleteData = async (ids: string[]) => {
+	const start = performance.now();
 	const models = [
 		{ model: Menus, name: 'Menus' },
 		{ model: Kitchens, name: 'Kitchens' },
@@ -25,38 +26,51 @@ const deleteData = async (ids: string[]) => {
 		}),
 	);
 
-	return results;
+	return {
+		processTime: (performance.now() - start) / 1000,
+		results,
+	};
 };
 
 const createData = async (props: TDocumentData) => {
 	const { account, profile, menus, kitchens, tables } = props;
-
-	const startTime = performance.now();
+	const start = performance.now();
 	const newAccount = await new Accounts(account).save();
+	const newProfile = await new Profiles(profile).save();
+	const [newMenus, newKitchen, newTables] = await Promise.all([
+		Promise.all(menus.map((m) => new Menus(m).save())),
+		Promise.all(kitchens.map((k) => new Kitchens(k).save())),
+		Promise.all(tables.map((t) => new Tables(t).save())),
+	]);
 
 	return {
+		processTime: (performance.now() - start) / 1000,
 		account: newAccount,
-		profile: await new Profiles(profile).save(),
-		menus: await Promise.all(menus.map(async (menu) => await new Menus(menu).save())),
-		kitchens: await Promise.all(kitchens.map(async (kitchen) => await new Kitchens(kitchen).save())),
-		tables: await Promise.all(tables.map(async (table) => await new Tables(table).save())),
-		processTime: (performance.now() - startTime) / 1000,
+		profile: newProfile,
+		menus: newMenus,
+		kitchens: newKitchen,
+		tables: newTables,
 	};
 };
 
 export async function GET () {
 	await connectDB();
 	try {
-		const response = {
-			totalProcessTime: performance.now(),
-			deleteData: await deleteData(['empire', 'starbucks']),
-			empire: await createData(empire),
-			starbucks: await createData(starbucks),
+		const start = performance.now();
+		const deleteResult = await deleteData(['empire', 'starbucks']);
+		const [empireResult, starbucksResult] = await Promise.all([
+			createData(empire),
+			createData(starbucks),
+		]);
+
+		const res = {
+			totalProcessTime: (performance.now() - start) / 1000,
+			delete: deleteResult,
+			empire: empireResult,
+			starbucks: starbucksResult,
 		};
+		return new Response(JSON.stringify(res, null, 4));
 
-		response.totalProcessTime = (performance.now() - response.totalProcessTime) / 1000;
-
-		return new Response(JSON.stringify(response, null, 4));
 	}
 	catch (err) {
 		console.log(err);

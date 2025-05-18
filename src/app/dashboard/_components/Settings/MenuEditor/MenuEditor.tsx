@@ -4,10 +4,10 @@ import { toast } from 'react-toastify';
 import { Button, Icon, Spinner } from 'xtreme-ui';
 
 import { useAdmin } from '#components/context/useContext';
+import { TMenu } from '#utils/database/models/menu';
 
 import MenuEditorItem from './MenuEditorItem';
 import './menuEditor.scss';
-import { TMenu } from '#utils/database/models/menu';
 
 const MenuEditor = () => {
 	const { profile, menus, profileLoading, profileMutate } = useAdmin();
