@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useInView } from 'react-intersection-observer';
-import { Button, Icon } from 'xtreme-ui';
+import { Button, Icon, useScreenType } from 'xtreme-ui';
 
 import { TMenu } from '#utils/database/models/menu';
 
@@ -15,6 +15,7 @@ const vegIcon = {
 
 const MenuEditorItem = (props: TMenuEditorItemProps) => {
 	const { item, onEdit, onHide, hideSettingsLoading = false } = props;
+	const { isMobile } = useScreenType();
 	const [itemRef, inView] = useInView({ threshold: 0 });
 
 	return (
@@ -47,7 +48,7 @@ const MenuEditorItem = (props: TMenuEditorItemProps) => {
 							iconType='solid'
 							size='mini'
 							type={item.hidden ? 'secondary' : 'primary'}
-							label={item.hidden ? 'Hidden' : 'Visible'}
+							label={isMobile ? undefined : item.hidden ? 'Hidden' : 'Visible'}
 							loading={hideSettingsLoading}
 							onClick={() => onHide(item._id.toString(), !item.hidden)}
 						/>

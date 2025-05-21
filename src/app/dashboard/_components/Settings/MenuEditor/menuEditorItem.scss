@@ -104,14 +104,29 @@
 		display: flex;
 		flex-direction: column;
 		margin: 18px 10px;
+		gap: 1rem;
 
 		.menuItemTitle {
 			font-size: 18px;
 			font-variation-settings: 'wdth' 75, 'wght' 500;
+			margin: 0;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		.menuItemDesc {
 			margin: 0;
+			font-size: 14px;
+			display: -webkit-box;
+			-webkit-line-clamp: 5;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			font-variation-settings: 'wdth' 75, 'wght' 400;
+			opacity: 0.8;
 		}
 
 		.menuItemPrice {
@@ -148,6 +163,26 @@
 	}
 }
 
+
+@media (width <= 750px) {
+	.menuEditorItem {
+		.menuItemData {
+			gap: 0.5rem;
+
+			.menuItemTitle {
+			}
+
+			.menuItemDesc {
+				font-size: 13px;
+				-webkit-line-clamp: 4;
+			}
+
+			.menuItemPrice {
+			}
+		}
+	}
+}
+
 @media (width <= 530px) {
 	.menuEditorItem {
 		margin-bottom: 15px;
@@ -159,7 +194,8 @@
 			}
 
 			.menuItemDesc {
-				display: none;
+				font-size: 11px;
+				-webkit-line-clamp: 3;
 			}
 
 			.menuItemPrice {

@@ -135,14 +135,11 @@
 			.menuCategoryContainer {
 				padding: 30px;
 			}
-
-			.scrollLeft, .scrollRight {
-				bottom: 40px;
-			}
 		}
 
 		.menuItemEditor {
 			.menuItemContainer {
+				--menuItemSize: 160px;
 				padding: 30px 30px 55px;
 			}
 		}
