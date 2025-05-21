@@ -280,7 +280,7 @@
 		letter-spacing: 0.5px;
 		padding: 5px 20px 5px 10px;
 		color: white;
-		background-color: rgb(var(--colorBrandAccentRgb));
+		background-color: hsl(var(--colorBrandPrimary));
 		filter: drop-shadow(0 2px 4px rgb(0 0 0 / 50%));
 		border-radius: 0 0 10px;
 		transition: padding 0.5s ease-out;
@@ -297,7 +297,7 @@
 			display: block;
 			width: 15px;
 			height: 7px;
-			background-color: rgb(var(--colorBrandAccentRgb));
+			background-color: hsl(var(--colorBrandPrimary));
 			filter: brightness(65%);
 			clip-path: polygon(0 0, 0 100%, 100% 100%);
 		}
@@ -305,7 +305,7 @@
 		div {
 			position: absolute;
 			left: -15px;
-			border-color: rgb(var(--colorBrandAccentRgb)) transparent;
+			border-color: hsl(var(--colorBrandPrimary)) transparent;
 			border-style: solid;
 
 			&.ribbonTop {

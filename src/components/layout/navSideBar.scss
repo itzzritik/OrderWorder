@@ -69,7 +69,7 @@
 				pointer-events: none !important;
 
 				.navItemContent {
-					background-color: rgb(var(--colorBrandAccentRgb));
+					background-color: hsl(var(--colorBrandPrimary));
 					box-shadow: var(--boxShadowGlow);
 					transition: all 0.2s ease-out;
 					

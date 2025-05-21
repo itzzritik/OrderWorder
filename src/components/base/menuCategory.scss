@@ -12,7 +12,7 @@
 	cursor: pointer;
 
 	&.active {
-		background-color: rgb(var(--colorBrandAccentRgb));
+		background-color: hsl(var(--colorBrandPrimary));
 
 		.title {
 			color: white;

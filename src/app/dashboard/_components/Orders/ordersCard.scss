@@ -13,8 +13,8 @@
 		cursor: auto;
 
 		.content {
-			background-color: rgb(var(--colorBrandAccentRgb));
-			box-shadow: 0 0 12px rgb(var(--colorBrandAccentRgb));
+			background-color: hsl(var(--colorBrandPrimary));
+			box-shadow: 0 0 12px hsl(var(--colorBrandPrimary));
 			transition: all 0.2s ease-out;
 
 			> p {
@@ -135,12 +135,12 @@
 				@media (hover: hover) {
 					&:hover {
 						color: var(--colorBackgroundPrimary);
-						background-color: rgb(var(--colorBrandAccentRgb));
+						background-color: hsl(var(--colorBrandPrimary));
 					}
 				}
 
 				&.accept {
-					color: rgb(var(--colorBrandAccentRgb));
+					color: hsl(var(--colorBrandPrimary));
 					background-color: var(--colorBackgroundPrimary);
 					border-color: var(--colorBackgroundPrimary);
 					margin-top: 5px;

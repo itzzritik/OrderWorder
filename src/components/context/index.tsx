@@ -5,7 +5,7 @@ import { ReactNode, Suspense } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { XProvider } from 'xtreme-ui';
 
-import { ThemeManager } from '#components/base/ThemeManager';
+import { ToastManager } from '#components/base/ToastManager';
 
 import { AdminProvider } from './Admin';
 import { OrderProvider } from './Order';
@@ -26,7 +26,7 @@ export const GlobalProvider = ({ children }: ProviderProps) => {
 export const CustomerProvider = ({ children }: ProviderProps) => {
 	return (
 		<RestaurantProvider>
-			<ThemeManager />
+			<ToastManager />
 			<OrderProvider>
 				{children}
 			</OrderProvider>
@@ -37,7 +37,7 @@ export const CustomerProvider = ({ children }: ProviderProps) => {
 export const DashboardProvider = ({ children }: ProviderProps) => {
 	return (
 		<AdminProvider>
-			<ThemeManager />
+			<ToastManager />
 			{children}
 		</AdminProvider>
 	);

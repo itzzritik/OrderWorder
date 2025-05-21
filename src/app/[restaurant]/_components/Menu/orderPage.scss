@@ -41,7 +41,7 @@
 						}
 
 						.searchIcon {
-							color: rgb(var(--colorBrandAccentRgb));
+							color: hsl(var(--colorBrandPrimary));
 						}
 
 						.clearIcon {
@@ -168,7 +168,7 @@
 				margin-bottom: 16px;
 				justify-content: center;
 				align-items: center;
-				background-color: rgb(var(--colorBrandAccentRgb));
+				background-color: hsl(var(--colorBrandPrimary));
 				box-shadow: var(--boxShadowGlow);
 				pointer-events: none;
 				cursor: pointer;

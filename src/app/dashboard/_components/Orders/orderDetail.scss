@@ -119,21 +119,21 @@
 				--buttonHeight: 30px;
 
 				overflow: hidden;
-				color: rgb(var(--colorBrandAccentRgb));
+				color: hsl(var(--colorBrandPrimary));
 				font-size: 12px;
 				border-color: transparent;
 
 				@media (hover: hover) {
 					&:hover {
-						border-color: rgb(var(--colorBrandAccentRgb));
+						border-color: hsl(var(--colorBrandPrimary));
 						background-color: var(--colorBackgroundPrimary);
 					}
 				}
 
 				&.accept {
 					color: var(--colorBackgroundPrimary);
-					background-color: rgb(var(--colorBrandAccentRgb));
-					border-color: rgb(var(--colorBrandAccentRgb));
+					background-color: hsl(var(--colorBrandPrimary));
+					border-color: hsl(var(--colorBrandPrimary));
 					transition: transform 0.1s ease-out;
 					margin-top: 8px;
 				}

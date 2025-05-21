@@ -1,6 +1,7 @@
 import mongoose, { HydratedDocument } from 'mongoose';
 
 import { Accounts, TAccount } from './account';
+import { type TThemeColor } from 'xtreme-ui';
 
 const accountCache = new Map<string, TAccount | null>();
 
@@ -10,9 +11,9 @@ const ProfileSchema = new mongoose.Schema<TProfile>({
 	description: { type: String, trim: true },
 	address: { type: String, trim: true },
 	themeColor: {
-		r: { type: Number, trim: true, min: 0, max: 255 },
-		g: { type: Number, trim: true, min: 0, max: 255 },
-		b: { type: Number, trim: true, min: 0, max: 255 },
+		h: { type: Number, trim: true, min: 0, max: 360 },
+		s: { type: Number, trim: true, min: 0, max: 100 },
+		l: { type: Number, trim: true, min: 0, max: 100 },
 	},
 	gstInclusive: { type: Boolean, default: false },
 	categories: [{ type: String, trim: true, lowercase: true, match: /^[^,]*$/ }],
@@ -57,8 +58,3 @@ export type TProfile = HydratedDocument<{
 	gstInclusive: boolean;
 	categories: Array<string>;
 }>
-export type TThemeColor = {
-	r: number;
-	g: number;
-	b: number;
-}

@@ -1,12 +1,7 @@
-'use client';
-
-import { useSearchParams } from 'next/navigation';
-
 import { CustomerProvider } from '#components/context';
 import NavSideBar from '#components/layout/NavSideBar';
-import UnderConstruction from '#components/layout/UnderConstruction';
-
-import OrderPage from './_components/Menu/OrderPage';
+import { capitalize } from 'xtreme-ui';
+import PageContainer from './_components/PageContainer';
 import './restaurant.scss';
 
 const navItems = [
@@ -17,24 +12,32 @@ const navItems = [
 	{ label: 'sign out', value: 'signout', icon: 'f011' },
 ];
 
+export async function generateMetadata({ params, searchParams }: IMetaDataProps) {
+	const tab = searchParams.tab;
+	return {
+		title: `${capitalize(params.restaurant)}${tab ? ` • ${capitalize(tab)}` : ''}`,
+	};
+}
+
 const Restaurant = () => {
-	const searchParams = useSearchParams();
-
-	const tab = searchParams.get('tab');
-
 	return (
 		<CustomerProvider>
 			<div className='restaurant'>
 				<NavSideBar navItems={navItems} defaultTab='menu' foot />
-				<div className='pageContainer'>
-					{tab === 'explore' && <UnderConstruction />}
-					{tab === 'menu' && <OrderPage />}
-					{tab === 'reviews' && <UnderConstruction />}
-					{tab === 'contact' && <UnderConstruction />}
-				</div>
+				<PageContainer />
 			</div>
 		</CustomerProvider>
 	);
 };
 
 export default Restaurant;
+
+interface IMetaDataProps {
+	params: {
+		restaurant: string;
+	};
+	searchParams: {
+		tab?: string;
+		[key: string]: string | undefined;
+	};
+}

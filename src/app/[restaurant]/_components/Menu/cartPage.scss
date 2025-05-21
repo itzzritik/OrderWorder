@@ -97,7 +97,7 @@
 					align-items: center;
 					justify-content: center;
 					border-radius: 12px;
-					background-color: rgb(var(--colorBrandAccentRgb));
+					background-color: hsl(var(--colorBrandPrimary));
 					color: white;
 					padding: 0 var(--orderButtonPadding);
 					box-shadow: var(--boxShadowGlow);
@@ -237,7 +237,7 @@
 			margin-top: -180px;
 	
 			.cheese {
-				fill: rgb(var(--colorBrandAccentRgb));
+				fill: hsl(var(--colorBrandPrimary));
 			}
 		}
 	

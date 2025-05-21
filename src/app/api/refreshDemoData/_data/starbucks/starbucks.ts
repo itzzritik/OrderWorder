@@ -13,7 +13,7 @@ const profile = {
 	restaurantID: 'starbucks',
 	description: 'coffee chain offering an extensive range of freshly brewed coffees, teas, and assorted beverages along with a selection of delectable snacks and pastries across numerous locations worldwide.',
 	address: 'Indiranagar, Benagaluru',
-	themeColor: { r: 0, g: 94, b: 59 },
+	themeColor: { h: 158, s: 100, l: 19 },
 	avatar: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/1200px-Starbucks_Corporation_Logo_2011.svg.png',
 	cover: 'https://b.zmtcdn.com/data/reviews_photos/c9f/cad697975e8e2871657b7df8ceea2c9f_1410727142.jpg',
 	photos: [

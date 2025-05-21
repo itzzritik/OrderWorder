@@ -1,33 +1,18 @@
-'use client';
-
-import { useState } from 'react';
-
 import { DashboardProvider } from '#components/context';
-
-import AboutSection from './_homepage/AboutSection';
-import FeatureSection from './_homepage/FeatureSection';
-import FooterSection from './_homepage/FooterSection';
-import LandingSection from './_homepage/LandingSection';
-import LoginSection from './_homepage/LoginSection';
-import Navbar from './_homepage/Navbar';
+import { ThemeColorsPreset, themeController } from 'xtreme-ui';
+import PageContainer from './_homepage/PageContainer';
 
 export default function Homepage () {
-	const [menuOpen, setMenuOpen] = useState(false);
-
 	return (
-		<DashboardProvider>
-			<div className='homepage'>
-				<Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-				<div className={`homepageSections ${menuOpen ? 'menuOpen' : ''}`}>
-					<LandingSection />
-					<AboutSection />
-					<FeatureSection />
-
-					<LoginSection />
-
-					<FooterSection />
-				</div>
-			</div>
-		</DashboardProvider>
+		<>
+			<head>
+				<script dangerouslySetInnerHTML={{ __html: themeController('auto', ThemeColorsPreset.plum) }} suppressHydrationWarning />
+			</head>
+			<body>
+				<DashboardProvider>
+					<PageContainer />
+				</DashboardProvider>
+			</body>
+		</>
 	);
 }

@@ -48,7 +48,7 @@
 		padding: 0 20px;
 		border-radius: var(--borderRadius);
 		user-select: none;
-		background-color: rgb(var(--colorBrandAccentRgb));
+		background-color: hsl(var(--colorBrandPrimary));
 		box-shadow: var(--boxShadowGlowHover);
 		transition: height 0.2s ease-out;
 		z-index: 2;
@@ -85,7 +85,7 @@
 			font-size: 14px;
 			font-variation-settings: 'wdth' 75, 'wght' 600;
 			background-color: white;
-			color: rgb(var(--colorBrandAccentRgb));
+			color: hsl(var(--colorBrandPrimary));
 			transition: all 0.2s ease-out;
 		}
 

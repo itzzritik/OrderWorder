@@ -17,8 +17,8 @@ body {
 
 	--boxShadowInset: inset 0 0 8px rgb(150 150 150 / 15%);
 	--colorBackdropPrimary: rgb(0 0 0 / 70%);
-	--boxShadowGlow: 0 0 6px rgb(var(--colorBrandAccentRgb) 0.8);
-	--boxShadowGlowHover: 0 0 10px rgb(var(--colorBrandAccentRgb) 0.8);
+	--boxShadowGlow: 0 0 6px hsl(var(--colorBrandPrimary) 0.8);
+	--boxShadowGlowHover: 0 0 10px hsl(var(--colorBrandPrimary) 0.8);
 	--boxShadowGlowActive: 0 0 0 transparent;
 }
 

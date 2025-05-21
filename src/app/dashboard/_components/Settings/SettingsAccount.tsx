@@ -18,12 +18,11 @@ const SettingsAccount = () => {
 	const [restaurantName, setRestaurantName] = useState<string[]>([]);
 
 	useEffect(() => {
-		if (profile?.name) {
+		if (profile?.name)
 			setRestaurantName(splitStringByFirstWord(profile?.name) ?? []);
-		}
 	}, [profile?.name]);
 
-	if (session.status === 'loading') return <Spinner fullpage label='Loading Account...' />;
+	if (session.status === 'loading' || !profile) return <Spinner fullpage label='Loading Account...' />;
 
 	return (
 		<div className='settingsAccount'>
