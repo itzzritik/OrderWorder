@@ -83,8 +83,8 @@ export const authOptions: AuthOptions = {
 				if (!customer) customer = await new Customers(customerCred).save();
 
 				const account = await Accounts.findOne({ username: cred?.restaurant })
-					.populate('profile')
-					.populate('tables');
+					.populate({ path: 'profile', model: Profiles })
+					.populate({ path: 'tables', model: Tables });
 
 				if (!account) throw new Error('Restaurant not found.');
 				if (!account?.tables?.some?.(({ username }: { username: string }) => username === cred?.table))

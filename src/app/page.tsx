@@ -8,6 +8,7 @@ import { DEFAULT_THEME_COLOR } from '#utils/constants/common';
 
 export default async function Homepage () {
 	const themeColor = await getThemeColor();
+	console.log('themeColor', themeColor);
 	return (
 		<>
 			<head>

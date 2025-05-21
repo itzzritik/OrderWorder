@@ -5,6 +5,9 @@ import connectDB from '#utils/database/connect';
 import { Accounts, TAccount } from '#utils/database/models/account';
 import { authOptions } from '#utils/helper/authHelper';
 import { CatchNextResponse } from '#utils/helper/common';
+import { Tables } from '#utils/database/models/table';
+import { Profiles } from '#utils/database/models/profile';
+import { Menus } from '#utils/database/models/menu';
 
 export async function GET () {
 	try {
@@ -13,9 +16,9 @@ export async function GET () {
 		if (!session) throw { status: 401, message: 'Authentication Required' };
 
 		const account = await Accounts.findOne<TAccount>({ username: session?.username })
-			.populate('profile')
-			.populate('tables')
-			.populate('menus')
+			.populate({ path: 'profile', model: Profiles })
+			.populate({ path: 'tables', model: Tables })
+			.populate({ path: 'menus', model: Menus })
 			.lean();
 
 		if (!account) throw { status: 500, message: 'Unable to fetch data' };
