@@ -13,6 +13,7 @@ type AuthUser = Partial<Omit<TAccount, 'profile'> & {
 		table: TTable.username,
 		name: TProfile.name,
 		avatar: TProfile.avatar,
+		themeColor: TProfile.themeColor,
 	}>
 }>
 

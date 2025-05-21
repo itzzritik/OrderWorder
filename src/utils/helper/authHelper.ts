@@ -83,8 +83,8 @@ export const authOptions: AuthOptions = {
 				if (!customer) customer = await new Customers(customerCred).save();
 
 				const account = await Accounts.findOne({ username: cred?.restaurant })
-					.populate({ path: 'profile', model: Profiles })
-					.populate({ path: 'tables', model: Tables });
+					.populate('profile')
+					.populate('tables');
 
 				if (!account) throw new Error('Restaurant not found.');
 				if (!account?.tables?.some?.(({ username }: { username: string }) => username === cred?.table))
@@ -99,6 +99,7 @@ export const authOptions: AuthOptions = {
 						table: cred?.table,
 						name: account?.profile?.name,
 						avatar: account?.profile?.avatar,
+						themeColor: account?.profile?.themeColor,
 					},
 				};
 			},

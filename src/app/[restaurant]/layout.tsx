@@ -3,14 +3,14 @@ import { ReactNode } from 'react';
 
 import { themeController } from 'xtreme-ui';
 
-import { getServerProfile } from '#utils/database/helper/getServerProfile';
+import { getThemeColor } from '#utils/database/helper/getThemeColor';
 
 export default async function RootLayout ({ children, params }: IRootProps) {
-	const profile = await getServerProfile(params.restaurant);
+	const themeColor = await getThemeColor(params.restaurant);
 	return (
 		<>
 			<head>
-				<script dangerouslySetInnerHTML={{ __html: themeController('auto', profile?.themeColor) }} suppressHydrationWarning />
+				<script dangerouslySetInnerHTML={{ __html: themeController('auto', themeColor) }} suppressHydrationWarning />
 			</head>
 			<body suppressHydrationWarning>
 				{ children }

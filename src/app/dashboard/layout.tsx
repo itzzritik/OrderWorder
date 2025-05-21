@@ -3,17 +3,17 @@ import { ReactNode } from 'react';
 
 import { themeController } from 'xtreme-ui';
 
-import { getServerProfile } from '#utils/database/helper/getServerProfile';
+import { getThemeColor } from '#utils/database/helper/getThemeColor';
 
 export const metadata = {
 	title: 'OrderWorder ⌘ Admin',
 };
 export default async function RootLayout ({ children }: IRootProps) {
-	const profile = await getServerProfile();
+	const themeColor = await getThemeColor();
 	return (
 		<>
 			<head>
-				<script dangerouslySetInnerHTML={{ __html: themeController('auto', profile?.themeColor) }} suppressHydrationWarning />
+				<script dangerouslySetInnerHTML={{ __html: themeController('auto', themeColor) }} suppressHydrationWarning />
 			</head>
 			<body suppressHydrationWarning>
 				{ children }
