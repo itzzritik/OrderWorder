@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
-import { Spinner } from 'xtreme-ui';
+import { Spinner, themeController } from 'xtreme-ui';
+import { DEFAULT_THEME_COLOR } from '#utils/constants/common';
 
 export default function Logout () {
 	const router = useRouter();
@@ -37,6 +38,18 @@ export default function Logout () {
 	}, [router, session]);
 
 	return (
-		<Spinner fullpage label='Signing out...' />
+		<>
+			<head>
+				<script
+					dangerouslySetInnerHTML={{
+						__html: themeController('auto', DEFAULT_THEME_COLOR),
+					}}
+					suppressHydrationWarning
+				/>
+			</head>
+		<body>
+			<Spinner fullpage label='Signing out...' />
+		</body>
+		</>
 	);
 }
