@@ -51,8 +51,8 @@ importers:
         specifier: ^2.3.3
         version: 2.3.3(react@19.1.0)
       xtreme-ui:
-        specifier: file:../XtremeUI
-        version: file:../XtremeUI(@babel/runtime@7.27.1)(@types/react-dom@19.1.5(@types/react@19.1.4))(@types/react@19.1.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14)
+        specifier: ^0.0.99
+        version: 0.0.99(@babel/runtime@7.27.1)(@types/react-dom@19.1.5(@types/react@19.1.4))(@types/react@19.1.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14)
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.3.1
@@ -3882,8 +3882,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  xtreme-ui@file:../XtremeUI:
-    resolution: {directory: ../XtremeUI, type: directory}
+  xtreme-ui@0.0.99:
+    resolution: {integrity: sha512-EB2lmU2Nj7Jl+gagLvvY3gAdoa8sF2RCnaskFpPHjxpRrrJxAldtSlWVPIz9ctJNaaMxgPDsrjuudnQgKx9iwg==}
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
@@ -8179,7 +8179,7 @@ snapshots:
 
   ws@8.18.2: {}
 
-  xtreme-ui@file:../XtremeUI(@babel/runtime@7.27.1)(@types/react-dom@19.1.5(@types/react@19.1.4))(@types/react@19.1.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14):
+  xtreme-ui@0.0.99(@babel/runtime@7.27.1)(@types/react-dom@19.1.5(@types/react@19.1.4))(@types/react@19.1.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14):
     dependencies:
       '@floating-ui/react': 0.27.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@lottiefiles/dotlottie-react': 0.13.5(react@19.1.0)

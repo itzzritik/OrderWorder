@@ -14,7 +14,7 @@ const maxBlurPerImage = 30;
 const maxOverlayTranslate = 0.3;
 const LandingSection = () => {
 	const router = useRouter();
-	const { isDarkMode } = useXTheme();
+	const { isDarkTheme } = useXTheme();
 	const ref = useRef<HTMLDivElement>(null);
 	const [blurBackground, setBlurBackground] = useState<number>(maxBlurPerImage);
 	const [blurOverlay, setBlurOverlay] = useState<number>(maxBlurPerImage);
@@ -44,7 +44,7 @@ const LandingSection = () => {
 	}, []);
 
 	return (
-		<section className={clsx('landingSection', isDarkMode && 'dark')} id='homepage' 
+		<section className={clsx('landingSection', isDarkTheme && 'dark')} id='homepage' 
 			style={{ filter: `blur(${blurBackground + blurOverlay}px)` }}>
 			<div className='coverBackground' style={{ backgroundImage: `url(${bgImg})` }} />
 			<div ref={ref} className='coverOverlay' onMouseMove={onMouseMove} style={{ backgroundImage: `url(${overlayImg})` }} />
