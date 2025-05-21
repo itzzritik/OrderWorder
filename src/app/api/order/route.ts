@@ -18,8 +18,8 @@ export async function GET () {
 		const restaurantID = session?.restaurant?.username;
 		const customer = session?.customer?._id;
 		const order: TOrder | undefined | null = await Orders.findOne<TOrder>({ restaurantID, customer, state: 'active' })
-			.populate({ path: 'customer', model: Customers }).lean()
-			.populate({ path: 'products.product', model: Menus }).lean();
+			.populate({ path: 'customer', model: Customers })
+			.populate({ path: 'products.product', model: Menus });
 
 		if (order?.products)
 			order.products = order?.products?.map((product) => {

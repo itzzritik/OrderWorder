@@ -70,15 +70,14 @@ const LoginSection = () => {
 		setNextLoading(false);
 	};
 	const logout = () => {
+		setThemeColor(DEFAULT_THEME_COLOR)
 		if (!loggedIn) return setProfile(undefined);
 		setLogoutLoading(true);
 		router.push('/logout');
 	};
 
 	useEffect(() => {
-		console.log(loggedIn, profile?.themeColor, dashboard?.themeColor);
-		if (loggedIn) setThemeColor(profile?.themeColor ?? dashboard?.themeColor ?? DEFAULT_THEME_COLOR)
-		else if (profile?.themeColor) setThemeColor(profile?.themeColor);
+		setThemeColor(profile?.themeColor ?? dashboard?.themeColor)
 	}, [profile, dashboard])
 
 	return (

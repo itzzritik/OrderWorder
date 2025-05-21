@@ -10,7 +10,9 @@ import './themeSettings.scss';
 const ThemeSettings = () => {
 	const { profile, profileMutate } = useAdmin();
 	const { themeColor, setThemeColor } = useXTheme();
-	const { isDesktop } = useScreenType();
+	const { isMobile } = useScreenType({
+		mobile: '(max-width: 779px)',
+	});
 
 	const [loading, setLoading] = useState(false);
 
@@ -53,7 +55,7 @@ const ThemeSettings = () => {
 				{
 					loading
 						? <Spinner className='spinner' label='Applying theme' fullpage />
-						: isDesktop ? <ThemePicker /> : <ThemeSelect withSwatch withScheme />
+						: isMobile ? <ThemeSelect size='default' withSwatch withScheme /> : <ThemePicker />
 				}
 			</div>
 		</div>

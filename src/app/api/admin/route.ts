@@ -5,9 +5,6 @@ import connectDB from '#utils/database/connect';
 import { Accounts, TAccount } from '#utils/database/models/account';
 import { authOptions } from '#utils/helper/authHelper';
 import { CatchNextResponse } from '#utils/helper/common';
-import { Tables } from '#utils/database/models/table';
-import { Profiles } from '#utils/database/models/profile';
-import { Menus } from '#utils/database/models/menu';
 
 export async function GET () {
 	try {

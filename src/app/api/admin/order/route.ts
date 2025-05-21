@@ -16,9 +16,8 @@ export async function GET () {
 
 		const restaurantID = session?.username;
 		const orders: TOrder[] = (await Orders.find<TOrder>({ restaurantID })
-			.populate('customer')
-			.populate({ path: 'products.product', model: Menus })
-			.lean()) ?? [];
+			.populate({ path: 'customer', model: Customers })
+			.populate({ path: 'products.product', model: Menus })) ?? [];
 
 		orders?.forEach?.((order) => {
 			if (order?.products)

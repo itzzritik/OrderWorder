@@ -49,6 +49,8 @@
 		max-height: 100%;
 		flex: 1;
 		margin: 80px;
+		display: flex;
+		justify-content: flex-end;
 
 		.scanMenuAnim {
 			width: 100%;

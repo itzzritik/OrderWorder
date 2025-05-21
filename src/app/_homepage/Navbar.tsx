@@ -1,13 +1,10 @@
-import { useState } from 'react';
-
 import { scrollToSection } from '#utils/helper/common';
 
-import './navbar.scss';
 
 import { ThemeSelect } from 'xtreme-ui';
+import './navbar.scss';
 
 export default function Navbar ({ menuOpen, setMenuOpen }: TNavBarProps) {
-	const [navItems, setNavItems] = useState(['About Us', 'Features']);
 
 	return (
 		<div className='homeNavbar' id='homepage-navBar'>
@@ -19,7 +16,7 @@ export default function Navbar ({ menuOpen, setMenuOpen }: TNavBarProps) {
 				</div>
 				<div className='container'>
 					{
-						navItems.map((item, key) => {
+						['About Us', 'Features'].map((item, key) => {
 							return (
 								<div
 									key={key}
