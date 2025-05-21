@@ -1,8 +1,9 @@
 /* eslint-disable react/no-danger */
-import { getServerProfile } from '#utils/database/helper/getServerProfile';
 import { ReactNode } from 'react';
 
 import { themeController } from 'xtreme-ui';
+
+import { getServerProfile } from '#utils/database/helper/getServerProfile';
 
 export const metadata = {
 	title: 'OrderWorder ⌘ Admin',

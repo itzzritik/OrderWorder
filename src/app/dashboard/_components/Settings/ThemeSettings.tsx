@@ -15,7 +15,7 @@ const ThemeSettings = () => {
 	const [loading, setLoading] = useState(false);
 
 	const onClear = () => {
-		if (isValidThemeColor(profile?.themeColor)) setThemeColor(profile?.themeColor)
+		if (isValidThemeColor(profile?.themeColor)) setThemeColor(profile?.themeColor);
 	};
 
 	const onSave = async () => {

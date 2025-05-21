@@ -1,9 +1,9 @@
+import { capitalize } from 'xtreme-ui';
+
 import { DashboardProvider } from '#components/context';
 import NavSideBar from '#components/layout/NavSideBar';
 
-import { capitalize } from 'xtreme-ui';
 import PageContainer from './_components/PageContainer';
-
 import './dashboard.scss';
 
 const navItems = [
@@ -11,7 +11,7 @@ const navItems = [
 	{ label: 'settings', icon: 'f013', value: 'settings' },
 ];
 
-export async function generateMetadata({ searchParams }: IMetaDataProps) {
+export async function generateMetadata ({ searchParams }: IMetaDataProps) {
 	const subTab = searchParams.subTab;
 	return {
 		title: `OrderWorder${subTab ? ` • ${capitalize(subTab)}` : ''}`,

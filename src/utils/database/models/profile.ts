@@ -1,7 +1,7 @@
 import mongoose, { HydratedDocument } from 'mongoose';
+import { type TThemeColor } from 'xtreme-ui';
 
 import { Accounts, TAccount } from './account';
-import { type TThemeColor } from 'xtreme-ui';
 
 const accountCache = new Map<string, TAccount | null>();
 

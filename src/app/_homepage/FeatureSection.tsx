@@ -1,8 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+
 import { Lottie } from 'xtreme-ui';
+
 import { getAnimSrc } from '#utils/constants/common';
+
 import './featureSection.scss';
 
 const getHSL = (hue: number, light: number) => `hsl(${hue}, 70%, ${light}%)`;
@@ -44,7 +47,8 @@ const FeatureSection = () => (
 				'Time to get a professional edge',
 				'Enhance the dining experience for your own customers',
 				'Remove any scope of human error in your restaurant management',
-			]} />
+			]}
+			/>
 		</div>
 		<div className='featuresAnim'>
 			<Lottie className='whyUsAnim' src={getAnimSrc('FoodMeal')} speed={0.5} />

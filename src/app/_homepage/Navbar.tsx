@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { scrollToSection } from '#utils/helper/common';
 
 import './navbar.scss';
+
 import { ThemeSelect } from 'xtreme-ui';
 
 export default function Navbar ({ menuOpen, setMenuOpen }: TNavBarProps) {

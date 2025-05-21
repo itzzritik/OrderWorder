@@ -1,6 +1,8 @@
+import { capitalize } from 'xtreme-ui';
+
 import { CustomerProvider } from '#components/context';
 import NavSideBar from '#components/layout/NavSideBar';
-import { capitalize } from 'xtreme-ui';
+
 import PageContainer from './_components/PageContainer';
 import './restaurant.scss';
 
@@ -12,7 +14,7 @@ const navItems = [
 	{ label: 'sign out', value: 'signout', icon: 'f011' },
 ];
 
-export async function generateMetadata({ params, searchParams }: IMetaDataProps) {
+export async function generateMetadata ({ params, searchParams }: IMetaDataProps) {
 	const tab = searchParams.tab;
 	return {
 		title: `${capitalize(params.restaurant)}${tab ? ` • ${capitalize(tab)}` : ''}`,

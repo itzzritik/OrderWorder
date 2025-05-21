@@ -6,6 +6,7 @@ import { Button, useXTheme } from 'xtreme-ui';
 import { scrollToSection } from '#utils/helper/common';
 
 import './landingSection.scss';
+
 import clsx from 'clsx';
 
 const bgImg = '/backgrounds/landingCover.png';
@@ -44,8 +45,9 @@ const LandingSection = () => {
 	}, []);
 
 	return (
-		<section className={clsx('landingSection', isDarkTheme && 'dark')} id='homepage' 
-			style={{ filter: `blur(${blurBackground + blurOverlay}px)` }}>
+		<section className={clsx('landingSection', isDarkTheme && 'dark')} id='homepage'
+			style={{ filter: `blur(${blurBackground + blurOverlay}px)` }}
+		>
 			<div className='coverBackground' style={{ backgroundImage: `url(${bgImg})` }} />
 			<div ref={ref} className='coverOverlay' onMouseMove={onMouseMove} style={{ backgroundImage: `url(${overlayImg})` }} />
 			<div className='overlay' />

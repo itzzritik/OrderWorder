@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger */
 import { ReactNode } from 'react';
 
 import { GlobalProvider } from '#components/context';

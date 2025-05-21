@@ -1,8 +1,10 @@
-import { DashboardProvider } from "#components/context";
-import { ThemeColorsPreset, themeController } from "xtreme-ui";
-import PageContainer from "./_homepage/PageContainer";
+import { ThemeColorsPreset, themeController } from 'xtreme-ui';
 
-export default function Homepage() {
+import { DashboardProvider } from '#components/context';
+
+import PageContainer from './_homepage/PageContainer';
+
+export default function Homepage () {
 	return (
 		<>
 			<head>
@@ -11,8 +13,8 @@ export default function Homepage() {
 						__html: themeController(
 							undefined,
 							undefined,
-							"auto",
-							ThemeColorsPreset.plum
+							'auto',
+							ThemeColorsPreset.plum,
 						),
 					}}
 					suppressHydrationWarning

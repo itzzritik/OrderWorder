@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { isValidThemeColor } from 'xtreme-ui';
 
 import connectDB from '#utils/database/connect';
 import { Profiles, TProfile } from '#utils/database/models/profile';
 import { authOptions } from '#utils/helper/authHelper';
 import { CatchNextResponse } from '#utils/helper/common';
-import { isValidThemeColor } from 'xtreme-ui';
 
 export async function POST (req: Request) {
 	try {
