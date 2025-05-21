@@ -22,9 +22,9 @@ export async function GET (req: Request) {
 
 		await connectDB();
 		const account = await Accounts.findOne<TAccount>({ username })
-			.populate({ path: 'profile', model: Profiles })
-			.populate({ path: 'tables', model: Tables })
-			.populate({ path: 'menus', model: Menus })
+			.populate('profile')
+			.populate('tables')
+			.populate('menus')
 			.lean();
 		if (!account) throw { status: 404, message: `Account with restaurant id: ${username} is not found` };
 

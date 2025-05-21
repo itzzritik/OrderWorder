@@ -26,7 +26,7 @@ MenuSchema.pre('save', async function (next) {
 	try {
 		let account = accountCache.get(this.restaurantID);
 		if (!account) {
-			account = await Accounts.findOne<TAccount>({ username: this.restaurantID }).populate({ path: 'profile', model: Profiles })
+			account = await Accounts.findOne<TAccount>({ username: this.restaurantID }).populate('profile')
 			if (account) accountCache.set(this.restaurantID, account);
 			else return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
 		}

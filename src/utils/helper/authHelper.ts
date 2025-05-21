@@ -3,7 +3,7 @@ import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 import connectDB from '#utils/database/connect';
-import { Accounts } from '#utils/database/models/account';
+import { Accounts, TAccount } from '#utils/database/models/account';
 import { Customers } from '#utils/database/models/customer';
 import { Kitchens } from '#utils/database/models/kitchen';
 import { Profiles } from '#utils/database/models/profile';
@@ -28,9 +28,10 @@ export const authOptions: AuthOptions = {
 				if (!cred?.password) throw new Error('Password is required');
 
 				await connectDB();
-				const username = isEmailValid(cred?.username) ? { email: cred?.username } : { username: cred?.username };
-				const account = await Accounts.findOne(username)
-					.populate({ path: 'kitchens', model: Kitchens, match: { username: cred?.kitchen } });
+				const credential = isEmailValid(cred?.username) ? { email: cred?.username } : { username: cred?.username };
+				const account = await Accounts.findOne<TAccount>(credential)
+					.populate('profile')
+					.populate({ path: 'kitchens', match: { username: cred?.kitchen } });
 
 				if (!account) throw new Error('Account not found.');
 
@@ -40,6 +41,7 @@ export const authOptions: AuthOptions = {
 					return {
 						id: account._id.toString(),
 						role: 'kitchen',
+						themeColor: account?.profile?.themeColor,
 						...account,
 					};
 				}
@@ -49,6 +51,7 @@ export const authOptions: AuthOptions = {
 					return {
 						id: account._id.toString(),
 						role: 'admin',
+						themeColor: account?.profile?.themeColor,
 						...account,
 					};
 				}
@@ -82,9 +85,9 @@ export const authOptions: AuthOptions = {
 
 				if (!customer) customer = await new Customers(customerCred).save();
 
-				const account = await Accounts.findOne({ username: cred?.restaurant })
-					.populate({ path: 'profile', model: Profiles })
-					.populate({ path: 'tables', model: Tables });
+				const account = await Accounts.findOne<TAccount>({ username: cred?.restaurant })
+					.populate('profile')
+					.populate('tables');
 
 				if (!account) throw new Error('Restaurant not found.');
 				if (!account?.tables?.some?.(({ username }: { username: string }) => username === cred?.table))
@@ -94,12 +97,12 @@ export const authOptions: AuthOptions = {
 					id: '',
 					role: 'customer',
 					customer,
+					themeColor: account?.profile?.themeColor,
 					restaurant: {
 						username: account?.profile?.restaurantID,
 						table: cred?.table,
 						name: account?.profile?.name,
 						avatar: account?.profile?.avatar,
-						themeColor: account?.profile?.themeColor,
 					},
 				};
 			},
@@ -120,6 +123,7 @@ export const authOptions: AuthOptions = {
 				if (user) {
 					token.user = {
 						role: user?.role,
+						themeColor: user?.themeColor,
 						...pick(user._doc, ['email', 'accountActive', 'subscriptionActive:', 'username', 'verified']),
 					};
 				}

@@ -1,4 +1,11 @@
 import { connect } from 'mongoose';
+import './models/profile';
+import './models/account';
+import './models/customer';
+import './models/kitchen';
+import './models/menu';
+import './models/table';
+import './models/order';
 
 if (!process.env.MONGODB_URI) {
 	throw new Error('Please add your MongoDB URI to Environment Variables.');
@@ -15,7 +22,6 @@ if (!cached) {
 
 async function connectDB () {
 	if (cached.conn) return cached.conn;
-
 	if (!cached.promise) {
 		console.log('🌿 Connecting to Mongo Server');
 		cached.promise = connect(process.env.MONGODB_URI!, options)

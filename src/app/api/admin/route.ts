@@ -16,9 +16,9 @@ export async function GET () {
 		if (!session) throw { status: 401, message: 'Authentication Required' };
 
 		const account = await Accounts.findOne<TAccount>({ username: session?.username })
-			.populate({ path: 'profile', model: Profiles })
-			.populate({ path: 'tables', model: Tables })
-			.populate({ path: 'menus', model: Menus })
+			.populate('profile')
+			.populate('tables')
+			.populate('menus')
 			.lean();
 
 		if (!account) throw { status: 500, message: 'Unable to fetch data' };

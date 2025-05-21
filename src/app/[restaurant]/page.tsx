@@ -15,9 +15,10 @@ const navItems = [
 ];
 
 export async function generateMetadata ({ params, searchParams }: IMetaDataProps) {
+	const p = await params;
 	const s = await searchParams;
 	return {
-		title: `${capitalize(params.restaurant)}${s.tab ? ` • ${capitalize(s.tab)}` : ''}`,
+		title: `${capitalize(p.restaurant)}${s.tab ? ` • ${capitalize(s.tab)}` : ''}`,
 	};
 }
 

@@ -8,18 +8,19 @@ import { TTable } from '#utils/database/models/table';
 type AuthUser = Partial<Omit<TAccount, 'profile'> & {
 	role: 'admin' | 'kitchen' | 'customer'
 	customer: Partial<TCustomer>,
+	themeColor: TProfile.themeColor,
 	restaurant: Partial<{
 		username: TProfile.username,
 		table: TTable.username,
 		name: TProfile.name,
 		avatar: TProfile.avatar,
-		themeColor: TProfile.themeColor,
 	}>
 }>
 
 declare module 'next-auth' {
 	interface User {
 		role: 'admin' | 'kitchen' | 'customer'
+		themeColor: TProfile.themeColor,
 		_doc: AuthUser
 	}
 

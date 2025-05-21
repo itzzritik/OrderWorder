@@ -1,6 +1,7 @@
 import _mongoose, { connect } from 'mongoose';
 
 declare global {
+	var themeColors: Map<string, TThemeColor | null>;
 	declare module '*.svg' {
 		import { FC, SVGProps } from 'react';
 
