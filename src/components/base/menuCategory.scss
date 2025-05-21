@@ -37,8 +37,13 @@
 	}
 }
 
-@media (width <= 800px) {
+@media (width <= 750px) {
 	.menuCategory {
-		margin-right: 20px;
+		height: 50px;
+    	max-height: 50px;
+
+		span {
+			margin: 0 1.5rem !important;
+		}
 	}
 }

@@ -212,12 +212,12 @@ const OrderPage = () => {
 								))
 							}
 							<div className='space' />
-						</div>
-						<div className={`scrollLeft ${leftCategoryScroll ? 'show' : ''}`} onClick={categoryScrollLeft}>
-							<Icon code='f053' />
-						</div>
-						<div className={`scrollRight ${rightCategoryScroll ? 'show' : ''}`} onClick={categoryScrollRight}>
-							<Icon code='f054' />
+							<div className={`scrollLeft ${leftCategoryScroll ? 'show' : ''}`} onClick={categoryScrollLeft}>
+								<Icon code='f053' />
+							</div>
+							<div className={`scrollRight ${rightCategoryScroll ? 'show' : ''}`} onClick={categoryScrollRight}>
+								<Icon code='f054' />
+							</div>
 						</div>
 					</div>
 				}

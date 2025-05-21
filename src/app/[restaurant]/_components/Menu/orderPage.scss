@@ -130,8 +130,7 @@
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
-			padding-top: 20px;
-			margin-top: 120px;
+			margin-top: 140px;
 
 			&.disable {
 				opacity: 0.5;
@@ -144,10 +143,9 @@
 
 			.itemCategories {
 				display: flex;
+				align-items: center;
 				width: 100%;
-				padding: 60px 50px 50px;
-				margin-top: -55px;
-				margin-bottom: -25px;
+				padding: 1rem 3rem;
 				overflow-x: scroll;
 				scroll-behavior: smooth;
 
@@ -165,7 +163,6 @@
 				width: 40px;
 				height: 40px;
 				display: flex;
-				margin-bottom: 16px;
 				justify-content: center;
 				align-items: center;
 				background-color: hsl(var(--colorBrandPrimary));
@@ -336,13 +333,12 @@
 
 			.category {
 				.itemCategories {
-					padding: 30px 30px 15px;
+					padding: 0rem 2rem;
 					scroll-padding: 0 15px;
-					margin-bottom: 10px;
 				}
-
 				.scrollLeft, .scrollRight {
-					margin-bottom: 42px;
+					width: 30px;
+					height: 30px;
 				}
 			}
 
