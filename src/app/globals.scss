@@ -4,13 +4,10 @@
 @import '../utils/styles/templates/rupee';
 @import '../utils/styles/templates/shake';
 
-html,
-body {
-	width: 100vw; height: 100%;
+html {
 	padding: 0; margin: 0;
 	background: var(--colorBackgroundPrimary);
 	overflow-x: hidden;
-
 	* {
 		font-family: var(--montserrat);
 	}
@@ -20,6 +17,13 @@ body {
 	--boxShadowGlow: 0 0 6px hsl(var(--colorBrandPrimary) 0.8);
 	--boxShadowGlowHover: 0 0 10px hsl(var(--colorBrandPrimary) 0.8);
 	--boxShadowGlowActive: 0 0 0 transparent;
+}
+
+body {
+	width: 100dvw; height: 100dvh;
+	padding: 0; margin: 0;
+	background: var(--colorBackgroundPrimary);
+	overflow-x: hidden;
 }
 
 @keyframes floatUp {

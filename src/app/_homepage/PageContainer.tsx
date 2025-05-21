@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import AboutSection from "./AboutSection";
@@ -12,15 +12,19 @@ export default function PageContainer() {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (
-		<div className="homepage">
-			<Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-			<div className={`homepageSections ${menuOpen ? "menuOpen" : ""}`}>
-				<LandingSection />
-				<AboutSection />
-				<FeatureSection />
-				<LoginSection />
-				<FooterSection />
+		<>
+			<div className="homepage">
+				<Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+				<div
+					className={`homepageSections ${menuOpen ? "menuOpen" : ""}`}
+				>
+					<LandingSection />
+					<AboutSection />
+					<FeatureSection />
+					<LoginSection />
+					<FooterSection />
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }

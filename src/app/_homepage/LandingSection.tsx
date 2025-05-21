@@ -1,11 +1,12 @@
 import { useEffect, useState, MouseEvent, Dispatch, SetStateAction, useRef } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { Button } from 'xtreme-ui';
+import { Button, useXTheme } from 'xtreme-ui';
 
 import { scrollToSection } from '#utils/helper/common';
 
 import './landingSection.scss';
+import clsx from 'clsx';
 
 const bgImg = '/backgrounds/landingCover.png';
 const overlayImg = '/backgrounds/landingCoverOverlay.png';
@@ -13,6 +14,7 @@ const maxBlurPerImage = 30;
 const maxOverlayTranslate = 0.3;
 const LandingSection = () => {
 	const router = useRouter();
+	const { isDarkMode } = useXTheme();
 	const ref = useRef<HTMLDivElement>(null);
 	const [blurBackground, setBlurBackground] = useState<number>(maxBlurPerImage);
 	const [blurOverlay, setBlurOverlay] = useState<number>(maxBlurPerImage);
@@ -42,7 +44,8 @@ const LandingSection = () => {
 	}, []);
 
 	return (
-		<section className='landingSection' id='homepage' style={{ filter: `blur(${blurBackground + blurOverlay}px)` }}>
+		<section className={clsx('landingSection', isDarkMode && 'dark')} id='homepage' 
+			style={{ filter: `blur(${blurBackground + blurOverlay}px)` }}>
 			<div className='coverBackground' style={{ backgroundImage: `url(${bgImg})` }} />
 			<div ref={ref} className='coverOverlay' onMouseMove={onMouseMove} style={{ backgroundImage: `url(${overlayImg})` }} />
 			<div className='overlay' />

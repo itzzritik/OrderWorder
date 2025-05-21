@@ -1,0 +1,87 @@
+.lighting {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	min-height: 500px;
+	height: fit-content;
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+.lighting-layers {
+	position: absolute;
+	bottom: -60px;
+	width: 100%;
+}
+
+.glow {
+	border-radius: 50%;
+	height: 20px;
+	width: 100%;
+	position: relative;
+	margin: auto;
+}
+
+.glow-one {
+	animation: glow-one 5s ease-in-out infinite alternate;
+}
+@keyframes glow-one {
+	from {
+		box-shadow: 0 0 250px 20px #473c78;
+	}
+	to {
+		box-shadow: 0 0 100px 15px #f72a3b;
+	}
+}
+
+.glow-two {
+	width: 90%;
+	animation: glow-two 4s ease-in-out infinite alternate;
+}
+@keyframes glow-two {
+	from {
+		box-shadow: 0 0 250px 20px #18c499;
+	}
+	to {
+		box-shadow: 0 0 100px 15px #d8f05e;
+	}
+}
+
+.glow-three {
+	width: 80%;
+	animation: glow-three 3s ease-in-out infinite alternate;
+}
+@keyframes glow-three {
+	from {
+		box-shadow: 0 0 250px 20px #ffdd00;
+	}
+	to {
+		box-shadow: 0 0 100px 15px #3e33ff;
+	}
+}
+
+.glow-four {
+	width: 70%;
+	animation: glow-four 2s ease-in-out infinite alternate;
+}
+@keyframes glow-four {
+	from {
+		box-shadow: 0 0 250px 20px #781848;
+	}
+	to {
+		box-shadow: 0 0 100px 15px #f2bbe9;
+	}
+}
+
+.glow-five {
+	width: 60%;
+	animation: glow-five 1s ease-in-out infinite alternate;
+}
+@keyframes glow-five {
+	from {
+		box-shadow: 0 0 250px 20px #42f2a1;
+	}
+	to {
+		box-shadow: 0 0 100px 15px #f4f6ad;
+	}
+}
