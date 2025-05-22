@@ -77,7 +77,8 @@ const LoginSection = () => {
 	};
 
 	useEffect(() => {
-		setThemeColor(profile?.themeColor ?? dashboard?.themeColor)
+		const newColor = profile?.themeColor ?? dashboard?.themeColor;
+		if (newColor) setThemeColor(profile?.themeColor ?? dashboard?.themeColor);
 	}, [profile, dashboard])
 
 	return (
