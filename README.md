@@ -1,6 +1,14 @@
 
 # OrderWorder – Contactless Restaurant Ordering System
 
+[![Live](https://img.shields.io/badge/Built_using-XtremeUI-blue?style=flat-square)](https://github.com/itzzritik/XtremeUI)
+[![Live Demo](https://img.shields.io/badge/Try_Live-Demo-green?style=flat-square)](https://orderworder.ritik.me)
+![Made with ❤️](https://img.shields.io/badge/Made_with-%E2%9D%A4-red?style=flat-square)
+[![Next JS](https://img.shields.io/badge/Next-black?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=flat-square&logo=sass&logoColor=white)](https://sass-lang.com/)
+
+
 ![OrderWorder Banner](public/screenshots/restaurant_banner.jpg)
 
 ---
@@ -99,5 +107,5 @@ Orderworder has two interfaces, one for **customers** and one for **restaurant's
 ---
 
 ## ⭐ Support the Project  
-If you like the project, a **star** would be appreciated!  
-Have suggestions? Feel free to open issues or pull requests.
+If you find OrderWorder useful, please give it a ⭐ on GitHub!  
+Have ideas or improvements? Contributions via issues or pull requests are warmly welcome!
