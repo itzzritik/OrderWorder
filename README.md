@@ -1,34 +1,40 @@
-<img src="public/screenshots/restaurant_banner.jpg" width="100%">
-<br>
 
-# OrderWorder - Contactless Dining Experience
+# OrderWorder – Contactless Restaurant Ordering System
 
-Introducing OrderWorder, our Contactless Dining Full-Stack Platform! This groundbreaking platform transforms the dining experience, enabling restaurants to effortlessly swap out traditional menus with a digital, contactless solution.
+![OrderWorder Banner](public/screenshots/restaurant_banner.jpg)
 
-## Features
+---
 
-- **QR Code Integration**: Each table is equipped with a QR code for easy access to the application.
-- **Ordering System**: Customers can browse the menu, place orders, and make payments directly through the intuitive web app.
-- **Admin Dashboard**: Enables restaurant management, order acceptance/rejection, inventory, and payroll management.
-- **Kitchen Dashboard**: Chefs receive live updates on incoming orders for efficient food preparation.
-- **Real-Time Functionality**: Built using Next.js and SCSS to ensure a responsive and real-time user experience.
+## 🚀 Overview  
+OrderWorder is a full-stack, contactless dining platform designed to digitize restaurant operations. From scanning a QR code to placing an order and managing kitchen workflows — everything runs on a clean, modern web app built with **Next.js**, **MongoDB**, and **SCSS**.
 
-## Tech Stack
+---
 
-- **FullStack**: Next.js and SASS
-- **Database**: Mongo
+## ✨ Features  
+- 📱 **QR Code-Based Access**: Every table gets a unique QR code for instant menu access.  
+- 🍽️ **Smart Ordering**: Customers can browse menus, add items, and place orders — no app download required.  
+- 🧑‍🍳 **Live Kitchen Dashboard**: Real-time order updates for chefs to prep efficiently.  
+- 🧑‍💼 **Admin Panel**: Manage tables, orders, inventory, payroll, and more.  
+- ⚡ **Real-Time UI**: Fast, responsive, and optimized for mobile/tablet/desktop.  
+- 🌗 **Dark Theme Support**: Modern design with animation and smooth transitions.
 
-## How to Use
+---
 
-1. **Setup QR Codes**: Place QR codes on each table to enable access for customers.
-2. **Access the Web App**: Customers can scan the QR code using their smartphones to open the web app and start ordering.
-3. **Admin Dashboard**: Access the admin panel to manage restaurants, accept/reject orders, and handle inventory and payroll.
-4. **Kitchen Dashboard**: Chefs can use the kitchen dashboard to stay updated on live orders for timely preparation.
+## 🛠️ Tech Stack  
+- **Frontend**: React + Next.js  
+- **Styling**: SCSS (SASS)  
+- **Backend**: API Routes in Next.js  
+- **Database**: MongoDB  
+- **Hosting**: Vercel  
+- **Authentication**: NextAuth.js  
+- **State Management**: React Context + Redux
 
-## Try it out
+---
+
+## 🔍 Try it out
 Orderworder has two interfaces, one for **customers** and one for **restaurant's admin**.
 
-### Customer Login:
+### 🧑 Customer Login:
 <table>
 	<tr>
 		<td>
@@ -53,7 +59,7 @@ Orderworder has two interfaces, one for **customers** and one for **restaurant's
 	</tr>
 </table>
 
-### Admin Login (Open in separate browser):
+### 👨‍💼 Admin Login (Open in separate browser):
 <table>
 	<tr>
 		<td>
@@ -69,16 +75,29 @@ Orderworder has two interfaces, one for **customers** and one for **restaurant's
 	</tr>
 </table>
 
-## Screenshots
+---
 
-#### Restaurant Menu:
+## 🖼️ Screenshots
+
+### 📋 Menu Interface
 <p align="center">
-	<img src="public/screenshots/restaurant_menu.png" width="49%">
-	<img src="public/screenshots/restaurant_cart.png" width="49%">
+  <img src="public/screenshots/restaurant_menu.png" width="49%">
+  <img src="public/screenshots/restaurant_cart.png" width="49%">
 </p>
 
-#### Admin Dashboard:
+### 🛠️ Admin Dashboard
 <p align="center">
-	<img src="public/screenshots/dashboard_requests.png" width="49%">
-	<img src="public/screenshots/dashboard_active.png" width="49%">
+  <img src="public/screenshots/dashboard_requests.png" width="49%">
+  <img src="public/screenshots/dashboard_active.png" width="49%">
 </p>
+
+---
+
+## 📌 Tags  
+`nextjs` `react` `javascript` `mongo` `sass` `typescript` `admin-panel` `dashboard` `qr-code` `realtime` `restaurant` `ecommerce` `responsive` `dark-theme` `ui` `animation` `scanner`
+
+---
+
+## ⭐ Support the Project  
+If you like the project, a **star** would be appreciated!  
+Have suggestions? Feel free to open issues or pull requests.
