@@ -1,4 +1,4 @@
-import { ThemeColorsPreset, themeController } from 'xtreme-ui';
+import { themeController } from 'xtreme-ui';
 
 import { DashboardProvider } from '#components/context';
 
@@ -7,16 +7,11 @@ import { getThemeColor } from '#utils/database/helper/getThemeColor';
 import { DEFAULT_THEME_COLOR } from '#utils/constants/common';
 
 export default async function Homepage () {
-	const themeColor = await getThemeColor();
+	const color = (await getThemeColor()) ?? DEFAULT_THEME_COLOR;
 	return (
 		<>
 			<head>
-				<script
-					dangerouslySetInnerHTML={{
-						__html: themeController('auto', themeColor ?? DEFAULT_THEME_COLOR),
-					}}
-					suppressHydrationWarning
-				/>
+				<script dangerouslySetInnerHTML={{ __html: themeController({ color }) }} suppressHydrationWarning />
 			</head>
 			<body>
 				<DashboardProvider>

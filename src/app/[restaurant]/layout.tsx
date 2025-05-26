@@ -10,7 +10,7 @@ export default async function RootLayout ({ children, params }: IRootProps) {
 	return (
 		<>
 			<head>
-				<script dangerouslySetInnerHTML={{ __html: themeController('auto', themeColor) }} suppressHydrationWarning />
+				<script dangerouslySetInnerHTML={{ __html: themeController({color: themeColor}) }} suppressHydrationWarning />
 			</head>
 			<body suppressHydrationWarning>
 				{ children }

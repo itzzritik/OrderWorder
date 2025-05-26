@@ -40,12 +40,7 @@ export default function Logout () {
 	return (
 		<>
 			<head>
-				<script
-					dangerouslySetInnerHTML={{
-						__html: themeController('auto', DEFAULT_THEME_COLOR),
-					}}
-					suppressHydrationWarning
-				/>
+				<script dangerouslySetInnerHTML={{ __html: themeController({color: DEFAULT_THEME_COLOR}) }} suppressHydrationWarning />
 			</head>
 		<body>
 			<Spinner fullpage label='Signing out...' />

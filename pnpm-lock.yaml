@@ -51,8 +51,8 @@ importers:
         specifier: ^2.3.3
         version: 2.3.3(react@19.1.0)
       xtreme-ui:
-        specifier: ^0.0.105
-        version: 0.0.105(@babel/runtime@7.27.1)(@types/react-dom@19.1.5(@types/react@19.1.5))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14)
+        specifier: ^0.0.110
+        version: 0.0.110(@babel/runtime@7.27.1)(@types/react-dom@19.1.5(@types/react@19.1.5))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14)
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.3.1
@@ -948,8 +948,8 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  '@floating-ui/react@0.27.8':
-    resolution: {integrity: sha512-EQJ4Th328y2wyHR3KzOUOoTW2UKjFk53fmyahfwExnFQ8vnsMYqKc+fFPOkeYtj5tcp1DUMiNJ7BFhed7e9ONw==}
+  '@floating-ui/react@0.27.9':
+    resolution: {integrity: sha512-Y0aCJBNtfVF6ikI1kVzA0WzSAhVBz79vFWOhvb5MLCRNODZ1ylGSLTuncchR7JsLyn9QzV6JD44DyZhhOtvpRw==}
     peerDependencies:
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
@@ -2205,8 +2205,8 @@ packages:
       typescript:
         optional: true
 
-  eslint-import-context@0.1.4:
-    resolution: {integrity: sha512-x3+etvB5TPxjFIq2m4tTnpt/9Ekp5GZKzXNp5ExLaS7Qv9E5BVs/Td7jxSnRtSzrgTCExXZlc0MuOdSuDLURiQ==}
+  eslint-import-context@0.1.5:
+    resolution: {integrity: sha512-jalO1mLiEvTv0io0koz1AE4LwkHQxDBFLaSXWweWtJR0y/NC1yyxvU61Z54bghIFNeM1M4TvwRwVRhLunQJ3gw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     peerDependencies:
       unrs-resolver: ^1.0.0
@@ -3891,8 +3891,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  xtreme-ui@0.0.105:
-    resolution: {integrity: sha512-hIqik3BgWDeUKHSbC000xFR26KtKRIA4ngObV5m8Yy7OpnPBywIbflpI7bMlyJjw/YDlPmVBmYEjcmEjHk7E9Q==}
+  xtreme-ui@0.0.110:
+    resolution: {integrity: sha512-QhBICJXIFDaWLVsjCcKQcpY87H0GMxzXRf6z8HF9SYIeZx+OKSb0G6BSp0UeN+Il6QQ9iZYwOEF88YRZ6kq5Lw==}
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
@@ -4864,7 +4864,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@floating-ui/react@0.27.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@floating-ui/react@0.27.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@floating-ui/react-dom': 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@floating-ui/utils': 0.2.9
@@ -6254,7 +6254,7 @@ snapshots:
       - eslint-plugin-import-x
       - supports-color
 
-  eslint-import-context@0.1.4(unrs-resolver@1.7.2):
+  eslint-import-context@0.1.5(unrs-resolver@1.7.2):
     dependencies:
       get-tsconfig: 4.10.1
       stable-hash: 0.0.5
@@ -6288,7 +6288,7 @@ snapshots:
     dependencies:
       debug: 4.4.1
       eslint: 9.27.0
-      eslint-import-context: 0.1.4(unrs-resolver@1.7.2)
+      eslint-import-context: 0.1.5(unrs-resolver@1.7.2)
       get-tsconfig: 4.10.1
       is-bun-module: 2.0.0
       stable-hash: 0.0.5
@@ -8196,9 +8196,9 @@ snapshots:
 
   ws@8.18.2: {}
 
-  xtreme-ui@0.0.105(@babel/runtime@7.27.1)(@types/react-dom@19.1.5(@types/react@19.1.5))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14):
+  xtreme-ui@0.0.110(@babel/runtime@7.27.1)(@types/react-dom@19.1.5(@types/react@19.1.5))(@types/react@19.1.5)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@8.6.14):
     dependencies:
-      '@floating-ui/react': 0.27.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@floating-ui/react': 0.27.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@lottiefiles/dotlottie-react': 0.13.5(react@19.1.0)
       '@storybook/preview-api': 8.6.14(storybook@8.6.14)
       '@uiw/react-color-alpha': 2.5.5(@babel/runtime@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
