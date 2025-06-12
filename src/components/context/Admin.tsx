@@ -25,6 +25,8 @@ const AdminDefault: TAdminInitialType = {
 	orderLoading: false,
 };
 
+const sortByDate = (a: any, b: any) => new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime();
+
 export const AdminContext = createContext(AdminDefault);
 export const AdminProvider = ({ children }: TAdminProviderProps) => {
 	const params = useSearchParams();
@@ -45,6 +47,8 @@ export const AdminProvider = ({ children }: TAdminProviderProps) => {
 		},
 		{ orderRequest: [], orderActive: [], orderHistory: [] },
 	) ?? {};
+
+	[orderRequest, orderActive, orderHistory].forEach(arr => arr.sort(sortByDate));
 
 	const orderAction = async (orderID: string, action: TOrderAction) => {
 		if (orderActionLoading) return;
