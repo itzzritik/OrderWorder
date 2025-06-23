@@ -48,7 +48,7 @@ export const AdminProvider = ({ children }: TAdminProviderProps) => {
 		{ orderRequest: [], orderActive: [], orderHistory: [] },
 	) ?? {};
 
-	[orderRequest, orderActive, orderHistory].forEach(arr => arr.sort(sortByDate));
+	[orderRequest, orderActive, orderHistory].forEach(arr => arr?.sort?.(sortByDate));
 
 	const orderAction = async (orderID: string, action: TOrderAction) => {
 		if (orderActionLoading) return;
