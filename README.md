@@ -112,5 +112,5 @@ Have ideas or improvements? Contributions via issues or pull requests are warmly
 
 
 ## License
-This project is dual-licensed under the **MIT License** and the **Apache License, Version 2.0**. You may choose either license to govern your use of the project.
-- **Apache License, Version 2.0**: See the [LICENSE-APACHE](LICENSE-APACHE) file for details.
+This project is licensed under the **Apache License, Version 2.0**.
+See the [LICENSE](LICENSE) file for details.
