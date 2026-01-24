@@ -48,7 +48,9 @@
 			position: absolute;
 			width: 500px;
 			border-radius: 18px;
-			box-shadow: 0 20px 40px rgb(0 0 0 / 20%), 0 20px 40px hsl(0deg 0 100% / 15%);
+			box-shadow:
+				0 20px 40px rgb(0 0 0 / 20%),
+				0 20px 40px hsl(0deg 0% 100% / 15%);
 			padding: 28px;
 			display: flex;
 			flex-direction: column;
@@ -74,9 +76,11 @@
 				flex-direction: column;
 				gap: 12px;
 
-				.email, .username, .password {
+				.email,
+				.username,
+				.password {
 					--iconSize: var(--inputHeight);
-	
+
 					position: relative;
 					width: 100%;
 
@@ -110,7 +114,9 @@
 						background: transparent;
 
 						span {
-							font-variation-settings: 'wdth' 75, 'wght' 600;
+							font-variation-settings:
+								'wdth' 75,
+								'wght' 600;
 						}
 					}
 				}
@@ -135,15 +141,18 @@
 					align-items: center;
 					justify-content: center;
 
-					> h3, > h4 {
+					> h3,
+					> h4 {
 						width: 100%;
 						font-size: 42px;
-						font-variation-settings: 'wdth' 75, 'wght' 300;;
+						font-variation-settings:
+							'wdth' 75,
+							'wght' 300;
 						text-align: left;
 						user-select: none;
 						margin: 0;
 					}
-		
+
 					> h4 {
 						font-size: 16px;
 						margin-top: 5px;
@@ -171,13 +180,17 @@
 						.name {
 							margin: 0;
 							font-size: 20px;
-							font-variation-settings: 'wdth' 75, 'wght' 600;
+							font-variation-settings:
+								'wdth' 75,
+								'wght' 600;
 						}
 
 						.address {
 							margin: 0;
 							font-size: 14px;
-							font-variation-settings: 'wdth' 75, 'wght' 400;
+							font-variation-settings:
+								'wdth' 75,
+								'wght' 400;
 						}
 					}
 				}
