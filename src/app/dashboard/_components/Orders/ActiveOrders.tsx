@@ -1,11 +1,11 @@
-import { UIEvent, useEffect, useState } from "react";
+import { type UIEvent, useEffect, useState } from "react";
 
 import SideSheet from "#components/base/SideSheet";
 import { useAdmin } from "#components/context/useContext";
 import ItemCard from "#components/layout/ItemCard";
 import NoContent from "#components/layout/NoContent";
-import { TMenu } from "#utils/database/models/menu";
-import { TOrder } from "#utils/database/models/order";
+import type { TMenu } from "#utils/database/models/menu";
+import type { TOrder } from "#utils/database/models/order";
 
 import OrderDetail from "./OrderDetail";
 import OrdersCard from "./OrdersCard";
@@ -32,7 +32,7 @@ const ActiveOrders = (props: TActiveOrdersProps) => {
 			setActiveCardID(orderActive[0]?._id.toString());
 			setActiveCardData(orderActive[0]);
 		}
-	}, [activeCardID, activeCardData, orderActive]);
+	}, [activeCardID, orderActive]);
 
 	return (
 		<div className="orders">
@@ -77,10 +77,9 @@ const ActiveOrders = (props: TActiveOrdersProps) => {
 				</div>
 			)}
 			<SideSheet title={[activeCardData ? `Table: ${activeCardData?.table}` : ""]} open={sideSheetOpen} setOpen={setSideSheetOpen}>
-				{activeCardData &&
-					activeCardData.products.map((product, key) => {
-						return <ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />;
-					})}
+				{activeCardData?.products.map((product, key) => {
+					return <ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />;
+				})}
 			</SideSheet>
 		</div>
 	);

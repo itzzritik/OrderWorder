@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import connectDB from "#utils/database/connect";
-import { Accounts, TAccount } from "#utils/database/models/account";
+import { Accounts, type TAccount } from "#utils/database/models/account";
 import { authOptions } from "#utils/helper/authHelper";
 import { CatchNextResponse } from "#utils/helper/common";
 import { verifyPassword } from "#utils/helper/passwordHelper";

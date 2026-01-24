@@ -1,6 +1,5 @@
-import { useEffect, useState, MouseEvent, Dispatch, SetStateAction, useRef } from "react";
-
 import { useRouter } from "next/navigation";
+import { type Dispatch, type MouseEvent, type SetStateAction, useEffect, useRef, useState } from "react";
 import { Button, useXTheme } from "xtreme-ui";
 
 import { scrollToSection } from "#utils/helper/common";

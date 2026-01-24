@@ -1,5 +1,5 @@
 import forEach from "lodash/forEach";
-import { ReadonlyURLSearchParams } from "next/navigation";
+import type { ReadonlyURLSearchParams } from "next/navigation";
 import { NextResponse } from "next/server";
 
 export const fetcher = (url: string) => fetch(url).then((r) => r.json());

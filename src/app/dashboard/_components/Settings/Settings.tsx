@@ -1,6 +1,5 @@
-import { UIEvent } from "react";
-
 import { useSearchParams } from "next/navigation.js";
+import type { UIEvent } from "react";
 
 import MenuEditor from "./MenuEditor/MenuEditor";
 import SettingsAccount from "./SettingsAccount";

@@ -1,7 +1,6 @@
-import mongoose, { HydratedDocument } from "mongoose";
+import mongoose, { type HydratedDocument } from "mongoose";
 
-import { Accounts, TAccount } from "./account";
-import { Profiles } from "./profile";
+import { Accounts, type TAccount } from "./account";
 
 const accountCache = new Map<string, TAccount | null>();
 

@@ -2,8 +2,7 @@ import pick from "lodash/pick";
 import { NextResponse } from "next/server";
 
 import connectDB from "#utils/database/connect";
-import { Accounts, TAccount } from "#utils/database/models/account";
-import { Profiles } from "#utils/database/models/profile";
+import { Accounts, type TAccount } from "#utils/database/models/account";
 import { CatchNextResponse } from "#utils/helper/common";
 
 export async function GET(req: Request) {

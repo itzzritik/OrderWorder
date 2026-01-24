@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-
 import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { Button, Lottie } from "xtreme-ui";
 
 import { useOrder } from "#components/context/useContext";
 import Collapsible from "#components/layout/Collapsible";
 import NoContent from "#components/layout/NoContent";
 import { getAnimSrc } from "#utils/constants/common";
-import { TMenu } from "#utils/database/models/menu.js";
+import type { TMenu } from "#utils/database/models/menu.js";
 
 import ItemCard from "../../../../components/layout/ItemCard";
 
@@ -55,7 +54,7 @@ const CartPage = (props: TCartPageProps) => {
 				return total + product.quantity * product.price;
 			}, 0),
 		);
-	}, [props.selectedProducts, selectedProducts]);
+	}, [selectedProducts]);
 
 	useEffect(() => {
 		const cancelAndSignout = async () => {

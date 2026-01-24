@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { Avatar, Button, Spinner } from "xtreme-ui";
 
 import { useAdmin } from "#components/context/useContext";

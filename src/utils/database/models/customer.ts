@@ -1,4 +1,4 @@
-import mongoose, { HydratedDocument } from "mongoose";
+import mongoose, { type HydratedDocument } from "mongoose";
 
 const gender = ["male", "female", "others"] as const;
 const CustomerSchema = new mongoose.Schema<TCustomer>(

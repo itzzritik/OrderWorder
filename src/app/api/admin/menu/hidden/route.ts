@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import connectDB from "#utils/database/connect";
-import { Menus, TMenu } from "#utils/database/models/menu";
+import { Menus, type TMenu } from "#utils/database/models/menu";
 import { authOptions } from "#utils/helper/authHelper";
 import { CatchNextResponse } from "#utils/helper/common";
 
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
 		if (!session) throw { status: 401, message: "Authentication Required" };
 		if (!itemId) throw { status: 400, message: "Menu item id is required" };
-		if (hidden == undefined) throw { status: 400, message: "Hidden value required" };
+		if (hidden === undefined) throw { status: 400, message: "Hidden value required" };
 
 		const menuItem = await Menus.findById<TMenu>(itemId);
 

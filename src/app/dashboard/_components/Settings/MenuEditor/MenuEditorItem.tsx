@@ -1,9 +1,7 @@
-import React from "react";
-
 import { useInView } from "react-intersection-observer";
 import { Button, Icon, useScreenType } from "xtreme-ui";
 
-import { TMenu } from "#utils/database/models/menu";
+import type { TMenu } from "#utils/database/models/menu";
 
 import "./menuEditorItem.scss";
 

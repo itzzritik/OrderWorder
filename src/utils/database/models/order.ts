@@ -1,7 +1,7 @@
-import mongoose, { HydratedDocument } from "mongoose";
+import mongoose, { type HydratedDocument } from "mongoose";
 
-import { TCustomer } from "./customer";
-import { TMenu } from "./menu";
+import type { TCustomer } from "./customer";
+import type { TMenu } from "./menu";
 
 const orderState = ["active", "reject", "cancel", "complete"] as const;
 const OrderSchema = new mongoose.Schema<TOrder>(

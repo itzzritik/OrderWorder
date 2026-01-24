@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import connectDB from "#utils/database/connect";
-import { Orders, TOrder } from "#utils/database/models/order";
+import { Orders, type TOrder } from "#utils/database/models/order";
 import { authOptions } from "#utils/helper/authHelper";
 import { CatchNextResponse } from "#utils/helper/common";
 

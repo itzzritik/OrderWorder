@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import connectDB from "#utils/database/connect";
-import { Menus, TMenu } from "#utils/database/models/menu";
-import { Orders, TOrder, TProduct } from "#utils/database/models/order";
+import { Menus, type TMenu } from "#utils/database/models/menu";
+import { Orders, type TOrder, type TProduct } from "#utils/database/models/order";
 import { authOptions } from "#utils/helper/authHelper";
 import { CatchNextResponse } from "#utils/helper/common";
 

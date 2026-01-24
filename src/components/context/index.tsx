@@ -1,8 +1,7 @@
 "use client";
 
-import { ReactNode, Suspense } from "react";
-
 import { SessionProvider } from "next-auth/react";
+import { type ReactNode, Suspense } from "react";
 import { XProvider } from "xtreme-ui";
 
 import { ToastManager } from "#components/base/ToastManager";

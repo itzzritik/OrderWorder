@@ -1,9 +1,8 @@
-import { createContext, ReactNode } from "react";
-
 import { usePathname } from "next/navigation";
+import { createContext, type ReactNode } from "react";
 import useSWR from "swr";
 
-import { TAccount } from "#utils/database/models/account";
+import type { TAccount } from "#utils/database/models/account";
 import { fetcher } from "#utils/helper/common";
 
 const RestaurantDefault: TRestaurantInitialType = {

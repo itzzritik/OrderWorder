@@ -1,6 +1,5 @@
-import { ReactNode } from "react";
-
 import clsx from "clsx";
+import type { ReactNode } from "react";
 import { Button } from "xtreme-ui";
 
 import "./modal.scss";

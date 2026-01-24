@@ -3,10 +3,9 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import connectDB from "#utils/database/connect";
-import { Accounts, TAccount } from "#utils/database/models/account";
-import { Menus, TMenu } from "#utils/database/models/menu";
-import { Profiles } from "#utils/database/models/profile";
-import { TTable, Tables } from "#utils/database/models/table";
+import { Accounts, type TAccount } from "#utils/database/models/account";
+import type { TMenu } from "#utils/database/models/menu";
+import type { TTable } from "#utils/database/models/table";
 import { authOptions } from "#utils/helper/authHelper";
 import { CatchNextResponse } from "#utils/helper/common";
 

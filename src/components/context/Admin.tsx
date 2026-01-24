@@ -1,14 +1,13 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
-
 import noop from "lodash/noop";
 import { useSearchParams } from "next/navigation";
+import { createContext, type ReactNode, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useSWR from "swr";
 
-import { TMenu } from "#utils/database/models/menu";
-import { TOrder } from "#utils/database/models/order";
-import { TProfile } from "#utils/database/models/profile";
-import { TTable } from "#utils/database/models/table";
+import type { TMenu } from "#utils/database/models/menu";
+import type { TOrder } from "#utils/database/models/order";
+import type { TProfile } from "#utils/database/models/profile";
+import type { TTable } from "#utils/database/models/table";
 import { fetcher } from "#utils/helper/common";
 
 const AdminDefault: TAdminInitialType = {
@@ -30,8 +29,8 @@ const sortByDate = (a: any, b: any) => new Date(b.updatedAt as string).getTime()
 export const AdminContext = createContext(AdminDefault);
 export const AdminProvider = ({ children }: TAdminProviderProps) => {
 	const params = useSearchParams();
-	const tab = params.get("tab");
-	const subTab = params.get("subTab");
+	const _tab = params.get("tab");
+	const _subTab = params.get("subTab");
 	const { data: { profile, menus = [], tables = [] } = {}, isLoading: profileLoading, mutate: profileMutate } = useSWR("/api/admin", fetcher);
 	const { data: orderData = [], isLoading: orderLoading, mutate } = useSWR("/api/admin/order", fetcher, { refreshInterval: 5000 });
 	const [orderActionLoading, setOrderActionLoading] = useState(false);
@@ -63,7 +62,7 @@ export const AdminProvider = ({ children }: TAdminProviderProps) => {
 
 	useEffect(() => {
 		mutate();
-	}, [tab, subTab, mutate]);
+	}, [mutate]);
 
 	return (
 		<AdminContext.Provider

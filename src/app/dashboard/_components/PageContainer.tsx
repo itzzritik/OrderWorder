@@ -1,8 +1,7 @@
 "use client";
 
-import { UIEvent, useEffect, useState } from "react";
-
 import { useSession } from "next-auth/react";
+import { type UIEvent, useEffect, useState } from "react";
 
 import { useQueryParams } from "#utils/hooks/useQueryParams";
 

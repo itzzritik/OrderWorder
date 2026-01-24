@@ -1,13 +1,12 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
-
 import noop from "lodash/noop";
 import pick from "lodash/pick";
 import { useSession } from "next-auth/react";
+import { createContext, type ReactNode, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useSWR from "swr";
 
-import { TMenu } from "#utils/database/models/menu";
-import { TOrder } from "#utils/database/models/order";
+import type { TMenu } from "#utils/database/models/menu";
+import type { TOrder } from "#utils/database/models/order";
 import { fetcher } from "#utils/helper/common";
 
 const OrderDefault: TOrderInitialType = {
@@ -54,7 +53,7 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 
 	useEffect(() => {
 		mutate();
-	}, [mutate, session.status]);
+	}, [mutate]);
 
 	return <OrderContext.Provider value={{ order, loading, placeOrder, placingOrder, cancelOrder, cancelingOrder }}>{children}</OrderContext.Provider>;
 };

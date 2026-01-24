@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 import { Icon } from "xtreme-ui";
 
 import QuantityButton from "#components/base/QuantityButton";
-import { TMenu } from "#utils/database/models/menu";
+import type { TMenu } from "#utils/database/models/menu";
 
 import "./menuCard.scss";
 

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { Accounts, TAccount } from "./account";
+import { Accounts, type TAccount } from "./account";
 
 const accountCache = new Map<string, TAccount | null>();
 

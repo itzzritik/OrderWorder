@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import { useEffect } from "react";
 import { Spinner, themeController } from "xtreme-ui";
 import { DEFAULT_THEME_COLOR } from "#utils/constants/common";
 

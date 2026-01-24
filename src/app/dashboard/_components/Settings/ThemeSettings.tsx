@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { toast } from "react-toastify";
-import { Spinner, Button, ThemePicker, useXTheme, isValidThemeColor, isEqual, useScreenType, ThemeSelect } from "xtreme-ui";
+import { Button, isEqual, isValidThemeColor, Spinner, ThemePicker, ThemeSelect, useScreenType, useXTheme } from "xtreme-ui";
 
 import { useAdmin } from "#components/context/useContext";
 

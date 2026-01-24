@@ -1,13 +1,10 @@
 import pick from "lodash/pick";
-import { AuthOptions } from "next-auth";
+import type { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import connectDB from "#utils/database/connect";
-import { Accounts, TAccount } from "#utils/database/models/account";
+import { Accounts, type TAccount } from "#utils/database/models/account";
 import { Customers } from "#utils/database/models/customer";
-import { Kitchens } from "#utils/database/models/kitchen";
-import { Profiles } from "#utils/database/models/profile";
-import { Tables } from "#utils/database/models/table";
 
 import { isEmailValid } from "./common";
 import { verifyPassword } from "./passwordHelper";

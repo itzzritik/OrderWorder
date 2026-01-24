@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-
 import { usePathname, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Textfield } from "xtreme-ui";
 

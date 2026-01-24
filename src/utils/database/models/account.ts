@@ -1,11 +1,11 @@
-import mongoose, { HydratedDocument } from "mongoose";
+import mongoose, { type HydratedDocument } from "mongoose";
 
 import { hashPassword } from "#utils/helper/passwordHelper";
 
-import { TKitchen } from "./kitchen";
-import { TMenu } from "./menu";
-import { TProfile } from "./profile";
-import { TTable } from "./table";
+import type { TKitchen } from "./kitchen";
+import type { TMenu } from "./menu";
+import type { TProfile } from "./profile";
+import type { TTable } from "./table";
 
 const AccountSchema = new mongoose.Schema<TAccount>(
 	{

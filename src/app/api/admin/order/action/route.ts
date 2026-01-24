@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import connectDB from "#utils/database/connect";
-import { Orders, TOrder } from "#utils/database/models/order";
+import { Orders, type TOrder } from "#utils/database/models/order";
 import { authOptions } from "#utils/helper/authHelper";
 import { CatchNextResponse } from "#utils/helper/common";
 
@@ -22,19 +22,19 @@ export async function POST(req: Request) {
 
 		if (!order) throw { status: 400, message: `Order with id: ${body?.orderID} not found` };
 
-		if (body.action == "accept")
+		if (body.action === "accept")
 			order.products.forEach((product) => {
 				product.adminApproved = true;
 			});
 
-		if (body.action == "reject") {
+		if (body.action === "reject") {
 			if (!order.products.some(({ adminApproved }) => adminApproved)) order.state = "reject";
 			else order.products = order.products.filter(({ adminApproved }) => adminApproved);
 		}
 
-		if (body.action == "rejectOnActive") order.state = "reject";
+		if (body.action === "rejectOnActive") order.state = "reject";
 
-		if (body.action == "complete") order.state = "complete";
+		if (body.action === "complete") order.state = "complete";
 
 		await order.save();
 

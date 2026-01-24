@@ -1,12 +1,11 @@
-import { useMemo, useState } from "react";
-
 import { useSearchParams } from "next/navigation";
+import { useMemo, useState } from "react";
 import { Button, Icon } from "xtreme-ui";
 
 import Collapsible from "#components/layout/Collapsible";
 import NoContent from "#components/layout/NoContent";
-import { TMenu } from "#utils/database/models/menu";
-import { TOrder } from "#utils/database/models/order";
+import type { TMenu } from "#utils/database/models/menu";
+import type { TOrder } from "#utils/database/models/order";
 
 import ItemCard from "../../../../components/layout/ItemCard";
 

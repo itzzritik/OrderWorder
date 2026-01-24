@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
-
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Avatar, Button, defaultColorPreset, Lottie, Textfield, useXTheme } from "xtreme-ui";
+import { Avatar, Button, Lottie, Textfield, useXTheme } from "xtreme-ui";
 
 import { useAdmin } from "#components/context/useContext";
 import { DEFAULT_THEME_COLOR, getAnimSrc } from "#utils/constants/common";
-import { TProfile } from "#utils/database/models/profile";
+import type { TProfile } from "#utils/database/models/profile";
 
 import "./loginSection.scss";
 
@@ -77,7 +76,7 @@ const LoginSection = () => {
 	useEffect(() => {
 		const newColor = profile?.themeColor ?? dashboard?.themeColor;
 		if (newColor) setThemeColor(profile?.themeColor ?? dashboard?.themeColor);
-	}, [profile, dashboard]);
+	}, [profile, dashboard, setThemeColor]);
 
 	return (
 		<section className="loginSection" id="homepage-login">

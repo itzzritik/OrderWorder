@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { isValidThemeColor } from "xtreme-ui";
 
 import connectDB from "#utils/database/connect";
-import { Profiles, TProfile } from "#utils/database/models/profile";
+import { Profiles, type TProfile } from "#utils/database/models/profile";
 import { authOptions } from "#utils/helper/authHelper";
 import { CatchNextResponse } from "#utils/helper/common";
 

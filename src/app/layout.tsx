@@ -1,8 +1,7 @@
-import { ReactNode } from "react";
-
+import type { ReactNode } from "react";
+import { Gliff } from "xtreme-ui";
 import { GlobalProvider } from "#components/context";
 import { montserrat } from "#utils/helper/fontHelper";
-import { Gliff } from "xtreme-ui";
 import "./globals.scss";
 
 export const metadata = {

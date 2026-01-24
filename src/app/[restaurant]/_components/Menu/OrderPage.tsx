@@ -1,13 +1,12 @@
-import { SyntheticEvent, UIEvent, useEffect, useMemo, useRef, useState } from "react";
-
 import { signOut, useSession } from "next-auth/react";
+import { type SyntheticEvent, type UIEvent, useEffect, useMemo, useRef, useState } from "react";
 import { ActionCard, Button, Icon, Spinner } from "xtreme-ui";
 
 import SearchButton from "#components/base/SearchButton";
 import SideSheet from "#components/base/SideSheet";
 import { useOrder, useRestaurant } from "#components/context/useContext";
 import Modal from "#components/layout/Modal";
-import { TMenu } from "#utils/database/models/menu";
+import type { TMenu } from "#utils/database/models/menu";
 import { useQueryParams } from "#utils/hooks/useQueryParams";
 
 import CartPage from "./CartPage";
@@ -127,11 +126,11 @@ const OrderPage = () => {
 	useEffect(() => {
 		params.set({ category: category.filter((e) => restaurant?.profile.categories.includes(e)).join(",") });
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [category, restaurant]);
+	}, [category, restaurant, params.set]);
 	useEffect(() => {
 		params.set({ search: searchValue });
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [searchValue]);
+	}, [searchValue, params.set]);
 
 	useEffect(() => {
 		setHasImageItems(filteredProducts?.some((product) => !!product.image) ?? false);
@@ -157,9 +156,7 @@ const OrderPage = () => {
 					<div className="options">
 						<SearchButton setSearchActive={setSearchActive} placeholder="Search menu" value={searchValue} setValue={setSearchValue} />
 						{(!session.data?.role || !showOrderButton) && <Button className="loginButton" label={showOrderButton ? "Order" : "Scan"} onClick={onLoginClick} />}
-						{eligibleToOrder && (
-							<Button icon="e43b" label={(selectedProducts?.length > 0 ? selectedProducts?.length : "") + ""} onClick={() => setSideSheetOpen(true)} />
-						)}
+						{eligibleToOrder && <Button icon="e43b" label={`${selectedProducts?.length > 0 ? selectedProducts?.length : ""}`} onClick={() => setSideSheetOpen(true)} />}
 						{session.data?.role === "admin" && (
 							<Button className="dashboardButton" label="Dashboard" icon="e09f" iconType="solid" onClick={() => params.router.push("/dashboard")} />
 						)}

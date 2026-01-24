@@ -1,6 +1,5 @@
-import { scrollToSection } from "#utils/helper/common";
-
 import { ThemeSelect } from "xtreme-ui";
+import { scrollToSection } from "#utils/helper/common";
 import "./navbar.scss";
 
 export default function Navbar({ menuOpen, setMenuOpen }: TNavBarProps) {
@@ -21,7 +20,7 @@ export default function Navbar({ menuOpen, setMenuOpen }: TNavBarProps) {
 								key={key}
 								className="item"
 								onClick={() => {
-									scrollToSection("homepage-" + item.toLowerCase().replace(/ /g, ""));
+									scrollToSection(`homepage-${item.toLowerCase().replace(/ /g, "")}`);
 									setMenuOpen(false);
 								}}>
 								<p>{item}</p>

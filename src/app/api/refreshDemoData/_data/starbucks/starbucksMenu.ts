@@ -1,4 +1,4 @@
-import { TMenu } from "#utils/database/models/menu";
+import type { TMenu } from "#utils/database/models/menu";
 
 /* eslint-disable max-len */
 const savouries = [

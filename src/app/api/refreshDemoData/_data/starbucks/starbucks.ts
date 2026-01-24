@@ -62,7 +62,7 @@ const kitchens = [
 
 const tables = Array.from({ length: 5 }, (_, i) => ({
 	restaurantID: "starbucks",
-	name: "Table " + i,
+	name: `Table ${i}`,
 	username: i.toString(),
 }));
 

@@ -1,10 +1,10 @@
-import React, { useState, useRef, UIEvent } from "react";
+import { type UIEvent, useRef, useState } from "react";
 
 import { toast } from "react-toastify";
 import { Button, Icon, Spinner } from "xtreme-ui";
 
 import { useAdmin } from "#components/context/useContext";
-import { TMenu } from "#utils/database/models/menu";
+import type { TMenu } from "#utils/database/models/menu";
 
 import MenuEditorItem from "./MenuEditorItem";
 import "./menuEditor.scss";
@@ -12,7 +12,7 @@ import "./menuEditor.scss";
 const MenuEditor = () => {
 	const { profile, menus, profileLoading, profileMutate } = useAdmin();
 	const [modalState, setModalState] = useState("");
-	const [editItem, setEditItem] = useState<TMenu>();
+	const [_editItem, setEditItem] = useState<TMenu>();
 	const [hideSettingsLoading, setHideSettingsLoading] = useState<string[]>([]);
 	const [category, setCategory] = useState(0);
 

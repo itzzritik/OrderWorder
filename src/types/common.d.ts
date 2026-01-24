@@ -15,7 +15,7 @@ declare global {
 
 	// eslint-disable-next-line no-var
 	var mongoose: {
-		promise: ReturnType<void | typeof connect>;
+		promise: ReturnType<undefined | typeof connect>;
 		conn: typeof _mongoose | null;
 	};
 }

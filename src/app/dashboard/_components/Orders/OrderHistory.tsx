@@ -1,10 +1,10 @@
-import { UIEvent, useEffect, useState } from "react";
+import { type UIEvent, useEffect, useState } from "react";
 
 import SideSheet from "#components/base/SideSheet";
 import { useAdmin } from "#components/context/useContext";
 import Invoice from "#components/layout/Invoice";
 import NoContent from "#components/layout/NoContent";
-import { TOrder } from "#utils/database/models/order";
+import type { TOrder } from "#utils/database/models/order";
 
 import OrdersCard from "./OrdersCard";
 
@@ -24,7 +24,7 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 			setActiveCardID(orderHistory[0]?._id.toString());
 			setActiveCardData(orderHistory[0]);
 		}
-	}, [activeCardID, activeCardData, orderHistory]);
+	}, [activeCardID, orderHistory]);
 
 	return (
 		<div className="orders">

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger */
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { themeController } from "xtreme-ui";
 
