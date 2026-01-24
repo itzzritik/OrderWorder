@@ -1,23 +1,20 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
-import { GlobalProvider } from '#components/context';
-import { montserrat } from '#utils/helper/fontHelper';
-
-import './globals.scss';
-import PreloadCss from '#components/base/PreloadCss';
+import { GlobalProvider } from "#components/context";
+import { montserrat } from "#utils/helper/fontHelper";
+import { Gliff } from "xtreme-ui";
+import "./globals.scss";
 
 export const metadata = {
-	title: 'OrderWorder',
+	title: "OrderWorder",
 };
-export default function RootLayout ({ children }: IRootProps) {
+export default function RootLayout({ children }: IRootProps) {
 	return (
-		<html lang='en' className={montserrat.variable} suppressHydrationWarning>
+		<html lang="en" className={montserrat.variable} suppressHydrationWarning>
 			<head>
-				<PreloadCss />
+				<Gliff next />
 			</head>
-			<GlobalProvider>
-				{ children }
-			</GlobalProvider>
+			<GlobalProvider>{children}</GlobalProvider>
 		</html>
 	);
 }

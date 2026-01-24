@@ -1,10 +1,10 @@
-import clsx from 'clsx';
-import { useInView } from 'react-intersection-observer';
+import clsx from "clsx";
+import { useInView } from "react-intersection-observer";
 
-import QuantityButton from '#components/base/QuantityButton';
-import { TMenu } from '#utils/database/models/menu';
+import QuantityButton from "#components/base/QuantityButton";
+import { TMenu } from "#utils/database/models/menu";
 
-import './itemCard.scss';
+import "./itemCard.scss";
 
 const ItemCard = (props: TItemCardProps) => {
 	const { className, item, staticCard, increaseQuantity, decreaseQuantity } = props;
@@ -13,49 +13,42 @@ const ItemCard = (props: TItemCardProps) => {
 		return item.quantity ? item.price * item.quantity : item.price;
 	};
 
-	const classList = clsx(
-		'itemCard',
-		className,
-		staticCard && 'staticCard',
-	);
+	const classList = clsx("itemCard", className, staticCard && "staticCard");
 
 	return (
 		<div className={classList} ref={cardRef}>
-			{
-				inView
-				&& <>
-					{
-						item.image
-						&& <div className='picture'>
+			{inView && (
+				<>
+					{item.image && (
+						<div className="picture">
 							<span style={{ background: `url(${item.image})` }} />
 						</div>
-					}
-					<div className='options'>
-						<p className='title'>{item.name}</p>
-						<div className='footer'>
-							<div className='price'>
-								{!staticCard && <p className='rupee'>{ getTotalPrice() }</p>}
-								{
-									staticCard && <p className='rupee'>
-										{ item.price } <span>✕</span> {item.quantity}
+					)}
+					<div className="options">
+						<p className="title">{item.name}</p>
+						<div className="footer">
+							<div className="price">
+								{!staticCard && <p className="rupee">{getTotalPrice()}</p>}
+								{staticCard && (
+									<p className="rupee">
+										{item.price} <span>✕</span> {item.quantity}
 									</p>
-								}
+								)}
 							</div>
-							{
-								staticCard
-									? <div className='totalAmount rupee'>{ getTotalPrice() }</div>
-									: (
-										<QuantityButton className='addToCart'
-											quantity={item.quantity}
-											increaseQuantity={() => increaseQuantity?.(item)}
-											decreaseQuantity={() => decreaseQuantity?.(item)}
-										/>
-									)
-							}
+							{staticCard ? (
+								<div className="totalAmount rupee">{getTotalPrice()}</div>
+							) : (
+								<QuantityButton
+									className="addToCart"
+									quantity={item.quantity}
+									increaseQuantity={() => increaseQuantity?.(item)}
+									decreaseQuantity={() => decreaseQuantity?.(item)}
+								/>
+							)}
 						</div>
 					</div>
 				</>
-			}
+			)}
 		</div>
 	);
 };
@@ -63,11 +56,11 @@ const ItemCard = (props: TItemCardProps) => {
 export default ItemCard;
 
 type TItemCardProps = {
-	className?: string
-	item: TMenuCustom
-	staticCard?: boolean
-	increaseQuantity?: (item: TMenuCustom) => void
-	decreaseQuantity?: (item: TMenuCustom) => void
-}
+	className?: string;
+	item: TMenuCustom;
+	staticCard?: boolean;
+	increaseQuantity?: (item: TMenuCustom) => void;
+	decreaseQuantity?: (item: TMenuCustom) => void;
+};
 
-type TMenuCustom = TMenu & {quantity: number}
+type TMenuCustom = TMenu & { quantity: number };

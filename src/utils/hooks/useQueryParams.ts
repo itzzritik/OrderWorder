@@ -1,6 +1,6 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { createQueryString } from '#utils/helper/common';
+import { createQueryString } from "#utils/helper/common";
 
 export const useQueryParams = () => {
 	const pathname = usePathname();
@@ -12,7 +12,7 @@ export const useQueryParams = () => {
 		router,
 		get: (v: string) => searchParams.get(v),
 		set: (query: Record<string, string>) => {
-			router.replace(pathname + '?' + createQueryString(searchParams, query));
+			router.replace(pathname + "?" + createQueryString(searchParams, query));
 		},
 	};
 };

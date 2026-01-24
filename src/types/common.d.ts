@@ -1,8 +1,8 @@
-import _mongoose, { connect } from 'mongoose';
+import _mongoose, { connect } from "mongoose";
 
 declare global {
-	declare module '*.svg' {
-		import { FC, SVGProps } from 'react';
+	declare module "*.svg" {
+		import { FC, SVGProps } from "react";
 
 		const SVG: FC<SVGProps<SVGSVGElement>>;
 		export default SVG;

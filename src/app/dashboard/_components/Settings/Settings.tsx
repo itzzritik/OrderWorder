@@ -1,25 +1,27 @@
-import { UIEvent } from 'react';
+import { UIEvent } from "react";
 
-import { useSearchParams } from 'next/navigation.js';
+import { useSearchParams } from "next/navigation.js";
 
-import MenuEditor from './MenuEditor/MenuEditor';
-import SettingsAccount from './SettingsAccount';
-import './settings.scss';
+import MenuEditor from "./MenuEditor/MenuEditor";
+import SettingsAccount from "./SettingsAccount";
+import "./settings.scss";
 
 const Settings = (props: TSettingsProps) => {
 	const { onScroll } = props;
 	const queryParams = useSearchParams();
-	const subTab = queryParams.get('subTab') ?? '';
+	const subTab = queryParams.get("subTab") ?? "";
 
 	return (
-		<div className='settings' onScroll={onScroll}>
-			{{
-				account: <SettingsAccount />,
+		<div className="settings" onScroll={onScroll}>
+			{
+				{
+					account: <SettingsAccount />,
 
-				menu: <MenuEditor />,
+					menu: <MenuEditor />,
 
-				// tables: <TableEditor showScrollBarAtRef={showScrollBarAtRef} />,
-			}[subTab]}
+					// tables: <TableEditor showScrollBarAtRef={showScrollBarAtRef} />,
+				}[subTab]
+			}
 		</div>
 	);
 };
@@ -27,5 +29,5 @@ const Settings = (props: TSettingsProps) => {
 export default Settings;
 
 export type TSettingsProps = {
-	onScroll: (event: UIEvent<HTMLDivElement>) => void
-}
+	onScroll: (event: UIEvent<HTMLDivElement>) => void;
+};

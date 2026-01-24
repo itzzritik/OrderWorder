@@ -1,10 +1,10 @@
-import { createContext, ReactNode } from 'react';
+import { createContext, ReactNode } from "react";
 
-import { usePathname } from 'next/navigation';
-import useSWR from 'swr';
+import { usePathname } from "next/navigation";
+import useSWR from "swr";
 
-import { TAccount } from '#utils/database/models/account';
-import { fetcher } from '#utils/helper/common';
+import { TAccount } from "#utils/database/models/account";
+import { fetcher } from "#utils/helper/common";
 
 const RestaurantDefault: TRestaurantInitialType = {
 	restaurant: undefined,
@@ -15,21 +15,17 @@ const RestaurantDefault: TRestaurantInitialType = {
 export const RestaurantContext = createContext(RestaurantDefault);
 export const RestaurantProvider = ({ children }: TRestaurantProviderProps) => {
 	const pathname = usePathname();
-	const { data: restaurant, error, isLoading } = useSWR(`/api/menu?id=${pathname.replace('/', '')}`, fetcher);
+	const { data: restaurant, error, isLoading } = useSWR(`/api/menu?id=${pathname.replace("/", "")}`, fetcher);
 
-	return (
-		<RestaurantContext.Provider value={{ restaurant, error, loading: isLoading }}>
-			{children}
-		</RestaurantContext.Provider>
-	);
+	return <RestaurantContext.Provider value={{ restaurant, error, loading: isLoading }}>{children}</RestaurantContext.Provider>;
 };
 
 export type TRestaurantProviderProps = {
-    children?: ReactNode
-}
+	children?: ReactNode;
+};
 
 export type TRestaurantInitialType = {
-	restaurant?: TAccount,
-	error: unknown,
-	loading: boolean,
-}
+	restaurant?: TAccount;
+	error: unknown;
+	loading: boolean;
+};

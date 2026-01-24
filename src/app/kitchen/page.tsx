@@ -1,13 +1,13 @@
-import { Lottie } from 'xtreme-ui';
+import { Lottie } from "xtreme-ui";
 
-import { getAnimSrc } from '#utils/constants/common';
+import { getAnimSrc } from "#utils/constants/common";
 
-import './kitchen.scss';
+import "./kitchen.scss";
 
 const Kitchen = () => {
 	return (
-		<div className='kitchen'>
-			<Lottie src={getAnimSrc('UnderConstruction')} size={450} />
+		<div className="kitchen">
+			<Lottie src={getAnimSrc("UnderConstruction")} size={450} />
 			<p>This page is under development</p>
 		</div>
 	);

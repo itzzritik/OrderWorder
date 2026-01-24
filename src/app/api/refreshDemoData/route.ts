@@ -1,26 +1,26 @@
-import connectDB from '#utils/database/connect';
-import { Accounts } from '#utils/database/models/account';
-import { Kitchens } from '#utils/database/models/kitchen';
-import { Menus } from '#utils/database/models/menu';
-import { Profiles } from '#utils/database/models/profile';
-import { Tables } from '#utils/database/models/table';
-import { CatchNextResponse } from '#utils/helper/common';
+import connectDB from "#utils/database/connect";
+import { Accounts } from "#utils/database/models/account";
+import { Kitchens } from "#utils/database/models/kitchen";
+import { Menus } from "#utils/database/models/menu";
+import { Profiles } from "#utils/database/models/profile";
+import { Tables } from "#utils/database/models/table";
+import { CatchNextResponse } from "#utils/helper/common";
 
-import empire from './_data/empire/empire';
-import starbucks from './_data/starbucks/starbucks';
+import empire from "./_data/empire/empire";
+import starbucks from "./_data/starbucks/starbucks";
 
 const deleteData = async (ids: string[]) => {
 	const start = performance.now();
 	const models = [
-		{ model: Menus, name: 'Menus' },
-		{ model: Kitchens, name: 'Kitchens' },
-		{ model: Profiles, name: 'Profiles' },
-		{ model: Tables, name: 'Tables' },
-		{ model: Accounts, name: 'Accounts', field: 'username' },
+		{ model: Menus, name: "Menus" },
+		{ model: Kitchens, name: "Kitchens" },
+		{ model: Profiles, name: "Profiles" },
+		{ model: Tables, name: "Tables" },
+		{ model: Accounts, name: "Accounts", field: "username" },
 	];
 
 	const results = await Promise.all(
-		models.map(async ({ model, name, field = 'restaurantID' }) => {
+		models.map(async ({ model, name, field = "restaurantID" }) => {
 			const res = await model.deleteMany({ [field]: { $in: ids } });
 			return { model: name, ...res };
 		}),
@@ -53,15 +53,12 @@ const createData = async (props: TDocumentData) => {
 	};
 };
 
-export async function GET () {
+export async function GET() {
 	await connectDB();
 	try {
 		const start = performance.now();
-		const deleteResult = await deleteData(['empire', 'starbucks']);
-		const [empireResult, starbucksResult] = await Promise.all([
-			createData(empire),
-			createData(starbucks),
-		]);
+		const deleteResult = await deleteData(["empire", "starbucks"]);
+		const [empireResult, starbucksResult] = await Promise.all([createData(empire), createData(starbucks)]);
 
 		const res = {
 			totalProcessTime: (performance.now() - start) / 1000,
@@ -70,18 +67,16 @@ export async function GET () {
 			starbucks: starbucksResult,
 		};
 		return new Response(JSON.stringify(res, null, 4));
-
-	}
-	catch (err) {
+	} catch (err) {
 		console.log(err);
 		return CatchNextResponse(err);
 	}
 }
 
 type TDocumentData = {
-	account: unknown,
-	profile: unknown,
-	menus: Array<unknown>,
-	kitchens: Array<unknown>,
-	tables: Array<unknown>
-}
+	account: unknown;
+	profile: unknown;
+	menus: Array<unknown>;
+	kitchens: Array<unknown>;
+	tables: Array<unknown>;
+};

@@ -1,11 +1,11 @@
-@import 'xtreme-ui/styles';
 @import 'react-toastify/dist/ReactToastify.css';
 @import '../utils/styles/templates/ripple';
 @import '../utils/styles/templates/rupee';
 @import '../utils/styles/templates/shake';
 
 html {
-	padding: 0; margin: 0;
+	padding: 0;
+	margin: 0;
 	background: var(--colorBackgroundPrimary);
 	overflow-x: hidden;
 	* {
@@ -20,8 +20,10 @@ html {
 }
 
 body {
-	width: 100dvw; height: 100dvh;
-	padding: 0; margin: 0;
+	width: 100dvw;
+	height: 100dvh;
+	padding: 0;
+	margin: 0;
 	background: var(--colorBackgroundPrimary);
 	overflow-x: hidden;
 }

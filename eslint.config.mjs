@@ -44,10 +44,7 @@ const eslintConfig = [
 		},
 		rules: {
 			...reactHooks.configs.recommended.rules,
-			"react-refresh/only-export-components": [
-				"warn",
-				{ allowConstantExport: true },
-			],
+			"react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
 			indent: ["error", "tab", { SwitchCase: 1 }],
 			"max-len": ["error", { code: 180 }],
 			"no-return-assign": ["off"],
@@ -143,10 +140,7 @@ const eslintConfig = [
 			"no-array-constructor": "error",
 			"max-nested-callbacks": "error",
 			"new-parens": "error",
-			"no-multiple-empty-lines": [
-				"error",
-				{ max: 1, maxEOF: 0, maxBOF: 0 },
-			],
+			"no-multiple-empty-lines": ["error", { max: 1, maxEOF: 0, maxBOF: 0 }],
 			"no-new-object": "error",
 			"no-whitespace-before-property": "error",
 			"object-curly-newline": "off",
@@ -191,17 +185,7 @@ const eslintConfig = [
 			"import/order": [
 				"error",
 				{
-					groups: [
-						"builtin",
-						"external",
-						"internal",
-						"parent",
-						"sibling",
-						"unknown",
-						"index",
-						"object",
-						"type",
-					],
+					groups: ["builtin", "external", "internal", "parent", "sibling", "unknown", "index", "object", "type"],
 					pathGroups: [
 						{ pattern: "react", group: "builtin" },
 						{ pattern: "react-native", group: "builtin" },
@@ -223,15 +207,13 @@ const eslintConfig = [
 					paths: [
 						{
 							name: "lodash",
-							message:
-								"Import [module] from lodash/[module] instead",
+							message: "Import [module] from lodash/[module] instead",
 						},
 					],
 					patterns: [
 						{
 							group: ["lodash/set"],
-							message:
-								"Import [module] from lodash/fp/[module] instead",
+							message: "Import [module] from lodash/fp/[module] instead",
 						},
 					],
 				},
