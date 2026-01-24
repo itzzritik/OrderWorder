@@ -28,7 +28,7 @@
 		"enabled": true,
 		"indentStyle": "tab",
 		"indentWidth": 4,
-		"lineWidth": 180,
+		"lineWidth": 170,
 		"formatWithErrors": true,
 		"bracketSpacing": true,
 		"bracketSameLine": true

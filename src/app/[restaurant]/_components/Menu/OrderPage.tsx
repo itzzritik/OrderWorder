@@ -155,8 +155,12 @@ const OrderPage = () => {
 					</h1>
 					<div className="options">
 						<SearchButton setSearchActive={setSearchActive} placeholder="Search menu" value={searchValue} setValue={setSearchValue} />
-						{(!session.data?.role || !showOrderButton) && <Button className="loginButton" label={showOrderButton ? "Order" : "Scan"} onClick={onLoginClick} />}
-						{eligibleToOrder && <Button icon="e43b" label={`${selectedProducts?.length > 0 ? selectedProducts?.length : ""}`} onClick={() => setSideSheetOpen(true)} />}
+						{(!session.data?.role || !showOrderButton) && (
+							<Button className="loginButton" label={showOrderButton ? "Order" : "Scan"} onClick={onLoginClick} />
+						)}
+						{eligibleToOrder && (
+							<Button icon="e43b" label={`${selectedProducts?.length > 0 ? selectedProducts?.length : ""}`} onClick={() => setSideSheetOpen(true)} />
+						)}
 						{session.data?.role === "admin" && (
 							<Button className="dashboardButton" label="Dashboard" icon="e09f" iconType="solid" onClick={() => params.router.push("/dashboard")} />
 						)}
@@ -208,7 +212,8 @@ const OrderPage = () => {
 													setShowInfo={(v) => setShowInfoCard(v)}
 													show={!!item.image}
 													quantity={
-														(selectedProducts.some((obj) => obj._id === item._id) && selectedProducts?.find((obj) => obj._id === item._id)?.quantity) ||
+														(selectedProducts.some((obj) => obj._id === item._id) &&
+															selectedProducts?.find((obj) => obj._id === item._id)?.quantity) ||
 														0
 													}
 												/>
@@ -232,7 +237,9 @@ const OrderPage = () => {
 											setShowInfo={(v) => setShowInfoCard(v)}
 											show={!!item.image}
 											quantity={
-												(selectedProducts.some((obj) => obj._id === item._id) && selectedProducts?.find((obj) => obj._id === item._id)?.quantity) || 0
+												(selectedProducts.some((obj) => obj._id === item._id) &&
+													selectedProducts?.find((obj) => obj._id === item._id)?.quantity) ||
+												0
 											}
 										/>
 									))}

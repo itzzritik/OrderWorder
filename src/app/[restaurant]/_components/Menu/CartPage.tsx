@@ -98,7 +98,13 @@ const CartPage = (props: TCartPageProps) => {
 		<div className="cartPage">
 			<div className="cartItems">
 				{order?.products?.length && approvedProducts && (
-					<Collapsible className="orderedProducts" round label="Order History" expand={showOrderHistory} setExpand={setShowOrderHistory} alert={order?.products?.length}>
+					<Collapsible
+						className="orderedProducts"
+						round
+						label="Order History"
+						expand={showOrderHistory}
+						setExpand={setShowOrderHistory}
+						alert={order?.products?.length}>
 						{order?.products.map((product, key) => {
 							return <ItemCard key={key} item={product as unknown as TMenuCustom} staticCard />;
 						})}

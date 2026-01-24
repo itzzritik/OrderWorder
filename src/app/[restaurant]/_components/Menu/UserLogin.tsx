@@ -81,7 +81,14 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 				<Textfield className="phone" type="phone" autoComplete="tel-local" value={phone} onEnterKey={onNext} onChange={(e) => setPhone(e.target.value)} />
 				<div className="otpContainer">
 					<Textfield className="fName" placeholder="First Name" autoComplete="given-name" value={fname} onChange={(e) => setFName(e.target.value)} />
-					<Textfield className="lName" placeholder="Last Name" autoComplete="family-name" onEnterKey={onNext} value={lname} onChange={(e) => setLName(e.target.value)} />
+					<Textfield
+						className="lName"
+						placeholder="Last Name"
+						autoComplete="family-name"
+						onEnterKey={onNext}
+						value={lname}
+						onChange={(e) => setLName(e.target.value)}
+					/>
 					{/* <Textfield
 						className='otp'
 						placeholder='Enter Your otp'

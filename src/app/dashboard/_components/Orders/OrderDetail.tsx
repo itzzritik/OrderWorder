@@ -71,7 +71,14 @@ const OrderDetail = (props: TOrderDetailProps) => {
 					}}
 					label={!reject ? "Reject" : "No Don't"}
 				/>
-				<Button className="accept" icon="f00c" iconType="solid" label={!reject ? "Accept" : "Yes do it!"} onClick={() => action(data._id.toString())} loading={busy} />
+				<Button
+					className="accept"
+					icon="f00c"
+					iconType="solid"
+					label={!reject ? "Accept" : "Yes do it!"}
+					onClick={() => action(data._id.toString())}
+					loading={busy}
+				/>
 			</div>
 		);
 	};

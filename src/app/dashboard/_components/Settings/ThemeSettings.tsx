@@ -46,7 +46,13 @@ const ThemeSettings = () => {
 				)}
 			</div>
 			<div className="colorPickerWrapper">
-				{loading ? <Spinner className="spinner" label="Applying theme" fullpage /> : isMobile ? <ThemeSelect size="default" withSwatch withScheme /> : <ThemePicker />}
+				{loading ? (
+					<Spinner className="spinner" label="Applying theme" fullpage />
+				) : isMobile ? (
+					<ThemeSelect size="default" withSwatch withScheme />
+				) : (
+					<ThemePicker />
+				)}
 			</div>
 		</div>
 	);
