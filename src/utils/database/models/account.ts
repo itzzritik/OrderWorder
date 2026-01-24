@@ -23,13 +23,8 @@ const AccountSchema = new mongoose.Schema<TAccount>(
 	{ timestamps: true },
 );
 
-AccountSchema.pre("save", async function (next) {
-	try {
-		if (this.isModified("password")) this.password = await hashPassword(this?.password);
-		next();
-	} catch (error) {
-		next(error);
-	}
+AccountSchema.pre("save", async function () {
+	if (this.isModified("password")) this.password = await hashPassword(this?.password);
 });
 
 export const Accounts = mongoose.models?.accounts ?? mongoose.model<TAccount>("accounts", AccountSchema);

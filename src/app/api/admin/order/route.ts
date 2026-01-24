@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import connectDB from "#utils/database/connect";
-import { Customers } from "#utils/database/models/customer";
-import { Menus } from "#utils/database/models/menu";
-import { Orders, type TOrder } from "#utils/database/models/order";
+import type { TCustomer } from "#utils/database/models/customer";
+import type { TMenu } from "#utils/database/models/menu";
+import { Orders, type TOrder, type TProduct } from "#utils/database/models/order";
 import { authOptions } from "#utils/helper/authHelper";
 import { CatchNextResponse } from "#utils/helper/common";
 
@@ -15,19 +15,29 @@ export async function GET() {
 		if (!session) throw { status: 401, message: "Authentication Required" };
 
 		const restaurantID = session?.username;
-		const orders: TOrder[] =
-			(await Orders.find<TOrder>({ restaurantID }).populate({ path: "customer", model: Customers }).populate({ path: "products.product", model: Menus })) ?? [];
+		const orders =
+			((await Orders.find({ restaurantID })
+				.populate<{ customer: TCustomer }>("customer")
+				.populate<{ products: { product: TMenu }[] }>("products.product")
+				.lean()) as unknown as TOrder[]) ?? [];
 
-		orders?.forEach?.((order) => {
-			if (order?.products)
-				order.products = order?.products?.map((product) => {
-					product = { ...product, ...product.product };
-					product.product = product?.product?.id;
-					return product;
+		const formattedOrders = orders.map((order) => {
+			if (order?.products) {
+				const products = order.products.map((p) => {
+					const product = p as unknown as TProduct;
+					const menu = product.product as unknown as TMenu;
+					return {
+						...product,
+						...menu,
+						product: menu?._id,
+					};
 				});
+				return { ...order, products: products as unknown as TProduct[] };
+			}
+			return order;
 		});
 
-		return NextResponse.json(orders);
+		return NextResponse.json(formattedOrders);
 	} catch (err) {
 		console.log(err);
 		return CatchNextResponse(err);

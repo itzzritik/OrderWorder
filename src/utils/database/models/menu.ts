@@ -23,20 +23,14 @@ const MenuSchema = new mongoose.Schema<TMenu>(
 	{ timestamps: true },
 );
 
-MenuSchema.pre("save", async function (next) {
-	try {
-		let account = accountCache.get(this.restaurantID);
-		if (!account) {
-			account = await Accounts.findOne<TAccount>({ username: this.restaurantID }).populate("profile");
-			if (account) accountCache.set(this.restaurantID, account);
-			else return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
-		}
-		if (!account?.profile?.categories?.includes(this.category)) return next(new Error("The menu item category does not exist."));
-
-		next();
-	} catch (error) {
-		next(error);
+MenuSchema.pre("save", async function () {
+	let account = accountCache.get(this.restaurantID);
+	if (!account) {
+		account = await Accounts.findOne<TAccount>({ username: this.restaurantID }).populate("profile");
+		if (account) accountCache.set(this.restaurantID, account);
+		else throw new Error(`The associated account with username '${this.restaurantID}'does not exist.`);
 	}
+	if (!account?.profile?.categories?.includes(this.category)) throw new Error("The menu item category does not exist.");
 });
 MenuSchema.post("save", async function () {
 	await Accounts.updateOne({ username: this.restaurantID }, { $addToSet: { menus: this._id } });

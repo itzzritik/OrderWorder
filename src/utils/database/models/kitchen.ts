@@ -15,20 +15,15 @@ const KitchenSchema = new mongoose.Schema<TKitchen>(
 	{ timestamps: true },
 );
 
-KitchenSchema.pre("save", async function (next) {
-	try {
-		let account = accountCache.get(this.restaurantID);
-		if (!account) {
-			account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
-			if (account) accountCache.set(this.restaurantID, account);
-			else return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
-		}
-
-		if (this.isModified("password")) this.password = await hashPassword(this.password);
-		next();
-	} catch (error) {
-		next(error);
+KitchenSchema.pre("save", async function () {
+	let account = accountCache.get(this.restaurantID);
+	if (!account) {
+		account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
+		if (account) accountCache.set(this.restaurantID, account);
+		else throw new Error(`The associated account with username '${this.restaurantID}'does not exist.`);
 	}
+
+	if (this.isModified("password")) this.password = await hashPassword(this.password);
 });
 
 KitchenSchema.post("save", async function () {

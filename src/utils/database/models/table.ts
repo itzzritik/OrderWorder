@@ -15,18 +15,12 @@ const TableSchema = new mongoose.Schema<TTable>(
 
 TableSchema.index({ username: 1, restaurantID: 1 }, { unique: true });
 
-TableSchema.pre("save", async function (next) {
-	try {
-		let account = accountCache.get(this.restaurantID);
-		if (!account) {
-			account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
-			if (account) accountCache.set(this.restaurantID, account);
-			else return next(new Error(`The associated account with username '${this.restaurantID}'does not exist.`));
-		}
-
-		next();
-	} catch (error) {
-		next(error);
+TableSchema.pre("save", async function () {
+	let account = accountCache.get(this.restaurantID);
+	if (!account) {
+		account = await Accounts.findOne<TAccount>({ username: this.restaurantID });
+		if (account) accountCache.set(this.restaurantID, account);
+		else throw new Error(`The associated account with username '${this.restaurantID}'does not exist.`);
 	}
 });
 TableSchema.post("save", async function () {

@@ -1,9 +1,9 @@
 import "next-auth";
 
-import { TAccount } from "#utils/database/models/account";
-import { TCustomer } from "#utils/database/models/customer";
-import { TProfile } from "#utils/database/models/profile";
-import { TTable } from "#utils/database/models/table";
+import type { TAccount } from "#utils/database/models/account";
+import type { TCustomer } from "#utils/database/models/customer";
+import type { TProfile } from "#utils/database/models/profile";
+import type { TTable } from "#utils/database/models/table";
 
 type AuthUser = Partial<
 	Omit<TAccount, "profile"> & {
