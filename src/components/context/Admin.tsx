@@ -24,7 +24,8 @@ const AdminDefault: TAdminInitialType = {
 	orderLoading: false,
 };
 
-const sortByDate = (a: any, b: any) => new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime();
+const sortByDate = (a: { updatedAt: string | number | Date }, b: { updatedAt: string | number | Date }) =>
+	new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
 
 export const AdminContext = createContext(AdminDefault);
 export const AdminProvider = ({ children }: TAdminProviderProps) => {

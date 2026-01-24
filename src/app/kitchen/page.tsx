@@ -1,7 +1,3 @@
-import { Lottie } from "xtreme-ui";
-
-import { getAnimSrc } from "#utils/constants/common";
-
 import "./kitchen.scss";
 
 const Kitchen = () => {

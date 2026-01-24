@@ -24,7 +24,7 @@ async function connectDB() {
 	if (cached.conn) return cached.conn;
 	if (!cached.promise) {
 		console.log("🌿 Connecting to Mongo Server");
-		cached.promise = connect(process.env.MONGODB_URI!, options)
+		cached.promise = connect(process.env.MONGODB_URI as string, options)
 			.then((mongoose) => {
 				console.log("🍃 Mongo Connection Established");
 				return mongoose;
