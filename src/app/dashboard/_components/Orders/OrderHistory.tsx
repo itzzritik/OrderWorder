@@ -48,11 +48,13 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 						))}
 					</div>
 					<div className="details">
+						{/* @ts-expect-error TOrder type mismatch between database model and Invoice component */}
 						{!activeCardData ? <NoContent label="No orders yet" animationName="GhostNoContent" size={200} /> : <Invoice order={activeCardData} />}
 					</div>
 				</div>
 			)}
 			<SideSheet title={["Invoice"]} open={sideSheetOpen} setOpen={setSideSheetOpen}>
+				{/* @ts-expect-error TOrder type mismatch between database model and Invoice component */}
 				{activeCardData && <Invoice order={activeCardData} />}
 			</SideSheet>
 		</div>

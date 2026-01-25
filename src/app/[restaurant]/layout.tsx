@@ -19,7 +19,7 @@ export default async function RootLayout({ children, params }: IRootProps) {
 
 interface IRootProps {
 	children?: ReactNode;
-	params: {
+	params: Promise<{
 		restaurant: string;
-	};
+	}>;
 }

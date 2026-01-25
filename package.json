@@ -3,9 +3,9 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "PORT=3050 next dev --turbopack",
-		"build:dev": "next build --turbopack",
-		"build": "next build --webpack",
+		"dev": "doppler run --command=\"PORT=3050 next dev\"",
+		"build:dev": "doppler run --command=\"next build\"",
+		"build": "next build",
 		"start": "next start",
 		"lint": "biome check",
 		"format": "biome format --write",
@@ -26,7 +26,8 @@
 		"react-toastify": "^11.0.5",
 		"sass": "^1.97.3",
 		"swr": "^2.3.8",
-		"xtreme-ui": "^0.0.127"
+		"xtreme-ui": "^0.0.127",
+		"zod": "^4.3.6"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.12",

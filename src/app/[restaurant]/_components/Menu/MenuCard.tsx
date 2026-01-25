@@ -29,7 +29,7 @@ const MenuCard = (props: TMenuCardProps) => {
 	if (!show) return null;
 
 	return (
-		<div className={classList + (!inView ? "blank" : "")} ref={cardRef}>
+		<div id={`menu-item-${item._id}`} className={classList + (!inView ? "blank" : "")} ref={cardRef}>
 			{inView && (
 				<>
 					{item.image && (
@@ -40,7 +40,7 @@ const MenuCard = (props: TMenuCardProps) => {
 					)}
 					{item.veg && (
 						<div className={`vegIcon ${item.veg}`}>
-							<Icon className="icon" type="duotone" size={16} code={vegIcon[item.veg]} />
+							<Icon className="icon" type="solid" size={16} code={vegIcon[item.veg]} />
 							<span className="label">{item.veg.replace(/-/g, " ")}</span>
 						</div>
 					)}

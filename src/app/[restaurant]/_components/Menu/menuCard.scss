@@ -41,8 +41,8 @@
 		.price {
 			padding: 5px 30px 5px 10px;
 		}
-	} 
-	
+	}
+
 	&.showInfo {
 		@include showInfo;
 	}
@@ -114,7 +114,9 @@
 		.vegIcon {
 			width: 30px;
 			height: 31px;
-			top: 18px; right: 18px; left: unset;
+			top: 18px;
+			right: 18px;
+			left: unset;
 			border-color: transparent;
 			background-color: transparent;
 			z-index: 1;
@@ -150,7 +152,8 @@
 		.description {
 			display: flex;
 			position: absolute;
-			top: 0; left: 0;
+			top: 0;
+			left: 0;
 			width: 100%;
 			height: 100%;
 			color: white;
@@ -159,7 +162,9 @@
 			opacity: 0;
 			justify-content: center;
 			font-size: 11px;
-			font-variation-settings: 'wdth' 75, 'wght' 300;
+			font-variation-settings:
+				'wdth' 75,
+				'wght' 300;
 			text-align: center;
 			align-items: center;
 			transition: opacity 0.2s ease-out;
@@ -168,7 +173,8 @@
 
 	.vegIcon {
 		position: absolute;
-		top: calc(var(--menuPictureHeight) - 30px); left: 16px;
+		top: calc(var(--menuPictureHeight) - 30px);
+		left: 16px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -216,7 +222,7 @@
 		.title {
 			display: flex;
 			margin: 0;
-            
+
 			> span {
 				flex-grow: 1;
 				text-overflow: ellipsis;
@@ -224,7 +230,9 @@
 				-webkit-line-clamp: 2;
 				-webkit-box-orient: vertical;
 				font-size: 12px;
-				font-variation-settings: 'wdth' 75, 'wght' 600;
+				font-variation-settings:
+					'wdth' 75,
+					'wght' 600;
 				overflow: hidden;
 				margin: 10px 10px 5px;
 			}
@@ -273,10 +281,13 @@
 
 	.price {
 		position: absolute;
-		top: calc(var(--menuPictureHeight) - 30px); right: -15px;
+		top: calc(var(--menuPictureHeight) - 30px);
+		right: -15px;
 		font-size: 12px;
 		margin: 0;
-		font-variation-settings: 'wdth' 75, 'wght' 500;
+		font-variation-settings:
+			'wdth' 75,
+			'wght' 500;
 		letter-spacing: 0.5px;
 		padding: 5px 20px 5px 10px;
 		color: white;
@@ -293,7 +304,8 @@
 		&::after {
 			content: '';
 			position: absolute;
-			top: -7px; right: 0;
+			top: -7px;
+			right: 0;
 			display: block;
 			width: 15px;
 			height: 7px;
@@ -338,4 +350,26 @@
 	.menuCard {
 		--menuPictureHeight: 200px;
 	}
+}
+
+@keyframes flash {
+	0% {
+		box-shadow: 0 0 0 0 hsl(var(--colorBrandPrimary) / 0.7);
+		border: 2px solid hsl(var(--colorBrandPrimary) / 0.7);
+	}
+	70% {
+		transform: scale(1.05);
+		box-shadow: 0 0 20px 10px hsl(var(--colorBrandPrimary) / 0);
+		border: 2px solid hsl(var(--colorBrandPrimary) / 0);
+	}
+	100% {
+		transform: scale(1);
+		box-shadow: 0 0 0 0 hsl(var(--colorBrandPrimary) / 0);
+		border: 2px solid transparent;
+	}
+}
+
+.menuCard.flash {
+	animation: flash 1s ease-out;
+	z-index: 10;
 }

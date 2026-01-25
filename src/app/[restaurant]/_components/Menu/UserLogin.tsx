@@ -1,5 +1,6 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Textfield } from "xtreme-ui";
@@ -78,16 +79,29 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 				</span>
 			</div>
 			<div className="content">
-				<Textfield className="phone" type="phone" autoComplete="tel-local" value={phone} onEnterKey={onNext} onChange={(e) => setPhone(e.target.value)} />
+				<Textfield
+					className="phone"
+					type="phone"
+					autoComplete="tel-local"
+					value={phone}
+					onEnterKey={onNext}
+					onChange={(e: ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
+				/>
 				<div className="otpContainer">
-					<Textfield className="fName" placeholder="First Name" autoComplete="given-name" value={fname} onChange={(e) => setFName(e.target.value)} />
+					<Textfield
+						className="fName"
+						placeholder="First Name"
+						autoComplete="given-name"
+						value={fname}
+						onChange={(e: ChangeEvent<HTMLInputElement>) => setFName(e.target.value)}
+					/>
 					<Textfield
 						className="lName"
 						placeholder="Last Name"
 						autoComplete="family-name"
 						onEnterKey={onNext}
 						value={lname}
-						onChange={(e) => setLName(e.target.value)}
+						onChange={(e: ChangeEvent<HTMLInputElement>) => setLName(e.target.value)}
 					/>
 					{/* <Textfield
 						className='otp'

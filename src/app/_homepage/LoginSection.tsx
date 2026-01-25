@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
+import type { ChangeEvent } from "react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Avatar, Button, Lottie, Textfield, useXTheme } from "xtreme-ui";
@@ -96,7 +97,7 @@ const LoginSection = () => {
 							placeholder="Enter your email"
 							onEnterKey={onNext}
 							value={email}
-							onChange={(e) => setEmail(e.target.value)}
+							onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
 						/>
 					</div>
 					<div className="loginAction">
@@ -128,7 +129,7 @@ const LoginSection = () => {
 									icon="f86b"
 									placeholder="Enter kitchen username"
 									value={kitchenUsername}
-									onChange={(e) => setKitchenUsername(e.target.value)}
+									onChange={(e: ChangeEvent<HTMLInputElement>) => setKitchenUsername(e.target.value)}
 								/>
 								<Textfield
 									type="password"
@@ -136,7 +137,7 @@ const LoginSection = () => {
 									placeholder={`Enter ${showKitchen ? "kitchen" : "admin"} password`}
 									onEnterKey={onNext}
 									value={password}
-									onChange={(e) => setPassword(e.target.value)}
+									onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
 								/>
 							</div>
 							<div className="loginAction">

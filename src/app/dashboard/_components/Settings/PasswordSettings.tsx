@@ -1,3 +1,4 @@
+import type { ChangeEvent } from "react";
 import { useState } from "react";
 
 import { toast } from "react-toastify";
@@ -101,7 +102,7 @@ const PasswordSettings = () => {
 						type="password"
 						onEnterKey={onPasswordKeyPress}
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
 					/>
 				) : (
 					<>
@@ -111,7 +112,7 @@ const PasswordSettings = () => {
 							type="password"
 							onEnterKey={onNewPasswordKeyPress}
 							value={newPassword}
-							onChange={(e) => setNewPassword(e.target.value)}
+							onChange={(e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}
 						/>
 
 						<Textfield
@@ -120,7 +121,7 @@ const PasswordSettings = () => {
 							type="password"
 							onEnterKey={onNewPasswordKeyPress}
 							value={newConfPassword}
-							onChange={(e) => setNewConfPassword(e.target.value)}
+							onChange={(e: ChangeEvent<HTMLInputElement>) => setNewConfPassword(e.target.value)}
 						/>
 					</>
 				)}

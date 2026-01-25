@@ -1,5 +1,4 @@
 import { capitalize } from "xtreme-ui";
-
 import { CustomerProvider } from "#components/context";
 import NavSideBar from "#components/layout/NavSideBar";
 

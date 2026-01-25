@@ -11,7 +11,7 @@ const ThemeSettings = () => {
 	const { profile, profileMutate } = useAdmin();
 	const { themeColor, setThemeColor } = useXTheme();
 	const { isMobile } = useScreenType({
-		mobile: "(max-width: 779px)",
+		mobile: 779,
 	});
 
 	const [loading, setLoading] = useState(false);
