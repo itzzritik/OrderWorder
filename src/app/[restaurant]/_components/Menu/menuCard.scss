@@ -348,20 +348,20 @@
 	}
 }
 
-@keyframes shimmer-flash {
+@keyframes flashCard {
 	0% {
-		box-shadow: 0 0 0 0 hsl(var(--colorBrandPrimary) / 0.7);
 		transform: scale(1);
+		box-shadow: 0 0 0 0 hsl(var(--colorBrandPrimary) / 0.7);
 		border-color: hsl(var(--colorBrandPrimary));
 		z-index: 10;
 	}
 	10% {
-		transform: scale(1.2);
-		box-shadow: 0 0 40px 15px hsl(var(--colorBrandPrimary) / 0.5);
+		transform: scale(1.5);
+		box-shadow: 0 0 50px 20px hsl(var(--colorBrandPrimary) / 0.5);
 	}
 	90% {
-		transform: scale(1.2);
-		box-shadow: 0 0 40px 15px hsl(var(--colorBrandPrimary) / 0.5);
+		transform: scale(1.5);
+		box-shadow: 0 0 50px 20px hsl(var(--colorBrandPrimary) / 0.5);
 	}
 	100% {
 		transform: scale(1);
@@ -371,7 +371,7 @@
 	}
 }
 
-@keyframes shimmer-sweep {
+@keyframes shimmer {
 	0% {
 		background-position: 200% center;
 	}
@@ -381,7 +381,7 @@
 }
 
 .menuCard.flash {
-	animation: shimmer-flash 1s ease-out forwards;
+	animation: flashCard 1.5s ease-in-out forwards;
 	position: relative;
 
 	&::after {
@@ -391,7 +391,7 @@
 		border-radius: 20px;
 		background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
 		background-size: 200% 100%;
-		animation: shimmer-sweep 1.5s linear infinite;
+		animation: shimmer 1.2s linear 0.15s 1 forwards;
 		pointer-events: none;
 		z-index: 12;
 		mix-blend-mode: overlay;

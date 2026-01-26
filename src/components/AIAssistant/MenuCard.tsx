@@ -2,11 +2,10 @@ import type { MenuSuggestion } from "../../types/chat";
 
 export function MenuCard({ item }: MenuCardProps) {
 	const handleClick = () => {
-		const element = document.getElementById(`menu-item-${item._id}`);
-		if (element) {
-			element.scrollIntoView({ behavior: "smooth", block: "center" });
-			element.classList.add("flash");
-			setTimeout(() => element.classList.remove("flash"), 1000);
+		const el = document.getElementById(`menu-item-${item._id}`);
+		if (el) {
+			el.scrollIntoView({ behavior: "smooth", block: "center" });
+			window.dispatchEvent(new CustomEvent("highlight-item", { detail: { id: String(item._id) } }));
 		}
 	};
 
