@@ -1,5 +1,5 @@
 import { capitalize } from "xtreme-ui";
-import { ChatInterface } from "#components/AIAssistant/ChatInterface";
+import { ChatInterface } from "#components/chatbot/Chat";
 import { CustomerProvider } from "#components/context";
 import NavSideBar from "#components/layout/NavSideBar";
 
