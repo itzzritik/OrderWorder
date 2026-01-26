@@ -6,20 +6,19 @@ import type { TMenu } from "#utils/database/models/menu";
 
 export async function POST(req: Request) {
 	try {
-		const { messages } = await req.json();
-		const url = new URL(req.url);
+		const { messages, restaurantId } = await req.json();
+		if (!restaurantId) return Response.json({ text: "Restaurant ID is required", toolResults: [] }, { status: 400 });
 
-		const id = url.searchParams.get("restaurantId") || "starbucks";
-		const provider = url.searchParams.get("provider") || "groq";
-		const name = id.replace(/\b\w/g, (c) => c.toUpperCase()).replace(/[-_]/g, " ");
+		const name = restaurantId.replace(/\b\w/g, (c: string) => c.toUpperCase()).replace(/[-_]/g, " ");
+		const account = await getRestaurantData(restaurantId).catch(() => null);
 
-		const account = await getRestaurantData(id).catch(() => null);
+		if (!account) return Response.json({ text: `Restaurant '${name}' not found`, toolResults: [] }, { status: 404 });
+
 		const items: TMenu[] = account?.menus || [];
-
 		const menuMap = new Map(items.map((i) => [i.name.toLowerCase(), i]));
 
 		const result = await generateText({
-			model: getModel(provider),
+			model: getModel("groq"),
 			system: getSystemPrompt(name, items),
 			messages,
 		});
