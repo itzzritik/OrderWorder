@@ -1,4 +1,5 @@
 import { capitalize } from "xtreme-ui";
+import { ChatInterface } from "#components/AIAssistant/ChatInterface";
 import { CustomerProvider } from "#components/context";
 import NavSideBar from "#components/layout/NavSideBar";
 
@@ -21,12 +22,15 @@ export async function generateMetadata({ params, searchParams }: IMetaDataProps)
 	};
 }
 
-const Restaurant = () => {
+const Restaurant = async ({ params }: { params: { restaurant: string } }) => {
+	const { restaurant } = await params;
+
 	return (
 		<CustomerProvider>
 			<div className="restaurant">
 				<NavSideBar navItems={navItems} defaultTab="menu" foot />
 				<PageContainer />
+				<ChatInterface restaurantId={restaurant} />
 			</div>
 		</CustomerProvider>
 	);

@@ -80,6 +80,7 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 			</div>
 			<div className="content">
 				<Textfield
+					id="user-login-phone"
 					className="phone"
 					type="phone"
 					autoComplete="tel-local"
@@ -89,6 +90,7 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 				/>
 				<div className="otpContainer">
 					<Textfield
+						id="user-login-fname"
 						className="fName"
 						placeholder="First Name"
 						autoComplete="given-name"
@@ -96,6 +98,7 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 						onChange={(e: ChangeEvent<HTMLInputElement>) => setFName(e.target.value)}
 					/>
 					<Textfield
+						id="user-login-lname"
 						className="lName"
 						placeholder="Last Name"
 						autoComplete="family-name"

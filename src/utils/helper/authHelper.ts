@@ -39,7 +39,7 @@ export const authOptions: AuthOptions = {
 						id: account._id.toString(),
 						role: "kitchen",
 						themeColor: account?.profile?.themeColor,
-						...account,
+						_doc: account as unknown as TAccount, // using account as the doc
 					};
 				} else {
 					if (!(await verifyPassword(cred?.password, account?.password))) throw new Error("Invalid admin credentials");
@@ -48,7 +48,7 @@ export const authOptions: AuthOptions = {
 						id: account._id.toString(),
 						role: "admin",
 						themeColor: account?.profile?.themeColor,
-						...account,
+						_doc: account as unknown as TAccount,
 					};
 				}
 			},
@@ -87,16 +87,20 @@ export const authOptions: AuthOptions = {
 				if (!account?.tables?.some?.(({ username }: { username: string }) => username === cred?.table)) throw new Error("Invalid table id");
 
 				return {
-					id: "",
+					id: customer._id.toString(), // Use customer ID or empty string if suitable
 					role: "customer",
-					customer,
 					themeColor: account?.profile?.themeColor,
-					restaurant: {
-						username: account?.profile?.restaurantID,
-						table: cred?.table,
-						name: account?.profile?.name,
-						avatar: account?.profile?.avatar,
-					},
+					_doc: {
+						role: "customer",
+						customer: customer,
+						restaurant: {
+							username: account?.profile?.restaurantID,
+							table: cred?.table,
+							name: account?.profile?.name,
+							avatar: account?.profile?.avatar,
+						},
+						// biome-ignore lint/suspicious/noExplicitAny: Complex type matching
+					} as any,
 				};
 			},
 		}),
@@ -124,7 +128,7 @@ export const authOptions: AuthOptions = {
 
 			if (account?.provider === "customer") {
 				if (user) {
-					token.user = user;
+					token.user = user._doc;
 				}
 			}
 			return token;

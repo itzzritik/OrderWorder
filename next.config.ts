@@ -20,6 +20,10 @@ const nextConfig: NextConfig = {
 				protocol: "https",
 				hostname: "*.githubusercontent.com",
 			},
+			{
+				protocol: "https",
+				hostname: "b.zmtcdn.com",
+			},
 		],
 	},
 	turbopack: {

@@ -6,11 +6,31 @@
 	display: flex;
 	overflow: hidden;
 	padding-left: var(--navIconSize);
-	
+
 	.pageContainer {
 		flex-grow: 1;
 		overflow: hidden;
 	}
+}
+
+@keyframes highlightPulse {
+	0% {
+		box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+		transform: scale(1);
+	}
+	50% {
+		box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+		transform: scale(1.02);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+		transform: scale(1);
+	}
+}
+
+.highlight-pulse {
+	animation: highlightPulse 1s ease-in-out 2;
+	border-color: #667eea !important;
 }
 
 @media (width <= 750px) {

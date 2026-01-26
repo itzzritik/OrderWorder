@@ -13,7 +13,11 @@
 		"clean": "rm -rf node_modules pnpm-lock.yaml .next && pnpm install"
 	},
 	"dependencies": {
+		"@ai-sdk/cerebras": "^2.0.20",
+		"@ai-sdk/google": "^3.0.13",
+		"@ai-sdk/groq": "^3.0.15",
 		"@react-pdf/renderer": "^4.3.2",
+		"ai": "^6.0.49",
 		"bcrypt": "^6.0.0",
 		"clsx": "^2.1.1",
 		"lodash": "^4.17.23",
