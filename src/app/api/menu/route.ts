@@ -2,8 +2,7 @@ import omit from "lodash/omit";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
-import connectDB from "#utils/database/connect";
-import { Accounts, type TAccount } from "#utils/database/models/account";
+import { getRestaurantData } from "#utils/database/helper/account";
 import type { TMenu } from "#utils/database/models/menu";
 import type { TTable } from "#utils/database/models/table";
 import { authOptions } from "#utils/helper/authHelper";
@@ -19,8 +18,7 @@ export async function GET(req: Request) {
 		}
 		if (!username) throw { status: 400, message: "Restaurant id is required to fetch menu" };
 
-		await connectDB();
-		const account = await Accounts.findOne<TAccount>({ username }).populate("profile").populate("tables").populate("menus").lean();
+		const account = await getRestaurantData(username);
 		if (!account) throw { status: 404, message: `Account with restaurant id: ${username} is not found` };
 
 		return NextResponse.json({

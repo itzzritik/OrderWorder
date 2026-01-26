@@ -186,13 +186,9 @@
 		&.veg .icon {
 			color: rgb(var(--colorAlertSuccessRGB));
 		}
-
-		/* stylelint-disable-next-line selector-class-pattern */
 		&.non-veg .icon {
 			color: rgb(var(--colorAlertErrorRGB));
 		}
-
-		/* stylelint-disable-next-line selector-class-pattern */
 		&.contains-egg .icon {
 			color: rgb(var(--colorAlertWarningRGB));
 		}
@@ -352,24 +348,52 @@
 	}
 }
 
-@keyframes flash {
+@keyframes shimmer-flash {
 	0% {
 		box-shadow: 0 0 0 0 hsl(var(--colorBrandPrimary) / 0.7);
-		border: 2px solid hsl(var(--colorBrandPrimary) / 0.7);
+		transform: scale(1);
+		border-color: hsl(var(--colorBrandPrimary));
+		z-index: 10;
 	}
-	70% {
-		transform: scale(1.05);
-		box-shadow: 0 0 20px 10px hsl(var(--colorBrandPrimary) / 0);
-		border: 2px solid hsl(var(--colorBrandPrimary) / 0);
+	10% {
+		transform: scale(1.2);
+		box-shadow: 0 0 40px 15px hsl(var(--colorBrandPrimary) / 0.5);
+	}
+	90% {
+		transform: scale(1.2);
+		box-shadow: 0 0 40px 15px hsl(var(--colorBrandPrimary) / 0.5);
 	}
 	100% {
 		transform: scale(1);
 		box-shadow: 0 0 0 0 hsl(var(--colorBrandPrimary) / 0);
-		border: 2px solid transparent;
+		border-color: transparent;
+		z-index: 1;
+	}
+}
+
+@keyframes shimmer-sweep {
+	0% {
+		background-position: 200% center;
+	}
+	100% {
+		background-position: -200% center;
 	}
 }
 
 .menuCard.flash {
-	animation: flash 1s ease-out;
-	z-index: 10;
+	animation: shimmer-flash 1s ease-out forwards;
+	position: relative;
+
+	&::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: 20px;
+		background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
+		background-size: 200% 100%;
+		animation: shimmer-sweep 1.5s linear infinite;
+		pointer-events: none;
+		z-index: 12;
+		mix-blend-mode: overlay;
+	}
 }

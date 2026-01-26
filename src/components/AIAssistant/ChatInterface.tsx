@@ -119,7 +119,7 @@ export function ChatInterface({ restaurantId, provider = "groq" }: ChatProps) {
 											{message.toolResults.map((items, idx) => (
 												<div key={idx} className="menu-suggestions">
 													{items.map((item) => (
-														<MenuCard key={item._id} item={item} restaurantId={restaurantId} />
+														<MenuCard key={item._id} item={item} />
 													))}
 												</div>
 											))}
