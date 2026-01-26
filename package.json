@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"play": "next dev",
 		"dev": "doppler run --command=\"PORT=3050 next dev\"",
 		"build:dev": "doppler run --command=\"next build\"",
 		"build": "next build",
