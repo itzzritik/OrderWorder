@@ -1,13 +1,18 @@
 import { generateText } from "ai";
+import { getServerSession } from "next-auth";
 import { getModel } from "#utils/ai/config";
 import { getSystemPrompt } from "#utils/ai/prompt";
 import { getRestaurantData } from "#utils/database/helper/account";
 import type { TMenu } from "#utils/database/models/menu";
+import { authOptions } from "#utils/helper/authHelper";
 
 export async function POST(req: Request) {
 	try {
 		const { messages, restaurantId } = await req.json();
 		if (!restaurantId) return Response.json({ text: "Restaurant ID is required", toolResults: [] }, { status: 400 });
+
+		const session = await getServerSession(authOptions);
+		if (!session) return Response.json({ text: "Please login to chat with Jarvis", toolResults: [] }, { status: 401 });
 
 		const name = restaurantId.replace(/\b\w/g, (c: string) => c.toUpperCase()).replace(/[-_]/g, " ");
 		const account = await getRestaurantData(restaurantId).catch(() => null);
@@ -19,7 +24,7 @@ export async function POST(req: Request) {
 
 		const result = await generateText({
 			model: getModel("groq"),
-			system: getSystemPrompt(name, items),
+			system: getSystemPrompt(name, items, session?.customer?.fname),
 			messages,
 		});
 

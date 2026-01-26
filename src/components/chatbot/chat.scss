@@ -165,9 +165,10 @@
 .chat-header-content {
 	display: flex;
 	align-items: center;
-	gap: 0.75rem;
+	gap: 0.5rem;
 
 	h3 {
+		color: white;
 		margin: 0;
 		font-size: 1.25rem;
 		font-weight: 600;
@@ -176,15 +177,16 @@
 }
 
 .chat-avatar {
-	width: 2.5rem;
-	height: 2.5rem;
+	width: 3rem;
+	height: 3rem;
 	border-radius: 999px;
-	background: var(--colorBackgroundPrimary);
-	color: hsl(var(--colorBrandPrimary));
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+	i {
+		color: white;
+	}
 }
 
 .chat-messages {
@@ -282,7 +284,7 @@
 	padding: 0.875rem 1.125rem;
 	border-radius: 1.125rem 1.125rem 0.25rem 1.125rem;
 	background: linear-gradient(135deg, hsl(var(--colorBrandPrimary)) 0%, hsl(var(--colorBrandPrimary) / 0.9) 100%);
-	color: var(--colorBackgroundPrimary);
+	color: white;
 	font-size: 0.9375rem;
 	line-height: 1.5;
 	font-weight: 400;

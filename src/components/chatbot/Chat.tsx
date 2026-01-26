@@ -1,5 +1,6 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { type FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Button, Icon, Textfield } from "xtreme-ui";
 import type { ChatMessage, ChatProps, MenuSuggestion } from "../../types/chat";
@@ -37,6 +38,8 @@ const createMessage = (role: "user" | "assistant", content: string, toolResults?
 };
 
 export const ChatInterface = ({ restaurantId }: ChatProps) => {
+	const session = useSession();
+	const isAuthenticated = session.status === "authenticated";
 	const [isOpen, setIsOpen] = useState(false);
 	const [input, setInput] = useState("");
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -54,17 +57,14 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 
 	const scrollToBottom = useCallback(() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }), []);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Scroll on message change
 	useEffect(() => {
 		scrollToBottom();
-	}, [scrollToBottom]);
+	}, [messages, scrollToBottom]);
 
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault();
-		if (!input.trim() || isLoading) return;
-
-		const userMessage = createMessage("user", input);
+	const sendMessage = async (messageContent: string) => {
+		const userMessage = createMessage("user", messageContent);
 		setMessages((prev) => [...prev, userMessage]);
-		setInput("");
 		setIsLoading(true);
 
 		try {
@@ -79,11 +79,27 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 		}
 	};
 
+	const handleSubmit = async (e: FormEvent) => {
+		e.preventDefault();
+		if (!input.trim() || isLoading) return;
+
+		const messageContent = input;
+		setInput("");
+		await sendMessage(messageContent);
+	};
+
+	const handleFabClick = async () => {
+		const wasOpen = isOpen;
+		setIsOpen(!isOpen);
+
+		if (!wasOpen && messages.length === 0 && isAuthenticated) await sendMessage("Hey!");
+	};
+
 	return (
 		<>
 			<button
 				type="button"
-				onClick={() => setIsOpen(!isOpen)}
+				onClick={handleFabClick}
 				className={`chat-fab ${isOpen ? "open" : ""}`}
 				aria-label={isOpen ? "Close AI Assistant" : "Open AI Assistant"}>
 				<Icon code={isOpen ? "f00d" : "f7d4"} type="solid" size={20} />
@@ -101,24 +117,22 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 				<div className="chat-header">
 					<div className="chat-header-content">
 						<div className="chat-avatar">
-							<Icon code="f544" type="solid" size={24} />
+							<Icon code="e3b8" type="solid" size={24} />
 						</div>
 						<h3>Jarvis</h3>
 					</div>
 				</div>
 
 				<div className="chat-messages">
-					{messages.length === 0 && (
+					{!isAuthenticated && (
 						<div className="chat-welcome">
 							<div className="welcome-icon">
-								<Icon code="f544" type="solid" size={48} />
+								<Icon code="f023" type="solid" size={24} />
 							</div>
-							<h4>Hello! I'm Jarvis</h4>
-							<p>Your restaurant assistant</p>
-							<p>Ask me about our menu, food recommendations, or dietary options!</p>
+							<h4>Please login</h4>
+							<p>You need to be logged in to chat with Jarvis</p>
 						</div>
 					)}
-
 					{messages.map((message) => (
 						<div key={message.id} className={`chat-message ${message.role}`}>
 							{message.role === "user" ? (
@@ -157,18 +171,19 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 					<div ref={messagesEndRef} />
 				</div>
 
-				<form onSubmit={handleSubmit} className="chat-input-form">
-					<Textfield
-						value={input}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
-						placeholder="Ask about our menu..."
-						disabled={isLoading}
-						className="chat-input"
-					/>
-					<Button type="submit" disabled={isLoading || !input.trim()} className="chat-send" filled>
-						<Icon code="f1d8" type="solid" size={18} />
-					</Button>
-				</form>
+				{isAuthenticated && (
+					<form onSubmit={handleSubmit} className="chat-input-form">
+						<Textfield
+							value={input}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+							placeholder="Ask me anything"
+							className="chat-input"
+						/>
+						<Button type="submit" disabled={isLoading || !input.trim()} className="chat-send" filled>
+							<Icon code="f1d8" type="solid" size={18} />
+						</Button>
+					</form>
+				)}
 			</div>
 		</>
 	);

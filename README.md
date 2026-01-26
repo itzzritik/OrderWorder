@@ -14,12 +14,13 @@
 ---
 
 ## 🚀 Overview  
-OrderWorder is a full-stack, contactless dining platform designed to digitize restaurant operations. From scanning a QR code to placing an order and managing kitchen workflows — everything runs on a clean, modern web app built with **Next.js**, **MongoDB**, and **SCSS**.
+OrderWorder is a full-stack, AI-powered contactless dining platform designed to digitize restaurant operations. From scanning a QR code to placing an order, chatting with an intelligent AI assistant, and managing kitchen workflows — everything runs on a clean, modern web app built with **Next.js**, **MongoDB**, and **SCSS**.
 
 ---
 
 ## ✨ Features  
 - 📱 **QR Code-Based Access**: Every table gets a unique QR code for instant menu access.  
+- 🤖 **AI-Powered Assistant**: Chat with Jarvis, your intelligent restaurant assistant for personalized menu recommendations.  
 - 🍽️ **Smart Ordering**: Customers can browse menus, add items, and place orders — no app download required.  
 - 🧑‍🍳 **Live Kitchen Dashboard**: Real-time order updates for chefs to prep efficiently.  
 - 🧑‍💼 **Admin Panel**: Manage tables, orders, inventory, payroll, and more.  
@@ -102,7 +103,7 @@ Orderworder has two interfaces, one for **customers** and one for **restaurant's
 ---
 
 ## 📌 Tags  
-`nextjs` `react` `javascript` `mongo` `sass` `typescript` `admin-panel` `dashboard` `qr-code` `realtime` `restaurant` `ecommerce` `responsive` `dark-theme` `ui` `animation` `scanner`
+`nextjs` `react` `javascript` `mongo` `sass` `typescript` `ai` `chatbot` `ai-assistant` `admin-panel` `dashboard` `qr-code` `realtime` `restaurant` `ecommerce` `responsive` `dark-theme` `ui` `animation` `scanner`
 
 ---
 
