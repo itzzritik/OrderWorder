@@ -3,6 +3,7 @@
 import { type FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { Button, Icon, Textfield } from "xtreme-ui";
 import type { ChatMessage, ChatProps, MenuSuggestion } from "../../types/chat";
+import { useResize } from "../../utils/hooks/useResize";
 import { MenuCard } from "./MenuCard";
 
 import "./chat.scss";
@@ -42,6 +43,15 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
+	const { dimensions, handleResizeStart } = useResize({
+		initialWidth: 400,
+		initialHeight: 600,
+		minWidth: 320,
+		minHeight: 400,
+		maxWidth: 800,
+		maxHeight: 900,
+	});
+
 	const scrollToBottom = useCallback(() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }), []);
 
 	useEffect(() => {
@@ -79,7 +89,15 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 				<Icon code={isOpen ? "f00d" : "f7d4"} type="solid" size={20} />
 			</button>
 
-			<div className={`chat-widget ${isOpen ? "open" : ""}`}>
+			<div
+				className={`chat-widget ${isOpen ? "open" : ""}`}
+				style={{
+					width: `${dimensions.width}px`,
+					height: `${dimensions.height}px`,
+				}}>
+				<button type="button" className="chat-resize-handle" onMouseDown={handleResizeStart} aria-label="Resize chat window">
+					<div className="resize-indicator" />
+				</button>
 				<div className="chat-header">
 					<div className="chat-header-content">
 						<div className="chat-avatar">
