@@ -13,4 +13,5 @@ export interface ChatMessage {
 	role: "user" | "assistant";
 	content: string;
 	toolResults?: MenuSuggestion[][];
+	createdAt: number;
 }

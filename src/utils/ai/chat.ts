@@ -25,5 +25,6 @@ export const createMessage = (role: "user" | "assistant", content: string, toolR
 		role,
 		content,
 		toolResults,
+		createdAt: Date.now(),
 	};
 };
