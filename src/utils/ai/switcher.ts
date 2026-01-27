@@ -2,31 +2,24 @@ import { generateText } from "ai";
 import AIConfig from "#utils/database/models/aiConfig";
 import { models } from "./config";
 
-const PROVIDER_ORDER: (keyof typeof models)[] = ["groq", "cerebras", "google"];
+const PROVIDER_ORDER = Object.keys(models) as (keyof typeof models)[];
 
-export async function getProviderState() {
+export const getProviderState = async () => {
 	let config = await AIConfig.findOne();
-	if (!config) {
-		config = await AIConfig.create({ exhaustedProviders: [] });
-	}
+	if (!config) config = await AIConfig.create({ exhaustedProviders: [] });
 	return config;
-}
+};
 
-export async function getAvailableProvider() {
+export const getAvailableProvider = async () => {
 	const config = await getProviderState();
 	const exhausted = new Set(config.exhaustedProviders);
 	return PROVIDER_ORDER.find((p) => !exhausted.has(p)) || null;
-}
+};
 
-export async function markProviderExhausted(provider: string) {
-	await AIConfig.updateOne({}, { $addToSet: { exhaustedProviders: provider } }, { upsert: true });
-}
+export const markProviderExhausted = async (provider: string) => await AIConfig.updateOne({}, { $addToSet: { exhaustedProviders: provider } }, { upsert: true });
+export const resetProviders = async () => await AIConfig.updateOne({}, { $set: { exhaustedProviders: [] } }, { upsert: true });
 
-export async function resetProviders() {
-	await AIConfig.updateOne({}, { $set: { exhaustedProviders: [] } }, { upsert: true });
-}
-
-export async function smartGenerateText(params: Omit<Parameters<typeof generateText>[0], "model">) {
+export const smartGenerateText = async (params: Omit<Parameters<typeof generateText>[0], "model">) => {
 	let currentProvider = await getAvailableProvider();
 
 	if (!currentProvider) {
@@ -49,4 +42,4 @@ export async function smartGenerateText(params: Omit<Parameters<typeof generateT
 		}
 	}
 	throw new Error("All AI providers exhausted");
-}
+};
