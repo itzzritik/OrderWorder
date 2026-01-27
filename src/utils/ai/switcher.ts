@@ -26,7 +26,7 @@ export async function resetProviders() {
 	await AIConfig.updateOne({}, { $set: { exhaustedProviders: [] } }, { upsert: true });
 }
 
-export async function smartGenerateText(params: Parameters<typeof generateText>[0]) {
+export async function smartGenerateText(params: Omit<Parameters<typeof generateText>[0], "model">) {
 	let currentProvider = await getAvailableProvider();
 
 	if (!currentProvider) {
@@ -40,10 +40,10 @@ export async function smartGenerateText(params: Parameters<typeof generateText>[
 			const result = await generateText({
 				...params,
 				model: models[currentProvider],
-			});
+			} as Parameters<typeof generateText>[0]);
 			return result;
 		} catch (error) {
-			console.error(`[AI] Provider ${currentProvider} failed:`, error.message);
+			console.error(`[AI] Provider ${currentProvider} failed:`, (error as Error).message);
 			await markProviderExhausted(currentProvider);
 			currentProvider = await getAvailableProvider();
 		}
