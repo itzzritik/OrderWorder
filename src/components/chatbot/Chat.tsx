@@ -5,6 +5,7 @@ import { type FormEvent, useCallback, useEffect, useRef, useState } from "react"
 import { Button, Icon, Textfield } from "xtreme-ui";
 import type { ChatMessage, ChatProps, MenuSuggestion } from "../../types/chat";
 import { useResize } from "../../utils/hooks/useResize";
+import { useOrder } from "../context/useContext";
 import { MenuCard } from "./MenuCard";
 
 import "./chat.scss";
@@ -39,6 +40,7 @@ const createMessage = (role: "user" | "assistant", content: string, toolResults?
 
 export const ChatInterface = ({ restaurantId }: ChatProps) => {
 	const session = useSession();
+	const { setLoginOpen } = useOrder();
 	const isAuthenticated = session.status === "authenticated";
 	const [isOpen, setIsOpen] = useState(false);
 	const [input, setInput] = useState("");
@@ -131,6 +133,13 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 							</div>
 							<h4>Please login</h4>
 							<p>You need to be logged in to chat with Jarvis</p>
+							<Button
+								label="Login"
+								onClick={() => {
+									setIsOpen(false);
+									setLoginOpen(true);
+								}}
+							/>
 						</div>
 					)}
 					{messages.map((message) => (

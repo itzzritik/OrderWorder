@@ -16,7 +16,7 @@ import "./orderPage.scss";
 
 const OrderPage = () => {
 	const session = useSession();
-	const { loading } = useOrder();
+	const { loading, loginOpen, setLoginOpen } = useOrder();
 	const { restaurant } = useRestaurant();
 
 	const menus = restaurant?.menus as Array<TMenuCustom>;
@@ -28,7 +28,6 @@ const OrderPage = () => {
 
 	const order = useRef<HTMLDivElement>(null);
 	const categories = useRef<HTMLDivElement>(null);
-	const [loginOpen, setLoginOpen] = useState(false);
 	const [sideSheetOpen, setSideSheetOpen] = useState(false);
 	const [topHeading, setTopHeading] = useState(["Menu", "Category"]);
 	const [orderHeading, setOrderHeading] = useState(["Explore", "Menu"]);

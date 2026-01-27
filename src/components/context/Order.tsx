@@ -16,6 +16,8 @@ const OrderDefault: TOrderInitialType = {
 	placingOrder: false,
 	cancelOrder: noop,
 	cancelingOrder: false,
+	loginOpen: false,
+	setLoginOpen: noop,
 };
 
 export const OrderContext = createContext(OrderDefault);
@@ -26,6 +28,7 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 
 	const [placingOrder, setPlacingOrder] = useState(false);
 	const [cancelingOrder, setCancelingOrder] = useState(false);
+	const [loginOpen, setLoginOpen] = useState(false);
 
 	const placeOrder = async (products: Array<TMenuCustom>) => {
 		setPlacingOrder(true);
@@ -55,7 +58,11 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 		mutate();
 	}, [mutate]);
 
-	return <OrderContext.Provider value={{ order, loading, placeOrder, placingOrder, cancelOrder, cancelingOrder }}>{children}</OrderContext.Provider>;
+	return (
+		<OrderContext.Provider value={{ order, loading, placeOrder, placingOrder, cancelOrder, cancelingOrder, loginOpen, setLoginOpen }}>
+			{children}
+		</OrderContext.Provider>
+	);
 };
 
 export type TOrderProviderProps = {
@@ -69,5 +76,7 @@ export type TOrderInitialType = {
 	placingOrder: boolean;
 	cancelOrder: () => void;
 	cancelingOrder: boolean;
+	loginOpen: boolean;
+	setLoginOpen: (open: boolean) => void;
 };
 type TMenuCustom = TMenu & { quantity: number };
