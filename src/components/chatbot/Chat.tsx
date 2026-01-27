@@ -24,7 +24,7 @@ export const ChatInterface = () => {
 
 	const { dimensions, handleResizeStart } = useResize({
 		initialWidth: 500,
-		initialHeight: 650,
+		initialHeight: 700,
 		minWidth: 350,
 		minHeight: 450,
 		maxWidth: 640,
@@ -40,7 +40,13 @@ export const ChatInterface = () => {
 
 	return (
 		<>
-			<Button className={`chatFab ${isOpen ? "open" : ""}`} type="primary" onClick={toggleOpen} icon={isOpen ? "f00d" : "f7d4"} iconType="solid" />
+			<Button
+				className={`chatFab ${isOpen ? "open" : ""}`}
+				type="primary"
+				onClick={toggleOpen}
+				icon={isOpen ? "f00d" : "f7d4"}
+				iconType={isOpen ? "solid" : "duotone"}
+			/>
 			<div
 				ref={chatRef}
 				className={`chatWidget ${isOpen ? "open" : ""}`}

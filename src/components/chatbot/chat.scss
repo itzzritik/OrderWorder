@@ -63,7 +63,9 @@
 			color: white;
 			margin: 0;
 			font-size: 1.25rem;
-			font-weight: 600;
+			font-variation-settings:
+				'wdth' 75,
+				'wght' 600;
 			letter-spacing: 0.02em;
 		}
 	}
@@ -93,7 +95,9 @@
 
 	input {
 		font-size: 14px;
-		font-weight: 400;
+		font-variation-settings:
+			'wdth' 75,
+			'wght' 400;
 	}
 }
 

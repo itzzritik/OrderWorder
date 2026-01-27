@@ -40,7 +40,6 @@ export const MessageList = memo(({ messages, isLoading, bottomRef, onResizeStart
 
 								<div className="assistantBody">
 									{message.content && <div className="assistantText">{message.content}</div>}
-
 									{message.toolResults && message.toolResults.length > 0 && (
 										<div className="menuSuggestions">
 											{message.toolResults.map((items, idx) => (

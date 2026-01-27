@@ -42,8 +42,10 @@
 
 		.cardTitle {
 			margin: 0;
-			font-size: 15px;
-			font-weight: 600;
+			font-size: 14px;
+			font-variation-settings:
+				'wdth' 75,
+				'wght' 500;
 			line-height: 1.4;
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -58,11 +60,16 @@
 			gap: 0.5rem;
 			margin: 0;
 			font-size: 12px;
-			font-weight: 400;
 			letter-spacing: 0.01em;
 
 			.separator {
-				opacity: 0.3;
+				opacity: 0.6;
+			}
+
+			span {
+				font-variation-settings:
+					'wdth' 75,
+					'wght' 400;
 			}
 		}
 	}

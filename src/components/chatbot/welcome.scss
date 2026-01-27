@@ -10,8 +10,8 @@
 	border-radius: 1.5rem;
 
 	.welcomeIcon {
-		width: 4rem;
-		height: 4rem;
+		width: 5rem;
+		height: 5rem;
 		margin: 0 auto 1.5rem;
 		border-radius: 50%;
 		background: linear-gradient(135deg, hsl(var(--colorBrandPrimary)) 0%, hsl(var(--colorBrandPrimary) / 0.85) 100%);
@@ -20,16 +20,20 @@
 		align-items: center;
 		justify-content: center;
 		animation: pulse 2s ease-in-out infinite;
+		overflow: hidden;
 
-		i {
+		.xIcon {
 			color: white;
+			margin-top: 1.4rem;
 		}
 	}
 
 	h4 {
 		margin: 0 0 0.5rem;
 		font-size: 1.5rem;
-		font-weight: 600;
+		font-variation-settings:
+			'wdth' 75,
+			'wght' 600;
 		color: var(--colorContentPrimary);
 	}
 
@@ -38,10 +42,13 @@
 		color: var(--colorContentSecondary);
 		font-size: 0.9rem;
 		line-height: 1.5;
+		font-variation-settings:
+			'wdth' 75,
+			'wght' 400;
 	}
 
 	.xtrButton {
-		margin-top: 2rem;
+		margin-top: 1.5rem;
 	}
 }
 
