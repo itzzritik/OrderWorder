@@ -7,6 +7,7 @@ import type { ChatMessage, ChatProps, MenuSuggestion } from "../../types/chat";
 import { useResize } from "../../utils/hooks/useResize";
 import { useOrder } from "../context/useContext";
 import { MenuCard } from "./MenuCard";
+import { Welcome } from "./Welcome";
 
 import "./chat.scss";
 
@@ -93,7 +94,6 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 	const handleFabClick = async () => {
 		const wasOpen = isOpen;
 		setIsOpen(!isOpen);
-
 		if (!wasOpen && messages.length === 0 && isAuthenticated) await sendMessage("Hey!");
 	};
 
@@ -110,88 +110,81 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 			<div
 				className={`chat-widget ${isOpen ? "open" : ""}`}
 				style={{
-					width: `${dimensions.width}px`,
-					height: `${dimensions.height}px`,
+					width: isAuthenticated ? `${dimensions.width}px` : "360px",
+					height: isAuthenticated ? `${dimensions.height}px` : "400px",
 				}}>
-				<button type="button" className="chat-resize-handle" onMouseDown={handleResizeStart} aria-label="Resize chat window">
-					<div className="resize-indicator" />
-				</button>
-				<div className="chat-header">
-					<div className="chat-header-content">
-						<div className="chat-avatar">
-							<Icon code="e3b8" type="solid" size={24} />
-						</div>
-						<h3>Jarvis</h3>
-					</div>
-				</div>
-
-				<div className="chat-messages">
-					{!isAuthenticated && (
-						<div className="chat-welcome">
-							<div className="welcome-icon">
-								<Icon code="f023" type="solid" size={24} />
+				{isAuthenticated ? (
+					<>
+						<button type="button" className="chat-resize-handle" onMouseDown={handleResizeStart} aria-label="Resize chat window">
+							<div className="resize-indicator" />
+						</button>
+						<div className="chat-header">
+							<div className="chat-header-content">
+								<div className="chat-avatar">
+									<Icon code="f544" type="solid" size={24} />
+								</div>
+								<h3>Jarvis</h3>
 							</div>
-							<h4>Please login</h4>
-							<p>You need to be logged in to chat with Jarvis</p>
-							<Button
-								label="Login"
-								onClick={() => {
-									setIsOpen(false);
-									setLoginOpen(true);
-								}}
-							/>
 						</div>
-					)}
-					{messages.map((message) => (
-						<div key={message.id} className={`chat-message ${message.role}`}>
-							{message.role === "user" ? (
-								<div className="user-bubble">{message.content}</div>
-							) : (
-								<div className="assistant-content">
-									{message.content && <div className="assistant-text">{message.content}</div>}
 
-									{message.toolResults && message.toolResults.length > 0 && (
-										<div className="menu-suggestions">
-											{message.toolResults.map((items, idx) => (
-												<div key={idx} className="menu-items">
-													{items.map((item) => (
-														<MenuCard key={item._id} item={item} />
+						<div className="chat-messages">
+							{messages.map((message) => (
+								<div key={message.id} className={`chat-message ${message.role}`}>
+									{message.role === "user" ? (
+										<div className="user-bubble">{message.content}</div>
+									) : (
+										<div className="assistant-content">
+											{message.content && <div className="assistant-text">{message.content}</div>}
+
+											{message.toolResults && message.toolResults.length > 0 && (
+												<div className="menu-suggestions">
+													{message.toolResults.map((items, idx) => (
+														<div key={idx} className="menu-items">
+															{items.map((item) => (
+																<MenuCard key={item._id} item={item} />
+															))}
+														</div>
 													))}
 												</div>
-											))}
+											)}
 										</div>
 									)}
 								</div>
-							)}
-						</div>
-					))}
+							))}
 
-					{isLoading && (
-						<div className="chat-message assistant">
-							<div className="assistant-content">
-								<div className="typing-indicator">
-									<span />
-									<span />
-									<span />
+							{isLoading && (
+								<div className="chat-message assistant">
+									<div className="assistant-content">
+										<div className="typing-indicator">
+											<span />
+											<span />
+											<span />
+										</div>
+									</div>
 								</div>
-							</div>
+							)}
+							<div ref={messagesEndRef} />
 						</div>
-					)}
-					<div ref={messagesEndRef} />
-				</div>
 
-				{isAuthenticated && (
-					<form onSubmit={handleSubmit} className="chat-input-form">
-						<Textfield
-							value={input}
-							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
-							placeholder="Ask me anything"
-							className="chat-input"
-						/>
-						<Button type="submit" disabled={isLoading || !input.trim()} className="chat-send" filled>
-							<Icon code="f1d8" type="solid" size={18} />
-						</Button>
-					</form>
+						<form onSubmit={handleSubmit} className="chat-input-form">
+							<Textfield
+								value={input}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+								placeholder="Ask me anything"
+								className="chat-input"
+							/>
+							<Button type="submit" disabled={isLoading || !input.trim()} className="chat-send" filled>
+								<Icon code="f1d8" type="solid" size={18} />
+							</Button>
+						</form>
+					</>
+				) : (
+					<Welcome
+						onLogin={() => {
+							setIsOpen(false);
+							setLoginOpen(true);
+						}}
+					/>
 				)}
 			</div>
 		</>

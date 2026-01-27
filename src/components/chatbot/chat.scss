@@ -200,62 +200,6 @@
 	background: var(--colorBackgroundSecondary);
 }
 
-.chat-welcome {
-	text-align: center;
-	padding: 3rem 1.5rem;
-	animation: fadeInUp 0.5s ease;
-
-	.welcome-icon {
-		width: 4rem;
-		height: 4rem;
-		margin: 0 auto 1rem;
-		border-radius: 50%;
-		background: linear-gradient(135deg, hsl(var(--colorBrandPrimary)) 0%, hsl(var(--colorBrandPrimary) / 0.85) 100%);
-		color: var(--colorBackgroundPrimary);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		animation: pulse 2s ease-in-out infinite;
-	}
-
-	h4 {
-		margin: 0 0 0.5rem;
-		font-size: 1.5rem;
-		font-weight: 600;
-		color: var(--colorContentPrimary);
-	}
-
-	p {
-		margin: 0.25rem 0;
-		color: var(--colorContentSecondary);
-		font-size: 0.9rem;
-		line-height: 1.5;
-	}
-}
-
-@keyframes pulse {
-	0%,
-	100% {
-		transform: scale(1);
-		box-shadow: 0 0 0 0 hsl(var(--colorBrandPrimary) / 0.7);
-	}
-	50% {
-		transform: scale(1.05);
-		box-shadow: 0 0 0 10px hsl(var(--colorBrandPrimary) / 0);
-	}
-}
-
-@keyframes fadeInUp {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
 .chat-message {
 	display: flex;
 	animation: messageSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
