@@ -13,7 +13,9 @@ export default function RootLayout({ children }: IRootProps) {
 			<head>
 				<Gliff next />
 			</head>
-			<GlobalProvider>{children}</GlobalProvider>
+			<body>
+				<GlobalProvider>{children}</GlobalProvider>
+			</body>
 		</html>
 	);
 }
