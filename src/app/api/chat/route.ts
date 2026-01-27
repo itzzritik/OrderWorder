@@ -1,12 +1,10 @@
-import { generateText } from "ai";
 import { getServerSession } from "next-auth";
-import { getModel } from "#utils/ai/config";
 import { getSystemPrompt } from "#utils/ai/prompt";
+import { smartGenerateText } from "#utils/ai/switcher";
 import { getRestaurantData } from "#utils/database/helper/account";
 import type { TMenu } from "#utils/database/models/menu";
 import { authOptions } from "#utils/helper/authHelper";
 
-const MODEL = "groq";
 export async function POST(req: Request) {
 	try {
 		const { messages, restaurantId } = await req.json();
@@ -23,8 +21,7 @@ export async function POST(req: Request) {
 		const items: TMenu[] = account?.menus || [];
 		const menuMap = new Map(items.map((i) => [i.name.toLowerCase(), i]));
 
-		const result = await generateText({
-			model: getModel(MODEL),
+		const result = await smartGenerateText({
 			system: getSystemPrompt(name, items, session?.customer?.fname),
 			messages,
 		});
@@ -46,7 +43,7 @@ export async function POST(req: Request) {
 
 		return Response.json({ text, toolResults });
 	} catch (error) {
-		console.error(`Error in ${MODEL} API:`, error);
+		console.error("Error in AI Chat API:", error);
 		return Response.json({ text: "I apologize, but I'm having trouble connecting right now. Please try again.", toolResults: [] }, { status: 500 });
 	}
 }
