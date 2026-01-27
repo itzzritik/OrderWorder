@@ -13,7 +13,7 @@ import { MessageList } from "./MessageList";
 
 export const ChatInterface = () => {
 	const session = useSession();
-	const { restaurant } = useRestaurant();
+	const { restaurant, loading } = useRestaurant();
 	const { setLoginOpen } = useOrder();
 	const isAuthenticated = session.status === "authenticated";
 
@@ -40,13 +40,15 @@ export const ChatInterface = () => {
 
 	return (
 		<>
-			<Button
-				className={`chatFab ${isOpen ? "open" : ""}`}
-				type="primary"
-				onClick={toggleOpen}
-				icon={isOpen ? "f00d" : "f7d4"}
-				iconType={isOpen ? "solid" : "duotone"}
-			/>
+			{!loading && (
+				<Button
+					className={`chatFab ${isOpen ? "open" : ""}`}
+					type="primary"
+					onClick={toggleOpen}
+					icon={isOpen ? "f00d" : "f7d4"}
+					iconType={isOpen ? "solid" : "duotone"}
+				/>
+			)}
 			<div
 				ref={chatRef}
 				className={`chatWidget ${isOpen ? "open" : ""}`}
