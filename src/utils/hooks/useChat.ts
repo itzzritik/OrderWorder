@@ -24,11 +24,11 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 		scrollToBottom();
 	}, [messages, scrollToBottom]);
 
-	const sendMessage = async (messageContent: string) => {
+	const sendMessage = async (messageContent: string, options?: { hidden?: boolean }) => {
 		if (!messageContent.trim()) return;
 
 		const userMessage = createMessage("user", messageContent);
-		setMessages((prev) => [...prev, userMessage]);
+		if (!options?.hidden) setMessages((prev) => [...prev, userMessage]);
 		setIsLoading(true);
 
 		try {
@@ -57,7 +57,7 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 	}, [isOpen]);
 
 	const toggleOpen = () => {
-		if (!isOpen && messages.length === 0 && isAuthenticated) sendMessage("Hey!").catch(console.error);
+		if (!isOpen && messages.length === 0 && isAuthenticated) sendMessage("Hey!", { hidden: true }).catch(console.error);
 		setIsOpen((prev) => !prev);
 	};
 
