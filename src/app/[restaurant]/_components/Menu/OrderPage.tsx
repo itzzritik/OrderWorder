@@ -158,7 +158,12 @@ const OrderPage = () => {
 							<Button className="loginButton" label={showOrderButton ? "Order" : "Scan"} onClick={onLoginClick} />
 						)}
 						{eligibleToOrder && (
-							<Button icon="e43b" label={`${selectedProducts?.length > 0 ? selectedProducts?.length : ""}`} onClick={() => setSideSheetOpen(true)} />
+							<Button
+								icon="e43b"
+								iconType="solid"
+								label={`${selectedProducts?.length > 0 ? selectedProducts?.length : ""}`}
+								onClick={() => setSideSheetOpen(true)}
+							/>
 						)}
 						{session.data?.role === "admin" && (
 							<Button className="dashboardButton" label="Dashboard" icon="e09f" iconType="solid" onClick={() => params.router.push("/dashboard")} />
@@ -178,10 +183,10 @@ const OrderPage = () => {
 							))}
 							<div className="space" />
 							<div className={`scrollLeft ${leftCategoryScroll ? "show" : ""}`} onClick={categoryScrollLeft}>
-								<Icon code="f053" />
+								<Icon code="f053" type="solid" />
 							</div>
 							<div className={`scrollRight ${rightCategoryScroll ? "show" : ""}`} onClick={categoryScrollRight}>
-								<Icon code="f054" />
+								<Icon code="f054" type="solid" />
 							</div>
 						</div>
 					</div>

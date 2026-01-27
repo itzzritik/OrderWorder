@@ -29,6 +29,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: flex-end;
 	gap: 0.25rem;
 	z-index: 999;
 	opacity: 0;
@@ -86,12 +87,12 @@
 
 .chatInput {
 	--primaryColor: var(--colorBackgroundPrimary);
-	--secondaryColor: var(--colorBackgroundSecondary);
+	--secondaryColor: var(--colorBackgroundPrimary);
+	width: 100%;
+	height: 52px;
 	border-top-left-radius: 0.5rem;
 	border-top-right-radius: 0.5rem;
-	height: 58px;
-
-	width: 100%;
+	box-shadow: 0 0 0 1px hsl(var(--colorBrandPrimary)) !important;
 
 	input {
 		font-size: 14px;

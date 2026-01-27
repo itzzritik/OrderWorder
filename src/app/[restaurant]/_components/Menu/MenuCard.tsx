@@ -73,7 +73,7 @@ const MenuCard = (props: TMenuCardProps) => {
 							<span>{item.name}</span>
 							{item.image && (
 								<div className="info" onClick={() => setShowInfo(showInfo ? false : !!item._id)}>
-									<Icon code={showInfo ? "f00d" : "f05a"} />
+									<Icon code={showInfo ? "f00d" : "f05a"} set="duotone" type="solid" />
 								</div>
 							)}
 						</div>

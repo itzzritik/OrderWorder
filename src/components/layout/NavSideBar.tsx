@@ -38,7 +38,7 @@ const NavSideBar = (props: TNavSideBar) => {
 					return (
 						<div key={key} className={clsx("navItem", active && "active")} onClick={() => onNavClick(item.value)}>
 							<div className="navItemContent">
-								<Icon code={item.icon} size={20} type={active ? "solid" : "light"} />
+								<Icon code={item.icon} size={20} set={active ? "classic" : "duotone"} type="solid" />
 								<p>{item.label}</p>
 							</div>
 						</div>

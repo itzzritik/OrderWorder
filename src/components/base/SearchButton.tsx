@@ -19,7 +19,7 @@ const SearchButton = (props: TSearchButton) => {
 				onFocus={() => setSearchActive(true)}
 				onBlur={() => setSearchActive(false)}
 			/>
-			<Icon className="searchIcon" code="f002" />
+			<Icon className="searchIcon" code="f002" type="solid" />
 		</div>
 	);
 };
