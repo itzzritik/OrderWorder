@@ -6,6 +6,7 @@ import { getRestaurantData } from "#utils/database/helper/account";
 import type { TMenu } from "#utils/database/models/menu";
 import { authOptions } from "#utils/helper/authHelper";
 
+const MODEL = "groq";
 export async function POST(req: Request) {
 	try {
 		const { messages, restaurantId } = await req.json();
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
 		const menuMap = new Map(items.map((i) => [i.name.toLowerCase(), i]));
 
 		const result = await generateText({
-			model: getModel("groq"),
+			model: getModel(MODEL),
 			system: getSystemPrompt(name, items, session?.customer?.fname),
 			messages,
 		});
@@ -44,7 +45,8 @@ export async function POST(req: Request) {
 		}
 
 		return Response.json({ text, toolResults });
-	} catch {
+	} catch (error) {
+		console.error(`Error in ${MODEL} API:`, error);
 		return Response.json({ text: "I apologize, but I'm having trouble connecting right now. Please try again.", toolResults: [] }, { status: 500 });
 	}
 }
