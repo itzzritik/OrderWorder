@@ -184,13 +184,13 @@
 		border: 1px solid var(--colorContentTertiary);
 
 		&.veg .icon {
-			color: rgb(var(--colorAlertSuccessRGB));
+			color: hsl(var(--colorAlertSuccess));
 		}
 		&.non-veg .icon {
-			color: rgb(var(--colorAlertErrorRGB));
+			color: hsl(var(--colorAlertError));
 		}
 		&.contains-egg .icon {
-			color: rgb(var(--colorAlertWarningRGB));
+			color: hsl(var(--colorAlertWarning));
 		}
 
 		.icon {

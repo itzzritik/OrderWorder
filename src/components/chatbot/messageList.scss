@@ -1,0 +1,204 @@
+.chatResizeHandle {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 32px;
+	height: 32px;
+	cursor: nwse-resize;
+	z-index: 100;
+
+	&::before {
+		content: '';
+		position: absolute;
+		width: 4px;
+		height: 4px;
+		top: 10px;
+		left: 10px;
+		border-top: 2px solid var(--colorContentPrimary);
+		border-left: 2px solid var(--colorContentPrimary);
+		border-top-left-radius: 1rem;
+		opacity: 0.5;
+		transition: all 0.2s ease;
+	}
+
+	&:hover {
+		&::before {
+			opacity: 1;
+			top: 8px;
+			left: 8px;
+			width: 12px;
+			height: 12px;
+			border-top-left-radius: 2rem;
+		}
+	}
+}
+
+.chatMessagesContainer {
+	position: relative;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid hsl(var(--colorBrandPrimary) / 0.5);
+	border-radius: 1.5rem;
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+	background: var(--colorBackgroundPrimary);
+	width: 100%;
+	min-height: 0;
+
+	.chatMessages {
+		flex: 1;
+		overflow-y: auto;
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		border-radius: 1.5rem;
+		border-bottom-left-radius: 0.5rem;
+		border-bottom-right-radius: 0.5rem;
+
+		.chatMessage {
+			display: flex;
+			animation: messageSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+			&.user {
+				justify-content: flex-end;
+			}
+
+			&.assistant {
+				justify-content: flex-start;
+			}
+		}
+
+		.userBubble {
+			max-width: 75%;
+			padding: 0.6rem 0.9rem;
+			border-radius: 1.125rem 1.125rem 0.25rem 1.125rem;
+			background: hsl(var(--colorBrandPrimary));
+			color: white;
+			font-size: 14px;
+			line-height: 1.5;
+			font-weight: 400;
+			box-shadow: 0 2px 8px hsl(var(--colorBrandPrimary) / 0.2);
+			animation: bubblePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+
+		.assistantContent {
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+
+			.assistantText {
+				padding: 0.875rem 0;
+				color: var(--colorContentPrimary);
+				font-size: 0.9375rem;
+				line-height: 1.6;
+				font-weight: 400;
+				animation: fadeIn 0.4s ease;
+			}
+
+			.typingIndicator {
+				display: flex;
+				gap: 0.375rem;
+				padding: 0.75rem 0;
+
+				span {
+					width: 0.5rem;
+					height: 0.5rem;
+					background: var(--colorContentPrimary);
+					border-radius: 50%;
+					animation: typing 1.4s infinite ease-in-out;
+
+					&:nth-child(1) {
+						animation-delay: 0s;
+					}
+
+					&:nth-child(2) {
+						animation-delay: 0.2s;
+					}
+
+					&:nth-child(3) {
+						animation-delay: 0.4s;
+					}
+				}
+			}
+
+			.menuSuggestions {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+				animation: slideUp 0.4s ease;
+
+				.menuItems {
+					display: flex;
+					flex-direction: column;
+					gap: 0.5rem;
+				}
+			}
+		}
+	}
+}
+
+@keyframes typing {
+	0%,
+	60%,
+	100% {
+		opacity: 0.3;
+		transform: translateY(0);
+	}
+	30% {
+		opacity: 1;
+		transform: translateY(-0.5rem);
+	}
+}
+
+@keyframes bubblePop {
+	0% {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	60% {
+		transform: scale(1.05);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes messageSlide {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (width <= 750px) {
+	.chatResizeHandle {
+		display: none;
+	}
+}

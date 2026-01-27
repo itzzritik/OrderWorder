@@ -22,15 +22,13 @@ export async function generateMetadata({ params, searchParams }: IMetaDataProps)
 	};
 }
 
-const Restaurant = async ({ params }: { params: { restaurant: string } }) => {
-	const { restaurant } = await params;
-
+const Restaurant = async () => {
 	return (
 		<CustomerProvider>
 			<div className="restaurant">
 				<NavSideBar navItems={navItems} defaultTab="menu" foot />
 				<PageContainer />
-				<ChatInterface restaurantId={restaurant} />
+				<ChatInterface />
 			</div>
 		</CustomerProvider>
 	);

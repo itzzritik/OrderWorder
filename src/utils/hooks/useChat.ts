@@ -12,6 +12,7 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 	const [isOpen, setIsOpen] = useState(false);
 	const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
 	const [isLoading, setIsLoading] = useState(false);
+	const chatRef = useRef<HTMLDivElement>(null);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const scrollToBottom = useCallback(() => {
@@ -42,6 +43,19 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 		}
 	};
 
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (chatRef.current && !chatRef.current.contains(event.target as Node)) {
+				const target = event.target as HTMLElement;
+				if (target.closest(".chatFab")) return;
+				setIsOpen(false);
+			}
+		};
+
+		if (isOpen) document.addEventListener("mousedown", handleClickOutside);
+		return () => document.removeEventListener("mousedown", handleClickOutside);
+	}, [isOpen]);
+
 	const toggleOpen = () => {
 		if (!isOpen && messages.length === 0 && isAuthenticated) sendMessage("Hey!").catch(console.error);
 		setIsOpen((prev) => !prev);
@@ -55,5 +69,6 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 		sendMessage,
 		toggleOpen,
 		messagesEndRef,
+		chatRef,
 	};
 };

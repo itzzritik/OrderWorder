@@ -1,15 +1,10 @@
 import { useInView } from "react-intersection-observer";
 import { Button, Icon, useScreenType } from "xtreme-ui";
 
+import { VEG_ICON_CODE } from "#utils/constants/common";
 import type { TMenu } from "#utils/database/models/menu";
 
 import "./menuEditorItem.scss";
-
-const vegIcon = {
-	veg: "f4d8",
-	"non-veg": "f6d6",
-	"contains-egg": "f7fb",
-} as const;
 
 const MenuEditorItem = (props: TMenuEditorItemProps) => {
 	const { item, onEdit, onHide, hideSettingsLoading = false } = props;
@@ -24,7 +19,7 @@ const MenuEditorItem = (props: TMenuEditorItemProps) => {
 						{!item.image ? <Icon code="e43b" /> : <span className="image" style={{ background: `url(${item.image})` }} />}
 						{item.veg && (
 							<div className={`vegIcon ${item.veg}`}>
-								<Icon className="icon" type="solid" size={16} code={vegIcon[item.veg]} />
+								<Icon className="icon" type="solid" size={16} code={VEG_ICON_CODE[item.veg]} />
 								<span className="label">{item.veg.replace(/-/g, " ")}</span>
 							</div>
 						)}

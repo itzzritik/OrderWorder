@@ -1,46 +1,37 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { type FormEvent, useState } from "react";
+import { useState } from "react";
 import { Button, Icon, Textfield } from "xtreme-ui";
-import type { ChatProps } from "../../types/chat";
 import { useChat } from "../../utils/hooks/useChat";
 import { useResize } from "../../utils/hooks/useResize";
-import { useOrder } from "../context/useContext";
+import { useOrder, useRestaurant } from "../context/useContext";
 import { Welcome } from "./Welcome";
 
 import "./chat.scss";
 import { MessageList } from "./MessageList";
 
-export const ChatInterface = ({ restaurantId }: ChatProps) => {
+export const ChatInterface = () => {
 	const session = useSession();
+	const { restaurant } = useRestaurant();
 	const { setLoginOpen } = useOrder();
 	const isAuthenticated = session.status === "authenticated";
 
-	const { isOpen, setIsOpen, messages, isLoading, sendMessage, toggleOpen, messagesEndRef } = useChat({
-		restaurantId,
+	const { isOpen, setIsOpen, messages, isLoading, sendMessage, toggleOpen, messagesEndRef, chatRef } = useChat({
+		restaurantId: restaurant?.username ?? "",
 		isAuthenticated,
 	});
 
 	const { dimensions, handleResizeStart } = useResize({
-		initialWidth: 400,
-		initialHeight: 600,
-		minWidth: 320,
-		minHeight: 400,
-		maxWidth: 800,
-		maxHeight: 900,
+		initialWidth: 500,
+		initialHeight: 650,
+		minWidth: 350,
+		minHeight: 450,
+		maxWidth: 640,
+		maxHeight: 950,
 	});
 
 	const [input, setInput] = useState("");
-
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault();
-		if (!input.trim() || isLoading) return;
-
-		const messageContent = input;
-		setInput("");
-		await sendMessage(messageContent);
-	};
 
 	const handleLoginRedirect = () => {
 		setIsOpen(false);
@@ -49,43 +40,36 @@ export const ChatInterface = ({ restaurantId }: ChatProps) => {
 
 	return (
 		<>
-			<button type="button" onClick={toggleOpen} className={`chat-fab ${isOpen ? "open" : ""}`} aria-label={isOpen ? "Close Jarvis" : "Open Jarvis"}>
-				<Icon code={isOpen ? "f00d" : "f7d4"} type="solid" size={20} />
-			</button>
-
+			<Button className={`chatFab ${isOpen ? "open" : ""}`} type="primary" onClick={toggleOpen} icon={isOpen ? "f00d" : "f7d4"} iconType="solid" />
 			<div
-				className={`chat-widget ${isOpen ? "open" : ""}`}
+				ref={chatRef}
+				className={`chatWidget ${isOpen ? "open" : ""}`}
 				style={{
-					width: isAuthenticated ? `${dimensions.width}px` : "360px",
-					height: isAuthenticated ? `${dimensions.height}px` : "400px",
+					width: isAuthenticated ? `${dimensions.width}px` : "fit-content",
+					height: isAuthenticated ? `${dimensions.height}px` : "fit-content",
 				}}>
 				{isAuthenticated ? (
 					<>
-						<button type="button" className="chat-resize-handle" onMouseDown={handleResizeStart} aria-label="Resize chat window">
-							<div className="resize-indicator" />
-						</button>
-						<div className="chat-header">
-							<div className="chat-header-content">
-								<div className="chat-avatar">
-									<Icon code="f544" type="solid" size={24} />
+						<div className="chatHeader">
+							<div className="chatHeaderContent">
+								<div className="chatAvatar">
+									<Icon code="f544" set="duotone" type="solid" size={28} />
 								</div>
-								<h3>Jarvis</h3>
 							</div>
 						</div>
-
-						<MessageList messages={messages} isLoading={isLoading} bottomRef={messagesEndRef} />
-
-						<form onSubmit={handleSubmit} className="chat-input-form">
-							<Textfield
-								value={input}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
-								placeholder="Ask me anything"
-								className="chat-input"
-							/>
-							<Button type="submit" disabled={isLoading || !input.trim()} className="chat-send" filled>
-								<Icon code="f1d8" type="solid" size={18} />
-							</Button>
-						</form>
+						<MessageList messages={messages} isLoading={isLoading} bottomRef={messagesEndRef} onResizeStart={handleResizeStart} />
+						<Textfield
+							value={input}
+							className="chatInput"
+							placeholder="Ask me anything"
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+							onKeyDown={(e: React.KeyboardEvent) => {
+								if (e.key === "Enter" && input.trim() && !isLoading) {
+									sendMessage(input);
+									setInput("");
+								}
+							}}
+						/>
 					</>
 				) : (
 					<Welcome onLogin={handleLoginRedirect} />

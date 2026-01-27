@@ -14,8 +14,3 @@ export interface ChatMessage {
 	content: string;
 	toolResults?: MenuSuggestion[][];
 }
-
-export interface ChatProps {
-	restaurantId: string;
-	provider?: "groq" | "gemini" | "cerebras";
-}

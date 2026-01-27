@@ -1,6 +1,7 @@
 .navSideBar {
 	position: fixed;
-	left: 0; top: 0;
+	left: 0;
+	top: 0;
 	width: var(--navIconSize);
 	min-width: var(--navIconSize);
 	height: 100%;
@@ -11,21 +12,25 @@
 	box-shadow: 10px 0 10px -10px rgb(0 0 0 / 10%);
 	z-index: 2;
 	overflow: hidden;
-	transition: width 0.1s ease-out, z-index 0s ease-out 0.1s;
-		
+	transition:
+		width 0.1s ease-out,
+		z-index 0s ease-out 0.1s;
+
 	@media (width >= 750px) {
 		&:hover {
 			--hoverWidth: 200px;
 
 			width: var(--hoverWidth);
 			z-index: 4;
-			transition: width 0.1s ease-out, z-index 0s;
-	
+			transition:
+				width 0.1s ease-out,
+				z-index 0s;
+
 			.menu .navItem .navItemContent {
 				p {
 					opacity: 1;
 				}
-			} 
+			}
 		}
 	}
 
@@ -72,7 +77,7 @@
 					background-color: hsl(var(--colorBrandPrimary));
 					box-shadow: var(--boxShadowGlow);
 					transition: all 0.2s ease-out;
-					
+
 					i {
 						color: white;
 						transition: all 0.2s ease-out;
@@ -85,7 +90,7 @@
 					}
 				}
 			}
-			
+
 			.navItemContent {
 				position: relative;
 				width: 100%;
@@ -102,7 +107,9 @@
 				p {
 					position: absolute;
 					text-align: center;
-					font-variation-settings: 'wdth' 75, 'wght' 500;
+					font-variation-settings:
+						'wdth' 75,
+						'wght' 500;
 					font-size: 14px;
 					color: var(--colorContentSecondary);
 					text-transform: capitalize;
@@ -120,7 +127,8 @@
 @media (width <= 750px) {
 	.navSideBar {
 		position: relative;
-		left: auto; top: auto;
+		left: auto;
+		top: auto;
 		width: 100%;
 		height: var(--navIconSize);
 		min-height: var(--navIconSize);
@@ -175,7 +183,8 @@
 
 					p {
 						position: absolute;
-						left: 50%; bottom: 10px;
+						left: 50%;
+						bottom: 10px;
 						transform: translateX(-50%) !important;
 						font-size: 10px;
 						letter-spacing: 2px;
@@ -183,6 +192,22 @@
 					}
 				}
 			}
+		}
+	}
+}
+
+@media (width <= 475px) {
+	.navSideBar {
+		position: relative;
+		left: auto;
+		top: auto;
+		width: 100%;
+		height: var(--navIconSize);
+		min-height: var(--navIconSize);
+		box-shadow: 0 -10px 10px -10px rgb(0 0 0 / 10%);
+
+		.menu {
+			justify-content: flex-start;
 		}
 	}
 }

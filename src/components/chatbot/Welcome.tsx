@@ -8,9 +8,9 @@ type WelcomeProps = {
 
 export const Welcome = ({ onLogin }: WelcomeProps) => {
 	return (
-		<div className="chat-welcome">
-			<div className="welcome-icon">
-				<Icon code="f544" type="solid" size={24} />
+		<div className="chatWelcome">
+			<div className="welcomeIcon">
+				<Icon code="f544" set="duotone" type="solid" size={28} />
 			</div>
 			<h4>Hey, I'm Jarvis!</h4>
 			<p>You need to be logged in to chat with me</p>
