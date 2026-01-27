@@ -2,7 +2,7 @@
 	position: fixed;
 	bottom: 2rem;
 	right: 2rem;
-	z-index: 100;
+	z-index: 9;
 	animation: fabSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 
 	&:active {
