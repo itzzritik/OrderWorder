@@ -1,8 +1,7 @@
 "use client";
 
-import { Scanner, useDevices } from "@yudiel/react-qr-scanner";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Scanner } from "@yudiel/react-qr-scanner";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Icon } from "xtreme-ui";
 
@@ -20,11 +19,9 @@ interface ExtendedMediaTrackCapabilities extends MediaTrackCapabilities {
 }
 
 const ScannerClient = () => {
-	const router = useRouter();
-
-	const devices = useDevices();
 	const checkInterval = useRef<NodeJS.Timeout | null>(null);
 
+	const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
 	const [deviceId, setDeviceId] = useState<string | undefined>(undefined);
 	const [torch, setTorch] = useState(false);
 	const [zoom, setZoom] = useState(1);
@@ -33,14 +30,35 @@ const ScannerClient = () => {
 	const [isScanning, setIsScanning] = useState(false);
 	const [caps, setCaps] = useState({ torch: false, zoom: false });
 
+	const enumerateDevices = useCallback(async () => {
+		try {
+			const devices = await navigator.mediaDevices.enumerateDevices();
+			const videoDevices = devices.filter((device) => device.kind === "videoinput");
+			setDevices(videoDevices);
+		} catch (err) {
+			console.error("Error enumerating devices:", err);
+		}
+	}, []);
+
+	useEffect(() => {
+		enumerateDevices();
+		navigator.mediaDevices.addEventListener("devicechange", enumerateDevices);
+		return () => {
+			navigator.mediaDevices.removeEventListener("devicechange", enumerateDevices);
+		};
+	}, [enumerateDevices]);
+
 	useEffect(() => {
 		if (devices && devices.length > 0 && !deviceId) {
 			const backCamera = devices.find((d) => d.label.toLowerCase().includes("back") || d.label.toLowerCase().includes("environment"));
-			setDeviceId(backCamera ? backCamera.deviceId : devices[0].deviceId);
+			if (backCamera) {
+				setDeviceId(backCamera.deviceId);
+			} else if (devices.length > 0) {
+				setDeviceId(devices[devices.length - 1].deviceId);
+			}
 		}
 	}, [devices, deviceId]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Need to update on DeviceId Change
 	useEffect(() => {
 		const checkCapabilities = () => {
 			const video = document.querySelector("video");
@@ -48,6 +66,10 @@ const ScannerClient = () => {
 				const stream = video.srcObject as MediaStream;
 				const track = stream.getVideoTracks()[0];
 				if (track) {
+					if (devices.some((d) => !d.label)) {
+						enumerateDevices();
+					}
+
 					const capabilities = (track.getCapabilities ? track.getCapabilities() : {}) as ExtendedMediaTrackCapabilities;
 					setCaps({
 						torch: !!capabilities.torch,
@@ -67,7 +89,7 @@ const ScannerClient = () => {
 		return () => {
 			if (checkInterval.current) clearInterval(checkInterval.current);
 		};
-	}, [deviceId]);
+	}, [devices, enumerateDevices]);
 
 	const handleScan = (detectedCodes: unknown) => {
 		const codes = detectedCodes as IDetectedBarcode[];
@@ -83,7 +105,7 @@ const ScannerClient = () => {
 
 					if (isOrderWorder && hasTable) {
 						setIsScanning(true);
-						router.replace(urlObj.pathname + urlObj.search + urlObj.hash);
+						window.location.replace(urlObj.pathname + urlObj.search + urlObj.hash);
 					} else {
 						toast.error("Not an OrderWorder QR");
 					}
@@ -102,16 +124,12 @@ const ScannerClient = () => {
 		} else if (errorObj?.name === "NotFoundError" || errorObj?.name === "DevicesNotFoundError") {
 			setError("No camera found on this device.");
 		} else {
-			setError(`Camera error: ${errorObj?.message || "Unknown error"}`);
+			console.warn("Scanner error:", errorObj);
 		}
 	};
 
-	const cameraOptions = devices.map((d) => ({
-		label:
-			(d.label || `Camera ${d.deviceId}`)
-				.replace(/\s*\(.*?\)\s*/g, "")
-				.replace(/\s*camera\s*/gi, "")
-				.trim() || `Camera ${devices.indexOf(d) + 1}`,
+	const cameraOptions = devices.map((d, index) => ({
+		label: d?.label?.replace(/\s*\(.*?\)\s*/g, "") || `Camera ${index + 1}`,
 		value: d.deviceId,
 	}));
 
@@ -122,9 +140,14 @@ const ScannerClient = () => {
 				<p className="subtitle">Scan QR to Order</p>
 			</div>
 
-			{devices.length > 1 && (
+			{devices.length > 0 && (
 				<div className="cameraSelectWrapper">
-					<select value={deviceId} onChange={(e) => setDeviceId(e.target.value)} className="cameraSelect">
+					<select
+						value={deviceId || ""}
+						onChange={(e) => {
+							setDeviceId(e.target.value);
+						}}
+						className="cameraSelect">
 						{cameraOptions.map((option) => (
 							<option key={option.value} value={option.value}>
 								{option.label}
@@ -149,7 +172,6 @@ const ScannerClient = () => {
 						onError={handleError}
 						constraints={{
 							deviceId: deviceId ? { exact: deviceId } : undefined,
-							facingMode: deviceId ? undefined : "environment",
 							advanced: [{ torch, zoom } as unknown as MediaTrackConstraintSet],
 						}}
 						components={{
