@@ -10,7 +10,7 @@ import OrdersCard from "./OrdersCard";
 
 const OrderHistory = (props: TOrderHistoryProps) => {
 	const { onScroll } = props;
-	const { orderHistory = [] } = useAdmin();
+	const { orderHistory = [], profile } = useAdmin();
 
 	const [activeCardID, setActiveCardID] = useState<string>();
 	const [activeCardData, setActiveCardData] = useState<TOrder>();
@@ -48,14 +48,16 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 						))}
 					</div>
 					<div className="details">
-						{/* @ts-expect-error TOrder type mismatch between database model and Invoice component */}
-						{!activeCardData ? <NoContent label="No orders yet" animationName="GhostNoContent" size={200} /> : <Invoice order={activeCardData} />}
+						{!activeCardData ? (
+							<NoContent label="No orders yet" animationName="GhostNoContent" size={200} />
+						) : (
+							<Invoice order={activeCardData} profile={profile} />
+						)}
 					</div>
 				</div>
 			)}
 			<SideSheet title={["Invoice"]} open={sideSheetOpen} setOpen={setSideSheetOpen}>
-				{/* @ts-expect-error TOrder type mismatch between database model and Invoice component */}
-				{activeCardData && <Invoice order={activeCardData} />}
+				{activeCardData && <Invoice order={activeCardData} profile={profile} />}
 			</SideSheet>
 		</div>
 	);
