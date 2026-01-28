@@ -11,13 +11,33 @@
 	color: var(--colorTextPrimary);
 	overflow: hidden;
 
-	@media (max-height: 700px) {
-		padding-top: 15dvh;
-	}
-
 	.scannerHeader {
 		position: absolute;
 		top: 5dvh;
+		margin: 0;
+		font-size: 1.5rem;
+		font-variation-settings:
+			'wdth' 75,
+			'wght' 800;
+		text-transform: uppercase;
+		color: var(--colorTextPrimary);
+
+		@media (height <= 800px) {
+			top: 2dvh;
+		}
+	}
+	.scannerFooter {
+		position: absolute;
+		bottom: 5dvh;
+		margin: 0;
+		font-size: 0.9rem;
+		font-variation-settings:
+			'wdth' 75,
+			'wght' 200;
+		color: var(--colorTextSecondary);
+	}
+
+	.scannerHeader {
 		left: 0;
 		width: 100%;
 		padding-top: max(2rem, env(safe-area-inset-top));
@@ -28,21 +48,6 @@
 		align-items: center;
 		gap: 0.25rem;
 		animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-
-		.title {
-			margin: 0;
-			font-size: 1.5rem;
-			font-weight: 800;
-			text-transform: uppercase;
-			letter-spacing: -0.5px;
-			color: var(--colorTextPrimary);
-		}
-
-		.subtitle {
-			margin: 0;
-			font-size: 0.9rem;
-			color: var(--colorTextSecondary);
-		}
 	}
 
 	.cameraSelectWrapper {

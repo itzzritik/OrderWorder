@@ -135,11 +135,8 @@ const ScannerClient = () => {
 
 	return (
 		<div className="scannerPage">
-			<div className="scannerHeader">
-				<h4 className="title">Order Worder</h4>
-				<p className="subtitle">Scan QR to Order</p>
-			</div>
-
+			<h4 className="scannerHeader">Order Worder</h4>
+			<p className="scannerFooter">Scan QR to Order</p>
 			{devices.length > 0 && (
 				<div className="cameraSelectWrapper">
 					<select
