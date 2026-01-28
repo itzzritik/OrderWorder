@@ -1,7 +1,10 @@
 /* eslint-disable max-len */
+import mongoose from "mongoose";
+import { ID_SUFFIX, REF_STARBUCKS, TYPE_ACCOUNT, TYPE_KITCHEN, TYPE_PROFILE, TYPE_TABLE } from "../constants";
 import { menus } from "./starbucksMenu";
 
 const account = {
+	_id: new mongoose.Types.ObjectId(`${REF_STARBUCKS}${TYPE_ACCOUNT}${ID_SUFFIX}000001`),
 	email: "admin@starbucks.com",
 	username: "starbucks",
 	password: "starbucks@123",
@@ -9,6 +12,7 @@ const account = {
 };
 
 const profile = {
+	_id: new mongoose.Types.ObjectId(`${REF_STARBUCKS}${TYPE_PROFILE}${ID_SUFFIX}000001`),
 	name: "Starbucks Coffee",
 	restaurantID: "starbucks",
 	description:
@@ -54,6 +58,7 @@ const profile = {
 
 const kitchens = [
 	{
+		_id: new mongoose.Types.ObjectId(`${REF_STARBUCKS}${TYPE_KITCHEN}${ID_SUFFIX}000001`),
 		restaurantID: "starbucks",
 		username: "starbucksKitchen1",
 		password: "123456",
@@ -61,6 +66,7 @@ const kitchens = [
 ];
 
 const tables = Array.from({ length: 5 }, (_, i) => ({
+	_id: new mongoose.Types.ObjectId(`${REF_STARBUCKS}${TYPE_TABLE}${ID_SUFFIX}${i.toString().padStart(6, "0")}`),
 	restaurantID: "starbucks",
 	name: `Table ${i}`,
 	username: i.toString(),

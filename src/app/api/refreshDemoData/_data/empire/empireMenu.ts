@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import type { TMenu } from "#utils/database/models/menu";
+import { ID_SUFFIX, REF_EMPIRE, TYPE_MENU } from "../constants";
 
 const empireBox = [
 	{
@@ -21,7 +23,7 @@ const empireBox = [
 	},
 	{
 		name: "Biriyani Rice With Chilly Chicken Boneless",
-		description: "Biriyani Rice, Raitha, Chilly Chicken Bonless (5 Pcs)",
+		description: "Biriyani Rice, Raitha, Chilly Chicken Boneless (5 Pcs)",
 		category: "Empire Box",
 		price: 150,
 		foodType: "extra-spicy",
@@ -280,7 +282,8 @@ const desserts = [
 
 let menus = [...mainCourse, ...rice, ...eggDishes, ...friedRice, ...empireBox, ...breads, ...beverages, ...desserts] as TMenu[];
 
-menus = menus.map((menu) => {
+menus = menus.map((menu, index) => {
+	menu._id = new mongoose.Types.ObjectId(`${REF_EMPIRE}${TYPE_MENU}${ID_SUFFIX}${index.toString().padStart(6, "0")}`);
 	menu.restaurantID = "empire";
 	if (!menu?.taxPercent) menu.taxPercent = 5;
 	if (!menu?.hidden) menu.hidden = false;

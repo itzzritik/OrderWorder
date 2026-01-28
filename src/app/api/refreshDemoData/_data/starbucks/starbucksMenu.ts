@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import type { TMenu } from "#utils/database/models/menu";
+import { ID_SUFFIX, REF_STARBUCKS, TYPE_MENU } from "../constants";
 
 /* eslint-disable max-len */
 const savouries = [
@@ -617,7 +619,8 @@ const special = [
 
 let menus = [...special, ...frappuccino, ...coldBeverages, ...hotBeverages, ...savouries, ...sandwiches, ...wraps, ...desserts] as TMenu[];
 
-menus = menus.map((menu) => {
+menus = menus.map((menu, index) => {
+	menu._id = new mongoose.Types.ObjectId(`${REF_STARBUCKS}${TYPE_MENU}${ID_SUFFIX}${index.toString().padStart(6, "0")}`);
 	menu.restaurantID = "starbucks";
 	if (!menu?.taxPercent) menu.taxPercent = 5;
 	if (!menu?.hidden) menu.hidden = false;
