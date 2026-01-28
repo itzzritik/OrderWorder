@@ -30,11 +30,11 @@
 			padding: 0 5px;
 			transition: width 0.1s ease-out;
 			overflow-y: auto;
-			
+
 			> .scrollbarVertical {
 				transform: translateX(3px);
 			}
-			
+
 			&.disable {
 				.ordersCard {
 					pointer-events: none;
@@ -58,7 +58,7 @@
 			box-shadow: 0 0 8px rgb(150 150 150 / 15%);
 
 			&.reject {
-				box-shadow: 0 0 5px rgb(var(--colorAlertErrorRGB));
+				box-shadow: 0 0 5px hsl(var(--colorAlertError));
 			}
 
 			.noContent > div p {
@@ -68,7 +68,7 @@
 	}
 
 	.detailSideSheet {
-		.scrollbarVertical{
+		.scrollbarVertical {
 			display: none;
 		}
 
@@ -106,7 +106,7 @@
 			> div {
 				margin-top: 70px;
 				transform: scale(0.8);
-	
+
 				span {
 					width: 90%;
 				}

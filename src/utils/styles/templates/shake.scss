@@ -1,22 +1,28 @@
 .shake {
-	color: rgb(var(--colorAlertErrorRGB));
+	color: hsl(var(--colorAlertError));
 	transition: border-color 0.2s ease-out;
-	animation: shake var(--animDurDefault) cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+	animation: shake var(--animDurDefault) cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 
 	&::placeholder {
-		color: rgb(var(--colorAlertErrorRGB));
+		color: hsl(var(--colorAlertError));
 	}
 
 	@keyframes shake {
-		0%, 100% {
+		0%,
+		100% {
 			transform: translateX(0);
 		}
 
-		10%, 30%, 50%, 70% {
+		10%,
+		30%,
+		50%,
+		70% {
 			transform: translateX(-10px);
 		}
 
-		20%, 40%, 60% {
+		20%,
+		40%,
+		60% {
 			transform: translateX(10px);
 		}
 

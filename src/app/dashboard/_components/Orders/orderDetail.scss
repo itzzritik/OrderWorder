@@ -13,8 +13,8 @@
 				> .button {
 					&.accept {
 						color: var(--colorBackgroundPrimary);
-						background-color: rgb(var(--colorAlertErrorRGB));
-						border-color: rgb(var(--colorAlertErrorRGB));
+						background-color: hsl(var(--colorAlertError));
+						border-color: hsl(var(--colorAlertError));
 					}
 
 					&.reject {
@@ -47,7 +47,9 @@
 				display: block;
 				margin: 0;
 				font-size: 28px;
-				font-variation-settings: 'wdth' 75, 'wght' 500;
+				font-variation-settings:
+					'wdth' 75,
+					'wght' 500;
 				user-select: none;
 				white-space: nowrap;
 				overflow: hidden;
@@ -61,7 +63,9 @@
 				display: flex;
 				height: var(--infoHeight);
 				line-height: var(--infoHeight);
-				font-variation-settings: 'wdth' 75, 'wght' 400;
+				font-variation-settings:
+					'wdth' 75,
+					'wght' 400;
 				font-size: var(--infoFont);
 				align-items: center;
 				margin: 0 0 0 -2px;
@@ -69,7 +73,7 @@
 				> i {
 					margin-right: 8px;
 				}
-	
+
 				&.name {
 					margin-top: 6px;
 				}
@@ -82,7 +86,7 @@
 				&.total {
 					font-size: calc(var(--infoFont) - 2px);
 				}
-	
+
 				div {
 					display: block;
 					width: var(--infoHeight);
