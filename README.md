@@ -29,6 +29,14 @@ OrderWorder is a full-stack, AI-powered contactless dining platform designed to 
 
 ---
 
+## 🧠 AI Integration (Jarvis)
+Built on **Google Gemini (Gemma-27b)** via **Vercel AI SDK**, Jarvis uses advanced prompt engineering to act as a virtual waiter.
+- **Context-Aware**: Dynamically injects real-time menu data (MongoDB) into system prompts for accurate allergen/ingredient answers.
+- **Structured Output**: Uses custom tokens to return direct item recommendations adjacent to natural language responses.
+- **No Vectors Required**: efficient, real-time context injection without complex vector databases.
+
+---
+
 ## 🛠️ Tech Stack  
 - **Frontend**: React + Next.js  
 - **Styling**: SCSS (SASS)  
@@ -37,6 +45,7 @@ OrderWorder is a full-stack, AI-powered contactless dining platform designed to 
 - **Hosting**: Vercel  
 - **Authentication**: NextAuth.js  
 - **State Management**: React Context + Redux
+- **AI & Chatbot**: Vercel AI SDK + Google Gemini (Gemma-27b)
 
 ---
 

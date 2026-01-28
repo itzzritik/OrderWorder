@@ -11,6 +11,10 @@
 	color: var(--colorTextPrimary);
 	overflow: hidden;
 
+	@media (max-height: 700px) {
+		padding-top: 15dvh;
+	}
+
 	.scannerHeader {
 		position: absolute;
 		top: 5dvh;
