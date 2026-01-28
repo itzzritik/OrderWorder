@@ -1,222 +1,317 @@
-.scanner-page {
+.scannerPage {
 	width: 100vw;
 	height: 100dvh;
-	background-color: var(--colorBackgroundPrimary, #fff);
+	background-color: var(--colorBackgroundPrimary);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	padding: 2rem;
-	gap: 1.5rem;
-	color: var(--colorPrimary, #000);
+	gap: 1rem;
+	color: var(--colorTextPrimary);
+	overflow: hidden;
 
-	.scanner-header {
-		text-align: center;
+	.scannerHeader {
+		position: absolute;
+		top: 5dvh;
+		left: 0;
 		width: 100%;
-		max-width: 400px;
+		padding-top: max(2rem, env(safe-area-inset-top));
+		z-index: 40;
+		text-align: center;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.25rem;
+		animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 
 		.title {
 			margin: 0;
 			font-size: 1.5rem;
-			font-weight: 700;
+			font-weight: 800;
 			text-transform: uppercase;
+			letter-spacing: -0.5px;
+			color: var(--colorTextPrimary);
 		}
 
 		.subtitle {
 			margin: 0;
 			font-size: 0.9rem;
-			color: var(--colorTextSecondary, #666);
-			margin-bottom: 0.5rem;
-		}
-
-		.camera-select-wrapper {
-			position: relative;
-			width: 100%;
-			max-width: 250px;
-			background: rgba(0, 0, 0, 0.05);
-			border-radius: 12px;
-			padding: 0.5rem 1rem;
-			display: flex;
-			align-items: center;
-
-			.camera-select {
-				appearance: none;
-				background: transparent;
-				border: none;
-				width: 100%;
-				font-size: 0.9rem;
-				color: inherit;
-				outline: none;
-				padding-right: 1.5rem;
-				cursor: pointer;
-			}
-
-			.select-icon {
-				position: absolute;
-				right: 1rem;
-				pointer-events: none;
-				font-size: 0.8rem;
-				opacity: 0.5;
-			}
+			color: var(--colorTextSecondary);
 		}
 	}
 
-	.scanner-container {
+	.cameraSelectWrapper {
+		position: relative;
+		background: var(--colorBackgroundSecondary);
+		border-radius: 30px;
+		padding: 0 1rem;
+		height: 36px;
+		min-width: 160px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid transparent;
+		transition: all 0.25s ease;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+		animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+		z-index: 30;
+
+		&:hover {
+			background: var(--colorBackgroundHover, #f0f0f0);
+			transform: translateY(-1px);
+		}
+
+		&:focus-within {
+			border-color: var(--colorPrimary);
+			box-shadow: 0 0 0 3px var(--colorPrimaryAlpha, rgba(0, 0, 0, 0.1));
+		}
+
+		.cameraSelect {
+			appearance: none;
+			background: transparent;
+			border: none;
+			width: 100%;
+			height: 100%;
+			font-size: 0.85rem;
+			font-weight: 600;
+			color: var(--colorTextPrimary);
+			outline: none;
+			padding-right: 1.5rem;
+			cursor: pointer;
+			text-align: center;
+			text-align-last: center;
+		}
+
+		.selectIcon {
+			position: absolute;
+			right: 1rem;
+			pointer-events: none;
+			font-size: 0.75rem;
+			color: var(--colorTextSecondary);
+			transition: transform 0.2s;
+		}
+
+		&:active .selectIcon {
+			transform: translateY(2px);
+		}
+	}
+
+	.scannerContainer {
 		width: 100%;
-		max-width: 350px; // Slightly smaller square
+		max-width: 380px;
 		aspect-ratio: 1/1;
 		position: relative;
-		border-radius: 20px;
-		background: #000; // Black bg for video placeholder
+		border-radius: 24px;
+		background: #000;
 		overflow: hidden;
-		box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.3);
+		animation: scaleIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		border: 4px solid var(--colorBackgroundPrimary);
+		outline: 1px solid rgba(0, 0, 0, 0.1);
 
-		.error-message {
+		.errorMessage {
 			width: 100%;
 			height: 100%;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			background: #f8d7da;
-			color: #721c24;
+			background: var(--colorBackgroundSecondary, #f8f9fa);
+			color: var(--colorError, #d32f2f);
 			padding: 2rem;
 			text-align: center;
 
-			.error-icon {
-				font-size: 2rem;
+			.errorIcon {
+				font-size: 2.5rem;
 				margin-bottom: 1rem;
+				animation: shake 0.5s ease-in-out;
 			}
 
 			p {
 				margin: 0;
-				font-size: 0.9rem;
-				line-height: 1.4;
+				font-size: 0.95rem;
+				line-height: 1.5;
+				font-weight: 500;
 			}
+
 			.hint {
 				font-size: 0.8rem;
-				opacity: 0.8;
-				margin-top: 0.5rem;
+				opacity: 0.7;
+				margin-top: 0.75rem;
+				color: var(--colorTextSecondary);
 			}
 		}
 
-		.scan-overlay {
+		.scanOverlay {
 			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
+			inset: 0;
 			pointer-events: none;
-			padding: 20px;
+			padding: 1rem;
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			z-index: 10;
 
 			.corners {
 				width: 100%;
 				height: 100%;
-				border: 2px solid rgba(255, 255, 255, 0.4);
-				border-radius: 12px;
+				border: 2px solid rgba(255, 255, 255, 0.3);
+				border-radius: 14px;
 				position: relative;
+				box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.6);
 
 				&::after {
-					// Laser line
 					content: '';
 					position: absolute;
 					top: 0;
 					left: 0;
 					width: 100%;
 					height: 2px;
-					background: #fff;
-					box-shadow: 0 0 10px #fff;
-					animation: scanLine 2s linear infinite;
+					background: var(--colorPrimary);
+					box-shadow: 0 0 15px var(--colorPrimary);
+					animation: scanLine 2.5s ease-in-out infinite;
 				}
+			}
+		}
+
+		.flashBtn {
+			position: absolute;
+			top: 0.5rem;
+			right: 0.5rem;
+			z-index: 20;
+			width: 32px;
+			height: 32px;
+			min-width: 32px;
+			border-radius: 50% !important;
+			backdrop-filter: blur(8px);
+			background: rgba(255, 255, 255, 0.15);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			transition: all 0.2s;
+
+			.xIcon {
+				font-size: 14px;
+			}
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.25);
+				transform: scale(1.05);
+			}
+
+			&:active {
+				transform: scale(0.95);
 			}
 		}
 	}
 
-	.scanner-controls {
+	.scannerControls {
 		display: flex;
 		align-items: center;
-		gap: 1.5rem;
-		background: rgba(0, 0, 0, 0.03);
-		padding: 0.75rem 1.5rem;
-		border-radius: 50px;
+		justify-content: center;
+		gap: 1rem;
+		width: 100%;
+		max-width: 400px;
+		animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
 
-		button {
-			border: none;
-			background: transparent;
-			cursor: pointer;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: var(--colorPrimary, #000);
-			transition: all 0.2s;
+		.controlBtn {
+			width: 48px;
+			height: 48px;
+			border-radius: 50% !important;
+			transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-			&:disabled {
-				opacity: 0.3;
-				cursor: not-allowed;
-			}
-			&:active:not(:disabled) {
-				transform: scale(0.95);
+			&:active {
+				transform: scale(0.9);
 			}
 		}
 
-		.control-btn {
-			width: 44px;
-			height: 44px;
-			border-radius: 50%;
-			background: #fff;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-			&.active {
-				background: var(--colorPrimary, #000);
-				color: #fff;
-			}
-		}
-
-		.zoom-controls {
+		.zoomControls {
 			display: flex;
 			align-items: center;
-			gap: 0.5rem;
-			background: #fff;
-			padding: 0.25rem;
+			gap: 0.25rem;
+			padding: 0.35rem 0.5rem;
 			border-radius: 30px;
-			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+			height: 48px;
 
-			button {
+			.zoomBtn {
 				width: 36px;
 				height: 36px;
-				border-radius: 50%;
-				&:hover:not(:disabled) {
-					background: rgba(0, 0, 0, 0.05);
-				}
+				min-width: 36px;
+				padding: 0;
+				border-radius: 50% !important;
 			}
 
-			.zoom-val {
-				min-width: 30px;
+			.zoomVal {
+				min-width: 36px;
 				text-align: center;
 				font-size: 0.85rem;
-				font-weight: 600;
+				font-weight: 700;
+				font-feature-settings: 'tnum';
+				color: var(--colorTextPrimary);
 			}
 		}
 	}
 }
 
 @keyframes scanLine {
-	0% {
-		transform: translateY(0);
-		opacity: 0.5;
+	0%,
+	100% {
+		top: 0;
+		opacity: 0;
 	}
-	50% {
+	10% {
 		opacity: 1;
 	}
+	50% {
+		top: 100%;
+		opacity: 1;
+	}
+	90% {
+		opacity: 1;
+	}
+}
+
+@keyframes scaleIn {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes shake {
+	0%,
 	100% {
-		transform: translateY(300px);
-		opacity: 0.5;
-	} // Approximate height
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(-5px);
+	}
+	75% {
+		transform: translateX(5px);
+	}
 }
