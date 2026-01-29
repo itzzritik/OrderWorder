@@ -13,7 +13,7 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 	const { orderHistory = [], profile } = useAdmin();
 
 	const [activeCardID, setActiveCardID] = useState<string>();
-	const [activeCardData, setActiveCardData] = useState<TOrder>();
+	const [activeCardData, setActiveCardData] = useState<TOrder & { _id: string; createdAt: string | Date }>();
 	const [sideSheetOpen, setSideSheetOpen] = useState(false);
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 			setActiveCardData(undefined);
 		} else if (!orderHistory.some(({ _id }) => _id.toString() === activeCardID)) {
 			setActiveCardID(orderHistory[0]?._id.toString());
-			setActiveCardData(orderHistory[0]);
+			setActiveCardData(orderHistory[0] as TOrder & { _id: string; createdAt: string | Date });
 		}
 	}, [activeCardID, orderHistory]);
 
@@ -42,7 +42,9 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 								active={activeCardID === data._id.toString()}
 								activate={(orderID) => {
 									setActiveCardID(orderID);
-									setActiveCardData(orderHistory.find((order) => order._id.toString() === orderID));
+									setActiveCardData(
+										orderHistory.find((order) => order._id.toString() === orderID) as TOrder & { _id: string; createdAt: string | Date },
+									);
 								}}
 							/>
 						))}
