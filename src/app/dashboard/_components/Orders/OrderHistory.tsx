@@ -2,9 +2,9 @@ import { type UIEvent, useEffect, useState } from "react";
 
 import SideSheet from "#components/base/SideSheet";
 import { useAdmin } from "#components/context/useContext";
-import Invoice from "#components/layout/Invoice";
 import NoContent from "#components/layout/NoContent";
 import type { TOrder } from "#utils/database/models/order";
+import OrderDetails from "./OrderDetails";
 
 import OrdersCard from "./OrdersCard";
 
@@ -53,13 +53,13 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 						{!activeCardData ? (
 							<NoContent label="No orders yet" animationName="GhostNoContent" size={200} />
 						) : (
-							<Invoice order={activeCardData} profile={profile} />
+							<OrderDetails order={activeCardData} profile={profile} />
 						)}
 					</div>
 				</div>
 			)}
-			<SideSheet title={["Invoice"]} open={sideSheetOpen} setOpen={setSideSheetOpen}>
-				{activeCardData && <Invoice order={activeCardData} profile={profile} />}
+			<SideSheet title={["Order Details"]} open={sideSheetOpen} setOpen={setSideSheetOpen}>
+				{activeCardData && <OrderDetails order={activeCardData} profile={profile} />}
 			</SideSheet>
 		</div>
 	);

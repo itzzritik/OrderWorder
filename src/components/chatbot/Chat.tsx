@@ -2,10 +2,11 @@
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Button, Icon, Textfield } from "xtreme-ui";
+import { Icon, Textfield } from "xtreme-ui";
 import { useChat } from "../../utils/hooks/useChat";
 import { useResize } from "../../utils/hooks/useResize";
 import { useOrder, useRestaurant } from "../context/useContext";
+import { ChatFab } from "./ChatFab";
 import { Welcome } from "./Welcome";
 
 import "./chat.scss";
@@ -17,7 +18,7 @@ export const ChatInterface = () => {
 	const { setLoginOpen } = useOrder();
 	const isAuthenticated = session.status === "authenticated";
 
-	const { isOpen, setIsOpen, messages, isLoading, sendMessage, toggleOpen, messagesEndRef, chatRef } = useChat({
+	const { isOpen, setIsOpen, messages, isLoading, sendMessage, toggleOpen, resetChat, messagesEndRef, chatRef } = useChat({
 		restaurantId: restaurant?.username ?? "",
 		isAuthenticated,
 	});
@@ -40,15 +41,7 @@ export const ChatInterface = () => {
 
 	return (
 		<>
-			{!loading && (
-				<Button
-					className={`chatFab ${isOpen ? "open" : ""}`}
-					type="primary"
-					onClick={toggleOpen}
-					icon={isOpen ? "f00d" : "f7d4"}
-					iconType={isOpen ? "solid" : "duotone"}
-				/>
-			)}
+			{!loading && <ChatFab isOpen={isOpen} toggleOpen={toggleOpen} resetChat={resetChat} isAuthenticated={isAuthenticated} />}
 			<div
 				ref={chatRef}
 				className={`chatWidget ${isOpen ? "open" : ""}`}

@@ -24,7 +24,7 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 		scrollToBottom();
 	}, [messages, scrollToBottom]);
 
-	const sendMessage = async (messageContent: string, options?: { hidden?: boolean }) => {
+	const sendMessage = async (messageContent: string, options?: { hidden?: boolean; overrideHistory?: ChatMessage[] }) => {
 		if (!messageContent.trim()) return;
 
 		const userMessage = createMessage("user", messageContent);
@@ -32,8 +32,13 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 		setIsLoading(true);
 
 		try {
-			const data = await sendChatMessage([...messages, userMessage], restaurantId);
-			const assistantMessage = createMessage("assistant", data.text || "", data.toolResults);
+			const historyToUse = options?.overrideHistory ?? messages;
+			const data = await sendChatMessage([...historyToUse, userMessage], restaurantId);
+			const assistantMessage = createMessage(
+				"assistant",
+				(data.text || "").replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "").replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gim, ""),
+				data.toolResults,
+			);
 			setMessages((prev) => [...prev, assistantMessage]);
 		} catch {
 			const errorMessage = createMessage("assistant", "Sorry, I encountered an error. Please try again.");
@@ -47,18 +52,32 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 		const handleClickOutside = (event: MouseEvent) => {
 			if (chatRef.current && !chatRef.current.contains(event.target as Node)) {
 				const target = event.target as HTMLElement;
-				if (target.closest(".chatFab")) return;
+				if (target.closest(".chatFab") || target.closest(".newChatFab")) return;
 				setIsOpen(false);
 			}
 		};
 
-		if (isOpen) document.addEventListener("mousedown", handleClickOutside);
-		return () => document.removeEventListener("mousedown", handleClickOutside);
+		if (isOpen) {
+			document.body.classList.add("chat-open");
+			document.addEventListener("mousedown", handleClickOutside);
+		} else document.body.classList.remove("chat-open");
+
+		return () => {
+			document.body.classList.remove("chat-open");
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
 	}, [isOpen]);
 
 	const toggleOpen = () => {
 		if (!isOpen && messages.length === 0 && isAuthenticated) sendMessage("Hey!", { hidden: true }).catch(console.error);
 		setIsOpen((prev) => !prev);
+	};
+
+	const resetChat = async () => {
+		setMessages([]);
+		if (isAuthenticated) {
+			await sendMessage("Hey!", { hidden: true, overrideHistory: [] });
+		}
 	};
 
 	return {
@@ -68,6 +87,7 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 		isLoading,
 		sendMessage,
 		toggleOpen,
+		resetChat,
 		messagesEndRef,
 		chatRef,
 	};

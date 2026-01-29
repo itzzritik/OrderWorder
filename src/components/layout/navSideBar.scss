@@ -138,6 +138,10 @@
 			flex-direction: row;
 			align-items: center;
 
+			body.chat-open & {
+				display: none;
+			}
+
 			&.head {
 				.navItem:first-child {
 					display: none;

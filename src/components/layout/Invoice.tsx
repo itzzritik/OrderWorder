@@ -133,12 +133,12 @@ const styles = StyleSheet.create({
 	},
 });
 
-type TInvoiceProps = {
+export type TInvoiceProps = {
 	order: TOrder & { _id: string; createdAt: string | Date };
 	profile?: TProfile;
 };
 
-const InvoiceDocument = ({ order, profile }: TInvoiceProps) => {
+export const InvoiceDocument = ({ order, profile }: TInvoiceProps) => {
 	const companyName = profile?.name || "Restaurant Name";
 	const companyAddress = profile?.address || "";
 	const logo = profile?.avatar;
