@@ -1,11 +1,39 @@
-import { createCerebras } from "@ai-sdk/cerebras";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { createGroq } from "@ai-sdk/groq";
+import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 
-export const models = {
-	groq: createGroq({ apiKey: process.env.GROQ_KEY })("meta-llama/llama-4-scout-17b-16e-instruct"),
-	cerebras: createCerebras({ apiKey: process.env.CEREBRAS_KEY })("llama-3.3-70b"),
-	google: createGoogleGenerativeAI({ apiKey: process.env.GEMINI_KEY })("gemini-2.5-flash-lite"),
-};
+const configs = [
+	{
+		platform: "siliconflow",
+		url: "https://api.siliconflow.com/v1",
+		model: "deepseek-ai/DeepSeek-V3.1",
+	},
+	{
+		platform: "google",
+		url: "https://generativelanguage.googleapis.com/v1beta/openai",
+		model: "gemini-2.5-flash-lite",
+	},
+	{
+		platform: "cerebras",
+		url: "https://api.cerebras.ai/v1",
+		model: "llama-3.3-70b",
+	},
+	{
+		platform: "groq",
+		url: "https://api.groq.com/openai/v1",
+		model: "meta-llama/llama-4-scout-17b-16e-instruct",
+	},
+] as const;
+
+type AIProvider = ReturnType<ReturnType<typeof createOpenAICompatible>>;
+
+export const models = Object.fromEntries(
+	configs.map(({ platform, url, model }) => {
+		const provider = createOpenAICompatible({
+			baseURL: url,
+			apiKey: process.env[`AI_${platform.toUpperCase()}_KEY`],
+			name: platform,
+		});
+		return [platform, provider(model)];
+	}),
+) as Record<(typeof configs)[number]["platform"], AIProvider>;
 
 export const getModel = (provider: keyof typeof models) => models[provider];
