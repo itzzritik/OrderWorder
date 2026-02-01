@@ -2,11 +2,6 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 
 const configs = [
 	{
-		platform: "siliconflow",
-		url: "https://api.siliconflow.com/v1",
-		model: "deepseek-ai/DeepSeek-V3.1",
-	},
-	{
 		platform: "google",
 		url: "https://generativelanguage.googleapis.com/v1beta/openai",
 		model: "gemini-2.5-flash-lite",
@@ -20,6 +15,11 @@ const configs = [
 		platform: "groq",
 		url: "https://api.groq.com/openai/v1",
 		model: "meta-llama/llama-4-scout-17b-16e-instruct",
+	},
+	{
+		platform: "siliconflow",
+		url: "https://api.siliconflow.com/v1",
+		model: "deepseek-ai/DeepSeek-V3.1",
 	},
 ] as const;
 
