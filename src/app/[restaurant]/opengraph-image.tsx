@@ -17,7 +17,7 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 
 	return new ImageResponse(
 		<OgBackground themeColor={p?.themeColor}>
-			<div style={{ display: "flex", flexDirection: "column", alignItems: "center", zIndex: 1, paddingBottom: "80px" }}>
+			<div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingBottom: "80px" }}>
 				<div
 					style={{
 						width: "180px",

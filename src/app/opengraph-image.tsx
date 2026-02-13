@@ -17,9 +17,10 @@ export default function OgImage() {
 						borderRadius: "99px",
 						display: "flex",
 						alignItems: "center",
+						marginTop: "-75px",
 						boxShadow: "0 8px 16px -4px rgba(228, 107, 54, 0.3)",
 					}}>
-					<span style={{ fontSize: "16px", fontWeight: 700, color: "white", letterSpacing: "1.5px", textTransform: "uppercase" }}>AI-Powered Dining</span>
+					<span style={{ fontSize: "16px", fontWeight: 700, color: "white", letterSpacing: "1.5px", textTransform: "uppercase" }}>AI Powered Dining</span>
 				</div>
 				<div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
 					<h1 style={{ fontSize: "96px", fontWeight: 900, color: "#1a1a1a", margin: 0, lineHeight: 1, letterSpacing: "-4px", display: "flex" }}>
@@ -28,9 +29,9 @@ export default function OgImage() {
 				</div>
 				<p
 					style={{
-						fontSize: "32px",
+						fontSize: "28px",
 						color: "#525252",
-						margin: 0,
+						margin: "-16px 0",
 						maxWidth: "700px",
 						textAlign: "center",
 						fontWeight: 500,
@@ -39,22 +40,6 @@ export default function OgImage() {
 					}}>
 					{SITE_TAGLINE}
 				</p>
-				<div style={{ display: "flex", gap: "16px", marginTop: "16px" }}>
-					{["Contactless", "No App Required", "Instant"].map((item) => (
-						<div
-							key={item}
-							style={{
-								padding: "8px 20px",
-								borderRadius: "12px",
-								background: "rgba(0, 0, 0, 0.04)",
-								color: "#4a4a4a",
-								fontSize: "18px",
-								fontWeight: 600,
-							}}>
-							{item}
-						</div>
-					))}
-				</div>
 			</div>
 		</OgBackground>,
 		{ ...size },
