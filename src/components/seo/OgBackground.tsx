@@ -1,5 +1,7 @@
 import type { TThemeColor } from "xtreme-ui";
 
+import { OG_IMAGE_SIZE } from "#utils/seo/constants";
+
 type OgBackgroundProps = {
 	children?: React.ReactNode;
 	themeColor?: TThemeColor;
@@ -19,8 +21,8 @@ export function OgBackground({ children, themeColor }: OgBackgroundProps) {
 	return (
 		<div
 			style={{
-				width: "100%",
-				height: "100%",
+				width: `${OG_IMAGE_SIZE.width}px`,
+				height: `${OG_IMAGE_SIZE.height}px`,
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
@@ -212,7 +214,7 @@ export function OgBackground({ children, themeColor }: OgBackgroundProps) {
 			/>
 
 			{/* === Content === */}
-			<div style={{ position: "relative", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>{children}</div>
+			{children}
 		</div>
 	);
 }

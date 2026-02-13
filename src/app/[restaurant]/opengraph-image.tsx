@@ -19,12 +19,12 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 	return new ImageResponse(
 		<OgBackground themeColor={themeColor}>
 			{/* === Center content === */}
-			<div style={{ display: "flex", flexDirection: "column", alignItems: "center", zIndex: 1 }}>
+			<div style={{ display: "flex", flexDirection: "column", alignItems: "center", zIndex: 1, paddingBottom: "80px" }}>
 				{/* Circular logo with grey border */}
 				<div
 					style={{
-						width: "220px",
-						height: "220px",
+						width: "180px",
+						height: "180px",
 						borderRadius: "50%",
 						overflow: "hidden",
 						display: "flex",
@@ -36,9 +36,9 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 					}}>
 					{avatarUrl ? (
 						// biome-ignore lint/performance/noImgElement: next/og ImageResponse only supports native HTML
-						<img src={avatarUrl} alt={name} width={220} height={220} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
+						<img src={avatarUrl} alt={name} width={180} height={180} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
 					) : (
-						<span style={{ fontSize: "90px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{name.charAt(0).toUpperCase()}</span>
+						<span style={{ fontSize: "72px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{name.charAt(0).toUpperCase()}</span>
 					)}
 				</div>
 
@@ -60,32 +60,36 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 				<span
 					style={{
 						fontSize: "22px",
-						fontWeight: 400,
+						fontWeight: 200,
 						color: "rgba(0, 0, 0, 0.7)",
 						lineHeight: 1.4,
 						marginTop: "16px",
 						textAlign: "center",
-						maxWidth: "640px",
-						display: "block",
+						maxWidth: "740px",
+						display: "-webkit-box",
+						WebkitLineClamp: 2,
+						WebkitBoxOrient: "vertical",
 						overflow: "hidden",
 						textOverflow: "ellipsis",
 					}}>
-					{description.length > 90 ? `${description.slice(0, 87)}...` : description}
+					{description}
 				</span>
 			</div>
 
-			{/* Bottom-right branding */}
+			{/* Bottom branding */}
 			<div
 				style={{
 					position: "absolute",
 					bottom: "30px",
-					right: "40px",
+					left: "50%",
+					transform: "translateX(-50%)",
 					display: "flex",
-					alignItems: "baseline",
-					gap: "8px",
+					flexDirection: "column",
+					alignItems: "center",
+					gap: "2px",
 				}}>
-				<span style={{ fontSize: "18px", color: "rgba(0, 0, 0, 0.36)", fontWeight: 400 }}>powered by</span>
-				<span style={{ fontSize: "24px", color: "rgba(0, 0, 0, 0.8)", fontWeight: 800, letterSpacing: "-0.5px" }}>{SITE_NAME}</span>
+				<span style={{ fontSize: "14px", color: "rgba(0, 0, 0, 0.4)", fontWeight: 500, letterSpacing: "1px" }}>Powered By</span>
+				<span style={{ fontSize: "24px", color: "rgba(0, 0, 0, 0.8)", fontWeight: 900, letterSpacing: "-1px", lineHeight: 1 }}>{SITE_NAME}</span>
 			</div>
 		</OgBackground>,
 		{ ...size },
