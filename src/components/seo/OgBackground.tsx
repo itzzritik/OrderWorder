@@ -1,150 +1,54 @@
 import type { TThemeColor } from "xtreme-ui";
 import { OG_IMAGE_SIZE } from "#utils/seo/constants";
 
-type OgBackgroundProps = {
-	children?: React.ReactNode;
-	themeColor?: TThemeColor;
-};
+export function OgBackground({ children, themeColor }: { children?: React.ReactNode; themeColor?: TThemeColor }) {
+	const { h, s, l } = { h: 26, s: 90, l: 55, ...themeColor };
+	const [p, pL, pD, pS, pPale] = [`hsl(${h},${s}%,${l}%)`, `hsl(${h},${s}%,85%)`, `hsl(${h},${s}%,40%)`, `hsl(${h},${s}%,${l}%,0.4)`, `hsl(${h},${s}%,96%)`];
+	const bg = `linear-gradient(135deg, #fff 0%, ${pPale} 50%, #fff 100%)`;
 
-export function OgBackground({ children, themeColor }: OgBackgroundProps) {
-	// Default to OrderWorder Orange if no theme color is provided
-	const h = themeColor?.h ?? 26;
-	const s = themeColor?.s ?? 90;
-	const l = themeColor?.l ?? 55;
-
-	// Palette generation
-	const primary = `hsl(${h}, ${s}%, ${l}%)`;
-	const primaryLight = `hsl(${h}, ${s}%, ${85}%)`;
-	const primaryDark = `hsl(${h}, ${s}%, ${40}%)`;
-	const primarySoft = `hsl(${h}, ${s}%, ${l}%, 0.4)`;
-	const primaryPale = `hsl(${h}, ${s}%, ${96}%)`;
-
-	// Professional subtle background
-	const background = `linear-gradient(135deg, #ffffff 0%, ${primaryPale} 50%, #ffffff 100%)`;
-
-	// Confetti Shapes Data
-	// Defined for Top-Left corner. Will be mirrored for Bottom-Right.
-	// Coordinates are roughly within 0-450px from the corner to keep center clear.
-	const confettiItems = [
-		// 1. Large Ambient Glow (Background)
-		{ type: "glow", top: -150, left: -150, size: 700, color: primary, opacity: 0.06 },
-
-		// 2. Rings (Donuts)
-		{ type: "ring", top: 40, left: 160, size: 45, border: 6, color: primary, opacity: 0.7 },
-		{ type: "ring", top: 280, left: 40, size: 28, border: 4, color: primaryDark, opacity: 0.5 },
-		{ type: "ring", top: 120, left: 420, size: 18, border: 3, color: primaryLight, opacity: 0.6 },
-
-		// 3. Polygons / Squares (Diamonds)
-		{ type: "square", top: 130, left: 90, size: 32, rotation: 15, color: primary, opacity: 0.8 },
-		{ type: "square", top: 50, left: 340, size: 22, rotation: 45, color: primaryLight, opacity: 0.9 },
-		{ type: "square", top: 240, left: 260, size: 16, rotation: 30, color: primaryDark, opacity: 0.6 },
-		{ type: "square", top: 380, left: 120, size: 14, rotation: 10, color: primarySoft, opacity: 0.8 },
-
-		// 4. Ribbons / Rectangles
-		{ type: "rect", top: 170, left: 40, width: 65, height: 14, rotation: -20, color: primaryLight, opacity: 0.9 },
-		{ type: "rect", top: 330, left: 160, width: 45, height: 9, rotation: 10, color: primary, opacity: 0.75 },
-		{ type: "rect", top: 80, left: 440, width: 35, height: 7, rotation: 60, color: primarySoft, opacity: 0.85 },
-		{ type: "rect", top: 20, left: 220, width: 20, height: 6, rotation: -45, color: primaryDark, opacity: 0.5 },
-
-		// 5. Circles (Dots)
-		{ type: "circle", top: 110, left: 290, size: 14, color: primaryDark, opacity: 0.7 },
-		{ type: "circle", top: 250, left: 30, size: 20, color: primaryLight, opacity: 0.85 },
-		{ type: "circle", top: 20, left: 110, size: 9, color: primary, opacity: 0.5 },
-		{ type: "circle", top: 360, left: 320, size: 11, color: primary, opacity: 0.4 },
-
-		// 6. Tiny particles for texture
-		{ type: "square", top: 190, left: 360, size: 8, rotation: 15, color: primary, opacity: 0.6 },
-		{ type: "rect", top: 270, left: 310, width: 28, height: 6, rotation: -45, color: primaryDark, opacity: 0.5 },
+	const items = [
+		{ t: "glow", y: -150, x: -150, s: 700, c: p, o: 0.06 },
+		{ t: "ring", y: 40, x: 160, s: 45, b: 6, c: p, o: 0.7 },
+		{ t: "ring", y: 280, x: 40, s: 28, b: 4, c: pD, o: 0.5 },
+		{ t: "ring", y: 120, x: 420, s: 18, b: 3, c: pL, o: 0.6 },
+		{ t: "sq", y: 130, x: 90, s: 32, r: 15, c: p, o: 0.8 },
+		{ t: "sq", y: 50, x: 340, s: 22, r: 45, c: pL, o: 0.9 },
+		{ t: "sq", y: 240, x: 260, s: 16, r: 30, c: pD, o: 0.6 },
+		{ t: "sq", y: 380, x: 120, s: 14, r: 10, c: pS, o: 0.8 },
+		{ t: "rect", y: 170, x: 40, w: 65, h: 14, r: -20, c: pL, o: 0.9 },
+		{ t: "rect", y: 330, x: 160, w: 45, h: 9, r: 10, c: p, o: 0.75 },
+		{ t: "rect", y: 80, x: 440, w: 35, h: 7, r: 60, c: pS, o: 0.85 },
+		{ t: "rect", y: 20, x: 220, w: 20, h: 6, r: -45, c: pD, o: 0.5 },
+		{ t: "cir", y: 110, x: 290, s: 14, c: pD, o: 0.7 },
+		{ t: "cir", y: 250, x: 30, s: 20, c: pL, o: 0.85 },
+		{ t: "cir", y: 20, x: 110, s: 9, c: p, o: 0.5 },
+		{ t: "cir", y: 360, x: 320, s: 11, c: p, o: 0.4 },
+		{ t: "sq", y: 190, x: 360, s: 8, r: 15, c: p, o: 0.6 },
+		{ t: "rect", y: 270, x: 310, w: 28, h: 6, r: -45, c: pD, o: 0.5 },
 	];
 
-	// Helper to render confetti items
-	const renderConfetti = () => (
-		<>
-			{confettiItems.map((item, i) => {
-				const commonStyle = {
-					position: "absolute" as const,
-					top: item.top,
-					left: item.left,
-					opacity: item.opacity,
-				};
-
-				if (item.type === "glow") {
-					return (
-						<div
-							key={`glow-${i}`}
-							style={{
-								...commonStyle,
-								width: item.size,
-								height: item.size,
-								borderRadius: "50%",
-								background: `radial-gradient(circle, ${item.color} 0%, transparent 70%)`,
-								filter: "blur(50px)",
-							}}
-						/>
-					);
-				}
-				if (item.type === "ring") {
-					return (
-						<div
-							key={`ring-${i}`}
-							style={{
-								...commonStyle,
-								width: item.size,
-								height: item.size,
-								borderRadius: "50%",
-								border: `${item.border}px solid ${item.color}`,
-							}}
-						/>
-					);
-				}
-				if (item.type === "square") {
-					return (
-						<div
-							key={`square-${i}`}
-							style={{
-								...commonStyle,
-								width: item.size,
-								height: item.size,
-								background: item.color,
-								borderRadius: 4,
-								transform: `rotate(${item.rotation || 0}deg)`,
-							}}
-						/>
-					);
-				}
-				if (item.type === "rect") {
-					return (
-						<div
-							key={`rect-${i}`}
-							style={{
-								...commonStyle,
-								width: item.width,
-								height: item.height,
-								background: item.color,
-								borderRadius: 4,
-								transform: `rotate(${item.rotation || 0}deg)`,
-							}}
-						/>
-					);
-				}
-				if (item.type === "circle") {
-					return (
-						<div
-							key={`circle-${i}`}
-							style={{
-								...commonStyle,
-								width: item.size,
-								height: item.size,
-								borderRadius: "50%",
-								background: item.color,
-							}}
-						/>
-					);
-				}
-				return null;
-			})}
-		</>
-	);
+	const render = () =>
+		items.map((i, k) => {
+			const st: any = {
+				position: "absolute",
+				top: i.y,
+				left: i.x,
+				opacity: i.o,
+				width: i.w || i.s,
+				height: i.h || i.s,
+				borderRadius: i.t === "sq" || i.t === "rect" ? 4 : "50%",
+			};
+			if (i.t === "glow") {
+				st.background = `radial-gradient(circle, ${i.c} 0%, transparent 70%)`;
+				st.filter = "blur(50px)";
+			} else if (i.t === "ring") {
+				st.border = `${i.b}px solid ${i.c}`;
+			} else {
+				st.background = i.c;
+			}
+			if (i.r) st.transform = `rotate(${i.r}deg)`;
+			return <div key={k} style={st} />;
+		});
 
 	return (
 		<div
@@ -155,41 +59,13 @@ export function OgBackground({ children, themeColor }: OgBackgroundProps) {
 				flexDirection: "column",
 				alignItems: "center",
 				justifyContent: "center",
-				background: background,
+				background: bg,
 				fontFamily: "system-ui, sans-serif",
 				position: "relative",
 				overflow: "hidden",
 			}}>
-			{/* === Confetti Layers === */}
-
-			{/* Top Left Group */}
-			<div
-				style={{
-					position: "absolute",
-					top: 0,
-					left: 0,
-					width: "100%",
-					height: "100%",
-					display: "flex", // Helper to contain children
-				}}>
-				{renderConfetti()}
-			</div>
-
-			{/* Bottom Right Group (Mirrored by rotating 180deg around center) */}
-			<div
-				style={{
-					position: "absolute",
-					top: 0,
-					left: 0,
-					width: "100%",
-					height: "100%",
-					display: "flex",
-					transform: "rotate(180deg)",
-				}}>
-				{renderConfetti()}
-			</div>
-
-			{/* === Center Content === */}
+			<div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", display: "flex" }}>{render()}</div>
+			<div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", display: "flex", transform: "rotate(180deg)" }}>{render()}</div>
 			{children}
 		</div>
 	);

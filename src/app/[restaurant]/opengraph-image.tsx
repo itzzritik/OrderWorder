@@ -1,6 +1,6 @@
+/** biome-ignore-all lint/performance/noImgElement: we need img tag for og */
 import { ImageResponse } from "next/og";
 import { capitalize } from "xtreme-ui";
-
 import { OgBackground } from "#components/seo/OgBackground";
 import { getRestaurantProfile } from "#utils/database/helper/getRestaurantProfile";
 import { OG_IMAGE_SIZE, SITE_NAME } from "#utils/seo/constants";
@@ -10,17 +10,14 @@ export const contentType = "image/png";
 
 export default async function OgImage({ params }: { params: Promise<{ restaurant: string }> }) {
 	const { restaurant } = await params;
-	const profile = await getRestaurantProfile(restaurant);
-	const name = profile?.name ?? capitalize(restaurant);
-	const description = profile?.description ?? `Order online from ${name}`;
-	const avatarUrl = profile?.avatar;
-	const themeColor = profile?.themeColor;
+	const p = await getRestaurantProfile(restaurant);
+	const name = p?.name ?? capitalize(restaurant);
+	const desc = p?.description ?? `Order online from ${name}`;
+	const avatar = p?.avatar;
 
 	return new ImageResponse(
-		<OgBackground themeColor={themeColor}>
-			{/* === Center content === */}
+		<OgBackground themeColor={p?.themeColor}>
 			<div style={{ display: "flex", flexDirection: "column", alignItems: "center", zIndex: 1, paddingBottom: "80px" }}>
-				{/* Circular logo with grey border */}
 				<div
 					style={{
 						width: "180px",
@@ -30,19 +27,16 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 						display: "flex",
 						alignItems: "center",
 						justifyContent: "center",
-						background: avatarUrl ? "#fff" : "linear-gradient(145deg, #222, #444)",
+						background: avatar ? "#fff" : "linear-gradient(145deg, #222, #444)",
 						border: "3px solid rgba(0, 0, 0, 0.13)",
 						boxShadow: "0 16px 56px rgba(0, 0, 0, 0.07), 0 4px 12px rgba(0, 0, 0, 0.03)",
 					}}>
-					{avatarUrl ? (
-						// biome-ignore lint/performance/noImgElement: next/og ImageResponse only supports native HTML
-						<img src={avatarUrl} alt={name} width={180} height={180} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
+					{avatar ? (
+						<img src={avatar} alt={name} width={180} height={180} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
 					) : (
 						<span style={{ fontSize: "72px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{name.charAt(0).toUpperCase()}</span>
 					)}
 				</div>
-
-				{/* Restaurant name */}
 				<span
 					style={{
 						fontSize: "60px",
@@ -55,8 +49,6 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 					}}>
 					{name}
 				</span>
-
-				{/* Description */}
 				<span
 					style={{
 						fontSize: "22px",
@@ -72,11 +64,9 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 						overflow: "hidden",
 						textOverflow: "ellipsis",
 					}}>
-					{description}
+					{desc}
 				</span>
 			</div>
-
-			{/* Bottom branding */}
 			<div
 				style={{
 					position: "absolute",
