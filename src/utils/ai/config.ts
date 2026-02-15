@@ -19,7 +19,7 @@ const configs = [
 	{
 		platform: "siliconflow",
 		url: "https://api.siliconflow.com/v1",
-		model: "deepseek-ai/DeepSeek-V3.1",
+		model: "deepseek-ai/DeepSeek-V3.2-Exp",
 	},
 ] as const;
 
