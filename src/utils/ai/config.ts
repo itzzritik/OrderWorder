@@ -2,9 +2,9 @@ import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 
 const configs = [
 	{
-		platform: "google",
-		url: "https://generativelanguage.googleapis.com/v1beta/openai",
-		model: "gemini-2.5-flash-lite",
+		platform: "groq",
+		url: "https://api.groq.com/openai/v1",
+		model: "meta-llama/llama-4-scout-17b-16e-instruct",
 	},
 	{
 		platform: "cerebras",
@@ -12,9 +12,9 @@ const configs = [
 		model: "llama-3.3-70b",
 	},
 	{
-		platform: "groq",
-		url: "https://api.groq.com/openai/v1",
-		model: "meta-llama/llama-4-scout-17b-16e-instruct",
+		platform: "google",
+		url: "https://generativelanguage.googleapis.com/v1beta/openai",
+		model: "gemini-2.5-pro",
 	},
 	{
 		platform: "siliconflow",
