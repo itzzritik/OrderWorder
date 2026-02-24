@@ -18,13 +18,13 @@ export default function PageContainer() {
 		<div className="homepage">
 			<Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 			<GitHubBanner />
-			<div className={`homepageSections ${menuOpen ? "menuOpen" : ""}`}>
+			<main className={`homepageSections ${menuOpen ? "menuOpen" : ""}`}>
 				<LandingSection />
 				<AboutSection />
 				<FeatureSection />
 				<LoginSection />
 				<FooterSection />
-			</div>
+			</main>
 		</div>
 	);
 }

@@ -49,7 +49,7 @@ const LandingSection = () => {
 			<div ref={ref} className="coverOverlay" onMouseMove={onMouseMove} style={{ backgroundImage: `url(${overlayImg})` }} />
 			<div className="overlay" />
 			<div className="landingGreeting">
-				<p className="head">Revolutionizing</p>
+				<h1 className="head">Revolutionizing</h1>
 				<p className="subHead">Dining Experience</p>
 				<p className="desc">Gone are the days of complex ordering systems and outdated</p>
 				<p className="desc">paper menus. It&apos;s time for the new normal, OrderWorder</p>

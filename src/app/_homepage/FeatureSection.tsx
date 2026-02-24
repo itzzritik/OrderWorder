@@ -31,7 +31,7 @@ const FeatureList = ({ items }: { items: string[] }) => {
 				["--lightFeatureColor" as string]: getHSL(hues[i], 80),
 				["--darkFeatureColor" as string]: getHSL(hues[i], 40),
 			}}>
-			<h1>{item.charAt(0)}</h1>
+			<span className="featureLetter">{item.charAt(0)}</span>
 			<p>{item}</p>
 		</div>
 	));
