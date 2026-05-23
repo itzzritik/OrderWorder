@@ -33,7 +33,7 @@ export const models = Object.fromEntries(
 			name: platform,
 		});
 		return [platform, provider(model)];
-	}),
+	})
 ) as Record<(typeof configs)[number]["platform"], AIProvider>;
 
 export const getModel = (provider: keyof typeof models) => models[provider];

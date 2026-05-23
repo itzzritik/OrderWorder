@@ -20,7 +20,7 @@ const MenuSchema = new mongoose.Schema<TMenu>(
 		image: { type: String, trim: true },
 		hidden: { type: Boolean, default: true },
 	},
-	{ timestamps: true },
+	{ timestamps: true }
 );
 
 MenuSchema.pre("save", async function () {

@@ -3,9 +3,9 @@ import type { ChatMessage } from "../../types/chat";
 import { createMessage, sendChatMessage } from "../ai/chat";
 
 interface UseChatProps {
-	restaurantId: string;
-	isAuthenticated: boolean;
 	initialMessages?: ChatMessage[];
+	isAuthenticated: boolean;
+	restaurantId: string;
 }
 
 export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }: UseChatProps) => {
@@ -37,7 +37,7 @@ export const useChat = ({ restaurantId, isAuthenticated, initialMessages = [] }:
 			const assistantMessage = createMessage(
 				"assistant",
 				(data.text || "").replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "").replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gim, ""),
-				data.toolResults,
+				data.toolResults
 			);
 			setMessages((prev) => [...prev, assistantMessage]);
 		} catch {

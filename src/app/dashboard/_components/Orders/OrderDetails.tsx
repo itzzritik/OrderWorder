@@ -54,8 +54,8 @@ const OrderDetails = ({ order, profile }: TInvoiceProps) => {
 					</div>
 				</div>
 				<div className="actions">
-					<Button icon="f019" type="primary" className="actionBtn" onClick={handleDownload} disabled={instance.loading || !instance.url} />
-					<Button icon="f02f" type="secondary" className="actionBtn" onClick={handlePrint} disabled={instance.loading || !instance.url} />
+					<Button className="actionBtn" disabled={instance.loading || !instance.url} icon="f019" onClick={handleDownload} type="primary" />
+					<Button className="actionBtn" disabled={instance.loading || !instance.url} icon="f02f" onClick={handlePrint} type="secondary" />
 				</div>
 			</div>
 
@@ -95,7 +95,7 @@ const OrderDetails = ({ order, profile }: TInvoiceProps) => {
 							<span className="col total">Total</span>
 						</div>
 						{order.products?.map((item, index) => (
-							<div key={index} className="row">
+							<div className="row" key={index}>
 								<span className="col name">{item.name}</span>
 								<span className="col qty">x{item.quantity}</span>
 								<span className="col price">{item.price?.toFixed(2)}</span>

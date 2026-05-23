@@ -11,6 +11,6 @@ export const hashPassword = async (password: string) => {
 };
 
 export const verifyPassword = async (password?: string, hash?: string) => {
-	if (!password || !hash) return false;
+	if (!(password && hash)) return false;
 	return await bcrypt.compare(password, hash);
 };

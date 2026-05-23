@@ -7,12 +7,11 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
+		"includes": ["!node_modules", "!.next", "!dist", "!build"]
 	},
 	"css": {
 		"parser": {
-			"cssModules": true,
-			"tailwindDirectives": true
+			"cssModules": true
 		},
 		"linter": {
 			"enabled": false
@@ -61,6 +60,9 @@
 			},
 			"security": {
 				"noDangerouslySetInnerHtml": "off"
+			},
+			"nursery": {
+				"useSortedClasses": "warn"
 			}
 		},
 		"domains": {
@@ -75,5 +77,9 @@
 			}
 		}
 	},
-	"extends": ["ultracite/next"]
+	"extends": [
+		"ultracite/biome/core",
+		"ultracite/biome/react",
+		"ultracite/biome/next"
+	]
 }

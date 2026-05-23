@@ -9,8 +9,8 @@ declare global {
 	}
 
 	interface NextResponseError {
-		status: number;
 		message: string;
+		status: number;
 	}
 
 	// eslint-disable-next-line no-var

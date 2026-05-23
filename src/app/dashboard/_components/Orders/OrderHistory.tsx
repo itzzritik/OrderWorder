@@ -29,36 +29,36 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 	return (
 		<div className="orders">
 			{orderHistory.length === 0 ? (
-				<NoContent label="No order history" animationName="GhostNoContent" />
+				<NoContent animationName="GhostNoContent" label="No order history" />
 			) : (
 				<div className="ordersContent">
 					<div className="list" onScroll={onScroll}>
 						{orderHistory.map((data, i) => (
 							<OrdersCard
-								key={i}
-								history
-								data={data}
-								showDetails={setSideSheetOpen}
-								active={activeCardID === data._id.toString()}
 								activate={(orderID) => {
 									setActiveCardID(orderID);
 									setActiveCardData(
-										orderHistory.find((order) => order._id.toString() === orderID) as TOrder & { _id: string; createdAt: string | Date },
+										orderHistory.find((order) => order._id.toString() === orderID) as TOrder & { _id: string; createdAt: string | Date }
 									);
 								}}
+								active={activeCardID === data._id.toString()}
+								data={data}
+								history
+								key={i}
+								showDetails={setSideSheetOpen}
 							/>
 						))}
 					</div>
 					<div className="details">
-						{!activeCardData ? (
-							<NoContent label="No orders yet" animationName="GhostNoContent" size={200} />
-						) : (
+						{activeCardData ? (
 							<OrderDetails order={activeCardData} profile={profile} />
+						) : (
+							<NoContent animationName="GhostNoContent" label="No orders yet" size={200} />
 						)}
 					</div>
 				</div>
 			)}
-			<SideSheet title={["Order Details"]} open={sideSheetOpen} setOpen={setSideSheetOpen}>
+			<SideSheet open={sideSheetOpen} setOpen={setSideSheetOpen} title={["Order Details"]}>
 				{activeCardData && <OrderDetails order={activeCardData} profile={profile} />}
 			</SideSheet>
 		</div>

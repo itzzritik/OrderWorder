@@ -9,9 +9,7 @@ import "./itemCard.scss";
 const ItemCard = (props: TItemCardProps) => {
 	const { className, item, staticCard, increaseQuantity, decreaseQuantity } = props;
 	const [cardRef, inView] = useInView({ triggerOnce: true, threshold: 0 });
-	const getTotalPrice = () => {
-		return item.quantity ? item.price * item.quantity : item.price;
-	};
+	const getTotalPrice = () => (item.quantity ? item.price * item.quantity : item.price);
 
 	const classList = clsx("itemCard", className, staticCard && "staticCard");
 
@@ -40,9 +38,9 @@ const ItemCard = (props: TItemCardProps) => {
 							) : (
 								<QuantityButton
 									className="addToCart"
-									quantity={item.quantity}
-									increaseQuantity={() => increaseQuantity?.(item)}
 									decreaseQuantity={() => decreaseQuantity?.(item)}
+									increaseQuantity={() => increaseQuantity?.(item)}
+									quantity={item.quantity}
 								/>
 							)}
 						</div>

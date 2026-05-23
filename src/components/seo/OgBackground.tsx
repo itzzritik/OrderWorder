@@ -64,13 +64,13 @@ export function OgBackground({ children, themeColor }: { children?: React.ReactN
 
 			return (
 				<div key={k} style={style}>
-					<svg viewBox="0 0 100 100" style={{ overflow: "visible", width: "100%", height: "100%" }}>
+					<svg style={{ overflow: "visible", width: "100%", height: "100%" }} viewBox="0 0 100 100">
 						<path
 							d={i.t === "tri" ? "M50 15 L85 85 L15 85 Z" : "M25 10 L75 10 L95 50 L75 90 L25 90 L5 50 Z"}
 							fill={i.c}
 							stroke={i.c}
-							strokeWidth={12}
 							strokeLinejoin="round"
+							strokeWidth={12}
 						/>
 					</svg>
 				</div>
@@ -99,7 +99,8 @@ export function OgBackground({ children, themeColor }: { children?: React.ReactN
 				fontFamily: "system-ui, sans-serif",
 				position: "relative",
 				overflow: "hidden",
-			}}>
+			}}
+		>
 			<div style={layerStyle}>{renderItems()}</div>
 			<div style={{ ...layerStyle, transform: "rotate(180deg)" }}>{renderItems()}</div>
 			{children}

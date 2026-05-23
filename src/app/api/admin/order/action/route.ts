@@ -28,8 +28,8 @@ export async function POST(req: Request) {
 			});
 
 		if (body.action === "reject") {
-			if (!order.products.some(({ adminApproved }) => adminApproved)) order.state = "reject";
-			else order.products = order.products.filter(({ adminApproved }) => adminApproved);
+			if (order.products.some(({ adminApproved }) => adminApproved)) order.products = order.products.filter(({ adminApproved }) => adminApproved);
+			else order.state = "reject";
 		}
 
 		if (body.action === "rejectOnActive") order.state = "reject";

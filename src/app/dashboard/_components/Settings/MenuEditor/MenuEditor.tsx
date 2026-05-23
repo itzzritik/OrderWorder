@@ -62,9 +62,9 @@ const MenuEditor = () => {
 					<h1 className="menuCategoryHeading">Menu Categories</h1>
 					<div className="menuCategoryOptions" />
 				</div>
-				<div className="menuCategoryContainer" ref={categories} onScroll={onCategoryScroll}>
+				<div className="menuCategoryContainer" onScroll={onCategoryScroll} ref={categories}>
 					{profile?.categories?.map((item, i) => (
-						<div key={i} className={`menuCategory ${category === i ? "active" : ""}`} onClick={() => setCategory(i)}>
+						<div className={`menuCategory ${category === i ? "active" : ""}`} key={i} onClick={() => setCategory(i)}>
 							<span className="title">{item}</span>
 						</div>
 					))}
@@ -84,11 +84,11 @@ const MenuEditor = () => {
 				</div>
 				<div className="menuItemContainer">
 					{menus.map((item, id) => (
-						<MenuEditorItem key={id} item={item} onEdit={onEdit} onHide={onHide} hideSettingsLoading={hideSettingsLoading.includes(item._id.toString())} />
+						<MenuEditorItem hideSettingsLoading={hideSettingsLoading.includes(item._id.toString())} item={item} key={id} onEdit={onEdit} onHide={onHide} />
 					))}
 				</div>
 			</div>
-			<Button className={`menuEditorAdd ${modalState ? "active" : ""}`} onClick={() => setModalState("newState")} icon="2b" iconType="solid" />
+			<Button className={`menuEditorAdd ${modalState ? "active" : ""}`} icon="2b" iconType="solid" onClick={() => setModalState("newState")} />
 		</div>
 	);
 };

@@ -40,16 +40,16 @@ const ThemeSettings = () => {
 				</h1>
 				{!isEqual(profile?.themeColor, themeColor) && (
 					<div className="action">
-						<Button className="clear" type="secondaryDanger" icon="f00d" iconType="solid" disabled={loading} onClick={onClear} />
+						<Button className="clear" disabled={loading} icon="f00d" iconType="solid" onClick={onClear} type="secondaryDanger" />
 						<Button className="save" icon="f00c" iconType="solid" label="Apply" loading={loading} onClick={onSave} />
 					</div>
 				)}
 			</div>
 			<div className="colorPickerWrapper">
 				{loading ? (
-					<Spinner className="spinner" label="Applying theme" fullpage />
+					<Spinner className="spinner" fullpage label="Applying theme" />
 				) : isMobile ? (
-					<ThemeSelect size="default" withSwatch withScheme />
+					<ThemeSelect size="default" withScheme withSwatch />
 				) : (
 					<ThemePicker />
 				)}

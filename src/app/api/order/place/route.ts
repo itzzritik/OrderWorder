@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 					price: menuItem?.price,
 					tax: ((menuItem?.price * menuItem?.taxPercent) / 100).toFixed(2),
 				};
-			}),
+			})
 		);
 
 		const restaurantID = session?.restaurant?.username;
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 			return NextResponse.json({ status: 200, message: "Additional items ordered successfully" });
 		}
 
-		const newOrder = new Orders({ restaurantID, table, customer, products: products });
+		const newOrder = new Orders({ restaurantID, table, customer, products });
 		await newOrder.save();
 
 		return NextResponse.json({ status: 200, message: "Order placed successfully" });

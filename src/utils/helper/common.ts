@@ -3,9 +3,7 @@ import type { ReadonlyURLSearchParams } from "next/navigation";
 import { NextResponse } from "next/server";
 
 export const fetcher = (url: string) => fetch(url).then((r) => r.json());
-export const CatchNextResponse = ({ message = "Something went wrong", status = 500 }: NextResponseError) => {
-	return NextResponse.json({ message, status }, { status });
-};
+export const CatchNextResponse = ({ message = "Something went wrong", status = 500 }: NextResponseError) => NextResponse.json({ message, status }, { status });
 
 export const scrollToSection = (section?: string) => {
 	const element = document.getElementById(section ? section : "homepage") as HTMLDivElement;

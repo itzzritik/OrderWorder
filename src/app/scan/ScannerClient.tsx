@@ -8,8 +8,8 @@ import { Button, Icon } from "xtreme-ui";
 import "./scan.scss";
 
 interface IDetectedBarcode {
-	rawValue: string;
 	raw_value?: string;
+	rawValue: string;
 	[key: string]: unknown;
 }
 
@@ -140,40 +140,41 @@ const ScannerClient = () => {
 			{devices.length > 0 && (
 				<div className="cameraSelectWrapper">
 					<select
-						value={deviceId || ""}
+						className="cameraSelect"
 						onChange={(e) => {
 							setDeviceId(e.target.value);
 						}}
-						className="cameraSelect">
+						value={deviceId || ""}
+					>
 						{cameraOptions.map((option) => (
 							<option key={option.value} value={option.value}>
 								{option.label}
 							</option>
 						))}
 					</select>
-					<Icon code="f0d7" type="solid" className="selectIcon" />
+					<Icon className="selectIcon" code="f0d7" type="solid" />
 				</div>
 			)}
 
 			<div className="scannerContainer">
 				{error ? (
 					<div className="errorMessage">
-						<Icon code="f071" type="solid" className="errorIcon" />
+						<Icon className="errorIcon" code="f071" type="solid" />
 						<p>{error}</p>
 						{!hasPermission && <p className="hint">Check your browser settings.</p>}
 					</div>
 				) : (
 					<Scanner
-						key={`${deviceId}-${torch}`}
-						onScan={handleScan}
-						onError={handleError}
+						components={{
+							finder: false,
+						}}
 						constraints={{
 							deviceId: deviceId ? { exact: deviceId } : undefined,
 							advanced: [{ torch, zoom } as unknown as MediaTrackConstraintSet],
 						}}
-						components={{
-							finder: false,
-						}}
+						key={`${deviceId}-${torch}`}
+						onError={handleError}
+						onScan={handleScan}
 						styles={{
 							container: { width: "100%", height: "100%", borderRadius: "20px" },
 							video: { objectFit: "cover", borderRadius: "20px" },
@@ -187,12 +188,12 @@ const ScannerClient = () => {
 
 				{caps.torch && (
 					<Button
-						type={torch ? "primary" : "secondary"}
+						className="flashBtn"
+						disabled={!!error}
 						icon="f0e7"
 						iconType="solid"
 						onClick={() => setTorch(!torch)}
-						disabled={!!error}
-						className="flashBtn"
+						type={torch ? "primary" : "secondary"}
 					/>
 				)}
 			</div>
@@ -200,9 +201,9 @@ const ScannerClient = () => {
 			<div className="scannerControls">
 				{caps.zoom && (
 					<div className="zoomControls">
-						<Button type="secondary" icon="f068" iconType="solid" onClick={() => setZoom(Math.max(1, zoom - 0.5))} disabled={!!error} className="zoomBtn" />
+						<Button className="zoomBtn" disabled={!!error} icon="f068" iconType="solid" onClick={() => setZoom(Math.max(1, zoom - 0.5))} type="secondary" />
 						<span className="zoomVal">{zoom}x</span>
-						<Button type="secondary" icon="f067" iconType="solid" onClick={() => setZoom(Math.min(5, zoom + 0.5))} disabled={!!error} className="zoomBtn" />
+						<Button className="zoomBtn" disabled={!!error} icon="f067" iconType="solid" onClick={() => setZoom(Math.min(5, zoom + 0.5))} type="secondary" />
 					</div>
 				)}
 			</div>

@@ -59,7 +59,7 @@ const Restaurant = async ({ params }: IRestaurantProps) => {
 				}}
 			/>
 			<div className="restaurant">
-				<NavSideBar navItems={navItems} defaultTab="menu" foot />
+				<NavSideBar defaultTab="menu" foot navItems={navItems} />
 				<PageContainer />
 				<ChatInterface />
 			</div>

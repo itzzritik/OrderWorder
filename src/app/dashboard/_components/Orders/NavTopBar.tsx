@@ -48,14 +48,12 @@ const NavTopBar = (props: TNavTopBarProps) => {
 					<span className="line2" />
 				</div>
 				<div className="navBarContainer">
-					{currentNav?.map((item, i) => {
-						return (
-							<div key={i} className={clsx("item", subTab === item?.route && "active")} onClick={() => queryParams.set({ subTab: item?.route })}>
-								<span />
-								<p>{item.label}</p>
-							</div>
-						);
-					})}
+					{currentNav?.map((item, i) => (
+						<div className={clsx("item", subTab === item?.route && "active")} key={i} onClick={() => queryParams.set({ subTab: item?.route })}>
+							<span />
+							<p>{item.label}</p>
+						</div>
+					))}
 				</div>
 			</div>
 		</div>

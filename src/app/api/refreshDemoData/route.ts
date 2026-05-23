@@ -23,7 +23,7 @@ const deleteData = async (ids: string[]) => {
 		models.map(async ({ model, name, field = "restaurantID" }) => {
 			const res = await model.deleteMany({ [field]: { $in: ids } });
 			return { model: name, ...res };
-		}),
+		})
 	);
 
 	return {

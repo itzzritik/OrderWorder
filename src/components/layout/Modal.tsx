@@ -13,7 +13,7 @@ const Modal = (props: TModal) => {
 			<div className="backdrop" onClick={() => setOpen(false)} />
 			<div className="modalPane">
 				{children}
-				{closeIcon && <Button className="closeModal" size="mini" icon={closeIcon} onClick={() => setOpen(false)} />}
+				{closeIcon && <Button className="closeModal" icon={closeIcon} onClick={() => setOpen(false)} size="mini" />}
 			</div>
 		</div>
 	);

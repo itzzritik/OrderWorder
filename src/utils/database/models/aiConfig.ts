@@ -11,7 +11,7 @@ const aiConfigSchema = new Schema<IAIConfig>(
 			default: [],
 		},
 	},
-	{ timestamps: true },
+	{ timestamps: true }
 );
 
 const AIConfig = models.AIConfig || model<IAIConfig>("AIConfig", aiConfigSchema);

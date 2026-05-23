@@ -20,7 +20,7 @@ const AccountSchema = new mongoose.Schema<TAccount>(
 		tables: [{ type: mongoose.Schema.Types.ObjectId, ref: "tables", unique: true }],
 		menus: [{ type: mongoose.Schema.Types.ObjectId, ref: "menus", unique: true }],
 	},
-	{ timestamps: true },
+	{ timestamps: true }
 );
 
 AccountSchema.pre("save", async function () {

@@ -22,7 +22,7 @@ const ProfileSchema = new mongoose.Schema<TProfile>(
 		cover: { type: String, trim: true },
 		photos: [{ type: String, trim: true }],
 	},
-	{ timestamps: true },
+	{ timestamps: true }
 );
 
 ProfileSchema.pre("save", async function () {

@@ -19,12 +19,10 @@ export const sendChatMessage = async (messages: ChatMessage[], restaurantId: str
 	return data;
 };
 
-export const createMessage = (role: "user" | "assistant", content: string, toolResults?: MenuSuggestion[][]): ChatMessage => {
-	return {
-		id: Date.now().toString() + Math.random(),
-		role,
-		content,
-		toolResults,
-		createdAt: Date.now(),
-	};
-};
+export const createMessage = (role: "user" | "assistant", content: string, toolResults?: MenuSuggestion[][]): ChatMessage => ({
+	id: Date.now().toString() + Math.random(),
+	role,
+	content,
+	toolResults,
+	createdAt: Date.now(),
+});

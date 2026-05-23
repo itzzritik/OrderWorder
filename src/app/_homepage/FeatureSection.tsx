@@ -30,7 +30,8 @@ const FeatureList = ({ items }: { items: string[] }) => {
 			style={{
 				["--lightFeatureColor" as string]: getHSL(hues[i], 80),
 				["--darkFeatureColor" as string]: getHSL(hues[i], 40),
-			}}>
+			}}
+		>
 			<span className="featureLetter">{item.charAt(0)}</span>
 			<p>{item}</p>
 		</div>
@@ -53,7 +54,7 @@ const FeatureSection = () => (
 			/>
 		</div>
 		<div className="featuresAnim">
-			<Lottie className="whyUsAnim" src={getAnimSrc("FoodMeal")} speed={0.5} />
+			<Lottie className="whyUsAnim" speed={0.5} src={getAnimSrc("FoodMeal")} />
 		</div>
 	</section>
 );

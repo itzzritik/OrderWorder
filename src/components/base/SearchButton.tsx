@@ -11,13 +11,13 @@ const SearchButton = (props: TSearchButton) => {
 	return (
 		<div className="search" onClick={() => inputRef?.current?.focus()}>
 			<input
-				type="text"
-				ref={inputRef}
-				placeholder={placeholder}
-				value={value}
+				onBlur={() => setSearchActive(false)}
 				onChange={(event) => setValue(event.target.value)}
 				onFocus={() => setSearchActive(true)}
-				onBlur={() => setSearchActive(false)}
+				placeholder={placeholder}
+				ref={inputRef}
+				type="text"
+				value={value}
 			/>
 			<Icon className="searchIcon" code="f002" type="solid" />
 		</div>

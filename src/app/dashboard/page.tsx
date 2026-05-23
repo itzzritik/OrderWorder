@@ -18,16 +18,14 @@ export async function generateMetadata({ searchParams }: IMetaDataProps) {
 	};
 }
 
-const Dashboard = () => {
-	return (
-		<DashboardProvider>
-			<div className="dashboard">
-				<NavSideBar navItems={navItems} defaultTab="orders" foot />
-				<PageContainer />
-			</div>
-		</DashboardProvider>
-	);
-};
+const Dashboard = () => (
+	<DashboardProvider>
+		<div className="dashboard">
+			<NavSideBar defaultTab="orders" foot navItems={navItems} />
+			<PageContainer />
+		</div>
+	</DashboardProvider>
+);
 
 export default Dashboard;
 

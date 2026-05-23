@@ -1,12 +1,12 @@
 import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
 interface ResizeOptions {
-	initialWidth?: number;
 	initialHeight?: number;
-	minWidth?: number;
-	minHeight?: number;
-	maxWidth?: number;
+	initialWidth?: number;
 	maxHeight?: number;
+	maxWidth?: number;
+	minHeight?: number;
+	minWidth?: number;
 }
 
 interface ResizeReturn {
@@ -34,7 +34,7 @@ export const useResize = (options: ResizeOptions = {}): ResizeReturn => {
 				height: dimensions.height,
 			};
 		},
-		[dimensions],
+		[dimensions]
 	);
 
 	useEffect(() => {

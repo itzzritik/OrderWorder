@@ -34,18 +34,7 @@ const LoginSection = () => {
 
 	const onNext = async () => {
 		setNextLoading(true);
-		if (!profile) {
-			const res = await fetch(`/api/baseProfile?email=${email}`);
-			const profile = await res.json();
-
-			if (profile.status === 404) {
-				toast.error("Account does not exist!");
-				setEmailShake(true);
-				setTimeout(() => setEmailShake(false), 600);
-			} else {
-				setProfile(profile);
-			}
-		} else {
+		if (profile) {
 			const res = await signIn("restaurant", {
 				redirect: false,
 				username: email,
@@ -64,6 +53,17 @@ const LoginSection = () => {
 
 			if (kitchenUsername) router.push("/kitchen");
 			else router.push("/dashboard");
+		} else {
+			const res = await fetch(`/api/baseProfile?email=${email}`);
+			const profile = await res.json();
+
+			if (profile.status === 404) {
+				toast.error("Account does not exist!");
+				setEmailShake(true);
+				setTimeout(() => setEmailShake(false), 600);
+			} else {
+				setProfile(profile);
+			}
 		}
 		setNextLoading(false);
 	};
@@ -82,7 +82,7 @@ const LoginSection = () => {
 	return (
 		<section className="loginSection" id="homepage-login">
 			<div className="loginAnim">
-				<Lottie className="welcomeAnim" src={getAnimSrc("Welcome")} speed={0.6} />
+				<Lottie className="welcomeAnim" speed={0.6} src={getAnimSrc("Welcome")} />
 			</div>
 			<div className={`loginContainer ${profile || loggedIn ? "profile" : ""}`}>
 				<div className="loginCard front">
@@ -94,14 +94,14 @@ const LoginSection = () => {
 						<Textfield
 							className={`email ${emailShake ? "shake" : ""}`}
 							icon="f0e0"
-							placeholder="Enter your email"
-							onEnterKey={onNext}
-							value={email}
 							onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+							onEnterKey={onNext}
+							placeholder="Enter your email"
+							value={email}
 						/>
 					</div>
 					<div className="loginAction">
-						<Button className="next" label="Next" onClick={onNext} loading={nextLoading} />
+						<Button className="next" label="Next" loading={nextLoading} onClick={onNext} />
 					</div>
 				</div>
 				<div className="loginCard back">
@@ -112,54 +112,54 @@ const LoginSection = () => {
 							</div>
 						) : (
 							<>
-								<Avatar src={profile?.avatar ?? dashboard?.avatar ?? session.data?.restaurant?.avatar ?? ""} size="mini" />
+								<Avatar size="mini" src={profile?.avatar ?? dashboard?.avatar ?? session.data?.restaurant?.avatar ?? ""} />
 								<div className="details">
 									<p className="name"> {profile?.name ?? dashboard?.name ?? `${session.data?.customer?.fname} ${session.data?.customer?.lname}`} </p>
 									<p className="address">{profile?.address ?? dashboard?.address ?? session.data?.customer?.phone}</p>
 								</div>
-								<Button className="logout" icon={loggedIn ? "f011" : "f304"} size="mini" onClick={logout} loading={logoutLoading} />
+								<Button className="logout" icon={loggedIn ? "f011" : "f304"} loading={logoutLoading} onClick={logout} size="mini" />
 							</>
 						)}
 					</div>
-					{!loggedIn ? (
+					{loggedIn ? (
+						<div className="loggedInAction">
+							{session.data?.role === "admin" && <Button icon="e323" label="open dashboard" onClick={() => router.push("/dashboard")} size="mini" />}
+							{(session.data?.role === "admin" || session.data?.role === "kitchen") && (
+								<Button icon="f86b" label="open kitchen" onClick={() => router.push("/kitchen")} size="mini" />
+							)}
+							{session.data?.role === "customer" && (
+								<Button icon="f86b" label="open  restaurant menu" onClick={() => router.push(`/${session.data?.restaurant?.username}`)} size="mini" />
+							)}
+						</div>
+					) : (
 						<div className="body">
 							<div className="inputContainer">
 								<Textfield
 									className={`username ${showKitchen ? "show" : ""}`}
 									icon="f86b"
+									onChange={(e: ChangeEvent<HTMLInputElement>) => setKitchenUsername(e.target.value)}
 									placeholder="Enter kitchen username"
 									value={kitchenUsername}
-									onChange={(e: ChangeEvent<HTMLInputElement>) => setKitchenUsername(e.target.value)}
 								/>
 								<Textfield
-									type="password"
 									className={`password ${passwordShake ? "shake" : ""}`}
-									placeholder={`Enter ${showKitchen ? "kitchen" : "admin"} password`}
-									onEnterKey={onNext}
-									value={password}
 									onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+									onEnterKey={onNext}
+									placeholder={`Enter ${showKitchen ? "kitchen" : "admin"} password`}
+									type="password"
+									value={password}
 								/>
 							</div>
 							<div className="loginAction">
 								<Button
 									className={`kitchenMode ${showKitchen ? "active" : ""}`}
-									type={showKitchen ? "primary" : "secondary"}
 									label="login to kitchen"
-									size="mini"
 									onClick={() => setShowKitchen((v) => !v)}
+									size="mini"
+									type={showKitchen ? "primary" : "secondary"}
 								/>
-								<Button className="next" label="Sign In" onClick={onNext} loading={nextLoading} />
+								<Button className="next" label="Sign In" loading={nextLoading} onClick={onNext} />
 							</div>
-						</div>
-					) : (
-						<div className="loggedInAction">
-							{session.data?.role === "admin" && <Button label="open dashboard" icon="e323" size="mini" onClick={() => router.push("/dashboard")} />}
-							{(session.data?.role === "admin" || session.data?.role === "kitchen") && (
-								<Button label="open kitchen" icon="f86b" size="mini" onClick={() => router.push("/kitchen")} />
-							)}
-							{session.data?.role === "customer" && (
-								<Button label="open  restaurant menu" icon="f86b" size="mini" onClick={() => router.push(`/${session.data?.restaurant?.username}`)} />
-							)}
 						</div>
 					)}
 				</div>

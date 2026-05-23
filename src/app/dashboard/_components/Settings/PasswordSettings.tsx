@@ -87,43 +87,43 @@ const PasswordSettings = () => {
 				</h1>
 				{authenticated && (
 					<div className="action">
-						<Button className="clear" type="secondaryDanger" icon="f00d" iconType="solid" disabled={loading} onClick={onClear} />
+						<Button className="clear" disabled={loading} icon="f00d" iconType="solid" onClick={onClear} type="secondaryDanger" />
 						<Button className="save" icon="f00c" iconType="solid" label="Change" loading={loading} onClick={onSave} />
 					</div>
 				)}
 			</div>
 			<div className="passwordFields">
 				{loading ? (
-					<Spinner className="spinner" label="Authenticating..." fullpage />
-				) : !authenticated ? (
-					<Textfield
-						className={`password ${passwordShake ? "shake" : ""}`}
-						placeholder="Enter your password"
-						type="password"
-						onEnterKey={onPasswordKeyPress}
-						value={password}
-						onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-					/>
-				) : (
+					<Spinner className="spinner" fullpage label="Authenticating..." />
+				) : authenticated ? (
 					<>
 						<Textfield
 							className={`newPassword ${passwordShake ? "shake" : ""}`}
+							onChange={(e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}
+							onEnterKey={onNewPasswordKeyPress}
 							placeholder="Enter new password"
 							type="password"
-							onEnterKey={onNewPasswordKeyPress}
 							value={newPassword}
-							onChange={(e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}
 						/>
 
 						<Textfield
 							className={`newConfPassword ${confPasswordShake ? "shake" : ""}`}
+							onChange={(e: ChangeEvent<HTMLInputElement>) => setNewConfPassword(e.target.value)}
+							onEnterKey={onNewPasswordKeyPress}
 							placeholder="Enter confirm password"
 							type="password"
-							onEnterKey={onNewPasswordKeyPress}
 							value={newConfPassword}
-							onChange={(e: ChangeEvent<HTMLInputElement>) => setNewConfPassword(e.target.value)}
 						/>
 					</>
+				) : (
+					<Textfield
+						className={`password ${passwordShake ? "shake" : ""}`}
+						onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+						onEnterKey={onPasswordKeyPress}
+						placeholder="Enter your password"
+						type="password"
+						value={password}
+					/>
 				)}
 			</div>
 		</div>

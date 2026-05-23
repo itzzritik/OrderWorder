@@ -80,31 +80,31 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 			</div>
 			<div className="content">
 				<Textfield
-					id="user-login-phone"
-					className="phone"
-					type="phone"
 					autoComplete="tel-local"
-					value={phone}
-					onEnterKey={onNext}
+					className="phone"
+					id="user-login-phone"
 					onChange={(e: ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
+					onEnterKey={onNext}
+					type="phone"
+					value={phone}
 				/>
 				<div className="otpContainer">
 					<Textfield
-						id="user-login-fname"
-						className="fName"
-						placeholder="First Name"
 						autoComplete="given-name"
-						value={fname}
+						className="fName"
+						id="user-login-fname"
 						onChange={(e: ChangeEvent<HTMLInputElement>) => setFName(e.target.value)}
+						placeholder="First Name"
+						value={fname}
 					/>
 					<Textfield
-						id="user-login-lname"
-						className="lName"
-						placeholder="Last Name"
 						autoComplete="family-name"
-						onEnterKey={onNext}
-						value={lname}
+						className="lName"
+						id="user-login-lname"
 						onChange={(e: ChangeEvent<HTMLInputElement>) => setLName(e.target.value)}
+						onEnterKey={onNext}
+						placeholder="Last Name"
+						value={lname}
 					/>
 					{/* <Textfield
 						className='otp'
@@ -116,7 +116,7 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 				</div>
 			</div>
 			<div className="footer">
-				<Button label={buttonLabel} onClick={onNext} loading={busy} />
+				<Button label={buttonLabel} loading={busy} onClick={onNext} />
 			</div>
 		</div>
 	);

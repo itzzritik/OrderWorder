@@ -41,28 +41,27 @@ export const ChatInterface = () => {
 
 	return (
 		<>
-			{!loading && <ChatFab isOpen={isOpen} toggleOpen={toggleOpen} resetChat={resetChat} isAuthenticated={isAuthenticated} />}
+			{!loading && <ChatFab isAuthenticated={isAuthenticated} isOpen={isOpen} resetChat={resetChat} toggleOpen={toggleOpen} />}
 			<div
-				ref={chatRef}
 				className={`chatWidget ${isOpen ? "open" : ""}`}
+				ref={chatRef}
 				style={{
 					width: isAuthenticated ? `${dimensions.width}px` : "fit-content",
 					height: isAuthenticated ? `${dimensions.height}px` : "fit-content",
-				}}>
+				}}
+			>
 				{isAuthenticated ? (
 					<>
 						<div className="chatHeader">
 							<div className="chatHeaderContent">
 								<div className="chatAvatar">
-									<Icon code="f544" set="duotone" type="solid" size={28} />
+									<Icon code="f544" set="duotone" size={28} type="solid" />
 								</div>
 							</div>
 						</div>
-						<MessageList messages={messages} isLoading={isLoading} bottomRef={messagesEndRef} onResizeStart={handleResizeStart} />
+						<MessageList bottomRef={messagesEndRef} isLoading={isLoading} messages={messages} onResizeStart={handleResizeStart} />
 						<Textfield
-							value={input}
 							className="chatInput"
-							placeholder="Ask me anything"
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
 							onKeyDown={(e: React.KeyboardEvent) => {
 								if (e.key === "Enter" && input.trim() && !isLoading) {
@@ -70,6 +69,8 @@ export const ChatInterface = () => {
 									setInput("");
 								}
 							}}
+							placeholder="Ask me anything"
+							value={input}
 						/>
 					</>
 				) : (

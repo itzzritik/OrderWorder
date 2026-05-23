@@ -45,7 +45,7 @@ export const AdminProvider = ({ children }: TAdminProviderProps) => {
 				} else acc.orderHistory.push(order);
 				return acc;
 			},
-			{ orderRequest: [], orderActive: [], orderHistory: [] },
+			{ orderRequest: [], orderActive: [], orderHistory: [] }
 		) ?? {};
 
 	[orderRequest, orderActive, orderHistory].forEach((arr) => arr?.sort?.(sortByDate));
@@ -79,7 +79,8 @@ export const AdminProvider = ({ children }: TAdminProviderProps) => {
 				orderAction,
 				orderActionLoading,
 				orderLoading,
-			}}>
+			}}
+		>
 			{children}
 		</AdminContext.Provider>
 	);

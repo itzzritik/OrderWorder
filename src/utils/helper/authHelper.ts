@@ -41,16 +41,15 @@ export const authOptions: AuthOptions = {
 						themeColor: account?.profile?.themeColor,
 						_doc: account as unknown as TAccount, // using account as the doc
 					};
-				} else {
-					if (!(await verifyPassword(cred?.password, account?.password))) throw new Error("Invalid admin credentials");
-
-					return {
-						id: account._id.toString(),
-						role: "admin",
-						themeColor: account?.profile?.themeColor,
-						_doc: account as unknown as TAccount,
-					};
 				}
+				if (!(await verifyPassword(cred?.password, account?.password))) throw new Error("Invalid admin credentials");
+
+				return {
+					id: account._id.toString(),
+					role: "admin",
+					themeColor: account?.profile?.themeColor,
+					_doc: account as unknown as TAccount,
+				};
 			},
 		}),
 		CredentialsProvider({
@@ -92,7 +91,7 @@ export const authOptions: AuthOptions = {
 					themeColor: account?.profile?.themeColor,
 					_doc: {
 						role: "customer",
-						customer: customer,
+						customer,
 						restaurant: {
 							username: account?.profile?.restaurantID,
 							table: cred?.table,
@@ -116,20 +115,16 @@ export const authOptions: AuthOptions = {
 			return session;
 		},
 		async jwt({ token, user, account }) {
-			if (account?.provider === "restaurant") {
-				if (user) {
-					token.user = {
-						role: user?.role,
-						themeColor: user?.themeColor,
-						...pick(user._doc, ["email", "accountActive", "subscriptionActive:", "username", "verified"]),
-					};
-				}
+			if (account?.provider === "restaurant" && user) {
+				token.user = {
+					role: user?.role,
+					themeColor: user?.themeColor,
+					...pick(user._doc, ["email", "accountActive", "subscriptionActive:", "username", "verified"]),
+				};
 			}
 
-			if (account?.provider === "customer") {
-				if (user) {
-					token.user = user._doc;
-				}
+			if (account?.provider === "customer" && user) {
+				token.user = user._doc;
 			}
 			return token;
 		},

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: IRootProps) {
 	return (
-		<html lang="en" className={montserrat.variable} suppressHydrationWarning>
+		<html className={montserrat.variable} lang="en" suppressHydrationWarning>
 			<head>
 				<Gliff next />
 			</head>

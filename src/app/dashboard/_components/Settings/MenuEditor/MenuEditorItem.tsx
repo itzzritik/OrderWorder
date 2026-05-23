@@ -16,10 +16,10 @@ const MenuEditorItem = (props: TMenuEditorItemProps) => {
 			{inView && (
 				<>
 					<div className="menuItemPicture">
-						{!item.image ? <Icon code="e43b" /> : <span className="image" style={{ background: `url(${item.image})` }} />}
+						{item.image ? <span className="image" style={{ background: `url(${item.image})` }} /> : <Icon code="e43b" />}
 						{item.veg && (
 							<div className={`vegIcon ${item.veg}`}>
-								<Icon className="icon" type="solid" size={16} code={VEG_ICON_CODE[item.veg]} />
+								<Icon className="icon" code={VEG_ICON_CODE[item.veg]} size={16} type="solid" />
 								<span className="label">{item.veg.replace(/-/g, " ")}</span>
 							</div>
 						)}
@@ -33,13 +33,13 @@ const MenuEditorItem = (props: TMenuEditorItemProps) => {
 						<Button
 							icon={item.hidden ? "f070" : "f06e"}
 							iconType="solid"
-							size="mini"
-							type={item.hidden ? "secondary" : "primary"}
 							label={isMobile ? undefined : item.hidden ? "Hidden" : "Visible"}
 							loading={hideSettingsLoading}
 							onClick={() => onHide(item._id.toString(), !item.hidden)}
+							size="mini"
+							type={item.hidden ? "secondary" : "primary"}
 						/>
-						<Button icon="f304" iconType="solid" size="mini" type="primary" onClick={() => onEdit(item)} />
+						<Button icon="f304" iconType="solid" onClick={() => onEdit(item)} size="mini" type="primary" />
 					</div>
 				</>
 			)}

@@ -12,7 +12,7 @@ const KitchenSchema = new mongoose.Schema<TKitchen>(
 		password: { type: String, required: true },
 		restaurantID: { type: String, trim: true, lowercase: true, required: true },
 	},
-	{ timestamps: true },
+	{ timestamps: true }
 );
 
 KitchenSchema.pre("save", async function () {

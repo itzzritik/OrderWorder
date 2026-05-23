@@ -22,27 +22,27 @@ const OrdersCard = (props: TOrdersCard) => {
 				<div className="options">
 					<Button
 						className="accept"
-						size="mini"
 						icon="f00c"
 						iconType="solid"
-						label={!props.reject ? "Complete" : "Yes do it!"}
-						onClick={() => action?.(data._id.toString())}
+						label={props.reject ? "Yes do it!" : "Complete"}
 						loading={busy}
+						onClick={() => action?.(data._id.toString())}
+						size="mini"
 					/>
 					{!busy && (
 						<Button
 							className="reject"
-							size="mini"
-							type="primaryDanger"
 							icon="f00d"
 							iconType="solid"
-							label={!reject ? "Cancel" : "No Don't"}
+							label={reject ? "No Don't" : "Cancel"}
 							onClick={() => {
 								setReject?.({
-									_id: !reject ? data._id.toString() : null,
+									_id: reject ? null : data._id.toString(),
 									details: false,
 								});
 							}}
+							size="mini"
+							type="primaryDanger"
 						/>
 					)}
 				</div>
@@ -52,27 +52,27 @@ const OrdersCard = (props: TOrdersCard) => {
 			<div className="options">
 				<Button
 					className="accept"
-					label={!reject ? "Accept" : "Yes do it!"}
-					size="mini"
 					icon="f00c"
 					iconType="solid"
-					onClick={() => action?.(data._id.toString())}
+					label={reject ? "Yes do it!" : "Accept"}
 					loading={busy}
+					onClick={() => action?.(data._id.toString())}
+					size="mini"
 				/>
 				{!busy && (
 					<Button
 						className="reject"
-						size="mini"
-						type="primaryDanger"
 						icon="f00d"
 						iconType="solid"
+						label={reject ? "No Don't" : "Reject"}
 						onClick={() => {
 							setReject?.({
-								_id: !reject ? data._id.toString() : null,
+								_id: reject ? null : data._id.toString(),
 								details: false,
 							});
 						}}
-						label={!reject ? "Reject" : "No Don't"}
+						size="mini"
+						type="primaryDanger"
 					/>
 				)}
 			</div>
@@ -85,18 +85,19 @@ const OrdersCard = (props: TOrdersCard) => {
 		<div
 			className={classList}
 			onClick={() => {
-				!active && !history && setReject?.({ _id: null, details: false });
+				!(active || history) && setReject?.({ _id: null, details: false });
 				activate(data._id.toString());
-			}}>
+			}}
+		>
 			<div className="content">
 				<p className="table">{!reject || details ? `Table: ${tableName}` : "Are you sure?"}</p>
 				<p className="name">{!reject || details ? customerName : `Table: ${tableName}`}</p>
-				{!data?.products?.length ? (
-					<p className="noContent">No orders yet</p>
-				) : (
+				{data?.products?.length ? (
 					<p className="total rupee" onClick={() => showDetails?.(true)}>
 						{data?.orderTotal}
 					</p>
+				) : (
+					<p className="noContent">No orders yet</p>
 				)}
 				<OptionButtons />
 			</div>

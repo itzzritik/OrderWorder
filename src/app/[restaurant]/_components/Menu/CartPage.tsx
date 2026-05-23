@@ -46,14 +46,10 @@ const CartPage = (props: TCartPageProps) => {
 	};
 
 	useEffect(() => {
-		if (!selectedProducts.length) setShowOrderHistory(true);
-		else setShowOrderHistory(false);
+		if (selectedProducts.length) setShowOrderHistory(false);
+		else setShowOrderHistory(true);
 
-		setSelectionTotal(
-			selectedProducts.reduce((total, product) => {
-				return total + product.quantity * product.price;
-			}, 0),
-		);
+		setSelectionTotal(selectedProducts.reduce((total, product) => total + product.quantity * product.price, 0));
 	}, [selectedProducts]);
 
 	useEffect(() => {
@@ -71,10 +67,10 @@ const CartPage = (props: TCartPageProps) => {
 	// 	}
 	// }, [userOrderEnd, setSideSheetHeading]);
 
-	if (!props.selectedProducts.length && !order?.products?.length) {
+	if (!(props.selectedProducts.length || order?.products?.length)) {
 		return (
 			<div className="cartPage">
-				<NoContent label={"Aren't you hungry?"} animationName="FoodBurgerHappy" />
+				<NoContent animationName="FoodBurgerHappy" label={"Aren't you hungry?"} />
 			</div>
 		);
 	}
@@ -83,12 +79,12 @@ const CartPage = (props: TCartPageProps) => {
 		return (
 			<div className="cartPage">
 				<div className="cartApproval">
-					<Lottie className="burgerLoader" src={getAnimSrc("FoodCook")} size={250} />
+					<Lottie className="burgerLoader" size={250} src={getAnimSrc("FoodCook")} />
 					<div className="approvalHeading">
 						<p>Your order</p>
 						<p>will be accepted soon</p>
 					</div>
-					<Button className="endOrder" type="secondaryDanger" size="mini" label="Cancel Order" loading={cancelingOrder} onClick={onCancelOrder} />
+					<Button className="endOrder" label="Cancel Order" loading={cancelingOrder} onClick={onCancelOrder} size="mini" type="secondaryDanger" />
 				</div>
 			</div>
 		);
@@ -99,21 +95,22 @@ const CartPage = (props: TCartPageProps) => {
 			<div className="cartItems">
 				{order?.products?.length && approvedProducts && (
 					<Collapsible
+						alert={order?.products?.length}
 						className="orderedProducts"
-						round
-						label="Order History"
 						expand={showOrderHistory}
+						label="Order History"
+						round
 						setExpand={setShowOrderHistory}
-						alert={order?.products?.length}>
-						{order?.products.map((product, key) => {
-							return <ItemCard key={key} item={product as unknown as TMenuCustom} staticCard />;
-						})}
+					>
+						{order?.products.map((product, key) => (
+							<ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />
+						))}
 					</Collapsible>
 				)}
 				<div className="selectedProducts">
-					{selectedProducts.map((product, key) => {
-						return <ItemCard item={product} key={key} increaseQuantity={increaseProductQuantity} decreaseQuantity={decreaseProductQuantity} />;
-					})}
+					{selectedProducts.map((product, key) => (
+						<ItemCard decreaseQuantity={decreaseProductQuantity} increaseQuantity={increaseProductQuantity} item={product} key={key} />
+					))}
 				</div>
 			</div>
 			<div className={`cartCheckout ${bottomBarActive ? "active" : ""}`}>
@@ -124,7 +121,8 @@ const CartPage = (props: TCartPageProps) => {
 							onClick={() => {
 								setShowTaxSummary(false);
 								setBottomBarActive((v) => !v);
-							}}>
+							}}
+						>
 							{bottomBarActive ? (
 								<h5>
 									Bill <span>Summary</span>
@@ -140,9 +138,8 @@ const CartPage = (props: TCartPageProps) => {
 					)}
 					<div className="cartAction">
 						<Button
-							iconType="solid"
-							size="mini"
 							icon={bottomBarActive ? "f078" : props.selectedProducts.length > 0 ? "e1bc" : "f09d"}
+							iconType="solid"
 							label={
 								bottomBarActive
 									? "close"
@@ -152,27 +149,28 @@ const CartPage = (props: TCartPageProps) => {
 							}
 							loading={placingOrder}
 							onClick={onOrderAction}
+							size="mini"
 						/>
 					</div>
 				</div>
 				{order && (
 					<div className={clsx("taxDetails", showTaxSummary && "show")}>
-						<CartTaxItem name="Item Total" amount={order?.orderTotal} />
+						<CartTaxItem amount={order?.orderTotal} name="Item Total" />
 						<hr className="itemHr" />
 						<CartTaxItem
+							amount={order?.taxTotal}
 							className="taxSummaryTitle"
 							name={showTaxSummary ? "Tax Summary" : "Tax Total"}
-							subtitle={showTaxSummary ? "collapse" : "show details"}
-							amount={order?.taxTotal}
 							onClick={() => setShowTaxSummary((v) => !v)}
+							subtitle={showTaxSummary ? "collapse" : "show details"}
 						/>
 						<div className="taxSummary">
 							{order?.products?.map((product, i) => (
-								<CartTaxItem key={i} name={product?.name ?? ""} size="mini" taxPercent={product?.taxPercent} amount={product?.quantity * product?.tax} />
+								<CartTaxItem amount={product?.quantity * product?.tax} key={i} name={product?.name ?? ""} size="mini" taxPercent={product?.taxPercent} />
 							))}
 						</div>
 						<hr />
-						<CartTaxItem name="Grand Total" amount={order?.orderTotal + order?.taxTotal} />
+						<CartTaxItem amount={order?.orderTotal + order?.taxTotal} name="Grand Total" />
 					</div>
 				)}
 			</div>

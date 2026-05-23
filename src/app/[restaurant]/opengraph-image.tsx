@@ -30,9 +30,10 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 						background: avatar ? "#fff" : "linear-gradient(145deg, #222, #444)",
 						border: "3px solid rgba(0, 0, 0, 0.13)",
 						boxShadow: "0 16px 56px rgba(0, 0, 0, 0.07), 0 4px 12px rgba(0, 0, 0, 0.03)",
-					}}>
+					}}
+				>
 					{avatar ? (
-						<img src={avatar} alt={name} width={180} height={180} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
+						<img alt={name} height={180} src={avatar} style={{ objectFit: "cover", width: "100%", height: "100%" }} width={180} />
 					) : (
 						<span style={{ fontSize: "72px", fontWeight: 700, color: "#fff", lineHeight: 1 }}>{name.charAt(0).toUpperCase()}</span>
 					)}
@@ -46,7 +47,8 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 						lineHeight: 1,
 						marginTop: "32px",
 						textAlign: "center",
-					}}>
+					}}
+				>
 					{name}
 				</span>
 				<span
@@ -63,7 +65,8 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 						WebkitBoxOrient: "vertical",
 						overflow: "hidden",
 						textOverflow: "ellipsis",
-					}}>
+					}}
+				>
 					{desc}
 				</span>
 			</div>
@@ -77,11 +80,12 @@ export default async function OgImage({ params }: { params: Promise<{ restaurant
 					flexDirection: "column",
 					alignItems: "center",
 					gap: "2px",
-				}}>
+				}}
+			>
 				<span style={{ fontSize: "14px", color: "rgba(0, 0, 0, 0.4)", fontWeight: 500, letterSpacing: "1px" }}>Powered By</span>
 				<span style={{ fontSize: "24px", color: "rgba(0, 0, 0, 0.8)", fontWeight: 900, letterSpacing: "-1px", lineHeight: 1 }}>{SITE_NAME}</span>
 			</div>
 		</OgBackground>,
-		{ ...size },
+		{ ...size }
 	);
 }

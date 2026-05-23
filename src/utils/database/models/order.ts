@@ -23,7 +23,7 @@ const OrderSchema = new mongoose.Schema<TOrder>(
 			},
 		],
 	},
-	{ timestamps: true },
+	{ timestamps: true }
 );
 
 OrderSchema.pre("save", function () {

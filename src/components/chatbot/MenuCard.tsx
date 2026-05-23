@@ -13,12 +13,12 @@ export function MenuCard({ item }: MenuCardProps) {
 	};
 
 	return (
-		<button type="button" onClick={handleClick} className="chatbotMenuCard">
+		<button className="chatbotMenuCard" onClick={handleClick} type="button">
 			{item.image && <div className="cardImage" style={{ backgroundImage: `url(${item.image})` }} />}
 			<div className="cardDesc">
 				<h4 className="cardTitle">{item.name}</h4>
 				<p className="cardSubtitle">
-					{item.veg && <Icon className={`vegBadge ${item.veg}`} code={VEG_ICON_CODE[item.veg]} type="solid" size={12} />}
+					{item.veg && <Icon className={`vegBadge ${item.veg}`} code={VEG_ICON_CODE[item.veg]} size={12} type="solid" />}
 					{item.veg && <span className="separator">•</span>}
 					<span>₹{item.price}</span>
 				</p>

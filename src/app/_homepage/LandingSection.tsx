@@ -46,7 +46,7 @@ const LandingSection = () => {
 	return (
 		<section className={clsx("landingSection", isDarkTheme && "dark")} id="homepage" style={{ filter: `blur(${blurBackground + blurOverlay}px)` }}>
 			<div className="coverBackground" style={{ backgroundImage: `url(${bgImg})` }} />
-			<div ref={ref} className="coverOverlay" onMouseMove={onMouseMove} style={{ backgroundImage: `url(${overlayImg})` }} />
+			<div className="coverOverlay" onMouseMove={onMouseMove} ref={ref} style={{ backgroundImage: `url(${overlayImg})` }} />
 			<div className="overlay" />
 			<div className="landingGreeting">
 				<h1 className="head">Revolutionizing</h1>
@@ -54,7 +54,7 @@ const LandingSection = () => {
 				<p className="desc">Gone are the days of complex ordering systems and outdated</p>
 				<p className="desc">paper menus. It&apos;s time for the new normal, OrderWorder</p>
 				<div className="greetingAction">
-					<Button label="Learn more" type="secondary" onClick={() => scrollToSection("homepage-aboutus")} />
+					<Button label="Learn more" onClick={() => scrollToSection("homepage-aboutus")} type="secondary" />
 					<Button label="Order now" onClick={() => router.push("/scan")} />
 				</div>
 			</div>

@@ -23,7 +23,7 @@ const OrderDetail = (props: TOrderDetailProps) => {
 			approvedItems: data.products.filter(({ adminApproved }) => adminApproved),
 			requestedItems: data.products.filter(({ adminApproved }) => !adminApproved),
 		}),
-		[data.products],
+		[data.products]
 	);
 
 	const OptionButtons = () => {
@@ -34,71 +34,71 @@ const OrderDetail = (props: TOrderDetailProps) => {
 				<div className="options">
 					<Button
 						className="reject"
-						type="primaryDanger"
 						icon="f00d"
 						iconType="solid"
+						label={reject ? "No Don't" : "Cancel"}
 						onClick={() => {
 							setReject({
-								_id: !reject ? data._id.toString() : null,
+								_id: reject ? null : data._id.toString(),
 								details: true,
 							});
 						}}
-						label={!reject ? "Cancel" : "No Don't"}
+						type="primaryDanger"
 					/>
 					<Button
 						className="accept"
 						icon="f00c"
 						iconType="solid"
-						label={!reject ? "Complete" : "Yes do it!"}
-						onClick={() => action(data._id.toString())}
+						label={reject ? "Yes do it!" : "Complete"}
 						loading={busy}
+						onClick={() => action(data._id.toString())}
 					/>
 				</div>
 			);
 		}
 		return (
-			<div className={`options ${busy ? "busy " : ""}`}>
+			<div className={`options ${busy ? "busy" : ""}`}>
 				<Button
 					className="reject"
-					type="primaryDanger"
 					icon="f00d"
 					iconType="solid"
+					label={reject ? "No Don't" : "Reject"}
 					onClick={() => {
 						setReject({
-							_id: !reject ? data._id.toString() : null,
+							_id: reject ? null : data._id.toString(),
 							details: true,
 						});
 					}}
-					label={!reject ? "Reject" : "No Don't"}
+					type="primaryDanger"
 				/>
 				<Button
 					className="accept"
 					icon="f00c"
 					iconType="solid"
-					label={!reject ? "Accept" : "Yes do it!"}
-					onClick={() => action(data._id.toString())}
+					label={reject ? "Yes do it!" : "Accept"}
 					loading={busy}
+					onClick={() => action(data._id.toString())}
 				/>
 			</div>
 		);
 	};
 
 	return (
-		<div className={`orderDetail ${reject ? "reject " : ""}`}>
+		<div className={`orderDetail ${reject ? "reject" : ""}`}>
 			<div className="header">
 				<div className="info">
-					<h1 className="table">{!reject ? `Table: ${data?.table}` : "Are you sure?"}</h1>
+					<h1 className="table">{reject ? "Are you sure?" : `Table: ${data?.table}`}</h1>
 					<div className="name">
-						<Icon code="f007" type="solid" size={16} />
+						<Icon code="f007" size={16} type="solid" />
 						{data?.customer?.fname} {data?.customer?.lname}
 					</div>
 					<div className="phone">
-						<Icon code="f095" type="solid" size={16} />
+						<Icon code="f095" size={16} type="solid" />
 						{data?.customer?.phone}
 					</div>
 					{data?.orderTotal && (
 						<div className="total">
-							<Icon code="e1bc" type="solid" size={16} />
+							<Icon code="e1bc" size={16} type="solid" />
 							{data?.orderTotal}
 						</div>
 					)}
@@ -107,20 +107,21 @@ const OrderDetail = (props: TOrderDetailProps) => {
 			</div>
 			<div className="detailContent">
 				{data?.products?.length === 0 ? (
-					<NoContent label="No approved orders from this table yet!" animationName="GhostNoContent" />
+					<NoContent animationName="GhostNoContent" label="No approved orders from this table yet!" />
 				) : subTab !== "requests" || !approvedItems.length ? (
 					data.products.map((product, key) => <ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />)
 				) : (
 					<div>
 						<Collapsible
+							alert={approvedItems?.length}
 							className="orderedProducts"
-							round
-							label="Approved Products"
 							expand={showApprovedItems}
+							label="Approved Products"
+							round
 							setExpand={setShowApprovedItems}
-							alert={approvedItems?.length}>
+						>
 							{approvedItems.map((product, key) => (
-								<ItemCard key={key} item={product as unknown as TMenuCustom} staticCard />
+								<ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />
 							))}
 						</Collapsible>
 						{requestedItems.map((product, key) => (

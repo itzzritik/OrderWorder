@@ -152,7 +152,7 @@ export const InvoiceDocument = ({ order, profile }: TInvoiceProps) => {
 						<Text style={styles.companyAddress}>{companyAddress}</Text>
 						{profile?.restaurantID && <Text style={styles.companyAddress}>{profile.restaurantID}</Text>}
 					</View>
-					{logo && <Image style={styles.logo} src={logo} />}
+					{logo && <Image src={logo} style={styles.logo} />}
 				</View>
 
 				<View style={styles.invoiceDetails}>
@@ -228,7 +228,7 @@ const Invoice = ({ order, profile }: TInvoiceProps) => {
 		updateInstance(<InvoiceDocument order={order} profile={profile} />);
 	}, [order, profile, updateInstance]);
 
-	if (!isClient || !order) return null;
+	if (!(isClient && order)) return null;
 
 	const handleDownload = () => {
 		if (instance.url) {
@@ -256,30 +256,30 @@ const Invoice = ({ order, profile }: TInvoiceProps) => {
 		<div style={{ position: "relative", width: "100%", height: "100%", minHeight: "500px", overflow: "hidden", borderRadius: "1rem" }}>
 			{!instance.loading && instance.url ? (
 				<iframe
-					src={`${instance.url}#toolbar=0&view=FitH&navpanes=0&scrollbar=0`}
-					width="100%"
 					height="100%"
+					src={`${instance.url}#toolbar=0&view=FitH&navpanes=0&scrollbar=0`}
 					style={{ border: "none", borderRadius: "1rem", backgroundColor: "white" }}
 					title="Invoice PDF"
+					width="100%"
 				/>
 			) : (
-				<Spinner label="Generating Invoice" fullpage />
+				<Spinner fullpage label="Generating Invoice" />
 			)}
 
 			<div style={{ position: "absolute", bottom: 20, right: 20, display: "flex", flexDirection: "column", gap: "10px" }}>
 				<Button
-					icon="f019"
-					type="primary"
-					style={{ borderRadius: "50%", width: 50, height: 50, padding: 0, minWidth: 0 }}
-					onClick={handleDownload}
 					disabled={instance.loading || !instance.url}
+					icon="f019"
+					onClick={handleDownload}
+					style={{ borderRadius: "50%", width: 50, height: 50, padding: 0, minWidth: 0 }}
+					type="primary"
 				/>
 				<Button
-					icon="f02f"
-					type="secondary"
-					style={{ borderRadius: "50%", width: 50, height: 50, padding: 0, minWidth: 0 }}
-					onClick={handlePrint}
 					disabled={instance.loading || !instance.url}
+					icon="f02f"
+					onClick={handlePrint}
+					style={{ borderRadius: "50%", width: 50, height: 50, padding: 0, minWidth: 0 }}
+					type="secondary"
 				/>
 			</div>
 		</div>

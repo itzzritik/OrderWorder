@@ -37,49 +37,49 @@ const ActiveOrders = (props: TActiveOrdersProps) => {
 	return (
 		<div className="orders">
 			{orderActive?.length === 0 ? (
-				<NoContent label="No active orders" animationName="GhostNoContent" />
+				<NoContent animationName="GhostNoContent" label="No active orders" />
 			) : (
 				<div className="ordersContent">
 					<div className={`list ${orderActionLoading ? "disable" : ""}`} onScroll={onScroll}>
 						{orderActive.map((data, i) => (
 							<OrdersCard
-								key={i}
-								actions
-								data={data}
 								action={onOrderAction}
-								showDetails={setSideSheetOpen}
-								details={!!rejectCard?._id && rejectCard.details}
-								reject={rejectCard._id === data._id.toString()}
-								setReject={setRejectCard}
-								active={activeCardID === data._id.toString()}
-								busy={orderActionLoading}
+								actions
 								activate={(orderID: string) => {
 									setActiveCardID(orderID);
 									setActiveCardData(orderActive.find((order) => order._id.toString() === orderID));
 								}}
+								active={activeCardID === data._id.toString()}
+								busy={orderActionLoading}
+								data={data}
+								details={!!rejectCard?._id && rejectCard.details}
+								key={i}
+								reject={rejectCard._id === data._id.toString()}
+								setReject={setRejectCard}
+								showDetails={setSideSheetOpen}
 							/>
 						))}
 					</div>
-					<div className={`details ${activeCardData && rejectCard._id === activeCardData._id.toString() ? "reject " : ""}`}>
-						{!activeCardData ? (
-							<NoContent label="No approved orders from this table yet!" animationName="GhostNoContent" size={200} />
-						) : (
+					<div className={`details ${activeCardData && rejectCard._id === activeCardData._id.toString() ? "reject" : ""}`}>
+						{activeCardData ? (
 							<OrderDetail
-								actions
-								data={activeCardData}
 								action={onOrderAction}
-								setReject={setRejectCard}
+								actions
 								busy={orderActionLoading}
+								data={activeCardData}
 								reject={activeCardData && rejectCard._id === activeCardData._id.toString()}
+								setReject={setRejectCard}
 							/>
+						) : (
+							<NoContent animationName="GhostNoContent" label="No approved orders from this table yet!" size={200} />
 						)}
 					</div>
 				</div>
 			)}
-			<SideSheet title={[activeCardData ? `Table: ${activeCardData?.table}` : ""]} open={sideSheetOpen} setOpen={setSideSheetOpen}>
-				{activeCardData?.products.map((product, key) => {
-					return <ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />;
-				})}
+			<SideSheet open={sideSheetOpen} setOpen={setSideSheetOpen} title={[activeCardData ? `Table: ${activeCardData?.table}` : ""]}>
+				{activeCardData?.products.map((product, key) => (
+					<ItemCard item={product as unknown as TMenuCustom} key={key} staticCard />
+				))}
 			</SideSheet>
 		</div>
 	);

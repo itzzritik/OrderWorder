@@ -117,8 +117,8 @@ const OrderPage = () => {
 			menus?.filter?.(
 				({ name, description, category: cat }) =>
 					(search ? name?.toLowerCase().includes(search) || description?.toLowerCase().includes(search) || cat?.toLowerCase().includes(search) : true) &&
-					(category.length ? category.includes(cat) : true),
-			),
+					(category.length ? category.includes(cat) : true)
+			)
 		);
 	}, [category, menus, searchParam]);
 
@@ -153,10 +153,8 @@ const OrderPage = () => {
 						{topHeading[0]} <span>{topHeading[1]}</span>
 					</h1>
 					<div className="options">
-						<SearchButton setSearchActive={setSearchActive} placeholder="Search menu" value={searchValue} setValue={setSearchValue} />
-						{(!session.data?.role || !showOrderButton) && (
-							<Button className="loginButton" label={showOrderButton ? "Order" : "Scan"} onClick={onLoginClick} />
-						)}
+						<SearchButton placeholder="Search menu" setSearchActive={setSearchActive} setValue={setSearchValue} value={searchValue} />
+						{!(session.data?.role && showOrderButton) && <Button className="loginButton" label={showOrderButton ? "Order" : "Scan"} onClick={onLoginClick} />}
 						{eligibleToOrder && (
 							<Button
 								icon="e43b"
@@ -166,18 +164,18 @@ const OrderPage = () => {
 							/>
 						)}
 						{session.data?.role === "admin" && (
-							<Button className="dashboardButton" label="Dashboard" icon="e09f" iconType="solid" onClick={() => params.router.push("/dashboard")} />
+							<Button className="dashboardButton" icon="e09f" iconType="solid" label="Dashboard" onClick={() => params.router.push("/dashboard")} />
 						)}
 						{session.data?.role === "kitchen" && (
-							<Button className="kitchenButton" label="Kitchen" icon="e09f" iconType="solid" onClick={() => params.router.push("/kitchen")} />
+							<Button className="kitchenButton" icon="e09f" iconType="solid" label="Kitchen" onClick={() => params.router.push("/kitchen")} />
 						)}
 					</div>
 				</div>
 				{restaurant && (
 					<div className="category">
-						<div className="itemCategories" ref={categories} onScroll={onCategoryScroll}>
+						<div className="itemCategories" onScroll={onCategoryScroll} ref={categories}>
 							{restaurant?.profile?.categories?.map((item, i) => (
-								<ActionCard key={i} className={`menuCategory ${category.includes(item) ? "active" : ""}`} onClick={() => onCategoryClick(item)}>
+								<ActionCard className={`menuCategory ${category.includes(item) ? "active" : ""}`} key={i} onClick={() => onCategoryClick(item)}>
 									<span className="title">{item}</span>
 								</ActionCard>
 							))}
@@ -191,9 +189,7 @@ const OrderPage = () => {
 						</div>
 					</div>
 				)}
-				{!restaurant ? (
-					<Spinner label="Loading Menu..." fullpage />
-				) : (
+				{restaurant ? (
 					<div className="order" ref={order}>
 						<div className="header">
 							<h1>
@@ -201,67 +197,69 @@ const OrderPage = () => {
 							</h1>
 						</div>
 						{hasImageItems && (
-							<div className={`itemContainer ${!eligibleToOrder ? "restrictOrder " : ""}`}>
+							<div className={`itemContainer ${eligibleToOrder ? "" : "restrictOrder"}`}>
 								<div>
 									{filteredProducts?.map(
 										(item, key) =>
 											!item.hidden && (
 												<MenuCard
-													key={key}
-													item={item}
-													restrictOrder={!eligibleToOrder}
-													increaseQuantity={increaseProductQuantity}
 													decreaseQuantity={decreaseProductQuantity}
-													showInfo={item._id.toString() === showInfoCard.toString()}
-													setShowInfo={(v) => setShowInfoCard(v)}
-													show={!!item.image}
+													increaseQuantity={increaseProductQuantity}
+													item={item}
+													key={key}
 													quantity={
 														(selectedProducts.some((obj) => obj._id === item._id) &&
 															selectedProducts?.find((obj) => obj._id === item._id)?.quantity) ||
 														0
 													}
+													restrictOrder={!eligibleToOrder}
+													setShowInfo={(v) => setShowInfoCard(v)}
+													show={!!item.image}
+													showInfo={item._id.toString() === showInfoCard.toString()}
 												/>
-											),
+											)
 									)}
 								</div>
 							</div>
 						)}
 						{hasImageItems && hasNonImageItems && <hr />}
 						{hasNonImageItems && (
-							<div className={`itemContainer withoutImage ${!eligibleToOrder ? "restrictOrder " : ""}`}>
+							<div className={`itemContainer withoutImage ${eligibleToOrder ? "" : "restrictOrder"}`}>
 								<div>
 									{filteredProducts?.map((item, key) => (
 										<MenuCard
-											key={key}
-											item={item}
-											restrictOrder={!eligibleToOrder}
-											increaseQuantity={increaseProductQuantity}
 											decreaseQuantity={decreaseProductQuantity}
-											showInfo={item._id.toString() === showInfoCard.toString()}
-											setShowInfo={(v) => setShowInfoCard(v)}
-											show={!!item.image}
+											increaseQuantity={increaseProductQuantity}
+											item={item}
+											key={key}
 											quantity={
 												(selectedProducts.some((obj) => obj._id === item._id) &&
 													selectedProducts?.find((obj) => obj._id === item._id)?.quantity) ||
 												0
 											}
+											restrictOrder={!eligibleToOrder}
+											setShowInfo={(v) => setShowInfoCard(v)}
+											show={!!item.image}
+											showInfo={item._id.toString() === showInfoCard.toString()}
 										/>
 									))}
 								</div>
 							</div>
 						)}
 					</div>
+				) : (
+					<Spinner fullpage label="Loading Menu..." />
 				)}
 			</div>
-			<SideSheet title={sideSheetHeading} open={sideSheetOpen} setOpen={setSideSheetOpen}>
+			<SideSheet open={sideSheetOpen} setOpen={setSideSheetOpen} title={sideSheetHeading}>
 				{loading ? (
-					<Spinner label="Loading Order..." fullpage />
+					<Spinner fullpage label="Loading Order..." />
 				) : (
 					<CartPage
-						selectedProducts={selectedProducts}
-						increaseProductQuantity={increaseProductQuantity}
 						decreaseProductQuantity={decreaseProductQuantity}
+						increaseProductQuantity={increaseProductQuantity}
 						resetSelectedProducts={() => setSelectedProducts([])}
+						selectedProducts={selectedProducts}
 						setSideSheetHeading={setSideSheetHeading}
 					/>
 				)}

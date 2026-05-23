@@ -9,7 +9,7 @@ const NoContent = (props: TNoContentProps) => {
 	return (
 		<div className="noContent">
 			<div>
-				<Lottie src={getAnimSrc(animationName)} size={size} speed={speed} />
+				<Lottie size={size} speed={speed} src={getAnimSrc(animationName)} />
 				{label && <p>{label}</p>}
 			</div>
 		</div>

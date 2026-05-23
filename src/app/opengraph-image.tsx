@@ -19,7 +19,8 @@ export default function OgImage() {
 						alignItems: "center",
 						marginTop: "-75px",
 						boxShadow: "0 8px 16px -4px rgba(228, 107, 54, 0.3)",
-					}}>
+					}}
+				>
 					<span style={{ fontSize: "16px", fontWeight: 700, color: "white", letterSpacing: "1.5px", textTransform: "uppercase" }}>AI Powered Dining</span>
 				</div>
 				<div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -37,11 +38,12 @@ export default function OgImage() {
 						fontWeight: 500,
 						lineHeight: 1.4,
 						letterSpacing: "-0.5px",
-					}}>
+					}}
+				>
 					{SITE_TAGLINE}
 				</p>
 			</div>
 		</OgBackground>,
-		{ ...size },
+		{ ...size }
 	);
 }

@@ -21,9 +21,9 @@ type AuthUser = Partial<
 
 declare module "next-auth" {
 	interface User {
+		_doc: AuthUser;
 		role: "admin" | "kitchen" | "customer";
 		themeColor: TProfile.themeColor;
-		_doc: AuthUser;
 	}
 
 	interface Session extends AuthUser {

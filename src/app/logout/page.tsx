@@ -18,7 +18,7 @@ export default function Logout() {
 					role: session?.data?.role,
 					restaurant: session?.data?.restaurant?.username,
 					table: session?.data?.restaurant?.table,
-				}),
+				})
 			);
 
 			signOut();

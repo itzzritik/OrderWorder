@@ -9,7 +9,7 @@ const CustomerSchema = new mongoose.Schema<TCustomer>(
 		email: { type: String, trim: true, unique: true, sparse: true, index: { unique: true } },
 		gender: { type: String, trim: true, lowercase: true, enum: gender },
 	},
-	{ timestamps: true },
+	{ timestamps: true }
 );
 
 export const Customers = mongoose.models?.customers ?? mongoose.model<TCustomer>("customers", CustomerSchema);

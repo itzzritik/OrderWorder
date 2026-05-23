@@ -41,19 +41,19 @@ const MenuCard = (props: TMenuCardProps) => {
 	}, [item._id]);
 
 	const classList = clsx(
-		"menuCard ",
+		"menuCard",
 		className,
 		isFlashing && "flash",
 		restrictOrder && "restrictOrder",
 		showInfo && "showInfo",
 		!item.image && "withoutImage",
-		window.matchMedia("(hover: hover)").matches && "hoverSupported",
+		window.matchMedia("(hover: hover)").matches && "hoverSupported"
 	);
 
 	if (!show) return null;
 
 	return (
-		<div id={`menu-item-${item._id}`} className={classList + (!inView ? "blank" : "")} ref={cardRef}>
+		<div className={classList + (inView ? "" : "blank")} id={`menu-item-${item._id}`} ref={cardRef}>
 			{inView && (
 				<>
 					{item.image && (
@@ -64,7 +64,7 @@ const MenuCard = (props: TMenuCardProps) => {
 					)}
 					{item.veg && (
 						<div className={`vegIcon ${item.veg}`}>
-							<Icon className="icon" type="solid" size={16} code={vegIcon[item.veg]} />
+							<Icon className="icon" code={vegIcon[item.veg]} size={16} type="solid" />
 							<span className="label">{item.veg.replace(/-/g, " ")}</span>
 						</div>
 					)}
@@ -82,10 +82,10 @@ const MenuCard = (props: TMenuCardProps) => {
 							{!item.image && <div className="priceNoImage rupee">{item.price}</div>}
 							<QuantityButton
 								className="addToCart"
-								quantity={quantity}
+								decreaseQuantity={() => props.decreaseQuantity(item)}
 								filled
 								increaseQuantity={() => props.increaseQuantity(item)}
-								decreaseQuantity={() => props.decreaseQuantity(item)}
+								quantity={quantity}
 							/>
 						</div>
 					</div>
