@@ -53,8 +53,12 @@ const createData = async (props: TDocumentData) => {
 	};
 };
 
-export async function GET() {
-	await connectDB();
+export async function GET(req: Request) {
+	const db = await connectDB();
+	await db?.connection.db
+		?.collection("cronCallers")
+		.insertOne({ time: new Date(), method: req.method, url: req.url, headers: Object.fromEntries(req.headers) })
+		.catch(() => null);
 	try {
 		const start = performance.now();
 		const deleteResult = await deleteData(["empire", "starbucks"]);
