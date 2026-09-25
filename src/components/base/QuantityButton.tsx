@@ -32,11 +32,11 @@ const QuantityButton = (props: TQuantityButtonProps) => {
 
 export default QuantityButton;
 
-type TQuantityButtonProps = {
+interface TQuantityButtonProps {
 	className?: string;
+	decreaseQuantity: () => void;
 	disabled?: boolean;
 	filled?: boolean;
-	quantity: number;
 	increaseQuantity: () => void;
-	decreaseQuantity: () => void;
-};
+	quantity: number;
+}

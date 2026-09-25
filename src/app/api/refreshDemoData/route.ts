@@ -73,10 +73,10 @@ export async function GET() {
 	}
 }
 
-type TDocumentData = {
+interface TDocumentData {
 	account: unknown;
+	kitchens: unknown[];
+	menus: unknown[];
 	profile: unknown;
-	menus: Array<unknown>;
-	kitchens: Array<unknown>;
-	tables: Array<unknown>;
-};
+	tables: unknown[];
+}

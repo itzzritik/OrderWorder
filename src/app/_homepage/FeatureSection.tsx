@@ -14,9 +14,7 @@ const FeatureList = ({ items }: { items: string[] }) => {
 	const [hues, setHues] = useState<number[]>([]);
 
 	useEffect(() => {
-		const baseHues = Array(items.length)
-			.fill(0)
-			.map((_, i) => i * (360 / items.length));
+		const baseHues = new Array(items.length).fill(0).map((_, i) => i * (360 / items.length));
 		const shuffled = [...baseHues].sort(() => Math.random() - 0.5);
 		setHues(shuffled);
 	}, [items]);

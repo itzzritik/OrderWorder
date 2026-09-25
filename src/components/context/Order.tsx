@@ -30,7 +30,7 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 	const [cancelingOrder, setCancelingOrder] = useState(false);
 	const [loginOpen, setLoginOpen] = useState(false);
 
-	const placeOrder = async (products: Array<TMenuCustom>) => {
+	const placeOrder = async (products: TMenuCustom[]) => {
 		setPlacingOrder(true);
 		const req = await fetch("/api/order/place", {
 			method: "POST",
@@ -65,18 +65,18 @@ export const OrderProvider = ({ children }: TOrderProviderProps) => {
 	);
 };
 
-export type TOrderProviderProps = {
+export interface TOrderProviderProps {
 	children?: ReactNode;
-};
+}
 
-export type TOrderInitialType = {
-	order?: TOrder;
-	loading: boolean;
-	placeOrder: (products: Array<TMenuCustom>) => Promise<void>;
-	placingOrder: boolean;
-	cancelOrder: () => void;
+export interface TOrderInitialType {
 	cancelingOrder: boolean;
+	cancelOrder: () => void;
+	loading: boolean;
 	loginOpen: boolean;
+	order?: TOrder;
+	placeOrder: (products: TMenuCustom[]) => Promise<void>;
+	placingOrder: boolean;
 	setLoginOpen: (open: boolean) => void;
-};
+}
 type TMenuCustom = TMenu & { quantity: number };

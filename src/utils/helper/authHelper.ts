@@ -111,7 +111,7 @@ export const authOptions: AuthOptions = {
 				...session,
 				...token?.user,
 			};
-			delete session.user;
+			session.user = undefined;
 			return session;
 		},
 		async jwt({ token, user, account }) {

@@ -43,7 +43,7 @@ export type TOrder = HydratedDocument<{
 	state: (typeof orderState)[number];
 	orderTotal: number;
 	taxTotal: number;
-	products: Array<TProduct>;
+	products: TProduct[];
 }>;
 
 export type TProduct = TMenu & {

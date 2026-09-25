@@ -86,22 +86,22 @@ export const AdminProvider = ({ children }: TAdminProviderProps) => {
 	);
 };
 
-export type TAdminProviderProps = {
+export interface TAdminProviderProps {
 	children?: ReactNode;
-};
+}
 
-export type TAdminInitialType = {
-	profile?: TProfile;
+export interface TAdminInitialType {
 	menus: TMenu[];
-	tables: TTable[];
-	profileLoading: boolean;
-	profileMutate: () => Promise<void>;
-	orderRequest: TOrder[];
-	orderActive: TOrder[];
-	orderHistory: TOrder[];
 	orderAction: (orderID: string, action: TOrderAction) => Promise<void>;
 	orderActionLoading: boolean;
+	orderActive: TOrder[];
+	orderHistory: TOrder[];
 	orderLoading: boolean;
-};
+	orderRequest: TOrder[];
+	profile?: TProfile;
+	profileLoading: boolean;
+	profileMutate: () => Promise<void>;
+	tables: TTable[];
+}
 
 export type TOrderAction = "accept" | "complete" | "reject" | "rejectOnActive";

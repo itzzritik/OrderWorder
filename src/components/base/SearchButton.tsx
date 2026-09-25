@@ -25,9 +25,9 @@ const SearchButton = (props: TSearchButton) => {
 };
 
 export default SearchButton;
-export type TSearchButton = {
+export interface TSearchButton {
 	placeholder: string;
 	setSearchActive: (searchActive: boolean) => void;
-	value: string;
 	setValue: (searchActive: string) => void;
-};
+	value: string;
+}

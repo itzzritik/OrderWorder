@@ -47,8 +47,8 @@ export type TProfile = HydratedDocument<{
 	address: string;
 	avatar: string;
 	cover: string;
-	photos: Array<string>;
+	photos: string[];
 	themeColor: TThemeColor;
 	gstInclusive: boolean;
-	categories: Array<string>;
+	categories: string[];
 }>;

@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import { SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME, SITE_URL } from "./constants";
 
-type OGImage = { url: string; width?: number; height?: number; alt?: string };
+interface OGImage {
+	alt?: string;
+	height?: number;
+	url: string;
+	width?: number;
+}
 
-type MetadataOverrides = {
-	title?: string;
+interface MetadataOverrides {
 	description?: string;
-	path?: string;
 	images?: OGImage[];
-};
+	path?: string;
+	title?: string;
+}
 
 export function buildMetadata({ title, description, path = "", images }: MetadataOverrides = {}): Metadata {
 	const url = `${SITE_URL}${path}`;

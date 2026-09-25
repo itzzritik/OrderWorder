@@ -19,12 +19,12 @@ export const RestaurantProvider = ({ children }: TRestaurantProviderProps) => {
 	return <RestaurantContext.Provider value={{ restaurant, error, loading: isLoading }}>{children}</RestaurantContext.Provider>;
 };
 
-export type TRestaurantProviderProps = {
+export interface TRestaurantProviderProps {
 	children?: ReactNode;
-};
+}
 
-export type TRestaurantInitialType = {
-	restaurant?: TAccount;
+export interface TRestaurantInitialType {
 	error: unknown;
 	loading: boolean;
-};
+	restaurant?: TAccount;
+}

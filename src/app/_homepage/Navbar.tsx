@@ -33,7 +33,7 @@ export default function Navbar({ menuOpen, setMenuOpen }: TNavBarProps) {
 	);
 }
 
-type TNavBarProps = {
+interface TNavBarProps {
 	menuOpen: boolean;
 	setMenuOpen: (menuOpen: boolean) => void;
-};
+}

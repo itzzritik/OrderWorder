@@ -180,12 +180,12 @@ const CartPage = (props: TCartPageProps) => {
 
 export default CartPage;
 
-type TCartPageProps = {
-	selectedProducts: Array<TMenuCustom>;
-	increaseProductQuantity: (product: TMenuCustom) => void;
+interface TCartPageProps {
 	decreaseProductQuantity: (product: TMenuCustom) => void;
+	increaseProductQuantity: (product: TMenuCustom) => void;
 	resetSelectedProducts: () => void;
+	selectedProducts: TMenuCustom[];
 	setSideSheetHeading: (heading: [string, string]) => void;
-};
+}
 
 type TMenuCustom = TMenu & { quantity: number };

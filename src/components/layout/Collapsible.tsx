@@ -23,12 +23,12 @@ const Collapsible = (props: TCollapsibleProps) => {
 
 export default Collapsible;
 
-type TCollapsibleProps = {
-	className?: string;
-	children: ReactNode;
-	round?: boolean;
-	expand: boolean;
-	setExpand: (expand: boolean) => void;
-	label: string;
+interface TCollapsibleProps {
 	alert?: number;
-};
+	children: ReactNode;
+	className?: string;
+	expand: boolean;
+	label: string;
+	round?: boolean;
+	setExpand: (expand: boolean) => void;
+}

@@ -107,16 +107,16 @@ const OrdersCard = (props: TOrdersCard) => {
 
 export default OrdersCard;
 
-type TOrdersCard = {
-	data: TOrder;
+interface TOrdersCard {
+	action?: (id: string) => void;
 	actions?: boolean;
-	history?: boolean;
+	activate: (id: string) => void;
 	active?: boolean;
+	busy?: boolean;
+	data: TOrder;
+	details?: boolean;
+	history?: boolean;
 	reject?: boolean;
 	setReject?: (props: { _id: string | null; details: boolean }) => void;
-	busy?: boolean;
-	details?: boolean;
-	action?: (id: string) => void;
 	showDetails?: (value: boolean) => void;
-	activate: (id: string) => void;
-};
+}

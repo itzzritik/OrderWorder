@@ -16,12 +16,12 @@ const CartTaxItem = (props: TCartTaxItemProps) => {
 
 export default CartTaxItem;
 
-export type TCartTaxItemProps = {
+export interface TCartTaxItemProps {
+	amount: number;
 	className?: string;
 	name: string;
-	subtitle?: string;
-	size?: "mini" | "default";
-	taxPercent?: number;
-	amount: number;
 	onClick?: () => void;
-};
+	size?: "mini" | "default";
+	subtitle?: string;
+	taxPercent?: number;
+}

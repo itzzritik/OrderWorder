@@ -136,12 +136,12 @@ const OrderDetail = (props: TOrderDetailProps) => {
 
 export default OrderDetail;
 
-export type TOrderDetailProps = {
-	data: TOrder;
-	actions?: boolean;
+export interface TOrderDetailProps {
 	action: (id: string) => void;
+	actions?: boolean;
 	busy: boolean;
+	data: TOrder;
 	reject: boolean;
 	setReject: (props: { _id: string | null; details: boolean }) => void;
-};
+}
 type TMenuCustom = TMenu & { quantity: number };

@@ -124,6 +124,6 @@ const UserLogin = ({ setOpen }: UserLoginProps) => {
 
 export default UserLogin;
 
-type UserLoginProps = {
+interface UserLoginProps {
 	setOpen: (open: boolean) => void;
-};
+}

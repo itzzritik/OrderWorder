@@ -2,9 +2,9 @@ import { Button, Icon } from "xtreme-ui";
 
 import "./welcome.scss";
 
-type WelcomeProps = {
+interface WelcomeProps {
 	onLogin: () => void;
-};
+}
 
 export const Welcome = ({ onLogin }: WelcomeProps) => (
 	<div className="chatWelcome">

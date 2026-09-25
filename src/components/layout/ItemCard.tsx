@@ -53,12 +53,12 @@ const ItemCard = (props: TItemCardProps) => {
 
 export default ItemCard;
 
-type TItemCardProps = {
+interface TItemCardProps {
 	className?: string;
+	decreaseQuantity?: (item: TMenuCustom) => void;
+	increaseQuantity?: (item: TMenuCustom) => void;
 	item: TMenuCustom;
 	staticCard?: boolean;
-	increaseQuantity?: (item: TMenuCustom) => void;
-	decreaseQuantity?: (item: TMenuCustom) => void;
-};
+}
 
 type TMenuCustom = TMenu & { quantity: number };

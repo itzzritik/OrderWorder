@@ -49,9 +49,9 @@ const MenuEditorItem = (props: TMenuEditorItemProps) => {
 
 export default MenuEditorItem;
 
-type TMenuEditorItemProps = {
+interface TMenuEditorItemProps {
+	hideSettingsLoading: boolean;
 	item: TMenu;
 	onEdit: (item: TMenu) => void;
 	onHide: (id: string, hidden: boolean) => void;
-	hideSettingsLoading: boolean;
-};
+}

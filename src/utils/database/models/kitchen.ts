@@ -31,8 +31,8 @@ KitchenSchema.post("save", async function () {
 });
 
 export const Kitchens = mongoose.models?.kitchens ?? mongoose.model<TKitchen>("kitchens", KitchenSchema);
-export type TKitchen = {
-	username: string;
+export interface TKitchen {
 	password: string;
 	restaurantID: string;
-};
+	username: string;
+}

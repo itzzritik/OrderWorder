@@ -28,8 +28,8 @@ TableSchema.post("save", async function () {
 });
 
 export const Tables = mongoose.models?.tables ?? mongoose.model<TTable>("tables", TableSchema);
-export type TTable = {
+export interface TTable {
 	name: string;
-	username: string;
 	restaurantID: string;
-};
+	username: string;
+}

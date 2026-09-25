@@ -26,10 +26,10 @@ const SideSheet = (props: SideSheetProps) => {
 
 export default SideSheet;
 
-type SideSheetProps = {
+interface SideSheetProps {
 	children: ReactNode;
 	className?: string;
-	title: string[];
 	open: boolean;
 	setOpen: (open: boolean) => void;
-};
+	title: string[];
+}

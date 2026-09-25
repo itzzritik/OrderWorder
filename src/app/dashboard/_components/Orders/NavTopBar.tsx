@@ -62,8 +62,8 @@ const NavTopBar = (props: TNavTopBarProps) => {
 
 export default NavTopBar;
 
-export type TNavTopBarProps = {
-	title?: string;
+export interface TNavTopBarProps {
 	menuOpen?: boolean;
 	onClick?: () => void;
-};
+	title?: string;
+}

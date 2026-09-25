@@ -18,9 +18,9 @@ const NoContent = (props: TNoContentProps) => {
 
 export default NoContent;
 
-export type TNoContentProps = {
+export interface TNoContentProps {
 	animationName: string;
 	label: string;
 	size?: number;
 	speed?: number;
-};
+}

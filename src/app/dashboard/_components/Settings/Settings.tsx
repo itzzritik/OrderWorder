@@ -27,6 +27,6 @@ const Settings = (props: TSettingsProps) => {
 
 export default Settings;
 
-export type TSettingsProps = {
+export interface TSettingsProps {
 	onScroll: (event: UIEvent<HTMLDivElement>) => void;
-};
+}

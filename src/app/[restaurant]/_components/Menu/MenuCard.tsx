@@ -104,16 +104,16 @@ const MenuCard = (props: TMenuCardProps) => {
 
 export default MenuCard;
 
-type TMenuCardProps = {
+interface TMenuCardProps {
 	className?: string;
-	show?: boolean;
-	restrictOrder?: boolean;
-	showInfo?: boolean;
-	setShowInfo: (showInfo: boolean) => void;
+	decreaseQuantity: (item: TMenuCustom) => void;
+	increaseQuantity: (item: TMenuCustom) => void;
 	item: TMenuCustom;
 	quantity: number;
-	increaseQuantity: (item: TMenuCustom) => void;
-	decreaseQuantity: (item: TMenuCustom) => void;
-};
+	restrictOrder?: boolean;
+	setShowInfo: (showInfo: boolean) => void;
+	show?: boolean;
+	showInfo?: boolean;
+}
 
 type TMenuCustom = TMenu & { quantity: number };

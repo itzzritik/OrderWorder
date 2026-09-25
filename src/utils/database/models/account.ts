@@ -36,7 +36,7 @@ export type TAccount = HydratedDocument<{
 	accountActive: boolean;
 	subscriptionActive: boolean;
 	profile: TProfile;
-	kitchens: Array<TKitchen>;
-	tables: Array<TTable>;
-	menus: Array<TMenu>;
+	kitchens: TKitchen[];
+	tables: TTable[];
+	menus: TMenu[];
 }>;

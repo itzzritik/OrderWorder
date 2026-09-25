@@ -19,7 +19,7 @@ const OrderPage = () => {
 	const { loading, loginOpen, setLoginOpen } = useOrder();
 	const { restaurant } = useRestaurant();
 
-	const menus = restaurant?.menus as Array<TMenuCustom>;
+	const menus = restaurant?.menus as TMenuCustom[];
 	const params = useQueryParams();
 	const table = params.get("table");
 	const searchParam = params.get("search")?.trim() ?? "";
@@ -40,8 +40,8 @@ const OrderPage = () => {
 	const [rightCategoryScroll, setRightCategoryScroll] = useState(true);
 	const [showInfoCard, setShowInfoCard] = useState(false);
 
-	const [filteredProducts, setFilteredProducts] = useState<Array<TMenuCustom>>(menus);
-	const [selectedProducts, setSelectedProducts] = useState<Array<TMenuCustom>>([]);
+	const [filteredProducts, setFilteredProducts] = useState<TMenuCustom[]>(menus);
+	const [selectedProducts, setSelectedProducts] = useState<TMenuCustom[]>([]);
 	const [hasImageItems, setHasImageItems] = useState(false);
 	const [hasNonImageItems, setHasNonImageItems] = useState(false);
 

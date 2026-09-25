@@ -87,8 +87,8 @@ const ActiveOrders = (props: TActiveOrdersProps) => {
 
 export default ActiveOrders;
 
-export type TActiveOrdersProps = {
+export interface TActiveOrdersProps {
 	onScroll: (event: UIEvent<HTMLDivElement>) => void;
-};
+}
 
 type TMenuCustom = TMenu & { quantity: number };

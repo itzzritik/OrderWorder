@@ -67,6 +67,6 @@ const OrderHistory = (props: TOrderHistoryProps) => {
 
 export default OrderHistory;
 
-export type TOrderHistoryProps = {
+export interface TOrderHistoryProps {
 	onScroll: (event: UIEvent<HTMLDivElement>) => void;
-};
+}

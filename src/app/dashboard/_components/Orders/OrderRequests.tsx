@@ -88,7 +88,7 @@ const OrderRequests = (props: TOrderRequestsProps) => {
 
 export default OrderRequests;
 
-export type TOrderRequestsProps = {
+export interface TOrderRequestsProps {
 	onScroll: (event: UIEvent<HTMLDivElement>) => void;
-};
+}
 type TMenuCustom = TMenu & { quantity: number };

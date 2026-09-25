@@ -51,9 +51,9 @@ const NavSideBar = (props: TNavSideBar) => {
 
 export default NavSideBar;
 
-type TNavSideBar = {
-	navItems: Array<{ label: string; value: string; icon: string }>;
+interface TNavSideBar {
 	defaultTab: string;
-	head?: boolean;
 	foot?: boolean;
-};
+	head?: boolean;
+	navItems: Array<{ label: string; value: string; icon: string }>;
+}

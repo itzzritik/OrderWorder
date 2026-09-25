@@ -4,18 +4,18 @@ import type { CSSProperties } from "react";
 import type { TThemeColor } from "xtreme-ui";
 import { OG_IMAGE_SIZE } from "#utils/seo/constants";
 
-type Shape = {
+interface Shape {
+	b?: number;
+	c: string;
+	h?: number;
+	o: number;
+	r?: number;
+	s?: number;
 	t: "circle" | "ring" | "sq" | "rect" | "tri" | "hex";
+	w?: number;
 	x: number;
 	y: number;
-	c: string;
-	o: number;
-	s?: number;
-	w?: number;
-	h?: number;
-	r?: number;
-	b?: number;
-};
+}
 
 export function OgBackground({ children, themeColor }: { children?: React.ReactNode; themeColor?: TThemeColor }) {
 	const { h, s } = { h: 26, s: 90, ...themeColor };

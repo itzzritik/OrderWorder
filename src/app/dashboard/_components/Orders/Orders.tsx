@@ -32,6 +32,6 @@ const Orders = (props: TOrdersProps) => {
 
 export default Orders;
 
-export type TOrdersProps = {
+export interface TOrdersProps {
 	onScroll: (event: UIEvent<HTMLDivElement>) => void;
-};
+}

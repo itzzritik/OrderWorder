@@ -21,9 +21,9 @@ const Modal = (props: TModal) => {
 
 export default Modal;
 
-type TModal = {
-	open: boolean;
-	closeIcon?: string;
-	setOpen: (open: boolean) => void;
+interface TModal {
 	children: ReactNode;
-};
+	closeIcon?: string;
+	open: boolean;
+	setOpen: (open: boolean) => void;
+}

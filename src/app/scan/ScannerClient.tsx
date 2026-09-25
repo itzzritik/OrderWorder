@@ -54,7 +54,7 @@ const ScannerClient = () => {
 			if (backCamera) {
 				setDeviceId(backCamera.deviceId);
 			} else if (devices.length > 0) {
-				setDeviceId(devices[devices.length - 1].deviceId);
+				setDeviceId(devices.at(-1).deviceId);
 			}
 		}
 	}, [devices, deviceId]);
