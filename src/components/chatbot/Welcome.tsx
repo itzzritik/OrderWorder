@@ -9,7 +9,7 @@ interface WelcomeProps {
 export const Welcome = ({ onLogin }: WelcomeProps) => (
 	<div className="chatWelcome">
 		<div className="welcomeIcon">
-			<Icon code="f4fb" set="duotone" size={68} type="solid" />
+			<Icon code="f4fb" set="duotone" style={{ "--iconSize": "68px" }} type="solid" />
 		</div>
 		<h4>Hey, I'm Jarvis!</h4>
 		<p>You need to be logged in to chat with me</p>

@@ -18,7 +18,7 @@ export function MenuCard({ item }: MenuCardProps) {
 			<div className="cardDesc">
 				<h4 className="cardTitle">{item.name}</h4>
 				<p className="cardSubtitle">
-					{item.veg && <Icon className={`vegBadge ${item.veg}`} code={VEG_ICON_CODE[item.veg]} size={12} type="solid" />}
+					{item.veg && <Icon className={`vegBadge ${item.veg}`} code={VEG_ICON_CODE[item.veg]} style={{ "--iconSize": "12px" }} type="solid" />}
 					{item.veg && <span className="separator">•</span>}
 					<span>₹{item.price}</span>
 				</p>

@@ -19,3 +19,10 @@ declare global {
 		conn: typeof _mongoose | null;
 	};
 }
+
+// gliff's Icon dropped the size prop; it reads this CSS variable instead
+declare module "react" {
+	interface CSSProperties {
+		"--iconSize"?: string;
+	}
+}

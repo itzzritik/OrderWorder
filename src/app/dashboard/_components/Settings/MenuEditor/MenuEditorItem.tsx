@@ -19,7 +19,7 @@ const MenuEditorItem = (props: TMenuEditorItemProps) => {
 						{item.image ? <span className="image" style={{ background: `url(${item.image})` }} /> : <Icon code="e43b" />}
 						{item.veg && (
 							<div className={`vegIcon ${item.veg}`}>
-								<Icon className="icon" code={VEG_ICON_CODE[item.veg]} size={16} type="solid" />
+								<Icon className="icon" code={VEG_ICON_CODE[item.veg]} style={{ "--iconSize": "16px" }} type="solid" />
 								<span className="label">{item.veg.replace(/-/g, " ")}</span>
 							</div>
 						)}

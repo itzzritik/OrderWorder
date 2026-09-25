@@ -23,7 +23,7 @@ export const MessageList = memo(({ messages, isLoading, bottomRef, onResizeStart
 						<div className="assistantContent">
 							<div className="messageHeader">
 								<div className="assistantAvatar">
-									<Icon code="f4fb" set="duotone" size={34} type="solid" />
+									<Icon code="f4fb" set="duotone" style={{ "--iconSize": "34px" }} type="solid" />
 								</div>
 								<div className="headerText">
 									<span className="assistantName">Jarvis</span>

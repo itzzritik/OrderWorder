@@ -89,16 +89,16 @@ const OrderDetail = (props: TOrderDetailProps) => {
 				<div className="info">
 					<h1 className="table">{reject ? "Are you sure?" : `Table: ${data?.table}`}</h1>
 					<div className="name">
-						<Icon code="f007" size={16} type="solid" />
+						<Icon code="f007" style={{ "--iconSize": "16px" }} type="solid" />
 						{data?.customer?.fname} {data?.customer?.lname}
 					</div>
 					<div className="phone">
-						<Icon code="f095" size={16} type="solid" />
+						<Icon code="f095" style={{ "--iconSize": "16px" }} type="solid" />
 						{data?.customer?.phone}
 					</div>
 					{data?.orderTotal && (
 						<div className="total">
-							<Icon code="e1bc" size={16} type="solid" />
+							<Icon code="e1bc" style={{ "--iconSize": "16px" }} type="solid" />
 							{data?.orderTotal}
 						</div>
 					)}
