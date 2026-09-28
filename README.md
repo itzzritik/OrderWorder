@@ -119,3 +119,8 @@ Orderworder has two interfaces, one for **customers** and one for **restaurant's
 ## ⭐ Support the Project  
 If you find OrderWorder useful, please give it a ⭐ on GitHub!  
 Have ideas or improvements? Contributions via issues or pull requests are warmly welcome!
+
+
+## License
+This project is licensed under the **Apache License, Version 2.0**.
+See the [LICENSE](LICENSE) file for details.
